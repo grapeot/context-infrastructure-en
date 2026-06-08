@@ -369,9 +369,8 @@ Sub-agent 产出的是**原始调研材料**，不是终稿的任何一部分。
 ## 参见
 
 - [语义搜索技能](./semantic_search.md) — 超越关键词匹配，用 embedding 相似度发现语义相关的消息
-- [并行 Subagent 工作流](./workflow_parallel_subagents.md) — Sub-agent 调度的执行规则
+- [并行 Subagent 工作流](./workflow_parallel_subagents.md) — Sub-agent 调度、overlap、交叉验证与适用标准
 - [深度调研工作流](./workflow_deep_research_survey.md) — 多 agent 并行 + 交叉验证的基础架构
-- [多 Agent 并行分析](./bestpractice_multi_agent_analysis.md) — 50% overlap、交叉验证方法论
 - 示例观察项目（本 skill 的原始来源）— `contexts/people/magong/`
 
 ---

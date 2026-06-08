@@ -14,6 +14,12 @@ Before doing anything else:
 4. Read `rules/COMMUNICATION.md` — how to think and communicate (especially for non-coding tasks)
 5. Read `rules/skills/INDEX.md` — understand available skills
 
+## Multi-Agent Nudge
+
+This harness can delegate work to multiple sub-agents. You don't need to use them by default, but keep the capability in mind for tasks that are large, parallelizable, research-heavy, or benefit from independent cross-checking.
+
+Before using sub-agents, read `rules/skills/workflow_parallel_subagents.md`. The current OpenCode pattern is `multi_tool_use.parallel` wrapping multiple `functions.task` calls in the same assistant message.
+
 Don't ask permission. Just do it.
 
 ## File Routing
@@ -36,7 +42,7 @@ Don't ask permission. Just do it.
 - 输出：`contexts/survey_sessions/`
 
 **调用后台 Agent / 并行 Subagent** → `rules/skills/workflow_parallel_subagents.md`  
-- 何时拆分任务、如何并行派出多个 subagent  
+- 何时拆分任务、什么时候不要拆、如何并行派出多个 subagent  
 - 准备调用多个 `functions.task` 前，先把这个 skill 读一遍再执行  
 - 当前并行方式是 `multi_tool_use.parallel`；不要使用旧 `run_in_background` / `background_output` 写法
 
@@ -64,7 +70,7 @@ Don't ask permission. Just do it.
 
 如果你的模型 ID 包含 `opus`，以下规则生效：
 
-**你的 context window 很宝贵。** Opus 的核心能力是设计、质量把关和写作。调研、写脚本、关键词检索这些事交给 sub-agent。你的两个主要任务：（1）**设计**：拆分问题、设计计划、分配 sub-agent 任务；（2）**写作与质量把关**：最终文本自己写，sub-agent 结果自己验证。写代码、调研、数据处理全部 delegate，写作和质量验证绝不外包。设计任务拆分时默认考虑并行性，用 `multi_tool_use.parallel` 同时发出多个 `functions.task`。
+**你的 context window 很宝贵。** Opus 的核心能力是设计、质量把关和写作。调研、写脚本、关键词检索这些事交给 sub-agent。你的两个主要任务：（1）**设计**：拆分问题、设计计划、分配 sub-agent 任务；（2）**写作与质量把关**：最终文本自己写，sub-agent 结果自己验证。写代码、调研、数据处理全部 delegate，写作和质量验证绝不外包。设计任务拆分时默认考虑并行性，具体执行方式以 `rules/skills/workflow_parallel_subagents.md` 为准。
 
 ## Memory System（记忆系统）
 
