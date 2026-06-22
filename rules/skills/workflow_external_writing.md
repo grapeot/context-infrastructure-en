@@ -6,7 +6,7 @@
 - **Applicable Scenarios**: Transforming research materials into judgment-driven external-facing analysis articles, public survey reports, or course/client content for external readers
 - **Prerequisites**: Output of Phase 1-3 of the Deep Research Survey Workflow (`workflow_deep_research_survey.md`), or equivalent verified materials
 - **Created**: 2026-04-28
-- **Last Updated**: 2026-06-17
+- **Last Updated**: 2026-06-22
 
 ## What Problem This Skill Solves
 
@@ -14,29 +14,33 @@ Research materials are sufficient but the writing reads like an AI summary, lack
 
 **Applicable Boundary**: For readers without shared context, public distribution channels, clients, or external course audiences. For internal documents aimed at the user themselves, collaborators sharing context, or future AI agents, use `workflow_internal_writing.md`.
 
+**Output Type Judgment (must do before writing)**: The **default output for external-facing analysis is a survey report**, stored in `contexts/survey_sessions/`, without Pelican frontmatter and without Kit subscription scripts. Only when the user explicitly says "write a blog post" or "publish to blog" should it be treated as a blog, stored in `contexts/blog/content/` with frontmatter. "Write an article" does not equal blog; default to survey report. Wrong judgment pollutes frontmatter, misplaces storage, and skews image strategy.
+
 **Relationship with Deep Research Skill**: The deep research skill handles information collection and verification; this skill handles judgment synthesis and writing. Research points here when complete.
 
 ---
 
 ## Acceptance Criteria: What a Good External Article Looks Like
 
-After writing, self-check against these criteria. These are outcome definitions, not process steps — how to get there is up to the agent.
+After writing, self-check against these criteria. These are outcome definitions, not process steps.
 
-1. **Has a thesis**: The article has a core judgment that a smart person unfamiliar with the details can retell in 1-2 sentences. Not "this is complex and worth paying attention to," but a specific judgment that can be agreed or disagreed with.
+**Criterion 1 is a gating constraint — if it's not met, send it back for rewrite. All other items are optimizations discussed only after it's satisfied.**
 
-2. **Thesis up front**: After reading the first 25% of the article, the reader knows (a) what problem the article addresses, (b) what the author's judgment is, (c) what they'll gain by continuing. If any of these three questions requires reading past the halfway point to answer, the structure needs adjustment.
+1. **A non-expert can understand and retell the thesis**: Find someone not working in this field and read the article aloud to them. Can they retell what the article is about in one or two sentences afterward? If they start frowning or zoning out at a particular section, that section has an information density or background assumption problem. This is the hardest criterion of all — not "is the writing smooth," but "did the reader actually understand." The most common AI writing failure is not a sentence problem; it's assuming the reader already knows SFT, RLHF, zero trust, bond spreads, and then pushing to the next concept before the reader has digested the previous one. **If this isn't met, don't bother checking the items below.**
 
-3. **Organized around the reader, not around the author's analytical framework**: The article advances along the reader's chain of questions (shock → fear/curiosity → relief → reality), not listing the author's analytical dimensions (categories like "combinatorial explosion + bypass"). Judgment criterion: if you read the article aloud to the target reader, would they think at any paragraph "what does this have to do with me?"
+2. **Has a thesis**: The article has a core judgment that a smart person unfamiliar with the details can retell in 1-2 sentences. Not "this is complex and worth paying attention to," but a specific judgment that can be agreed or disagreed with.
 
-4. **Evidence economy**: Each argument uses one strongest case; do not pile up similar evidence. After the first case, the reader is already thinking "so what?" — if what follows is more of the same, their attention is already spent.
+3. **Thesis up front**: After reading the first 25% of the article, the reader knows (a) what problem the article addresses, (b) what the author's judgment is, (c) what they'll gain by continuing. If any of these three questions requires reading past the halfway point to answer, the structure needs adjustment.
 
-5. **Manageable cognitive load**: The reader receives no more than two new concepts in any single paragraph. New terms or frameworks are first grounded in scenarios the reader already knows, then given names.
+4. **Organized around the reader, not around the author's analytical framework**: The article advances along the reader's chain of questions (shock → fear/curiosity → relief → reality), not listing the author's analytical dimensions (categories like "combinatorial explosion + bypass"). Judgment criterion: if you read the article aloud to the target reader, would they think at any paragraph "what does this have to do with me?"
+
+5. **Evidence economy**: Each argument uses one strongest case; do not pile up similar evidence. After the first case, the reader is already thinking "so what?" — if what follows is more of the same, their attention is already spent.
 
 6. **Clean prose**: Pass post-writing scans (em dashes, "very + adjective" judgment summaries, internal framework terminology leakage, large blocks of English quotes). See `rules/COMMUNICATION.md` for details.
 
 7. **Informative subheadings**: Articles over 1500 words use `##`-level subheadings. Subheadings carry information, not category names — if you delete the subheading, can the first sentence of the body independently serve as a subheading? If yes, the subheading is merely a category name.
 
-8. **Analytical framework invisible**: Thesis Catalog (L1-L6), axiom numbers, Phase names, terms like "narrative reconstruction" are scaffolding for the writing process and must not appear in the final article. The reader should feel they are reading someone with their own way of thinking doing analysis.
+8. **Analytical framework invisible**: Thesis Catalog (L1-L8), axiom numbers, Phase names, terms like "narrative reconstruction" are scaffolding for the writing process and must not appear in the final article. The reader should feel they are reading someone with their own way of thinking doing analysis.
 
 ---
 
@@ -162,11 +166,39 @@ Must read `rules/COMMUNICATION.md` before writing. Not reading it afterward for 
 
 **Title strategy**. The title is the article's only entry point in the information stream. Event-driven pieces must include specific event keywords (product name, company name, action word). Analytical pieces can start from judgment or tension but must still give a concrete subject. Judgment criterion: read the title to someone who follows AI but hasn't heard of this event — if they ask "what is this," the title has failed.
 
-**Article weight calibration**. Different articles have different weights, corresponding to different minimum requirements. Quick commentary (800-1500 words, single viewpoint): no images needed, 1-2 cases sufficient, thesis can come from user-provided viewpoint. Analysis (1500-3000 words): subheadings needed, 3-5 argument points, images recommended. Deep research (3000+ words): full Phase process, images required, complete evidence chain. Before writing, determine which tier this falls into and adjust investment accordingly.
+**Article weight calibration**. Default target length is 2500-3500 words, no longer split into quick commentary / analysis / deep research tiers. This length corresponds to: complete Phase research process, complete evidence chain, 3-5 argument points with subheadings, argumentation density sufficient to support the thesis without compressing into a checklist. Images as needed; deep research type must have them, analysis type can skip. Short pieces (1500-2000 words) are written only when the user explicitly requests, and must clearly state "this one is short because X"; don't default to writing short. "Low cognitive burden" does not equal short — it equals the reader following a natural storyline without feeling force-fed. How long an article should be depends on the breathing room the argumentation needs, not a fixed word budget. **Exception**: when cognitive burden is the primary tension (reader says "I don't understand"), cutting content is more effective than rewriting, even if it ends up shorter than the default length. A 3000-word article the reader can understand is far more valuable than a 7000-word article the reader only grasps a third of.
 
 ### Cognitive Load
 
-No more than two new concepts per paragraph. New terms are first grounded in scenarios or sensations the reader already knows, then given names. When using metaphors, introduce only one core concept per paragraph, advance with multiple short paragraphs (no more than 3 sentences each), don't cram scene + problem + solution + insight four layers into one paragraph. When the target reader is not a domain expert, that domain's jargon does not appear by default; when it must be introduced, use references the reader already knows as anchors.
+The goal of low cognitive burden is correct, but it's repeatedly misunderstood in AI writing. Mechanically applying rules — forcing short sentences, forcing short paragraphs, inserting a transition word every two paragraphs, replacing "three things" with "first thing / second thing / third thing" — does not reduce cognitive burden. It turns a flowing article into a dismembered checklist. What the reader gets is not an article but items肢解 by rules.
+
+The only way to truly reduce cognitive burden is: let the reader follow a natural storyline, finishing without feeling force-fed. The following are specific techniques, confirmed effective from the pattern of rewriting the same article repeatedly to the fifth version.
+
+**No taxonomy announcements.** "First thing / second thing / third thing," "there are several directions," "three things" — this kind of pre-announced numbering signals "what follows is a checklist," and the reader's attention shifts from following along to counting which number we're on. Let the content surface on its own. If three things have a sequential relationship, the narrative itself brings out the order; if they're merely parallel, that means you're listing rather than writing. Test: can the article stand on its own after deleting all the numbers? If yes, the numbering is redundant preamble.
+
+**No mechanical connectives.** "However," "this way," "in other words," "then again" appear only when the reading rhythm needs breathing. When the paragraph itself flows, add none. Repeatedly writing multiple versions of the same article most easily exposes this problem: the mechanical connectives inserted in the previous version, when mostly deleted, the rhythm turns out better. Test: read aloud. If connectives appear like a template every two paragraphs, that's a machine filling slots. If a paragraph reads smoothly without stumbling, no need to force them.
+
+**No information walls.** Don't cram five or six data points into a single paragraph. The role of data in an article is not to be listed, but to push the narrative one step forward. Before placing each data point, ask: what is it helping the reader understand? If the answer is just "it's here," move it to its own paragraph, or merge it into the narrative action currently advancing. Data is embedded in the story, not in a "number → meaning" Q&A pattern.
+
+**Paragraphs have natural length.** When telling a complete mini-story, let it be long; when delivering a punchline, let it be short. Don't force any length. If you notice every paragraph is three to four lines with completely uniform rhythm, that means you're applying a template.
+
+**Read aloud once.** The final check after writing is not a checklist scan, but reading the article aloud. Does it sound like someone talking? Like telling a friend something interesting, or like reading a work report? This test is more reliable than any rule — when reading aloud, you don't count "how many new concepts in this paragraph," you just feel whether the rhythm is right.
+
+The above addresses narrative-level cognitive burden. Concept-level cognitive burden (no more than two new concepts per paragraph, ground new terms in known scenarios first, jargon doesn't appear by default) still applies, but it addresses "can the reader keep up," while the narrative level addresses "does the reader want to keep reading." Both are necessary.
+
+### Methods for Reducing Cognitive Burden (Information Architecture Level)
+
+The sentence patterns and rhythm discussed above are the micro level. In practice, the most common reason readers say "I don't understand" is not sentence-level, but macro information architecture: an article crams in too many angles, too many terms, too many cases. The following are operational methods confirmed effective from the process of repeatedly rewriting the same article until the reader said "a qualitative leap."
+
+**One section holds only one core judgment + one concrete story.** This is the single most powerful operation for reducing cognitive burden. Assume your article has three angles; for each angle, keep only the anchor that best illustrates the point — one company did a certain thing, or one person said a certain sentence. Cut or compress all other numbers, quotes, and cases to half a sentence. Judgment criterion: after reading a section, can the reader summarize "what this section is about" in one sentence? If they can't summarize it themselves, the section is stuffed with too much.
+
+**Cutting is more important than adding.** AI's (especially sub-agents like DeepSeek) default behavior is to use as much research material as possible, because more material seems "more thorough." But the goal of an external-facing article is not to display research to the reader, but to convey judgment. When you find an article has excessive cognitive burden, the first reaction should not be "how to rewrite more accessibly," but "what can be cut." A 7000-word article cut to 3000 words where the reader says "a qualitative leap" — what was cut was not filler, but interesting but unnecessary arguments, interesting but unnecessary cases, accurate but unnecessary terminology.
+
+What specifically to cut: the second case of the same type (keeping the strongest one is enough), supporting quotes (keeping the core judgment is enough, not every sentence's source), intermediate analysis steps (keeping the start and conclusion is enough, not every step of the reasoning chain), precise definitions of terminology (replace with everyday scenarios, not academic definitions).
+
+**The reader's existing knowledge is the entry point.** The first paragraph must start from something the reader already knows or can intuitively grasp. "OpenAI spent $34 billion last year" — anyone can grasp that. "Three signal chains" or "the paradigm shift from model safety to agent security" — only domain insiders can grasp that. The former is an entry point; the latter is not. If the article must introduce a new concept, first ground it in a scenario the reader already has, then give it a name. "The internet bubble lost shareholders' money; the AI bubble loses creditors' money" — this is a contrast the reader can intuitively understand, far stronger than "differences in loss transmission mechanisms."
+
+**Professional terminology: delete or translate.** "Bond spreads widened" becomes "companies that already struggle to borrow are finding it even more expensive." "Unit economics" becomes "for every dollar earned, two dollars and sixty cents are spent." "Stranded assets" becomes "things built but unable to make money." If deleting a term doesn't affect the argument, delete it. If it can't be deleted, immediately follow with an everyday-language restatement. The reader doesn't need to learn your terminology; you need to learn to speak in the reader's language.
 
 ### Prose Rules (High-Risk Items for Long-Form Writing)
 
@@ -176,11 +208,11 @@ The following items are where AI repeatedly makes mistakes in long-form writing,
 
 **"Very + adjective" judgment summaries**. Do not write "demonstrated very directly," "explained very clearly," "results are very clear." This pattern uses one adjective to skip the burden of argument. After writing, scan with `rg 'very[direct clear simple obvious important thorough comprehensive deep key]'` (in the target language equivalent); delete all judgment summaries or replace with specific content.
 
-**English quote handling**. Large blocks of English quotes in Chinese articles (blockquotes exceeding one full sentence) should be restated in Chinese, preserving core meaning and URL. Chinese readers face high cognitive cost with large English blocks: need to switch languages, parse grammar, then return to Chinese context. Short English phrases (product names, key terms) can be kept inline. English-language articles are not subject to this restriction.
+**English quote handling**. English quotes in Chinese articles are judged by content density, not by number of sentences. Blockquotes exceeding 20 English words, or single sentences containing 3 or more key information points (numbers, proper nouns, clauses), should be restated in Chinese, preserving the URL. Short English (≤20 words, single information point) as an iconic quote can be kept as a blockquote. Inline short English (product names, terms, ≤15-word quotes) can be kept. Chinese readers face high cognitive cost with large English blocks: need to switch languages, parse grammar, then return to Chinese context. English-language articles are not subject to this restriction.
 
 **Zero tolerance for meta-commentary**. Do not write "specifically," "here's a key distinction," "let's look at." Enter the content directly.
 
-**Transition words**. Use light transitions between paragraphs (this way, however, in other words, the key is) to maintain rhythm; don't make every sentence land like an independent brick.
+**Transition words**. Use light transitions between paragraphs (this way, however, in other words, the key is) to maintain rhythm; don't make every sentence land like an independent brick. But also be alert to mechanical insertion: connectives that are too dense, appearing at fixed template intervals, also break rhythm. Judge by reading aloud, not by counting.
 
 **Do not wrap conceptual terms in quotation marks** (unless absolutely ambiguous).
 
@@ -190,17 +222,21 @@ The following items are where AI repeatedly makes mistakes in long-form writing,
 - Do not separately list "Sources" or "References" at the end
 - Do not write publication date or research date at the beginning of the body (injected by the system at publish time)
 - Survey reports (default output) stored in `contexts/survey_sessions/`, no Pelican frontmatter. Blog posts stored in `contexts/blog/content/` with frontmatter.
-- External-facing articles have 0-3 images. Data comparisons and flowcharts must have images; pure text analysis articles can skip. Images placed in the same directory as the MD, referenced with relative paths. Quantitative charts use matplotlib; process/concept diagrams use gpt-image-2. When GPT redraws content containing Chinese, reduce text density, 16:9 landscape, require normal-width unstretched fonts.
+- External-facing articles have 0-3 images. Data comparisons and flowcharts must have images; pure text analysis articles can skip. Images placed in the same directory as the MD, referenced with relative paths. Images default to a two-step process: first generate a structural draft with matplotlib (with text annotations, layout, positioning), then use gpt-image-2 to redraw with the draft as `-i` input for visual optimization. matplotlib-only is only for precise quantitative charts (bar charts, line charts, scatter plots). Concept diagrams, flowcharts, comparison diagrams, and stack diagrams all go through the two-step process. gpt-image-2 redraw timeout set to 300s+, reduce text density when containing Chinese, 16:9 landscape, require normal-width unstretched fonts. See `generate_image.md` for detailed operations.
 
 ---
 
 ## Model Division of Labor Protocol
 
-The final writing of external-facing articles defaults to strong writing models.
+The final prose of external-facing articles defaults to a DeepSeek Pro writing sub-agent. The main thread is responsible for research, judgment, material organization, fact-checking, style review, and final acceptance; the writing sub-agent is responsible for turning the finalized judgment into the article.
 
-When the main thread model is an Opus series or DeepSeek series (including Flash, Pro, V4, and all variants), the main thread writes directly. Otherwise, the main thread must not directly draft the final piece; it must first write research materials, thesis, evidence table, style requirements, prohibitions, target output path, and overwrite strategy to `tmp/<session_slug>/`, then invoke a DeepSeek V4 Flash sub-agent to read these files and write the final Markdown. Agents must not rely on chat to pass body materials; files are the handoff interface. Judge by model ID.
+**Standard delivery must include two passes of DeepSeek Pro writing: first pass produces the draft, second pass rewrites the prose.** The first pass organizes research, thesis, and evidence into a complete article; the second pass completely rewrites the prose in DeepSeek Pro's own most natural, most comfortable language, without changing structure, facts, or information volume. Both passes together constitute a complete writing workflow. Unless the user explicitly requests only a draft, only an outline, or only an internal temporary memo, do not deliver the first-pass draft as the final piece.
 
-The main thread is responsible for: preparing materials, fact-checking, style review, and final acceptance. Do not deliver unchecked sub-agent drafts directly. Delegate execution; keep accountability with yourself.
+The main thread must not directly draft the final prose. Regardless of what model the main thread is, it must first write research materials, thesis, evidence table, style requirements, prohibitions, target output path, and overwrite strategy to `tmp/<session_slug>/writing_brief.md`, then invoke a `writer_deepseek` sub-agent to read that file and write the first-pass Markdown: `tmp/<session_slug>/draft.md`. Agents must not rely on chat to pass body materials; files are the handoff interface. `writer_deepseek` is the DeepSeek Pro writing route; do not use DeepSeek V4 Flash for standard external prose writing anymore.
+
+The main thread is responsible for: preparing materials, fact-checking, style review, and final acceptance. Do not deliver unchecked sub-agent drafts or rewrites directly. Delegate execution; keep accountability with yourself.
+
+**Structural judgment for cognitive burden reduction is done by the main thread; language-layer complete rewrite is done by the DeepSeek Pro sub-agent.** Historical testing shows DeepSeek V4 Flash tends to turn rewrites into synonym replacement and cannot handle the second pass of standard external prose. The current standard route is `writer_deepseek`: the main thread first determines article structure, information selection, and reader cognitive path, then lets DeepSeek Pro rewrite the language from scratch within these constraints. If the reader says "I don't understand," the main thread should first reorganize the structure and cut information itself, then hand it to `writer_deepseek` for language-layer rewriting; don't outsource structural judgment to the writing sub-agent.
 
 When the user requests rewriting or overwriting the final file, the deliverable under `contexts/survey_sessions/` can be overwritten; but raw materials under `tmp/<session_slug>/` (source index, scratchpad, handoff brief, etc.) must be preserved as the audit chain.
 
@@ -218,6 +254,28 @@ After receiving feedback, first diagnose the feedback type before acting.
 
 ---
 
+## Second-Pass Writing: Language-Layer Rewrite
+
+After content and structure are finalized, and before post-writing self-check, must execute the second-pass writing: **language-layer rewrite**. This pass does not change structure, content, information volume, URLs, or facts. It only rewrites the entire article's prose from scratch using the rewriter's own language habits.
+
+This is not optional polishing, nor is it a fix done only when style issues are discovered. The standard workflow for external-facing articles is: complete the first-pass draft, then complete the second-pass language rewrite, then enter post-writing scans. The first-pass draft is a draft; the second-pass rewrite is the final candidate.
+
+Why this pass is needed: by this point the article's structure, thesis, and evidence are all settled, but the prose layer often retains the sentence-pattern inertia of the original author (main thread or first-pass sub-agent), including translationese, flat rhythm, missing transitions, conceptual terms wrapped in quotation marks, "very + adjective" judgment summaries, and em-dash emotional pauses. Post-writing scans only catch explicit violations, not rhythm and language feel. A fresh writing brain, without the inertia of the first draft, can rewrite in more natural language.
+
+**Execution method**: Invoke a `writer_deepseek` sub-agent, give it the first-pass draft MD path, and require it to output a completely new file: `tmp/<session_slug>/rewrite.md`. Do not overwrite the original. After the main thread accepts, copy or apply the rewrite to the final delivery path.
+
+**Hard constraints for the rewriter**:
+
+1. **Do not change structure**: section order, subheadings, paragraph count, and paragraph correspondence remain consistent.
+2. **Do not change content**: thesis, judgments, cases, numbers, URLs, and quotes are all preserved.
+3. **Do not change information volume**: the information density conveyed per paragraph does not change; do not add or remove arguments.
+4. **Build from scratch, not sentence-by-sentence editing**: You are not editing words on the original; you are reading it, closing the original, and writing the same content from scratch in your own language. The original's role is to tell you "what information this paragraph needs to convey, which URLs to cite," not to give you a template for synonym replacement. You may change subjects, transitions, merge short sentences, split long sentences, reorder clauses, and reorganize the argumentation order within a paragraph. Judgment criterion: comparing the rewrite and the original paragraph by paragraph, no paragraph should have more than 30% sentence similarity. If it exceeds that, it means you're copying original sentences rather than rewriting, and you need to start over.
+5. **Follow COMMUNICATION.md for style**: the rewriter must read COMMUNICATION.md before writing, loading the rules in before starting.
+
+**Main thread acceptance**: After the rewrite is complete, the main thread compares it with the original paragraph by paragraph, checking three things: (a) structural integrity — section order, subheadings, paragraph count are consistent; (b) content integrity — all thesis, judgments, numbers, URLs are preserved; (c) language rewrite degree — check sentence similarity paragraph by paragraph; any paragraph exceeding 30% sentence similarity is judged as incomplete rewriting and must be redone. Only after acceptance does the rewrite enter the post-writing self-check phase. The original is preserved as the audit chain. When replying to the user, if the second-pass rewrite has not been completed, you must explicitly state that the deliverable is still the first-pass draft and cannot be called the final piece.
+
+---
+
 ## Post-Writing Quality Checks
 
 After writing, must execute the following scans; do not rely on naked-eye review:
@@ -231,9 +289,26 @@ rg 'very[direct clear simple obvious important thorough comprehensive deep key]'
 
 # 3. Internal framework terminology leakage
 rg 'L[0-6]|axiom|Phase [A-Z]|narrative reconstruction|technology lineage|bottleneck shift|Thesis Catalog' <file>
+
+# 4. Long English blockquotes (blockquote lines over 100 chars need manual check for >20 words or >3 information points)
+rg -n '^> ' <file> | awk '{ if (length($0) > 100) print }'
+
+# 5. Evaluative leads before quotes/facts (meta-commentary variants)
+rg -n 'says .{0,5} more|straightforward to|no need to restate|in itself shows|in itself is a bit|easy to miss|no need for reasoning' <file>
+
+# 6. Passive voice (translationese disaster zone; passive voice is low-frequency and emphatic in Chinese)
+rg -n '被' <file>
 ```
 
-All three scans must return empty results. Check each hit location one by one; fix and re-scan.
+The first five scans must all return empty results (#4 hits need manual judgment). #6 will not be empty; classify each one: which are translationese that must be rewritten, which are natural Chinese usage that can be kept.
+
+**#6 Judgment criteria**: Translationese loves to abuse passive voice, directly calquing English "is being Xed" / "X was done to Y." In Chinese, most cases should use active subjects or topic-comment structure. Check each passive construction:
+
+- **Almost always translationese, must rewrite**: "正在被 X" / "在被 X" (being commoditized, being compressed); "被 + 持续/系统/整个/同时 + verb" (being continuously squeezed out, being systematically trained, being entirely deleted, being simultaneously compressed); "被 X 掉/被 X 出去" (was deleted, was squeezed out, was short-circuited, was dismantled). Rewrite approach: switch to active subject or natural Chinese. "执行正在被商品化" → "执行正在变成商品"; "环节正在被压缩" → "环节正在缩水"; "这个问题被删掉了" → "这个问题直接消失了"; "过滤器被拆了" → "AI 把过滤器拆了".
+- **Natural usage that can be kept**: 被替代 (replaced), 被贴上标签 (labeled), 被工具取代 (replaced by tools), 被训练成 (trained as), 被要求 (required), 被骗 (deceived). These are acceptable passive constructions in Chinese, describing a subject genuinely receiving an unfavorable or directed action.
+- **Quick test**: delete the "被" character; if the sentence still reads smoothly, the "被" is redundant translation flavor; read aloud, and if the subject is passively acted upon by some abstract process and reads like a translation, change it to active.
+
+**Special note**: When fixing "not X, but Y" contrastive frames, do not use "没有被……，它被……" (negation + passive) as a replacement — that's trading one translationese for another, usually worse (double passive stacking negation then affirmation). Just rewrite into natural active Chinese.
 
 After writing, also do a round of qualitative self-check (against the 8 acceptance criteria).
 
@@ -251,12 +326,14 @@ After writing, also do a round of qualitative self-check (against the 8 acceptan
 | Temporal dimension ambiguity | Simultaneously implying "important now" and "still very early" | Temporal dimension judgment must be explicitly expressed in the opening |
 | Object-explainer | Always explaining from the analysis object's perspective, never judging from the reader's situation | Change the subject from the analysis object to "you (the reader)" |
 | Internal framework leaking into final piece | "From the L4 technology lineage perspective," axiom numbers appear in the article | Scaffolding terms have zero appearance in the final article |
-| Cognitive burden too high | Multiple consecutive paragraphs introduce new concepts; reader zones out or scrolls back | No more than two new concepts per paragraph; ground in known scenarios first, then give names |
+| Cognitive burden too high | Multiple consecutive paragraphs introduce new concepts, reader zones out; or taxonomy announcements (first/second/third), mechanical connectives, information walls that chop the article into a checklist, reading feels like being force-fed | No more than two new concepts per paragraph; ban taxonomy announcements, mechanical connectives, information walls; embed data in stories rather than listing; read aloud to test rhythm |
 | Em dash proliferation | Heavy use of —— throughout | Zero tolerance in final piece. One-time scan with `rg -n '——'` after writing |
 | Large blocks of English quotes | Pasting multi-sentence English blockquotes in Chinese articles | Restate in Chinese, preserving core meaning and URL |
 | "Very + adjective" judgment summaries | "demonstrated very directly," "explained very clearly" | Scan with `rg`; delete all judgment summaries or replace with specific content |
 | Meta-commentary as transitions | "Specifically," "the key distinction is" | Enter content directly. If deleting it breaks coherence, the previous sentence wasn't clear enough |
 | Complex metaphor cognitive overload | One paragraph crams scene + problem + solution + insight | One metaphor paragraph pushes only one concept; no more than 3 sentences per paragraph |
+| Information-architecture-level cognitive overload | Reader says "I don't understand" or "I only understood a small part," but sentence-by-sentence inspection shows no obvious grammar problems | Root cause is not sentence patterns but information density: one section crams multiple concepts or multiple cases. The solution is to cut content, not to rewrite — keep only one core judgment + one concrete story per section. See "Methods for Reducing Cognitive Burden" section |
+| Sub-agent rewrite becomes synonym replacement | After second-pass language-layer rewrite, paragraph-by-paragraph comparison shows heavy sentence similarity (over 30%) | `writer_deepseek` must execute complete rewrite per "build from scratch." Main thread checks similarity paragraph by paragraph during acceptance; if threshold exceeded, require that paragraph or the entire piece to be redone. If the problem comes from structure or information density, the main thread first reorganizes structure and cuts content, then re-hands to `writer_deepseek` |
 | No images (analysis/research type) | Pure text long article | Data charts and flowcharts must have images; analysis-type articles can skip images |
 | Duplicate publication date | Date written in body, injected again on publish page | Do not write publication date in body |
 
