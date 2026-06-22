@@ -3,50 +3,52 @@ id: axiom_a13_tech_adoption_stages_2026
 category: ai_agentic
 created: 2026-03-01
 updated: 2026-03-01
+raw_sources:
+  - "rules/skills/bestpractice_tech_adoption.md"
 ---
 
-# A13. 技术采用三阶段
+# A13. Technology Adoption Stages
 
-## 1. 核心公理
+## 1. Core Axiom
 
-革命性技术的采用不是组件替换，而是系统重设。电动马达用了60年才改造整个经济体系——不是因为技术本身，而是因为需要重新设计工厂、电网、生产流程。AI亦然。
+The adoption of technology that changes a system is not component replacement but system reset. Electric motors took 60 years to transform the entire economic system, not because of the technology itself, but because factories, power grids, and production processes needed to be redesigned. The same applies to AI.
 
-技术采用分三个阶段：**Driver**（驾驶员，被动使用）→ **Co-pilot**（副驾驶，协作优化）→ **Architect**（架构师，系统重设）。每个阶段的瓶颈不同，解决方案也完全不同。
+Technology adoption has three stages: **Driver** (passive use) → **Co-pilot** (collaborative optimization) → **Architect** (system reset). Each stage has different bottlenecks, and the solutions are completely different.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-**蒸汽机思维 vs 电网思维**
+**Steam Engine Thinking vs Power Grid Thinking**
 
-蒸汽机时代，工厂用一台大蒸汽机驱动所有机器。电动马达出现后，人们最初也是这样用——一台大电动机替代蒸汽机。但真正的革命来自电网：每台机器独立供电，工厂可以灵活布局、按需启动。这需要完全不同的基础设施。
+In the steam engine era, factories used one large steam engine to drive all machines. When electric motors appeared, people initially used them the same way — one large motor replacing the steam engine. But the real revolution came from the power grid: each machine independently powered, factories could flexibly lay out and start on demand. This required completely different infrastructure.
 
-**三阶段的焦点转移**
+**The Focus Shift Across Three Stages**
 
-- **Driver阶段**：用户被动接收AI输出。瓶颈是提示质量和模型能力。
-- **Co-pilot阶段**：用户与AI协作迭代。瓶颈转向数据质量、反馈循环、评估标准。
-- **Architect阶段**：系统围绕AI重新设计。瓶颈是基础设施——文档清晰度、数据可访问性、API稳定性、评估框架。
+- **Driver stage**: Users passively receive AI output. The bottleneck is prompt quality and model capability.
+- **Co-pilot stage**: Users and AI collaborate iteratively. The bottleneck shifts to data quality, feedback loops, and evaluation criteria.
+- **Architect stage**: Systems are redesigned around AI. The bottleneck is infrastructure — documentation clarity, data accessibility, API stability, evaluation frameworks.
 
-**基础设施瓶颈隐喻**
+**The Infrastructure Bottleneck Metaphor**
 
-超跑在泥土路上跑不快。同样，再强的AI模型遇到混乱的数据、不清晰的需求定义、不稳定的API，也无法发挥价值。
+A supercar can't run fast on a dirt road. Similarly, the strongest AI model, faced with messy data, unclear requirement definitions, and unstable APIs, cannot deliver value.
 
-**采用检查清单**
+**Adoption Checklist**
 
-评估是否准备好进入Co-pilot或Architect阶段：
-- 文档是否足够清晰，让AI理解业务逻辑？
-- 数据是否可访问且结构化？
-- API是否稳定且有明确的错误处理？
-- 是否定义了明确的评估标准（而非模糊的"好用"）？
+Assess readiness to enter the Co-pilot or Architect stage:
+- Is documentation clear enough for AI to understand business logic?
+- Is data accessible and structured?
+- Are APIs stable with clear error handling?
+- Are clear evaluation criteria defined (rather than vague "works well")?
 
-## 3. 应用判定
+## 3. Application Criteria
 
-当以下情况出现时，参考本公理：
+Reference this axiom when:
 
-- 评估新技术采用时，先诊断当前处于哪个阶段，再决定投入方向
-- 听到"AI不够好"的抱怨时，问题可能不在模型，而在基础设施
-- 设计AI原生系统时，优先投资基础设施而非追求模型升级
+- Evaluating new technology adoption: first diagnose which stage you're in, then decide investment direction
+- Hearing complaints that "AI isn't good enough": the problem may not be the model but the infrastructure
+- Designing AI-native systems: prioritize infrastructure investment over pursuing model upgrades
 
-## 4. 与其他公理的关系
+## 4. Relationships with Other Axioms
 
-- **T01 基础设施优于组件**：直接呼应。基础设施投资的长期回报远超单点优化。
-- **A08 提示质量是主要杠杆**：在Driver阶段成立；进入Co-pilot后，数据质量和评估框架权重上升。
-- **A12 AI原生开发范式**：Architect阶段的具体实践——围绕AI能力重新设计系统架构。
+- **T01 Infrastructure Over Components**: Direct echo. The long-term return on infrastructure investment far exceeds point optimization.
+- **A08 Prompt Quality is the Primary Lever**: Holds true in the Driver stage; entering Co-pilot, data quality and evaluation framework weight rise.
+- **A12 AI-Native Development Paradigm**: The concrete practice of the Architect stage — redesigning system architecture around AI capabilities.

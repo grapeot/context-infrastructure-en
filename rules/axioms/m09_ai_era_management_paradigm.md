@@ -5,46 +5,46 @@ created: 2026-03-01
 updated: 2026-03-01
 ---
 
-# M9. AI 时代管理范式
+# M9. AI-Era Management Paradigm
 
-## 1. 核心公理
+## 1. Core Axiom
 
-AI 时代的管理范式从过程确定性转向结果确定性。不再依赖流程规范和中间检查点，而是通过科学的评估框架验证最终产出。AI 被视为团队成员而非工具，这意味着管理者必须承担完整责任——责任无法被委派给 AI 系统。高期待框架驱动团队和 AI 协作的质量上限。
+The management paradigm in the AI era shifts from process determinism to outcome determinism. Instead of relying on process norms and intermediate checkpoints, verify final output through a scientific evaluation framework. AI is treated as a team member rather than a tool, which means the manager must bear full responsibility — accountability cannot be delegated to an AI system. A high-expectation framework drives the quality ceiling of team and AI collaboration.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 科学脑 vs 工程脑评估
+### Scientific Brain vs. Engineering Brain Evaluation
 
-管理 AI 系统需要科学脑思维：定义清晰的评估指标、设计可重复的实验、容忍不确定性。工程脑（确定性流程、可预测输出）在 AI 环境中失效。评估框架必须前置于开发，而非事后补救。
+Managing AI systems requires scientific-brain thinking: defining clear evaluation metrics, designing reproducible experiments, tolerating uncertainty. The engineering brain (deterministic processes, predictable outputs) fails in AI environments. The evaluation framework must precede development, not be an afterthought.
 
-### 不可能三角
+### The Impossible Triangle
 
-AI 系统面临三维约束：可解释性、速度、规模。无法同时最大化三者。管理决策必须明确权衡：是否需要完全可解释的小模型，还是接受黑盒但高效的大模型。这个权衡决定了整个系统架构。
+AI systems face a three-dimensional constraint: explainability, speed, and scale. You cannot maximize all three simultaneously. Management decisions must make explicit trade-offs: do you need a fully explainable small model, or accept a black-box but efficient large model? This trade-off determines the entire system architecture.
 
-### LLM 决策与程序执行解耦
+### Decoupling LLM Decisions from Program Execution
 
-LLM 本质是非确定性决策引擎，程序执行是确定性的。不应期望 LLM 直接执行关键业务逻辑。正确模式：LLM 生成候选方案 → 确定性程序验证和执行 → 反馈循环。这解决了"AI 不可靠"的根本问题。
+LLMs are inherently non-deterministic decision engines; program execution is deterministic. You should not expect LLMs to directly execute critical business logic. The correct pattern: LLM generates candidate solutions → deterministic program verifies and executes → feedback loop. This resolves the fundamental problem of "AI unreliability."
 
-### AI 管理三大机制
+### Three Core Mechanisms of AI Management
 
-1. **Evaluation First**：在任何开发前，定义成功标准和评估方法。评估框架是产品定义的一部分。
-2. **Cross-check**：多维度验证结果。单一指标无法捕捉 AI 系统的复杂性。
-3. **Documents as Deliverable**：评估报告、决策文档、架构文档是真正的交付物，代码只是实现细节。
+1. **Evaluation First**: Before any development, define success criteria and evaluation methods. The evaluation framework is part of the product definition.
+2. **Cross-check**: Verify results across multiple dimensions. A single metric cannot capture the complexity of AI systems.
+3. **Documents as Deliverable**: Evaluation reports, decision documents, and architecture documents are the true deliverables; code is merely an implementation detail.
 
-### 高期待框架
+### High-Expectation Framework
 
-设定明确的质量期待，而非"尽力而为"。高期待驱动团队和 AI 系统的协作深度。模糊的期待导致模糊的产品定义，这是 AI 项目最常见的阻塞点。
+Set clear quality expectations, not "do your best." High expectations drive the depth of collaboration between teams and AI systems. Vague expectations lead to vague product definitions, which is the most common blocker in AI projects.
 
-## 3. 应用判定
+## 3. Application Judgment
 
-**何时使用**：构建 AI Agent 系统、管理 AI 研发团队、设计评估框架、处理高不确定性的产品定义。
+**When to use**: Building AI agent systems, managing AI R&D teams, designing evaluation frameworks, handling high-uncertainty product definitions.
 
-**何时不适用**：简单工具集成、确定性流程自动化、传统工程项目。
+**When not to use**: Simple tool integrations, deterministic process automation, traditional engineering projects.
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **T02 结果确定性优于过程确定性**：M9 是 T02 在管理层的直接应用。AI 时代更加凸显结果导向的必要性。
-- **A03 从 IC 到经理的心智转变**：管理 AI 需要同样的心智转变——从执行者到决策者，从确定性到不确定性管理。
-- **A04 可靠性是管理问题**：AI 系统的可靠性不来自"更好的模型"，而来自架构设计和评估机制。
-- **V01 责任无法被委派**：AI 不能成为逃避责任的借口。管理者对 AI 系统的输出承担完整责任。
-- **T05 认知是资产，代码是消耗品**：当代码生成成本趋近于零，评估框架和产品定义的认知价值指数级上升。
+- **T02 Outcome Determinism Over Process Determinism**: M9 is the direct application of T02 at the management level. The AI era further highlights the necessity of outcome orientation.
+- **A03 The Mental Shift from IC to Manager**: Managing AI requires the same mental shift — from executor to decision-maker, from determinism to uncertainty management.
+- **A04 Reliability Is a Management Problem**: AI system reliability does not come from "better models," but from architecture design and evaluation mechanisms.
+- **V01 Accountability Cannot Be Delegated**: AI cannot be an excuse to evade responsibility. The manager bears full accountability for the AI system's output.
+- **T05 Cognition Is an Asset, Code Is Consumable**: When the cost of code generation approaches zero, the cognitive value of evaluation frameworks and product definitions rises exponentially.

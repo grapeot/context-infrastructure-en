@@ -24,60 +24,60 @@ Don't ask permission. Just do it.
 
 ## File Routing
 
-**找文件时，先查 `rules/WORKSPACE.md`，再搜索。** WORKSPACE.md 是这个 workspace 的目录索引，记录了每类内容的存放位置。绝大多数情况下查一下就能定位到目标目录，不需要全盘 glob/grep。如果发现新目录或项目没被收录，顺手更新 WORKSPACE.md。
+**When looking for files, check `rules/WORKSPACE.md` first, then search.** WORKSPACE.md is the directory index for this workspace — it records where each type of content lives. In most cases, a quick lookup gets you to the target directory without a full glob/grep. If you discover a new directory or project that isn't listed, update WORKSPACE.md.
 
 ## Skills
 
-**Skills** 是 AI 可复用的能力，包括工作流、API 指南、最佳实践等。
+**Skills** are reusable AI capabilities: workflows, API guides, best practices, and so on.
 
-**重要：遇到"怎么做 X"时，先查 skill 再查系统工具。** 搜索顺序：(1) 下方速查表 → (2) `rules/skills/INDEX.md` → (3) 系统工具。
+**Important: when you need to figure out how to do X, check skills first, then system tools.** Search order: (1) quick reference below → (2) `rules/skills/INDEX.md` → (3) system tools.
 
-**需要执行某项任务** → 先查 `rules/skills/INDEX.md` 找到对应的 skill  
-**想添加新能力** → 参考现有 skill 格式，更新 INDEX.md
+**Need to run a task** → check `rules/skills/INDEX.md` for the matching skill
+**Want to add a new capability** → follow existing skill format, update INDEX.md
 
-### 常用 Skill 速查（以 INDEX.md 为准）
+### Common Skill Quick Reference (INDEX.md is authoritative)
 
-**深度调研任务** → `rules/skills/workflow_deep_research_survey.md`  
-- 初步扫描 → 分割维度 → 多 Agent 并行 → 交叉验证 → 写报告  
-- 输出：`contexts/survey_sessions/`
+**Deep research tasks** → `rules/skills/workflow_deep_research_survey.md`
+- Initial scan → split dimensions → multi-agent parallel → cross-validate → write report
+- Output: `contexts/survey_sessions/`
 
-**调用后台 Agent / 并行 Subagent** → `rules/skills/workflow_parallel_subagents.md`  
-- 何时拆分任务、什么时候不要拆、如何并行派出多个 subagent  
-- 准备调用多个 `functions.task` 前，先把这个 skill 读一遍再执行  
-- 当前并行方式是 `multi_tool_use.parallel`；不要使用旧 `run_in_background` / `background_output` 写法
+**Background agent / parallel subagent** → `rules/skills/workflow_parallel_subagents.md`
+- When to split tasks, when not to, how to dispatch multiple subagents in parallel
+- Before calling multiple `functions.task`, read this skill first, then execute
+- Current parallel method is `multi_tool_use.parallel`; do not use the old `run_in_background` / `background_output` pattern
 
-## Axioms（公理）
+## Axioms
 
-从个人经历提炼的决策原则，用于启发深度思考。分类索引、使用指南和触发词见 `rules/axioms/INDEX.md`。
+Decision principles distilled from personal experience, used to inspire deeper thinking. For category index, usage guide, and trigger words, see `rules/axioms/INDEX.md`.
 
-## Sub-agent 模型路由
+## Sub-agent Model Routing
 
-配置入口：OpenCode 原生 `opencode.json` 的 `agent` 字段，或 `.opencode/agent(s)/*.md` agent 文件。`subagent_type` 必须是已注册 agent 名，不是模型名，也不是旧 `category`。
+Configuration entry: OpenCode native `opencode.json` `agent` field, or `.opencode/agent(s)/*.md` agent files. `subagent_type` must be a registered agent name, not a model name, and not the old `category`.
 
-常用路由速查：
-- **代码库探索** → `subagent_type="explore"`
-- **通用并行任务** → `subagent_type="general"`
-- **高可靠推理 / 工程判断** → `subagent_type="reasoning_gpt"`
-- **中文写作 / 改稿** → `subagent_type="writer_deepseek"`
-- **低成本初筛 / 轻量整理** → `subagent_type="cheap_glm"`
-- **本地隐私敏感任务** → `subagent_type="private_ds4"`
-- **Ollama Cloud zero-data-retention 低成本任务** → `subagent_type="ollama_kimi"`
-- **Ollama Cloud zero-data-retention 高质量任务** → `subagent_type="ollama_deepseek_pro"`
+Common routing quick reference:
+- **Codebase exploration** → `subagent_type="explore"`
+- **General parallel tasks** → `subagent_type="general"`
+- **High-reliability reasoning / engineering judgment** → `subagent_type="reasoning_gpt"`
+- **Chinese writing / editing** → `subagent_type="writer_deepseek"`
+- **Low-cost initial screening / lightweight organization** → `subagent_type="cheap_glm"`
+- **Local privacy-sensitive tasks** → `subagent_type="private_ds4"`
+- **Ollama Cloud zero-data-retention low-cost tasks** → `subagent_type="ollama_kimi"`
+- **Ollama Cloud zero-data-retention high-quality tasks** → `subagent_type="ollama_deepseek_pro"`
 
-创意性工作（brainstorm、文章结构、观点碰撞）默认并行派一个不同路线的 subagent 做反向视角或补充视角。不要使用旧的 `category="artistry"` / `category="deep"` / `category="ultrabrain"` 写法，除非当前 OpenCode 配置已经显式注册了这些同名 agent。
+For creative work (brainstorming, article structure, viewpoint collision), dispatch one subagent with a different approach in parallel by default for a counter-perspective or supplementary view. Do not use the old `category="artistry"` / `category="deep"` / `category="ultrabrain"` pattern unless the current OpenCode config has explicitly registered these agent names.
 
-## Opus 工作模式
+## Opus Work Mode
 
-如果你的模型 ID 包含 `opus`，以下规则生效：
+If your model ID contains `opus`, the following rules apply:
 
-**你的 context window 很宝贵。** Opus 的核心能力是设计、质量把关和写作。调研、写脚本、关键词检索这些事交给 sub-agent。你的两个主要任务：（1）**设计**：拆分问题、设计计划、分配 sub-agent 任务；（2）**写作与质量把关**：最终文本自己写，sub-agent 结果自己验证。写代码、调研、数据处理全部 delegate，写作和质量验证绝不外包。设计任务拆分时默认考虑并行性，具体执行方式以 `rules/skills/workflow_parallel_subagents.md` 为准。
+**Your context window is precious.** Opus's core strengths are design, quality control, and writing. Delegate research, scripting, and keyword search to sub-agents. Your two main tasks: (1) **Design**: break down problems, design plans, assign sub-agent tasks; (2) **Writing and quality control**: write the final text yourself, verify sub-agent results yourself. Delegate all coding, research, and data processing. Never outsource writing and quality verification. When designing task splits, default to considering parallelism. For execution details, follow `rules/skills/workflow_parallel_subagents.md`.
 
-## Memory System（记忆系统）
+## Memory System
 
-三层记忆架构：
-- **L3（全局约束）**：`rules/` 下的所有文件，每次 session 被动加载
-- **L1/L2（动态记忆）**：`contexts/memory/OBSERVATIONS.md`，agent 主动检索
-- **自动积累**：`periodic_jobs/ai_heartbeat/` 每日 observer + 每周 reflector
+Three-tier memory architecture:
+- **L3 (global constraints)**: All files under `rules/`, passively loaded every session
+- **L1/L2 (dynamic memory)**: `contexts/memory/OBSERVATIONS.md`, agent actively retrieves
+- **Automatic accumulation**: `periodic_jobs/ai_heartbeat/` daily observer + weekly reflector
 
 ## Safety
 

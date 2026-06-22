@@ -1,382 +1,382 @@
-# 认知画像提取工作流
+# Cognitive Profile Extraction Workflow
 
-## 元数据
+## Metadata
 
-- **类型**: Workflow
-- **适用场景**: 从非结构化对话数据（群聊、Slack、Discord、邮件、播客转录等）中提取可预测的认知画像
-- **产出**: 一组"公理"——可用于预测目标人物在新话题上的反应方向、论辩姿态和修辞手段的条件触发规则
-- **依赖**: [并行 Subagent 工作流](./workflow_parallel_subagents.md)、[深度调研工作流](./workflow_deep_research_survey.md)
-- **创建日期**: 2026-03-13
-- **来源**: 示例观察项目（8139 条微信消息 → 15 条公理，预测力回测 89%）
-
----
-
-## 模型 Guardrail
-
-**执行前检查**：确认当前模型 ID 是否包含 `opus`。
-
-- **是 Opus** → 继续。你的 context window 极其宝贵，你的核心能力是设计、质量把关和写作。所有调研、数据处理、代码编写一律 delegate 给 sub-agent，且默认并行。写作——包括公理文本、索引、最终报告——必须由你亲自完成，不得外包。
-- **不是 Opus** → 暂停，问用户：
-
-  > "这个工作流设计为由 Opus 执行——Opus 的 context window 和写作能力是流程核心假设。你当前使用的模型不是 Opus，是否确认要继续？如果是误选模型，建议切换到 Opus 再开始。"
+- **Type**: Workflow
+- **Applicable Scenarios**: Extracting predictable cognitive profiles from unstructured conversation data (group chats, Slack, Discord, email, podcast transcripts, etc.)
+- **Output**: A set of "axioms" — conditionally triggered rules that can predict the target person's reaction direction, argumentation stance, and rhetorical devices on new topics
+- **Dependencies**: [Parallel Subagent Workflow](./workflow_parallel_subagents.md), [Deep Research Survey Workflow](./workflow_deep_research_survey.md)
+- **Created**: 2026-03-13
+- **Source**: Example observation project (8,139 WeChat messages → 15 axioms, predictive power backtest 89%)
 
 ---
 
-## 核心原则
+## Model Guardrail
 
-### 1. 并行 + Delegation 是第一原则
+**Pre-execution check**: Confirm whether the current model ID contains `opus`.
 
-Opus 的 context window 是稀缺资源，不应被扫描和检索消耗。工作流分工：
+- **Is Opus** → Continue. Your context window is extremely precious; your core capabilities are design, quality assurance, and writing. All research, data processing, and code writing must be delegated to sub-agents, and parallel by default. Writing — including axiom text, indices, and final reports — must be done by you personally; do not outsource.
+- **Not Opus** → Pause and ask the user:
 
-| 角色 | 谁做 | 说明 |
-|------|------|------|
-| **Plan（设计）** | Opus 主 agent | 每轮迭代的调研计划、维度划分、任务边界 |
-| **Execute（调研）** | Sub-agent（并行） | 数据扫描、关键词检索、反例狩猎、统计分析 |
-| **Write（写作）** | Opus 主 agent | 公理文本、索引、报告——概念一致性和文风统一只能由一个 agent 保证 |
-| **QA（质量把关）** | Opus 主 agent | 交叉验证 sub-agent 结果、发现矛盾、判断收敛 |
-
-Sub-agent 调度遵循 [并行 Subagent 工作流](./workflow_parallel_subagents.md) 的规则：并行度 ≤5，调研 overlap 30-50%，用 `multi_tool_use.parallel` 在同一条消息里包多个 `functions.task` 调用。不要使用旧的 `run_in_background=true` 写法。
-
-### 2. 写作不 delegate（硬约束）
-
-所有面向最终产出的文本——公理定义、索引、方法论报告——必须由 Opus 亲自撰写。理由：
-- 公理之间的概念一致性（同一现象在不同公理里的措辞不能互相矛盾）
-- 交叉引用的精确性（V05 引用 V07 的张力描述必须两边对齐）
-- 文风统一（15 条公理读起来像同一个人写的，不像 5 个 agent 拼的）
-
-Sub-agent 产出的是**原始调研材料**，不是终稿的任何一部分。
-
-### 3. 迭代轮次动态滚动
-
-**最低下限**：3 轮（广泛扫描 + 深度验证 + 至少一轮压力测试/定稿）。
-
-**上限不设**，但每轮开始前必须评估是否继续（见"收敛判断标准"）。实测经验：3-4 轮是常见收敛点，超过 5 轮边际递减明显，且有过拟合风险。
-
-### 4. 公理是条件触发规则，不是绝对律条
-
-每条公理都应有反例和边界条件。一条没有反例的公理要么太泛（"他关注 AI"），要么证据不足（看起来完美只是因为没认真找反例）。
+  > "This workflow is designed to be executed by Opus — Opus's context window and writing capability are core assumptions of the process. Your current model is not Opus. Are you sure you want to continue? If this is a model selection mistake, it is recommended to switch to Opus before starting."
 
 ---
 
-## 工作流
+## Core Principles
 
-### Phase 0: 数据准备
+### 1. Parallel + Delegation Is the First Principle
 
-**目标**：把原始数据转化为可检索的目标人物消息集合。
+Opus's context window is a scarce resource and should not be consumed by scanning and retrieval. Workflow division of labor:
 
-**输入要求**：
-- 目标人物的文本消息集合
-- 最好带时间戳（必要：用于时间演化分析）
-- 最好带来源标签——群名/频道名/对话类型（必要：用于跨源对比）
-- 可选：带上下文的版本（每条消息附前后 N 条他人发言，用于理解互动模式）
+| Role | Who Does It | Description |
+|------|-------------|-------------|
+| **Plan (Design)** | Opus main agent | Research plan for each iteration round, dimension division, task boundaries |
+| **Execute (Research)** | Sub-agents (parallel) | Data scanning, keyword retrieval, counterexample hunting, statistical analysis |
+| **Write (Writing)** | Opus main agent | Axiom text, indices, reports — conceptual consistency and stylistic unity can only be guaranteed by one agent |
+| **QA (Quality Assurance)** | Opus main agent | Cross-validate sub-agent results, discover contradictions, judge convergence |
 
-**预处理步骤**（delegate 给 sub-agent）：
-1. 从原始格式提取目标人物消息（用 ID 而非显示名过滤——显示名可能跨群变化）
-2. 产出统计摘要：总消息数、时间跨度、各来源的消息分布
-3. 如果有多个对话源，产出带上下文的版本
+Sub-agent scheduling follows the rules of [Parallel Subagent Workflow](./workflow_parallel_subagents.md): parallelism ≤5, research overlap 30-50%, use `multi_tool_use.parallel` to wrap multiple `functions.task` calls in the same message. Do not use the old `run_in_background=true` syntax.
 
-**规模评估 → 决定验证档位**：
+### 2. Writing Is Not Delegated (Hard Constraint)
 
-| 数据规模 | 推荐公理数 | 验证档位 | 说明 |
-|---------|-----------|---------|------|
-| < 500 条 | 3-5 条 | 轻量版 | 数据稀疏，跳过压力测试 |
-| 500-2000 条 | 5-8 条 | 标准版 | 简化压力测试（互斥性 + 反例，跳过预测回测） |
-| 2000-5000 条 | 8-12 条 | 标准版+ | 可做简化预测回测（3 个话题） |
-| 5000+ 条 | 10-15 条 | 完整版 | 全部三层验证，含预测力回测（5+ 个话题） |
+All final-output-facing text — axiom definitions, indices, methodology reports — must be personally written by Opus. Reasons:
+- Conceptual consistency between axioms (the same phenomenon described in different axioms must not contradict in wording)
+- Precision of cross-references (V05's reference to V07's tension description must be aligned on both sides)
+- Stylistic unity (15 axioms read like they were written by the same person, not stitched together by 5 agents)
 
-**语义搜索准备**（推荐）：如果数据量 ≥ 1000 条，建议在此阶段构建 embedding cache（见 [语义搜索技能](./semantic_search.md)）。将消息按条拆成独立文本文件或 chunk，运行一次 embedding 建缓存。后续 Phase 1/2 的 sub-agent 可以用语义搜索替代纯关键词 grep——语义搜索能找到"关键词不同但意思相近"的消息，对发现隐含观点和边界案例尤其有价值。
+Sub-agent output is **raw research material**, not any part of the final draft.
 
-**Phase 0 产出**：数据概况报告、验证档位决定、初步的维度假设、embedding cache（如适用）。
+### 3. Iteration Rounds Dynamically Roll
 
----
+**Minimum floor**: 3 rounds (broad scan + deep verification + at least one round of stress testing/finalization).
 
-### Phase 1: 广泛扫描（R0）
+**No upper limit**, but before each round begins, evaluate whether to continue (see "Convergence Judgment Criteria"). Empirical experience: 3-4 rounds is the common convergence point; beyond 5 rounds, marginal returns diminish noticeably, and there is overfitting risk.
 
-**目标**：从五个正交维度并行扫描，产出候选公理池。
+### 4. Axioms Are Conditional Trigger Rules, Not Absolute Laws
 
-**Opus 做的事（Plan）**：
-1. 确定 5 个扫描维度——建议的默认维度：
-
-| 维度 | 关注点 | 典型关键词 |
-|------|--------|-----------|
-| 专业领域观点 | 目标人物的专业领域（技术、商业、学术等）核心判断 | 因领域而异 |
-| 方法论偏好 | 如何做事、如何决策、如何评估 | 流程、标准、方法、原则 |
-| 价值观与立场 | 社会议题、伦理判断、制度偏好 | 公平、效率、应该、不应该 |
-| 论辩风格 | 怎么反驳、怎么说服、怎么让步 | 反驳标记词、让步标记词 |
-| 语言与表达模式 | 句式偏好、类比习惯、情绪标记 | 高频短语、标点用法 |
-
-2. 为每个 sub-agent 写 prompt，明确：搜索范围、输出格式（时间戳 + 来源 + 原文 + 候选公理）、允许的 overlap 范围
-3. 用 `multi_tool_use.parallel` 在同一条消息里并行派出 5 个 `functions.task` sub-agent
-
-**Sub-agent 做的事（Execute）**：
-- 扫描全部数据，按分配维度提取模式
-- 每个维度产出 3-5 个候选公理，每个附 3+ 条带时间戳的证据
-- 标注跨维度发现（供交叉验证用）
-
-**Opus 做的事（Consolidate）**：
-1. 收集 5 个 sub-agent 的结果
-2. 合并重叠的候选公理（合并标准：底层判断相同，而非表述相似）
-3. 拆分过泛的候选公理
-4. 产出**候选公理清单**（预计 12-20 个候选）和**初步综合分析**
+Every axiom should have counterexamples and boundary conditions. An axiom without counterexamples is either too broad ("he pays attention to AI") or insufficiently evidenced (looks perfect only because no one seriously looked for counterexamples).
 
 ---
 
-### Phase 2: 深度验证（R1）
+## Workflow
 
-**目标**：验证候选公理的稳定性、独特性和边界条件。
+### Phase 0: Data Preparation
 
-**Opus 做的事（Plan）**：
-1. 设计 5 个验证任务——建议的默认配置：
+**Goal**: Transform raw data into a searchable set of target person messages.
 
-| 任务 | 目标 | 方法 |
-|------|------|------|
-| 核心验证 | 可信度最高的 3-5 条候选，深挖证据链 | 穷举式搜索相关消息 |
-| 跨源对比 | 同一观点在不同来源的表现差异 | 按来源分组对比 |
-| 遗漏补充 | R0 可能遗漏的话题或模式 | 开放式扫描 R0 未覆盖的关键词 |
-| 风格验证 | 论辩风格和语言模式的一致性 | 标记词频率统计 + 模式匹配 |
-| 时间序列 | 观点的时间稳定性和演化轨迹 | 按月/季度分组，标注转折点 |
+**Input Requirements**:
+- Text message collection of the target person
+- Preferably with timestamps (required: for temporal evolution analysis)
+- Preferably with source labels — group name/channel name/conversation type (required: for cross-source comparison)
+- Optional: version with context (each message accompanied by N preceding/following messages from others, for understanding interaction patterns)
 
-2. **关键去重约束**：告知每个 sub-agent"前一轮已引用的证据不要重复"——这一条对报告质量提升最大
-3. 并行派出 5 个 sub-agent
+**Preprocessing Steps** (delegate to sub-agents):
+1. Extract target person messages from raw format (filter by ID, not display name — display names may change across groups)
+2. Produce statistical summary: total message count, time span, message distribution by source
+3. If multiple conversation sources exist, produce a version with context
 
-**Sub-agent 做的事（Execute）**：
-- 按分配任务做深度验证
-- 每条候选公理给出可信度评分（1-10）、反例列表、边界条件建议
+**Scale Assessment → Determine Verification Tier**:
 
-**Opus 做的事（Consolidate）**：
-1. 交叉验证各 sub-agent 的发现
-2. 为每条候选公理更新可信度、添加边界条件
-3. 淘汰可信度过低的候选（建议阈值：< 6.0）
-4. **判断收敛**：是否需要继续到 Phase 3？
+| Data Scale | Recommended Axiom Count | Verification Tier | Notes |
+|-----------|------------------------|-------------------|-------|
+| < 500 messages | 3-5 axioms | Lightweight | Sparse data; skip stress testing |
+| 500-2000 messages | 5-8 axioms | Standard | Simplified stress testing (mutual exclusivity + counterexamples, skip predictive backtest) |
+| 2000-5000 messages | 8-12 axioms | Standard+ | Can do simplified predictive backtest (3 topics) |
+| 5000+ messages | 10-15 axioms | Full | All three layers of verification, including predictive power backtest (5+ topics) |
 
----
+**Semantic Search Preparation** (recommended): If data volume ≥ 1000 messages, it is recommended to build an embedding cache at this stage (see [Semantic Search Skill](./semantic_search.md)). Split messages into individual text files or chunks, run one embedding pass to build cache. Subsequent Phase 1/2 sub-agents can use semantic search instead of pure keyword grep — semantic search can find messages with "different keywords but similar meaning," especially valuable for discovering implicit viewpoints and boundary cases.
 
-### Phase 3: 压力测试（R2）
-
-**适用条件**：标准版及以上（数据 ≥ 500 条）。
-
-**目标**：主动攻击公理的弱点，测试整体框架的预测力。
-
-**Opus 做的事（Plan）**：设计 3-5 个压力测试任务。核心三件事：
-
-#### 3a. 互斥性检验
-
-检查公理之间是否存在逻辑矛盾。
-
-操作：把公理按相关性分组（每组 3-4 条），让 sub-agent 检查组内是否有互斥关系。互斥不一定要消除——可以用"描述性 vs 规范性"、"默认模式 vs 边界模式"等分层解释来吸收。但需要标注冲突等级（1-10）。
-
-#### 3b. 反例狩猎
-
-明确要求 sub-agent **主动寻找反驳公理的消息**。
-
-操作：每条公理至少找 2 条反例，给每条反例打破坏力分数（1-10）。反例不是公理失败的信号——能被边界条件吸收的反例反而让公理更精确。
-
-#### 3c. 预测力回测（完整版）
-
-测试公理组合作为预测器的效果。
-
-操作（严格顺序）：
-1. 设计 5-10 个假设话题（覆盖不同公理组合）
-2. **在不检索原始数据的前提下**，用公理做先验预测：立场方向、论辩策略、可能的类比/短句
-3. 检索原始数据，寻找语义相近的真实对话
-4. 对比预测与实际的一致性，打分
-
-**改进版回测协议**（可选，更可信但更贵）：
-- 话题从真实数据中随机采样，而非 agent 自选
-- 用一个**没有参与公理制定的独立 agent** 做一致性评判
-- 预测信心和一致性分开评分
-
-**已知局限**（必须在报告中披露）：
-- 小样本（5-10 个话题）统计结论不稳健
-- LLM 评判 LLM 预测存在系统性偏差
-- 连续量表（如 89%）和二值量表（如 60%）差异大，建议同时报告两个数字
-
-**Opus 做的事（Consolidate）**：
-1. 根据压力测试结果修订每条公理的边界条件和可信度
-2. 标注公理间的关系图（闭环、张力、正交关系）
-3. **判断收敛**：是否需要额外轮次？
+**Phase 0 Output**: Data overview report, verification tier decision, preliminary dimension hypotheses, embedding cache (if applicable).
 
 ---
 
-### Phase 4+: 定稿（R3+）
+### Phase 1: Broad Scan (R0)
 
-**目标**：Opus 亲自撰写全部公理文本。
+**Goal**: Parallel scan from five orthogonal dimensions, producing a candidate axiom pool.
 
-**硬约束**：这个 Phase 不 delegate。所有公理文本由 Opus 一个人写。
+**What Opus Does (Plan)**:
+1. Determine 5 scan dimensions — suggested default dimensions:
 
-**公理文件模板**：
+| Dimension | Focus | Typical Keywords |
+|-----------|-------|-----------------|
+| Domain Expertise Views | Core judgments in the target person's professional domain (tech, business, academia, etc.) | Domain-dependent |
+| Methodological Preferences | How to do things, how to decide, how to evaluate | Process, standards, methods, principles |
+| Values and Stances | Social issues, ethical judgments, institutional preferences | Fairness, efficiency, should, shouldn't |
+| Argumentation Style | How to refute, how to persuade, how to concede | Refutation markers, concession markers |
+| Language and Expression Patterns | Sentence structure preferences, analogy habits, emotional markers | High-frequency phrases, punctuation usage |
+
+2. Write prompts for each sub-agent, specifying: search scope, output format (timestamp + source + original text + candidate axiom), allowed overlap range
+3. Use `multi_tool_use.parallel` to dispatch 5 `functions.task` sub-agents in parallel within the same message
+
+**What Sub-agents Do (Execute)**:
+- Scan all data, extract patterns by assigned dimension
+- Each dimension produces 3-5 candidate axioms, each with 3+ timestamped pieces of evidence
+- Annotate cross-dimensional discoveries (for cross-validation use)
+
+**What Opus Does (Consolidate)**:
+1. Collect results from 5 sub-agents
+2. Merge overlapping candidate axioms (merge criterion: same underlying judgment, not similar phrasing)
+3. Split overly broad candidate axioms
+4. Produce **candidate axiom list** (expected 12-20 candidates) and **preliminary synthesis analysis**
+
+---
+
+### Phase 2: Deep Verification (R1)
+
+**Goal**: Verify the stability, uniqueness, and boundary conditions of candidate axioms.
+
+**What Opus Does (Plan)**:
+1. Design 5 verification tasks — suggested default configuration:
+
+| Task | Goal | Method |
+|------|------|--------|
+| Core Verification | Deepen evidence chain for the 3-5 highest-credibility candidates | Exhaustive search of related messages |
+| Cross-Source Comparison | Performance differences of the same viewpoint across different sources | Grouped comparison by source |
+| Gap Supplementation | Topics or patterns possibly missed in R0 | Open-ended scan of keywords not covered in R0 |
+| Style Verification | Consistency of argumentation style and language patterns | Marker word frequency statistics + pattern matching |
+| Time Series | Temporal stability and evolution trajectory of viewpoints | Group by month/quarter; annotate inflection points |
+
+2. **Key deduplication constraint**: Inform each sub-agent "do not repeat evidence already cited in the previous round" — this single constraint provides the greatest report quality improvement
+3. Dispatch 5 sub-agents in parallel
+
+**What Sub-agents Do (Execute)**:
+- Perform deep verification per assigned task
+- For each candidate axiom, provide credibility score (1-10), counterexample list, boundary condition suggestions
+
+**What Opus Does (Consolidate)**:
+1. Cross-validate findings from each sub-agent
+2. Update credibility for each candidate axiom, add boundary conditions
+3. Eliminate candidates with too-low credibility (suggested threshold: < 6.0)
+4. **Judge convergence**: Need to continue to Phase 3?
+
+---
+
+### Phase 3: Stress Testing (R2)
+
+**Applicable Condition**: Standard tier and above (data ≥ 500 messages).
+
+**Goal**: Actively attack axiom weaknesses; test the overall framework's predictive power.
+
+**What Opus Does (Plan)**: Design 3-5 stress test tasks. Three core items:
+
+#### 3a. Mutual Exclusivity Check
+
+Check for logical contradictions between axioms.
+
+Operation: Group axioms by relevance (3-4 per group); have sub-agents check for mutual exclusion within groups. Mutual exclusion doesn't necessarily need elimination — it can be absorbed through layered explanations like "descriptive vs normative," "default mode vs boundary mode." But conflict level must be annotated (1-10).
+
+#### 3b. Counterexample Hunting
+
+Explicitly require sub-agents to **actively search for messages that refute axioms**.
+
+Operation: Find at least 2 counterexamples per axiom; assign each counterexample a disruption score (1-10). Counterexamples are not signals of axiom failure — counterexamples absorbable by boundary conditions actually make axioms more precise.
+
+#### 3c. Predictive Power Backtest (Full Version)
+
+Test the effectiveness of the axiom combination as a predictor.
+
+Operation (strict order):
+1. Design 5-10 hypothetical topics (covering different axiom combinations)
+2. **Without retrieving original data**, use axioms for prior prediction: stance direction, argumentation strategy, possible analogies/short phrases
+3. Retrieve original data; search for semantically similar real conversations
+4. Compare prediction vs actual consistency; score
+
+**Improved Backtest Protocol** (optional, more credible but more expensive):
+- Topics randomly sampled from real data, not agent-selected
+- Use an **independent agent not involved in axiom formulation** for consistency judgment
+- Score prediction confidence and consistency separately
+
+**Known Limitations** (must be disclosed in the report):
+- Small sample (5-10 topics) statistical conclusions are not robust
+- LLM judging LLM predictions has systematic bias
+- Continuous scale (e.g., 89%) and binary scale (e.g., 60%) differ greatly; recommend reporting both numbers
+
+**What Opus Does (Consolidate)**:
+1. Revise each axiom's boundary conditions and credibility based on stress test results
+2. Annotate inter-axiom relationship diagram (closed loops, tensions, orthogonal relationships)
+3. **Judge convergence**: Need additional rounds?
+
+---
+
+### Phase 4+: Finalization (R3+)
+
+**Goal**: Opus personally writes all axiom text.
+
+**Hard Constraint**: This Phase is not delegated. All axiom text is written by Opus alone.
+
+**Axiom File Template**:
 
 ```markdown
-# 编号 标题
+# Number Title
 
-## 核心表述
-一句话，可独立引用。
+## Core Statement
+One sentence, independently citable.
 
-## 展开
-2-3 段落。解释逻辑链，说明与其他公理的关系。
+## Elaboration
+2-3 paragraphs. Explain the logical chain; describe relationships with other axioms.
 
-## 边界条件
-什么场景下弱化或不适用。包括 R2 发现的反例和张力。
+## Boundary Conditions
+Scenarios where it weakens or does not apply. Includes counterexamples and tensions discovered in R2.
 
-## 代表性证据
-带时间戳和来源的原始发言（3-5 条）。
+## Representative Evidence
+Original statements with timestamps and sources (3-5 items).
 
-## 跨源表现
-同一观点在不同来源的表达差异。
+## Cross-Source Performance
+Expression differences of the same viewpoint across different sources.
 
-## 可信度
-1-10 评分，附简要理由。
+## Credibility
+1-10 score, with brief rationale.
 ```
 
-**风格类公理额外字段**：
-- **适用范围/默认模式**：说明风格公理在什么语境下激活、什么语境下切换
+**Additional Fields for Style Axioms**:
+- **Applicable Scope / Default Mode**: Describe under what context the style axiom activates, and under what context it switches
 
-**索引文件**：
-- 所有公理的速查表（编号、标题、核心表述、可信度）
-- 公理间关系图（闭环、张力、正交）
-- 压力测试关键发现摘要
+**Index File**:
+- Quick-reference table of all axioms (number, title, core statement, credibility)
+- Inter-axiom relationship diagram (closed loops, tensions, orthogonal)
+- Key findings summary from stress testing
 
-**如果压力测试反馈需要大幅修订**（不只是边界条件微调），则增加一轮 R3→R4：修订后再跑一轮简化压力测试验证修订效果，然后定稿。
-
----
-
-### Phase 5: 发布为 Web 站点（仅用户明确要求时执行）
-
-**不要主动发布。** 定稿即完成。只有用户明确说"发布"、"上线"、"给我链接"时才进入此阶段。
-
-基础转换流程见 [分享报告到 Web](./share_report.md)，以下是**多页公理站点**的额外经验：
-
-**结构**：索引页（index.html）+ 每条公理一个子页面。索引页用表格列出全部公理（编号、标题、核心表述、可信度），每行标题是指向子页面的超链接。每个子页面顶部加"← 返回索引"导航链接。
-
-**实操要点**：
-1. 先在 Markdown 源文件里加好页间链接（`[V01](V01_xxx.html)`），pandoc 转换时链接自动保留
-2. 每个 HTML 文件独立自包含（CSS 用 `--embed-resources` 内嵌），不依赖外部样式表——这样单独打开任何子页面都能正常显示
-3. 用 rsync 整个文件夹上传，而非逐文件传——保证目录结构和链接一致
-4. 上传后用 curl 验证索引页和至少 2 个子页面的 HTTP 200
-
-**delegate 规则**：HTML 转换和上传可以 delegate 给 sub-agent，但索引页的 Markdown 源文件（公理间关系图、摘要文字）由 Opus 亲自写——这是写作，不是机械转换。
+**If stress test feedback requires major revision** (not just boundary condition tweaks), add one round R3→R4: revise, then run one more round of simplified stress testing to verify revision effects, then finalize.
 
 ---
 
-## 收敛判断标准
+### Phase 5: Publish as Web Site (Only Execute When User Explicitly Requests)
 
-每轮结束后，评估以下四个信号：
+**Do not proactively publish.** Finalization is completion. Only enter this phase when the user explicitly says "publish," "go live," "give me a link."
 
-| 信号 | 含义 |
-|------|------|
-| 修改指令可直接执行 | 不需要更多数据就能修订 → 可以收敛 |
-| 预测力达到可用水平 | 连续口径 ≥ 80% → 框架已捕捉核心结构 |
-| 反例类型开始重复 | 新一轮找到的反例跟之前类型相同 → 边际递减 |
-| 公理间关系已稳定 | 不再需要新增、合并或大幅重组 → 结构收敛 |
+Basic conversion flow see [Share Report to Web](./share_report.md); the following are **additional experience for multi-page axiom sites**:
 
-**四个信号中满足 3 个即可收敛。** 满足 2 个时，建议再做一轮轻量验证确认。
+**Structure**: Index page (index.html) + one sub-page per axiom. Index page uses a table listing all axioms (number, title, core statement, credibility); each row's title is a hyperlink to the sub-page. Each sub-page has a "← Back to Index" navigation link at the top.
 
-**过度迭代的风险**：超过 4-5 轮后，每轮修订容易把公理从"可泛化的认知模式"磨成"训练数据的精确拟合"。宁可保留一些粗糙度，也不要过拟合。
+**Practical Tips**:
+1. First add inter-page links in Markdown source files (`[V01](V01_xxx.html)`); pandoc conversion automatically preserves links
+2. Each HTML file is independently self-contained (CSS embedded with `--embed-resources`), not dependent on external stylesheets — this way opening any sub-page alone displays correctly
+3. Use rsync to upload the entire folder, not file by file — ensures directory structure and link consistency
+4. After upload, use curl to verify HTTP 200 for the index page and at least 2 sub-pages
 
----
-
-## 公理设计标准
-
-一条好的公理应满足：
-
-1. **持久性**：跨时间段、跨话题反复出现，不是一次性的表态
-2. **独特性**：是目标人物特有的，而非大多数人都会说的通识
-3. **预测性**：可以用来预测他在新话题上的立场和表达方式
-4. **具体性**：有多条原始发言作为证据，且证据来自多个独立时间点
-5. **非冗余**：公理之间不重叠，各自覆盖不同侧面
-6. **有边界**：标注在什么场景下弱化或不适用
-
-**公理类型**：建议分两类——
-- **观点类**：定义"他会站什么立场"
-- **风格类**：定义"他会怎么表达"
-
-**合并 vs 拆分的判断**：底层判断相同 → 合并（即使表述不同）；底层逻辑正交 → 保留为独立公理（即使领域接近）。
+**Delegation Rules**: HTML conversion and upload can be delegated to sub-agents, but the index page's Markdown source file (inter-axiom relationship diagram, summary text) is personally written by Opus — this is writing, not mechanical conversion.
 
 ---
 
-## 方法论心得
+## Convergence Judgment Criteria
 
-以下经验从示例项目提炼，适用于所有认知画像提取任务：
+After each round, evaluate these four signals:
 
-### 1. 预测力是终极验证标准
+| Signal | Meaning |
+|--------|---------|
+| Revision instructions are directly executable | No more data needed to revise → can converge |
+| Predictive power reaches usable level | Continuous metric ≥ 80% → framework has captured core structure |
+| Counterexample types begin repeating | New round finds counterexamples of the same type as before → diminishing returns |
+| Inter-axiom relationships are stable | No more need to add, merge, or significantly reorganize → structure converged |
 
-证据数量和可信度评分是中间指标。最终判断公理是否成立的标准是能不能用它预测新话题上的反应。
+**Converge when 3 of the 4 signals are met.** When 2 are met, recommend one more round of lightweight verification for confirmation.
 
-### 2. 反例比正例更有价值
-
-主动寻找反例、量化破坏力、用边界条件吸收反例——这个过程比堆积正面证据有用得多。没有经过反例压力测试的公理只是观察，经过了才是公理。
-
-### 3. 公理应锚定在稳定的判断层级上
-
-当目标人物自己开始质疑某个具体方法但坚持上位概念时，公理应锚定在上位概念。例如：锚定"验证是控制面"而非"TDD 是控制面"——前者能吸收方法论漂移，后者会被新数据击穿。
-
-### 4. 跨源对比区分"真实观点"和"社交表演"
-
-同一个人在不同场景的表达差异揭示了哪些是底层信念、哪些是受众适配。如果一个观点只在一个来源出现，它可能是场景产物；如果跨源方向一致但表达不同，更可能是真实立场。
-
-### 5. 时间序列区分"信念"和"表态"
-
-没有时间维度就无法区分稳定观点和一时兴起。观点的时间演化本身就是公理的一部分——记录转折点和演化轨迹。
-
-### 6. 情绪偏离需要量化
-
-当发现目标人物在某些场景会偏离公理预测时，量化偏离率（如"严格口径 2%，综合破坏 6.5/10"），而非模糊地说"有时候会偏离"。
-
-### 7. 去重约束对 sub-agent 质量提升最大
-
-告知 sub-agent"前一轮已引用的证据不要重复"——这一条简单约束能显著减少冗余，迫使 agent 去找新证据。
-
-### 8. 风格公理是默认策略簇
-
-目标人物通常具有受众自适应能力。风格公理描述的是默认高频模式，不代表唯一模式。公理文本需要明确标注激活条件和模式切换场景。
-
-### 9. 收敛信号 > 固定轮次
-
-不要预设"做 N 轮"，而是监控收敛信号。过度迭代有两个成本：context window 消耗，和过拟合。
+**Risk of over-iteration**: Beyond 4-5 rounds, each round's revisions tend to grind axioms from "generalizable cognitive patterns" into "precise fits to training data." It's better to retain some roughness than to overfit.
 
 ---
 
-## 陷阱与对策
+## Axiom Design Standards
 
-| 陷阱 | 对策 |
-|------|------|
-| 公理太泛（"他关注 AI"） | 追问：这条能预测什么具体行为？不能 → 不是公理 |
-| 公理太窄（"他反对 TDD"） | 提升到上位概念层级 |
-| 证据选择偏差（只找支持的） | R2 反例狩猎强制对冲 |
-| 跨公理概念不一致 | 写作不 delegate，一个人通稿 |
-| 把转发内容当作本人观点 | 区分"转发行为"和"对转发内容的立场表达" |
-| 把社交场景表态当稳定信念 | 跨源对比 + 时间序列验证 |
-| 预测回测虚高 | 同时报告连续量表和二值量表，披露评判者局限 |
-| 过度迭代导致过拟合 | 监控收敛信号，≥3 个信号满足即停 |
-| Sub-agent 调研深度不够 | Prompt 中明确要求原文摘录 + 时间戳，不接受纯总结 |
-| Context window 被调研消耗 | 严守 Plan/Write 自己做、Execute 全 delegate 的分工 |
+A good axiom should satisfy:
 
----
+1. **Persistence**: Recurring across time periods and topics, not a one-time statement
+2. **Uniqueness**: Specific to the target person, not common sense most people would say
+3. **Predictiveness**: Can be used to predict their stance and expression on new topics
+4. **Specificity**: Multiple original statements as evidence, from multiple independent time points
+5. **Non-redundancy**: Axioms do not overlap; each covers a different facet
+6. **Has boundaries**: Annotated under what scenarios it weakens or does not apply
 
-## 规模与成本参考
+**Axiom Types**: Recommend two categories —
+- **Viewpoint type**: Defines "what stance they will take"
+- **Style type**: Defines "how they will express it"
 
-| 数据规模 | Sub-agent 总调用数 | 预估轮次 |
-|---------|-------------------|---------|
-| < 500 条 | 10-12 | 2-3 轮 |
-| 500-2000 条 | 12-15 | 3 轮 |
-| 2000-5000 条 | 15-20 | 3-4 轮 |
-| 5000+ 条 | 18-25 | 3-5 轮 |
-
-每轮 5 个并行 sub-agent 是默认配置。根据数据量和维度复杂度可调整为 3-7 个。
+**Merge vs Split Judgment**: Same underlying judgment → merge (even if phrasing differs); orthogonal underlying logic → keep as independent axioms (even if domains are close).
 
 ---
 
-## 参见
+## Methodological Insights
 
-- [语义搜索技能](./semantic_search.md) — 超越关键词匹配，用 embedding 相似度发现语义相关的消息
-- [并行 Subagent 工作流](./workflow_parallel_subagents.md) — Sub-agent 调度、overlap、交叉验证与适用标准
-- [深度调研工作流](./workflow_deep_research_survey.md) — 多 agent 并行 + 交叉验证的基础架构
-- 示例观察项目（本 skill 的原始来源）— `contexts/people/magong/`
+The following insights are distilled from the example project and apply to all cognitive profile extraction tasks:
+
+### 1. Predictive Power Is the Ultimate Verification Standard
+
+Evidence quantity and credibility scores are intermediate metrics. The final criterion for whether an axiom holds is whether it can be used to predict reactions on new topics.
+
+### 2. Counterexamples Are More Valuable Than Positive Examples
+
+Actively searching for counterexamples, quantifying disruption, absorbing counterexamples with boundary conditions — this process is far more useful than piling up positive evidence. Axioms not stress-tested with counterexamples are merely observations; only after testing are they axioms.
+
+### 3. Axioms Should Anchor at Stable Judgment Levels
+
+When the target person themselves begin questioning a specific method but maintain the higher-level concept, axioms should anchor at the higher-level concept. For example: anchor at "verification is the control surface" rather than "TDD is the control surface" — the former can absorb methodological drift; the latter will be broken by new data.
+
+### 4. Cross-Source Comparison Distinguishes "Genuine Views" from "Social Performance"
+
+The same person's expression differences across different scenarios reveal which are underlying beliefs and which are audience adaptation. If a viewpoint only appears in one source, it may be a situational product; if the direction is consistent across sources but expression differs, it is more likely a genuine stance.
+
+### 5. Time Series Distinguishes "Beliefs" from "Statements"
+
+Without the temporal dimension, stable viewpoints and momentary whims cannot be distinguished. The temporal evolution of viewpoints is itself part of the axiom — record inflection points and evolution trajectories.
+
+### 6. Emotional Deviation Needs Quantification
+
+When discovering that the target person deviates from axiom predictions in certain scenarios, quantify the deviation rate (e.g., "strict metric 2%, composite disruption 6.5/10"), rather than vaguely saying "sometimes deviates."
+
+### 7. Deduplication Constraint Provides the Greatest Sub-Agent Quality Improvement
+
+Informing sub-agents "do not repeat evidence already cited in the previous round" — this simple constraint significantly reduces redundancy and forces agents to find new evidence.
+
+### 8. Style Axioms Are Default Strategy Clusters
+
+The target person typically has audience-adaptive capability. Style axioms describe default high-frequency patterns, not the only patterns. Axiom text needs to explicitly annotate activation conditions and mode-switching scenarios.
+
+### 9. Convergence Signals > Fixed Rounds
+
+Don't preset "do N rounds"; monitor convergence signals. Over-iteration has two costs: context window consumption, and overfitting.
 
 ---
 
-## 变更日志
+## Pitfalls and Countermeasures
 
-| 日期 | 变更 |
-|------|------|
-| 2026-03-13 | 初始版本，从示例观察项目 methodology.md 抽象泛化 |
+| Pitfall | Countermeasure |
+|---------|---------------|
+| Axiom too broad ("he pays attention to AI") | Ask: what specific behavior can this predict? Can't → not an axiom |
+| Axiom too narrow ("he opposes TDD") | Elevate to higher-level concept |
+| Evidence selection bias (only finding supporting) | R2 counterexample hunting forces hedging |
+| Cross-axiom conceptual inconsistency | Writing not delegated; one person does the full draft |
+| Treating forwarded content as personal views | Distinguish "forwarding behavior" from "stance expression on forwarded content" |
+| Treating social scenario statements as stable beliefs | Cross-source comparison + time series verification |
+| Inflated predictive backtest | Report both continuous and binary scales; disclose judge limitations |
+| Over-iteration leading to overfitting | Monitor convergence signals; stop when ≥3 signals met |
+| Sub-agent research depth insufficient | Prompt explicitly requires original excerpts + timestamps; do not accept pure summaries |
+| Context window consumed by research | Strictly follow Plan/Write self-do, Execute fully delegate division of labor |
+
+---
+
+## Scale and Cost Reference
+
+| Data Scale | Total Sub-Agent Invocations | Estimated Rounds |
+|-----------|----------------------------|------------------|
+| < 500 messages | 10-12 | 2-3 rounds |
+| 500-2000 messages | 12-15 | 3 rounds |
+| 2000-5000 messages | 15-20 | 3-4 rounds |
+| 5000+ messages | 18-25 | 3-5 rounds |
+
+5 parallel sub-agents per round is the default configuration. Adjustable to 3-7 based on data volume and dimension complexity.
+
+---
+
+## See Also
+
+- [Semantic Search Skill](./semantic_search.md) — Beyond keyword matching; use embedding similarity to discover semantically related messages
+- [Parallel Subagent Workflow](./workflow_parallel_subagents.md) — Sub-agent scheduling, overlap, cross-validation, and applicability criteria
+- [Deep Research Survey Workflow](./workflow_deep_research_survey.md) — Multi-agent parallel + cross-validation base architecture
+- Example observation project (original source of this skill) — `contexts/people/magong/`
+
+---
+
+## Changelog
+
+| Date | Change |
+|------|--------|
+| 2026-03-13 | Initial version; abstracted and generalized from example observation project methodology.md |

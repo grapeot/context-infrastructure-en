@@ -1,267 +1,267 @@
-# 外部写作工作流
+# External Writing Workflow
 
-## 元数据
+## Metadata
 
-- **类型**: Workflow
-- **适用场景**: 将调研素材转化为有判断力的 external-facing 分析文章、公开 survey report 或面向外部读者的课程/客户内容
-- **前置依赖**: 深度调研工作流（`workflow_deep_research_survey.md`）的 Phase 1-3 产出（或等价的已验证素材）
-- **创建日期**: 2026-04-28
-- **最后更新**: 2026-06-17
+- **Type**: Workflow
+- **Applicable Scenarios**: Transforming research materials into judgment-driven external-facing analysis articles, public survey reports, or course/client content for external readers
+- **Prerequisites**: Output of Phase 1-3 of the Deep Research Survey Workflow (`workflow_deep_research_survey.md`), or equivalent verified materials
+- **Created**: 2026-04-28
+- **Last Updated**: 2026-06-17
 
-## 这个 skill 解决什么问题
+## What Problem This Skill Solves
 
-调研素材充分但写出来像 AI 汇总，缺乏作者的分析视角和判断框架。本 skill 把"一堆验证过的事实"变成"一篇陌生读者能理解、记住并复述的分析"。
+Research materials are sufficient but the writing reads like an AI summary, lacking the author's analytical perspective and judgment framework. This skill turns "a pile of verified facts" into "an analysis that an unfamiliar reader can understand, remember, and retell."
 
-**适用边界**：面向没有共享上下文的陌生读者、公开发布渠道、客户或外部课程受众。面向鸭哥本人、共享上下文协作者或未来 AI agent 的内部文档用 `workflow_internal_writing.md`。
+**Applicable Boundary**: For readers without shared context, public distribution channels, clients, or external course audiences. For internal documents aimed at the user themselves, collaborators sharing context, or future AI agents, use `workflow_internal_writing.md`.
 
-**与深度调研 skill 的关系**：深度调研 skill 管信息采集和验证，本 skill 管判断合成和写作。调研完成后指向这里。
-
----
-
-## 验收标准：好的 external 文章长什么样
-
-写完后用以下标准自查。这些是结果定义，不是过程步骤——怎么到达由 agent 自己决定。
-
-1. **有 thesis**：文章有一个核心判断，一个不了解细节的聪明人读完能用 1-2 句话复述。不是"这件事很复杂值得关注"，而是具体的、可被同意或反对的判断。
-
-2. **Thesis 前置**：文章的前 25% 读完，读者知道 (a) 这篇文章在讲什么问题、(b) 作者的判断是什么、(c) 继续读能得到什么。三个问题任何一个需要读到后半篇才能回答，结构需要调整。
-
-3. **围绕读者组织，不是围绕作者的分析框架组织**：文章按读者的疑问链推进（震惊 → 恐惧/好奇 → 释然 → 现实），不按作者的分析维度（"组合爆炸 + 绕过"这类分类）罗列。判断标准：把文章读给目标读者听，他会不会在某一段想"这关我屁事"。
-
-4. **证据经济**：每个论点用一个最强案例，不堆砌同类证据。读者在第一个案例之后就在想"所以呢"，如果接下来还是同类证据，注意力已经用完。
-
-5. **认知负担可控**：读者在任何一段里同时接收的新概念不超过两个。新术语或新框架先用读者已有的场景接住，再给名字。
-
-6. **文字干净**：通过 post-writing 扫描（破折号、"很+形容词"判断总结、内部框架术语泄漏、大段英文引文）。详见 `rules/COMMUNICATION.md`。
-
-7. **有信息量的小标题**：超过 1500 字的文章用 `##` 级小标题。小标题携带信息不做范畴名——删掉后正文第一句话能否独立充当小标题？能，说明小标题只是范畴名。
-
-8. **分析框架不可见**：Thesis Catalog（L1-L6）、axiom 编号、Phase 名称、"叙事重构"等术语属于写作过程的脚手架，不能出现在最终文章里。读者感受到的是一个有自己思考方式的人在做分析。
+**Relationship with Deep Research Skill**: The deep research skill handles information collection and verification; this skill handles judgment synthesis and writing. Research points here when complete.
 
 ---
 
-## Thesis Catalog：启发性分析视角
+## Acceptance Criteria: What a Good External Article Looks Like
 
-以下视角是从作者已发表文章中归纳出的分析习惯，不是必须套用的框架。它们有两个用途：一是帮你找到文章的切入点（"这件事的底层机制是什么""大众忽略了什么维度"），二是让文章带有作者的判断风格，而不是 AI 汇总的味道。
+After writing, self-check against these criteria. These are outcome definitions, not process steps — how to get there is up to the agent.
 
-用多少、用哪些完全由文章决定。很多好文章一个视角都没显式用到——作者本来就有自己的判断。把这些视角当灵感库而非清单：如果某个视角和当前话题自然契合，用它；如果不契合，忽略它。不要为了"用上某个 L"而强行套框架。视角指导你怎么想，但读者看到的只有想出来的结果。
+1. **Has a thesis**: The article has a core judgment that a smart person unfamiliar with the details can retell in 1-2 sentences. Not "this is complex and worth paying attention to," but a specific judgment that can be agreed or disagreed with.
 
-L1-L3 有一个共同主题：诊断 AI 系统的局限来自哪里（L1 诊断反馈环、L2 诊断瓶颈和成本结构、L3 诊断训练先验）。它们经常在同一篇文章里互补使用。
+2. **Thesis up front**: After reading the first 25% of the article, the reader knows (a) what problem the article addresses, (b) what the author's judgment is, (c) what they'll gain by continuing. If any of these three questions requires reading past the halfway point to answer, the structure needs adjustment.
 
-### L1: 反馈闭环判断
+3. **Organized around the reader, not around the author's analytical framework**: The article advances along the reader's chain of questions (shock → fear/curiosity → relief → reality), not listing the author's analytical dimensions (categories like "combinatorial explosion + bypass"). Judgment criterion: if you read the article aloud to the target reader, would they think at any paragraph "what does this have to do with me?"
 
-一个系统的能力天花板取决于它能否感知自身输出并自我修正。AI 系统中最关键的不是模型智能，而是模型能否看到自己行为的后果。闭环完整的系统可以自我迭代，闭环缺失的系统只能依赖人类补位。这个原理不只适用于系统设计，也定义了学习的本质：持续校准方向的能力比一次瞄准的精确更重要。
+4. **Evidence economy**: Each argument uses one strongest case; do not pile up similar evidence. After the first case, the reader is already thinking "so what?" — if what follows is more of the same, their attention is already spent.
 
-**对应 axioms**: A02（放大器）、A04（可靠性是管理问题）、M01（闭环校准）
+5. **Manageable cognitive load**: The reader receives no more than two new concepts in any single paragraph. New terms or frameworks are first grounded in scenarios the reader already knows, then given names.
 
-**典型应用**: 创意 AI 三代演化（Generation 1 无法看到渲染结果，Generation 3 通过截图闭环）、Agentic AI 部署危机（代码能跑但不知道对不对）、闭环学习（开环 vs 闭环控制论应用到个人学习哲学）
+6. **Clean prose**: Pass post-writing scans (em dashes, "very + adjective" judgment summaries, internal framework terminology leakage, large blocks of English quotes). See `rules/COMMUNICATION.md` for details.
 
-**触发条件**: 分析对象涉及 AI 系统的可靠性、自动化程度、或"为什么 demo 很好但实际用不了"
+7. **Informative subheadings**: Articles over 1500 words use `##`-level subheadings. Subheadings carry information, not category names — if you delete the subheading, can the first sentence of the body independently serve as a subheading? If yes, the subheading is merely a category name.
 
-### L2: 成本结构经济学重建
-
-当某项关键资源的成本发生数量级变化时，系统性地重建旧经济学和新经济学：旧的最优策略在旧成本下为什么合理，新的最优策略如何不同。不只是说"瓶颈迁移了"，而是完整对比两套经济学。关键洞察：我们引以为豪的很多实践（DRY 原则、直觉决策、精心设计防御性代码）不是天生正确的，而是旧成本结构下的合理产物——在新成本结构下它们可能变成负担。
-
-**对应 axioms**: X03（效率由瓶颈决定）、T05（认知是资产，代码是消耗品）
-
-**典型应用**: AI Native 成本结构（代码贵→复用/DRY vs 代码趋零→一次性/用完即焚）、过程确定性到结果确定性（人力贵→精心设计 vs intelligence 便宜→挥霍 token 换确定性）、Context infrastructure（模型智能是瓶颈→升级模型 vs context 是瓶颈→积累 context）
-
-**触发条件**: 分析对象声称"让 X 变得更快/更便宜/更容易"时，追问旧的最优策略为什么合理、新的最优策略如何不同
-
-### L3: 共识天花板判断
-
-LLM 的默认输出是共识（consensus）。训练机制（next token prediction + RLHF 安全对齐）决定了 LLM 回归均值。差异化和深度来自注入非共识的个人上下文，不来自换更好的模型。Deep Research 其实是 Wide Research。主要适用于内容创作和分析质量类话题。
-
-**对应 axioms**: context infrastructure 博客的核心论点、A10（熟悉度胜过原始智能）
-
-**典型应用**: Context infrastructure（两份报告的对比实验）、对 Deep Research 产品的批判
-
-**触发条件**: 分析对象涉及"AI 能不能做 X"的能力边界讨论，或者任何 AI 产出质量的评估
-
-### L4: 技术族谱追溯
-
-任何新发布都不是凭空出现的。追溯它的前几代可以定位它在演化轨迹上的真实位置，区分"真正的新东西"和"已有路径的产品化"。通常分成 2-4 代，每代解决了前一代留下的核心问题。主要适用于产品评测和技术发布分析。
-
-**对应 axioms**: M06（连接胜过孤立知识）、A13（技术采用三阶段）
-
-**典型应用**: 创意 AI 三代（脚本 → 协议 → 闭环）、MCP 演化（研究协议 → 工程现实碰撞 → 方言分裂）、GPT-5 定位（o3/Gemini/Claude 的"个性"被参数化统一）
-
-**触发条件**: 分析对象是一个新发布的产品/技术/标准，需要定位它在演化中的位置
-
-**操作方法**: 第一步，识别前几代：这个东西要解决什么问题？在它之前人们怎么解决？前一代的核心局限是什么？第二步，画出代际演化线：每代解决了什么、留下了什么。第三步，定位当前事件在演化线上的位置：它解决了哪一代遗留的问题？它本身又会遗留什么？第四步，判断演化的下一步：基于当前遗留问题，下一代可能长什么样？
-
-### L5: 表层诊断与底层机制
-
-表面看到的不是真正起作用的东西。文章的核心工作是把注意力从表层重定向到底层机制。这个"表层"可以是媒体/厂商叙事（"AI 能做设计了"）、拟人化直觉（"AI 偷懒了"）、或成功场景里藏着的隐含前提（"demo 能跑 = 达到目标"）。共同结构是：人们停在表层描述上做判断，而真正驱动结果的是底层机制。
-
-**对应 axioms**: T04（数据优于观点）、V02（可验证性是信任的地基）
-
-**典型应用**: 几乎每篇 external 文章都有这个动作。创意 AI（叙事聚焦"AI 能做设计了"，实际瓶颈是反馈闭环）、Wide Research（"偷懒"掩盖了架构性约束）、AI Native 成本结构（"直觉是高手象征"实际是观测成本高时的被迫压缩策略）
-
-**触发条件**: 几乎总是需要。问自己：关于这个话题，大多数人的第一反应是什么？这个第一反应是在看表层还是在看机制？拟人化描述掩盖了什么技术本质？
-
-**操作方法**: 第一步，提取主流叙事或表面判断。第二步，识别它把注意力放在了哪个维度。第三步，追问底层机制：真正驱动结果的是什么？第四步，构造重定向。不是每篇都需要"反驳"主流叙事，有时是"推深一层"。
-
-### L6: 执行摩擦消除后的价值重分配
-
-当工具消除了执行层面的摩擦，竞争优势从"谁执行得快"转移到"谁的判断更好"。工具掌握的价值下降，品味和方向感的价值上升。在具体文章中，这个判断通常以角色重定位的形式出现——不只是抽象地说"判断更重要"，而是描绘出人类在新系统中的具体角色。三种常见变体：IC→Manager（管理类，从亲力亲为到设计流程让系统自我迭代）、User→Builder（工具使用类，从被动调用到主动构建和改进工具）、出题人 vs 执行者（工作流类，人的核心价值从"做"转移到"定义做什么、判断做得好不好"）。
-
-**对应 axioms**: T05（认知是资产）、A02（AI 是放大器不是替代品）
-
-**典型应用**: 创意 AI（人类从创作者转向边界设计者/反馈解释者）、Wide Research（Senior Manager 视角设计流程）、Deep Research（AI 数据挖掘 + 人类认知炼金的分工）
-
-**触发条件**: 分析对象涉及"AI 让某类工作变简单了"时，追问价值转移到了哪里，以及人类的新角色具体长什么样
-
-### L7: 管理框架平移
-
-AI 使用中遇到的问题往往不是 AI 特有的新问题，而是人类组织管理中早已解决的问题。把 AI 当团队成员来管理，可以调用成熟的管理框架（招聘/委托/培训/指导/验收）获得现成解法。"太阳下没有新鲜事"——AI 的不可靠、幻觉、偷懒、沟通成本，在人类组织中都有对应的经典管理问题和解决方案。这个视角的力量在于：它把"AI 是全新的、需要全新方法论"的焦虑，转化为"我们其实已经知道怎么做"的务实感。
-
-**对应 axioms**: A03（IC→Manager）、A04（可靠性是管理问题）
-
-**典型应用**: AI 管理三部曲（不抢键盘/可视化上下文/授之以渔，每一条都映射到经典管理学）、AI 关键决策（manager 设计流程让 AI 自我迭代，而非跟进每个 work item）、AI 管理 2（"AI 不可靠"映射到"新人不可靠"，解法是情境领导力和层级化扩展）
-
-**触发条件**: 分析对象涉及 AI 使用中的可靠性、效率、协作质量问题，且这些问题在人类组织管理中有成熟对应物
-
-### L8: 上下文与信息架构
-
-系统的能力边界和故障模式取决于它"能看到什么"——上下文里有哪些信息、信息是否整洁、不同角色的信息是否隔离。分析任何 LLM 系统的第一步，是逆向理解它的 context window 里到底是什么。这与 L1 互补：L1 讲"能否感知并修正"（动作层），L8 讲"感知的信息基础是什么"（信息层）。当 AI 的行为出问题时，先问"它看到了什么信息"再问"它的推理对不对"。
-
-**对应 axioms**: M01（闭环校准）、context infrastructure 博客核心论点
-
-**典型应用**: Multi-agent 改造（角色拆分、文档沟通、Planner 选择全部由 context window 管理倒推）、Context infrastructure（模型智能跨过门槛后 context density 成为瓶颈）、AI Software Engineering（激进式透明 = 给 AI 足够的反馈信息让它自我修正）
-
-**触发条件**: 分析对象涉及 LLM 系统的故障模式、能力边界、或"为什么同一个模型在不同场景表现差异大"。也适用于设计 AI 系统时的信息架构决策（哪些信息进 context、哪些外化到文件、哪些隔离到不同 agent）
+8. **Analytical framework invisible**: Thesis Catalog (L1-L6), axiom numbers, Phase names, terms like "narrative reconstruction" are scaffolding for the writing process and must not appear in the final article. The reader should feel they are reading someone with their own way of thinking doing analysis.
 
 ---
 
-## 从素材到 thesis
+## Thesis Catalog: Inspiring Analytical Perspectives
 
-以下是从调研素材到可写作 thesis 的可用分析工具。不是流水线——如果用户已经给了 thesis（比如来自一段讨论或一个明确观点），跳过发现过程直接进入写作。只有当 thesis 需要从素材中发现时才用这些工具。
+The following perspectives are analytical habits distilled from the author's published articles, not frameworks that must be applied. They serve two purposes: helping you find the article's entry point ("what is the underlying mechanism here," "what dimension is the public overlooking"), and giving the article the author's judgment style rather than an AI summary flavor.
 
-**视角匹配**：扫描 Thesis Catalog（L1-L6），标注哪些与当前话题强相关、辅助、不相关。一篇文章通常用到 1-3 个视角。
+How many to use and which ones is entirely determined by the article. Many good articles don't explicitly use any of these perspectives — the author already has their own judgment. Treat these perspectives as an inspiration library, not a checklist: if a perspective naturally fits the current topic, use it; if not, ignore it. Don't force a framework just to "use an L." Perspectives guide how you think, but the reader only sees the result of that thinking.
 
-**搜索作者已有写作**：在 `contexts/blog/`、`contexts/survey_sessions/`、`rules/axioms/` 中查找与话题直接相关的已有文章、调研和公理。如果用户在对话中提到了自己的相关思考或已有文章，这些是 thesis 的最强锚点。
+L1-L3 share a common theme: diagnosing where AI system limitations come from (L1 diagnoses feedback loops, L2 diagnoses bottlenecks and cost structures, L3 diagnoses training priors). They often complement each other within the same article.
 
-**技术族谱追溯**（L4 强相关时）：识别 2-4 代前身，画出演化线，定位当前事件。
+### L1: Feedback Loop Judgment
 
-**叙事重构**（L5 强相关时）：提取主流叙事 → 识别叙事聚焦的维度 → 识别被忽略的维度 → 构造重定向。
+A system's capability ceiling depends on whether it can perceive its own output and self-correct. The most critical thing in an AI system is not model intelligence, but whether the model can see the consequences of its own actions. Systems with complete loops can self-iterate; systems with missing loops can only rely on human backfilling. This principle applies not only to system design but also defines the essence of learning: the ability to continuously calibrate direction matters more than the precision of a single aim.
 
-**输出**：thesis statement（2-3 句话，能被不了解细节的聪明人理解，包含具体判断）+ 论证骨架（3-5 个要点，每个标注用了哪个视角和哪些证据）。写入 `tmp/<session_slug>/scratchpad.md`。
+**Corresponding axioms**: A02 (Amplifier), A04 (Reliability is a management problem), M01 (Closed-loop calibration)
+
+**Typical Applications**: Three generations of creative AI evolution (Generation 1 cannot see rendering results, Generation 3 closes the loop via screenshots), Agentic AI deployment crises (code runs but no one knows if it's correct), closed-loop learning (open-loop vs closed-loop control theory applied to personal learning philosophy)
+
+**Trigger Condition**: The analysis subject involves AI system reliability, degree of automation, or "why the demo is great but it doesn't work in practice"
+
+### L2: Cost Structure Economics Reconstruction
+
+When the cost of a key resource changes by orders of magnitude, systematically reconstruct the old economics and the new economics: why the old optimal strategy was rational under the old cost, and how the new optimal strategy differs. Not just saying "the bottleneck shifted," but a complete comparison of two sets of economics. Key insight: many practices we take pride in (DRY principle, intuitive decision-making, carefully designed defensive code) are not inherently correct, but rational products of the old cost structure — under the new cost structure they may become liabilities.
+
+**Corresponding axioms**: X03 (Efficiency is determined by bottlenecks), T05 (Cognition is an asset, code is consumable)
+
+**Typical Applications**: AI Native cost structure (code is expensive → reuse/DRY vs code approaches zero → disposable/use-and-discard), process determinism to outcome determinism (labor is expensive → careful design vs intelligence is cheap → spend tokens for certainty), Context infrastructure (model intelligence is the bottleneck → upgrade models vs context is the bottleneck → accumulate context)
+
+**Trigger Condition**: When the analysis subject claims to "make X faster/cheaper/easier," ask why the old optimal strategy was rational and how the new optimal strategy differs
+
+### L3: Consensus Ceiling Judgment
+
+LLM default output is consensus. The training mechanism (next token prediction + RLHF safety alignment) determines that LLMs regress to the mean. Differentiation and depth come from injecting non-consensus personal context, not from switching to a better model. Deep Research is actually Wide Research. Primarily applicable to content creation and analysis quality topics.
+
+**Corresponding axioms**: Core thesis of the context infrastructure blog, A10 (Familiarity trumps raw intelligence)
+
+**Typical Applications**: Context infrastructure (comparative experiment of two reports), critique of Deep Research products
+
+**Trigger Condition**: The analysis subject involves "can AI do X" capability boundary discussions, or any evaluation of AI output quality
+
+### L4: Technology Lineage Tracing
+
+No new release appears out of nowhere. Tracing its previous generations can locate its real position on the evolutionary trajectory, distinguishing "genuinely new" from "productization of an existing path." Typically divided into 2-4 generations, each solving the core problem left by the previous one. Primarily applicable to product reviews and technology release analysis.
+
+**Corresponding axioms**: M06 (Connections surpass isolated knowledge), A13 (Three stages of technology adoption)
+
+**Typical Applications**: Three generations of creative AI (script → protocol → closed loop), MCP evolution (research protocol → engineering reality collision → dialect fragmentation), GPT-5 positioning (o3/Gemini/Claude "personalities" unified through parameterization)
+
+**Trigger Condition**: The analysis subject is a newly released product/technology/standard that needs positioning on the evolutionary trajectory
+
+**Method**: Step 1, identify prior generations: what problem does this thing solve? How did people solve it before? What was the core limitation of the previous generation? Step 2, draw the generational evolution line: what each generation solved, what it left behind. Step 3, locate the current event on the evolution line: which generation's remaining problem does it solve? What will it itself leave behind? Step 4, predict the next step in evolution: based on current remaining problems, what might the next generation look like?
+
+### L5: Surface Diagnosis and Underlying Mechanism
+
+What you see on the surface is not what actually drives outcomes. The core work of the article is redirecting attention from the surface to the underlying mechanism. This "surface" can be media/vendor narratives ("AI can do design now"), anthropomorphic intuitions ("AI is slacking off"), or hidden premises embedded in success scenarios ("demo works = goal achieved"). The common structure: people stop at surface descriptions to make judgments, while what actually drives results is the underlying mechanism.
+
+**Corresponding axioms**: T04 (Data trumps opinion), V02 (Verifiability is the foundation of trust)
+
+**Typical Applications**: Almost every external article has this move. Creative AI (narrative focuses on "AI can do design," actual bottleneck is feedback loop), Wide Research ("slacking off" masks architectural constraints), AI Native cost structure ("intuition is a sign of expertise" is actually a forced compression strategy when observation cost is high)
+
+**Trigger Condition**: Almost always needed. Ask yourself: about this topic, what is most people's first reaction? Is this first reaction looking at the surface or the mechanism? What technical essence does the anthropomorphic description mask?
+
+**Method**: Step 1, extract the mainstream narrative or surface judgment. Step 2, identify which dimension it focuses attention on. Step 3, trace the underlying mechanism: what actually drives the results? Step 4, construct the redirect. Not every article needs to "refute" the mainstream narrative; sometimes it's "push one layer deeper."
+
+### L6: Value Redistribution After Execution Friction Removal
+
+When tools eliminate execution-level friction, competitive advantage shifts from "who executes faster" to "whose judgment is better." The value of tool mastery decreases; the value of taste and directional sense increases. In specific articles, this judgment typically appears as role repositioning — not just abstractly saying "judgment is more important," but depicting the human's concrete role in the new system. Three common variants: IC→Manager (management type, from hands-on to designing processes for the system to self-iterate), User→Builder (tool usage type, from passive invocation to actively building and improving tools), Question-setter vs Executor (workflow type, human's core value shifts from "doing" to "defining what to do and judging whether it's done well").
+
+**Corresponding axioms**: T05 (Cognition is an asset), A02 (AI is an amplifier, not a replacement)
+
+**Typical Applications**: Creative AI (human shifts from creator to boundary designer/feedback interpreter), Wide Research (Senior Manager perspective designing processes), Deep Research (division of labor: AI data mining + human cognitive alchemy)
+
+**Trigger Condition**: When the analysis subject involves "AI makes a certain type of work easier," ask where value has shifted to, and what the human's new role concretely looks like
+
+### L7: Management Framework Translation
+
+Problems encountered in AI usage are often not AI-specific new problems, but problems already solved in human organizational management. Treat AI as a team member to manage, and you can invoke mature management frameworks (hiring/delegation/training/coaching/acceptance) for ready-made solutions. "There is nothing new under the sun" — AI's unreliability, hallucinations, slacking off, communication costs all have corresponding classic management problems and solutions in human organizations. The power of this perspective: it transforms the anxiety of "AI is entirely new and needs entirely new methodology" into the pragmatic sense of "we actually already know how to do this."
+
+**Corresponding axioms**: A03 (IC→Manager), A04 (Reliability is a management problem)
+
+**Typical Applications**: AI Management Trilogy (don't grab the keyboard / visualize context / teach to fish, each mapping to classic management), AI Key Decisions (manager designs processes for AI to self-iterate rather than following up on every work item), AI Management 2 ("AI is unreliable" maps to "new hires are unreliable," solution is situational leadership and hierarchical scaling)
+
+**Trigger Condition**: The analysis subject involves reliability, efficiency, or collaboration quality issues in AI usage, and these problems have mature counterparts in human organizational management
+
+### L8: Context and Information Architecture
+
+A system's capability boundaries and failure modes depend on "what it can see" — what information is in the context, whether the information is clean, whether information is isolated across different roles. The first step in analyzing any LLM system is to reverse-engineer what is actually in its context window. This complements L1: L1 addresses "can it perceive and correct" (action layer), L8 addresses "what is the information basis for perception" (information layer). When AI behavior goes wrong, first ask "what information did it see" before asking "is its reasoning correct."
+
+**Corresponding axioms**: M01 (Closed-loop calibration), core thesis of the context infrastructure blog
+
+**Typical Applications**: Multi-agent redesign (role splitting, document communication, Planner selection all derived from context window management), Context infrastructure (after model intelligence crosses the threshold, context density becomes the bottleneck), AI Software Engineering (radical transparency = giving AI enough feedback information to self-correct)
+
+**Trigger Condition**: The analysis subject involves LLM system failure modes, capability boundaries, or "why the same model performs so differently in different scenarios." Also applicable to information architecture decisions when designing AI systems (which information goes into context, which is externalized to files, which is isolated to different agents)
 
 ---
 
-## 写作原则
+## From Materials to Thesis
 
-动笔前必读 `rules/COMMUNICATION.md`。不是写完回来对照检查，是动笔前把规则装进来。以下只重复长文写作中 AI 最容易犯的几条，完整规则以 COMMUNICATION.md 为准。
+The following are usable analytical tools for going from research materials to a writable thesis. Not a pipeline — if the user has already provided a thesis (e.g., from a discussion or a clear viewpoint), skip the discovery process and go directly to writing. Only use these tools when the thesis needs to be discovered from materials.
 
-### 结构：围绕读者组织
+**Perspective Matching**: Scan the Thesis Catalog (L1-L6), annotate which are strongly relevant, auxiliary, or irrelevant to the current topic. An article typically uses 1-3 perspectives.
 
-**Thesis 前置与证据经济性**。文章结构围绕读者的心理推进设计：钩子（读者能感知的现象）→ 这件事和你的关系 → 核心论点（1-2 句话）→ 证据（每个论点一个最强案例）→ 解法 → 限定。不要把多个章节花在证明同一个论点上。不要按作者的分析框架（"维度一 + 维度二"）组织，按读者的疑问链组织。判断标准：读者会不会在某一段想"这关我屁事"。
+**Search Author's Existing Writing**: Search `contexts/blog/`, `contexts/survey_sessions/`, `rules/axioms/` for existing articles, research, and axioms directly related to the topic. If the user mentioned their own related thoughts or existing articles in the conversation, these are the strongest anchors for the thesis.
 
-**小标题**。超过 1500 字的文章用 `##` 级小标题。小标题携带信息不做范畴名——"为什么命令行过滤失效"是范畴名，"组合爆炸：shell 语法的等价表达无穷多"携带了信息。数量 3-5 个，每个下面 2-4 段。
+**Technology Lineage Tracing** (when L4 is strongly relevant): Identify 2-4 predecessor generations, draw the evolution line, locate the current event.
 
-**标题策略**。标题是文章在信息流里的唯一入口。事件驱动型必须包含具体事件关键词（产品名、公司名、动作词）。分析型可以从判断或张力入手但仍要给出具体对象。判断标准：把标题读给一个关注 AI 但没听说这件事的人听，如果他问"这是什么"，标题就失败了。
+**Narrative Reconstruction** (when L5 is strongly relevant): Extract mainstream narrative → identify the dimension the narrative focuses on → identify the overlooked dimension → construct the redirect.
 
-**文章重量校准**。不同文章有不同重量，对应不同的最低要求。快评（800-1500 字，单一观点）：不需要配图，1-2 个案例足够，thesis 可以来自用户给定观点。分析（1500-3000 字）：需要小标题，3-5 个论证要点，配图推荐。深度调研（3000+ 字）：完整 Phase 流程，必须配图，完整证据链。写之前判断属于哪一档，调整投入。
-
-### 认知负担
-
-每段新概念不超过两个。新术语先用读者已有的场景或体感接住，再给名字。用比喻时一个段落只引入一个核心概念，用多个短段（每段不超过 3 句）推进，不一段塞入场景 + 问题 + 方案 + 洞察四个层次。目标读者不是某领域专家时，该领域的 jargon 默认不出现，必须引入时用读者已知的参照物做锚点。
-
-### 散文规则（长文高风险项）
-
-以下几条在长文写作中 AI 反复犯错，即使读过 COMMUNICATION.md 仍会犯，因此在此重复。完整规则以 COMMUNICATION.md 为准。
-
-**破折号零容忍**。成品中不得出现 ——。插入补充拆成两句，因果改用句号或冒号，双破折号插入语拆成独立句。
-
-**「很 + 形容词」判断总结**。不写"展示得很直接""说得很清楚""结果很明确"。这种句式用一个形容词跳过论证责任。写完后用 `rg '很[直接清楚简单明显重要透彻全面深入关键]'` 扫描，判断总结一律删除或替换为具体内容。
-
-**英文引文处理**。中文文章中的大段英文引文（超过一句完整句子的 blockquote）改为中文重述，保留核心意思和 URL。中文读者面对大段英文的认知成本高：需要切换语言、解析语法、再回到中文上下文。短句英文（产品名、关键术语）可以 inline 保留。英文版文章不受此限制。
-
-**元评论零容忍**。不写"具体来说""这里有一个关键区别""接下来看"。直接进入内容。
-
-**承接词**。段与段之间用轻承接（这样做、不过、换句话说、关键在于）维持节奏，不要每句都像独立砸下来的砖头。
-
-**不用引号包裹概念词**（除非绝对有歧义）。
-
-### 格式
-
-- 中文 Markdown，所有引用用绝对 `https://` 链接 inline 在正文中
-- 不得在文末单独列「来源」或「参考文献」清单
-- 不在正文开头写发布时间、调研日期（发布时由系统注入）
-- Survey report（默认产出）存 `contexts/survey_sessions/`，不加 Pelican frontmatter。博客文章存 `contexts/blog/content/` 并加 frontmatter。
-- External-facing 文章配图 0-3 张。数据对比和流程图必须配，纯文字分析文章可以不配。配图放在 MD 同目录，用相对路径引用。定量图用 matplotlib，流程/概念图用 gpt-image-2。GPT 重绘含中文时降低文字密度，16:9 横版，要求字体正常宽度不拉伸。
+**Output**: thesis statement (2-3 sentences, understandable by a smart person unfamiliar with the details, containing specific judgment) + argument skeleton (3-5 points, each annotated with which perspective and which evidence was used). Write to `tmp/<session_slug>/scratchpad.md`.
 
 ---
 
-## 模型分工协议
+## Writing Principles
 
-external-facing 文章的最终写作默认由强写作模型完成。
+Must read `rules/COMMUNICATION.md` before writing. Not reading it afterward for a checklist comparison — load the rules in before writing. The following only repeats the items AI most frequently gets wrong in long-form writing; complete rules are in COMMUNICATION.md.
 
-主线程模型为 Opus 系列或 DeepSeek 系列（包括 Flash、Pro、V4 等所有变体）时，主线程自行写作。否则主线程不得直接起草最终稿，必须先把调研素材、thesis、证据表、风格要求、禁用事项、目标输出路径和覆盖策略落盘到 `tmp/<session_slug>/`，再调用 DeepSeek V4 Flash sub-agent 读取这些文件并写入最终 Markdown。Agent 之间不要依赖 chat 传递正文素材，文件才是交接界面。判断时以模型 ID 为准。
+### Structure: Organize Around the Reader
 
-主线程负责：准备材料、事实核查、风格审阅和最终验收。不把未核查的 sub-agent 初稿直接交付。委派的是执行，问责留在自己这里。
+**Thesis up front and evidence economy**. Article structure is designed around the reader's psychological progression: hook (a phenomenon the reader can perceive) → how this relates to you → core thesis (1-2 sentences) → evidence (one strongest case per argument) → solution → constraints. Don't spend multiple sections proving the same argument. Don't organize by the author's analytical framework ("Dimension 1 + Dimension 2"); organize by the reader's chain of questions. Judgment criterion: would the reader think at any paragraph "what does this have to do with me?"
 
-用户要求重写或覆盖最终文件时，可以覆盖 `contexts/survey_sessions/` 下的交付稿；但 `tmp/<session_slug>/` 下的 raw material（source index、scratchpad、handoff brief 等）必须保留作为审计链。
+**Subheadings**. Articles over 1500 words use `##`-level subheadings. Subheadings carry information, not category names — "Why command-line filtering fails" is a category name; "Combinatorial explosion: shell syntax has infinitely many equivalent expressions" carries information. 3-5 subheadings, each with 2-4 paragraphs underneath.
+
+**Title strategy**. The title is the article's only entry point in the information stream. Event-driven pieces must include specific event keywords (product name, company name, action word). Analytical pieces can start from judgment or tension but must still give a concrete subject. Judgment criterion: read the title to someone who follows AI but hasn't heard of this event — if they ask "what is this," the title has failed.
+
+**Article weight calibration**. Different articles have different weights, corresponding to different minimum requirements. Quick commentary (800-1500 words, single viewpoint): no images needed, 1-2 cases sufficient, thesis can come from user-provided viewpoint. Analysis (1500-3000 words): subheadings needed, 3-5 argument points, images recommended. Deep research (3000+ words): full Phase process, images required, complete evidence chain. Before writing, determine which tier this falls into and adjust investment accordingly.
+
+### Cognitive Load
+
+No more than two new concepts per paragraph. New terms are first grounded in scenarios or sensations the reader already knows, then given names. When using metaphors, introduce only one core concept per paragraph, advance with multiple short paragraphs (no more than 3 sentences each), don't cram scene + problem + solution + insight four layers into one paragraph. When the target reader is not a domain expert, that domain's jargon does not appear by default; when it must be introduced, use references the reader already knows as anchors.
+
+### Prose Rules (High-Risk Items for Long-Form Writing)
+
+The following items are where AI repeatedly makes mistakes in long-form writing, even after reading COMMUNICATION.md, so they are repeated here. Complete rules are in COMMUNICATION.md.
+
+**Zero tolerance for em dashes**. No —— may appear in the final piece. Break insertions into two sentences; replace causal dashes with periods or colons; break double-dash parentheticals into independent sentences.
+
+**"Very + adjective" judgment summaries**. Do not write "demonstrated very directly," "explained very clearly," "results are very clear." This pattern uses one adjective to skip the burden of argument. After writing, scan with `rg 'very[direct clear simple obvious important thorough comprehensive deep key]'` (in the target language equivalent); delete all judgment summaries or replace with specific content.
+
+**English quote handling**. Large blocks of English quotes in Chinese articles (blockquotes exceeding one full sentence) should be restated in Chinese, preserving core meaning and URL. Chinese readers face high cognitive cost with large English blocks: need to switch languages, parse grammar, then return to Chinese context. Short English phrases (product names, key terms) can be kept inline. English-language articles are not subject to this restriction.
+
+**Zero tolerance for meta-commentary**. Do not write "specifically," "here's a key distinction," "let's look at." Enter the content directly.
+
+**Transition words**. Use light transitions between paragraphs (this way, however, in other words, the key is) to maintain rhythm; don't make every sentence land like an independent brick.
+
+**Do not wrap conceptual terms in quotation marks** (unless absolutely ambiguous).
+
+### Format
+
+- Chinese Markdown; all citations use absolute `https://` links inline in the body
+- Do not separately list "Sources" or "References" at the end
+- Do not write publication date or research date at the beginning of the body (injected by the system at publish time)
+- Survey reports (default output) stored in `contexts/survey_sessions/`, no Pelican frontmatter. Blog posts stored in `contexts/blog/content/` with frontmatter.
+- External-facing articles have 0-3 images. Data comparisons and flowcharts must have images; pure text analysis articles can skip. Images placed in the same directory as the MD, referenced with relative paths. Quantitative charts use matplotlib; process/concept diagrams use gpt-image-2. When GPT redraws content containing Chinese, reduce text density, 16:9 landscape, require normal-width unstretched fonts.
 
 ---
 
-## 修订流程
+## Model Division of Labor Protocol
 
-收到反馈后，先诊断反馈类型再动手。
+The final writing of external-facing articles defaults to strong writing models.
 
-**结构问题**（"不知道你在讲什么""看完前两章没看懂""关我屁事"）：不需要改句子，需要重组文章。先确定读者疑问链（读者走到每一段时的心理状态），再围绕它重新排序。结构性反馈是最重要的信号——它说明文章的组织逻辑和读者的认知路径不匹配。
+When the main thread model is an Opus series or DeepSeek series (including Flash, Pro, V4, and all variants), the main thread writes directly. Otherwise, the main thread must not directly draft the final piece; it must first write research materials, thesis, evidence table, style requirements, prohibitions, target output path, and overwrite strategy to `tmp/<session_slug>/`, then invoke a DeepSeek V4 Flash sub-agent to read these files and write the final Markdown. Agents must not rely on chat to pass body materials; files are the handoff interface. Judge by model ID.
 
-**风格问题**（"这个句子不舒服""这里有翻译腔"）：在当前位置修复，不影响结构。
+The main thread is responsible for: preparing materials, fact-checking, style review, and final acceptance. Do not deliver unchecked sub-agent drafts directly. Delegate execution; keep accountability with yourself.
 
-**事实问题**（"这个数字不对""这个案例描述有误"）：核查来源，修正后重新验证相关论证。
+When the user requests rewriting or overwriting the final file, the deliverable under `contexts/survey_sessions/` can be overwritten; but raw materials under `tmp/<session_slug>/` (source index, scratchpad, handoff brief, etc.) must be preserved as the audit chain.
 
 ---
 
-## Post-writing 质量检查
+## Revision Process
 
-写完后必须执行以下扫描，不要靠肉眼：
+After receiving feedback, first diagnose the feedback type before acting.
+
+**Structural issues** ("I don't know what you're talking about," "I didn't understand after the first two sections," "what does this have to do with me"): don't need to fix sentences; need to reorganize the article. First determine the reader's question chain (the reader's psychological state at each paragraph), then reorder around it. Structural feedback is the most important signal — it indicates the article's organizational logic doesn't match the reader's cognitive path.
+
+**Style issues** ("this sentence feels off," "this reads like translationese"): fix in place without affecting structure.
+
+**Factual issues** ("this number is wrong," "this case description is inaccurate"): verify sources, correct, then re-validate related arguments.
+
+---
+
+## Post-Writing Quality Checks
+
+After writing, must execute the following scans; do not rely on naked-eye review:
 
 ```bash
-# 1. 破折号
+# 1. Em dashes
 rg -n '——' <file>
 
-# 2.「很+形容词」判断总结
-rg '很[直接清楚简单明显重要透彻全面深入关键]' <file>
+# 2. "Very + adjective" judgment summaries
+rg 'very[direct clear simple obvious important thorough comprehensive deep key]' <file>
 
-# 3. 内部框架术语泄漏
-rg 'L[0-6]|axiom|Phase [A-Z]|叙事重构|技术族谱|瓶颈迁移|Thesis Catalog' <file>
+# 3. Internal framework terminology leakage
+rg 'L[0-6]|axiom|Phase [A-Z]|narrative reconstruction|technology lineage|bottleneck shift|Thesis Catalog' <file>
 ```
 
-三个扫描必须全部空结果。逐个检查命中的位置，修复后重新扫描。
+All three scans must return empty results. Check each hit location one by one; fix and re-scan.
 
-写完后还做一轮定性自查（对照验收标准的 8 条）。
-
----
-
-## 常见失败模式
-
-| 失败模式 | 症状 | 解法 |
-|---------|------|------|
-| 调研汇总而非作者写作 | 读完感觉"AI 搜了一圈写的摘要" | 没有形成 thesis。回去做视角匹配和叙事重构 |
-| 围绕作者框架组织而非读者疑问 | 文章按"维度一+维度二"罗列，读者在某段想"关我屁事" | 重组为读者恐惧链/疑问链。每个案例先回答"为什么和读者相关" |
-| 证据堆砌 | 多个章节证明同一个论点，读者在第一个案例后就想"所以呢" | 每个论点只用一个最强案例。thesis 前置：读者在前四分之一必须知道问题、判断和预期收获 |
-| Relevance 不着地 | 读者读完前几段不知道"这和我有什么关系" | Opening 第二段必须把分析对象和读者的处境连接起来 |
-| Opening 从技术概念切入 | 第一段就让非本领域的人皱眉 | 换成读者能直接感知的体感现象 |
-| 时间维度模糊 | 同时暗示"现在重要"和"还很早期" | 时间维度判断必须在 opening 中正面表达 |
-| Object-explainer | 始终从分析对象出发解释，不从读者处境出发判断 | 把主语从分析对象换成"你（读者）" |
-| 内部框架泄露到成品 | 文中出现"从 L4 技术族谱视角"、axiom 编号 | 脚手架术语最终文章里零出现 |
-| Cognitive burden 过高 | 连续多段引入新概念，读者走神或回翻 | 每段新概念不超过两个，先用已有场景接住再给名字 |
-| 破折号泛滥 | 全文大量使用 —— | 成品零容忍。写完用 `rg -n '——'` 一次性扫描 |
-| 大段英文引文 | 中文文章里粘贴多句英文 blockquote | 改为中文重述，保留核心意思和 URL |
-|「很+形容词」判断总结 | "展示得很直接""说得很清楚" | 用 `rg` 扫描，判断总结一律删除或替换为具体内容 |
-| 元评论当过渡 | "具体来说""关键区别在于" | 直接进入内容。删除后文意不通说明前一句不够清晰 |
-| 复杂比喻认知超载 | 一个段落塞入场景+问题+方案+洞察 | 一个比喻段只推一个概念，每段不超过 3 句 |
-| 无配图（分析/调研型） | 纯文字长文 | 数据图和流程图必须配，分析型文章配图可省 |
-| 发布时间重复 | 正文写了日期，发布页又注入一次 | 正文不写发布时间 |
+After writing, also do a round of qualitative self-check (against the 8 acceptance criteria).
 
 ---
 
-## 交付终点
+## Common Failure Modes
 
-写完最终 MD 文件即为交付终点。不要自动执行发布流程（yage share、博客、Twitter、Circle 等）。仅当用户显式要求时按对应 skill 执行。
+| Failure Mode | Symptom | Solution |
+|-------------|---------|----------|
+| Research summary instead of authorial writing | Reads like "AI searched around and wrote a summary" | No thesis formed. Go back to perspective matching and narrative reconstruction |
+| Organized around author's framework, not reader's questions | Article lists "Dimension 1 + Dimension 2"; reader thinks "what does this have to do with me" at some paragraph | Reorganize as reader's fear/curiosity chain. Each case first answers "why is this relevant to the reader" |
+| Evidence piling | Multiple sections proving the same argument; reader thinks "so what" after the first case | One strongest case per argument. Thesis up front: reader must know the problem, judgment, and expected takeaway in the first quarter |
+| Relevance not landing | Reader doesn't know "what this has to do with me" after the first few paragraphs | The second paragraph of the opening must connect the analysis subject to the reader's situation |
+| Opening starts from technical concepts | The first paragraph makes non-domain people frown | Switch to a sensory phenomenon the reader can directly perceive |
+| Temporal dimension ambiguity | Simultaneously implying "important now" and "still very early" | Temporal dimension judgment must be explicitly expressed in the opening |
+| Object-explainer | Always explaining from the analysis object's perspective, never judging from the reader's situation | Change the subject from the analysis object to "you (the reader)" |
+| Internal framework leaking into final piece | "From the L4 technology lineage perspective," axiom numbers appear in the article | Scaffolding terms have zero appearance in the final article |
+| Cognitive burden too high | Multiple consecutive paragraphs introduce new concepts; reader zones out or scrolls back | No more than two new concepts per paragraph; ground in known scenarios first, then give names |
+| Em dash proliferation | Heavy use of —— throughout | Zero tolerance in final piece. One-time scan with `rg -n '——'` after writing |
+| Large blocks of English quotes | Pasting multi-sentence English blockquotes in Chinese articles | Restate in Chinese, preserving core meaning and URL |
+| "Very + adjective" judgment summaries | "demonstrated very directly," "explained very clearly" | Scan with `rg`; delete all judgment summaries or replace with specific content |
+| Meta-commentary as transitions | "Specifically," "the key distinction is" | Enter content directly. If deleting it breaks coherence, the previous sentence wasn't clear enough |
+| Complex metaphor cognitive overload | One paragraph crams scene + problem + solution + insight | One metaphor paragraph pushes only one concept; no more than 3 sentences per paragraph |
+| No images (analysis/research type) | Pure text long article | Data charts and flowcharts must have images; analysis-type articles can skip images |
+| Duplicate publication date | Date written in body, injected again on publish page | Do not write publication date in body |
+
+---
+
+## Delivery Endpoint
+
+Writing the final MD file is the delivery endpoint. Do not automatically execute publishing workflows (yage share, blog, Twitter, Circle, etc.). Only execute per the corresponding skill when the user explicitly requests it.

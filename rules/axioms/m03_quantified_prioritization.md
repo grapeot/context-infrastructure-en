@@ -5,69 +5,68 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# M3. 量化优先级（纲举目张）
+# M3. Quantified Prioritization (Grasp the Key Link)
 
-## 1. 核心公理
+## 1. Core Axiom
 
-用粗略量化找出支配结果的少数杠杆点，把时间先花在那里，再去打磨其他部分。正确性是廉价的、易被推翻的、容易分散注意力的；真正的能力是知道什么重要、什么不重要，以及该按什么顺序做。
+Use rough quantification to find the few leverage points that dominate outcomes, and invest time there first before polishing everything else. Correctness is cheap, easily overturned, and distracting; the real capability is knowing what matters, what doesn't, and in what order to proceed.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 为什么正确性不是优先级
+### Why Correctness Is Not the Priority
 
-"正确"常常是个干扰项。它有三个致命弱点：首先，正确性难以定义且易被推翻——任何结论都依赖前提假设，而不同的假设会导出不同的"正确"答案，最终只是定义之争。其次，正确性是廉价的——非原创知识的获取只需一次告知，不需长期积累。第三，对正确性的执着会导致"叠甲"（过度限定和保留），这反而会模糊核心洞察，干扰表达和理解。
+"Correctness" is often a distraction. It has three fatal weaknesses: first, correctness is hard to define and easily overturned — any conclusion depends on premises, and different premises lead to different "correct" answers, ultimately devolving into definitional disputes. Second, correctness is cheap — acquiring non-original knowledge takes only one telling, not long-term accumulation. Third, an obsession with correctness leads to "armor-stacking" (excessive qualification and hedging), which actually obscures core insights and interferes with expression and understanding.
 
-相比之下，社会创造的价值不来自编纂绝对正确的词典，而来自抓住主要矛盾、聚焦核心目标、赢得主流市场的能力。一个有意思的观察是：如果一个岗位的主要职责就是确保东西"正确"（如初级会计、初级程序员、翻译），它往往最容易被 AI 取代。这恰恰说明了正确性本身的低价值。
+In contrast, the value society creates does not come from compiling a dictionary of absolute correctness, but from the ability to grasp the principal contradiction, focus on core objectives, and win mainstream markets. An interesting observation: if a role's primary responsibility is ensuring things are "correct" (e.g., junior accountant, junior programmer, translator), it tends to be among the first replaced by AI. This precisely illustrates the low value of correctness itself.
 
-### 量化优先级的核心机制
+### The Core Mechanism of Quantified Prioritization
 
-最经典的例子是硬盘满了需要删文件。有两种方法：(1) 拍脑袋随机删除，删十万个小文件；(2) 用工具找到最大的文件，删掉它。两者的效率差异是数量级的。这不是因为第二种方法"更正确"，而是因为它识别了问题的纲领——找到占用空间最多的那个约束，然后集中火力。这就是纲举目张：明确了纲领，填充细节就相对简单。
+The classic example is a hard drive that's full and needs files deleted. There are two approaches: (1) randomly delete by gut feel, removing a hundred thousand small files; (2) use a tool to find the largest file and delete it. The efficiency difference is orders of magnitude. This is not because the second approach is "more correct," but because it identifies the key link of the problem — finding the constraint that occupies the most space, then concentrating firepower. This is "grasp the key link and the rest falls into place": once the key link is clear, filling in details is relatively simple.
 
-在工程中，这个原理反复出现。做任何项目的第一步都应该定义一个量化指标，然后围绕这个指标优化。否则你会陷入"按下葫芦起了瓢"的怪圈——改进了 A，B 就坏了；修好了 B，C 又出问题。只有用一个代表性的量化指标来综合衡量全局，才能保持情境感知（situational awareness）。
+In engineering, this principle appears repeatedly. The first step of any project should be defining a quantitative metric, then optimizing around that metric. Otherwise, you fall into the "whack-a-mole" trap: improve A, B breaks; fix B, C breaks. Only a representative quantitative metric lets you track the whole system and maintain situational awareness.
 
-### 优先级的动态性
+### The Dynamic Nature of Prioritization
 
-瓶颈是会移动的。当你解决了当前的限速器后，下一个约束就会浮现。这意味着昨天的优化可能变成今天的浪费。因此，量化优先级不是一次性的规划，而是持续的测量-识别-聚焦的闭环。每次有意义的改进后，都应该重新测量，因为约束的拓扑会改变。这也是为什么"80/20 的集合"是动态的——你必须频繁地重新计算，而不是依赖过时的优先级列表。
+Bottlenecks move. When you resolve the current rate-limiter, the next constraint surfaces. This means yesterday's optimization can become today's waste. Therefore, quantified prioritization is not a one-time plan, but a continuous measure-identify-focus loop. After every meaningful improvement, you should re-measure, because the topology of constraints changes. This is also why the "80/20 set" is dynamic — you must frequently recalculate rather than rely on an outdated priority list.
 
-### 量化优先级作为沟通工具
+### Quantified Prioritization as a Communication Tool
 
-量化优先级也是一个强大的沟通工具。它让你能用理由而不是感觉说"不"或"还不是时候"。当你能指出"这个改进只影响 5% 的用户，而那个改进影响 60%"时，决策就变得透明和可辩论。这种透明性在团队协作中至关重要，因为它把优先级从个人偏好转变为基于数据的讨论。
+Quantified prioritization is also a powerful communication tool. It lets you say "no" or "not yet" with reasons rather than feelings. When you can point out "this improvement affects only 5% of users, while that one affects 60%," decisions become transparent and debatable. This transparency is critical in team collaboration, because it transforms prioritization from personal preference into data-driven discussion.
 
-### 与连接和验证的关系
+### Relationship to Connection and Verification
 
-量化优先级不是孤立的。它与另外两个核心能力形成三角形：连接（Connection）和验证（Verification）。连接让你识别出哪些因素真正重要——通过跨领域的经验和类比，你能看到别人看不到的瓶颈。验证让你确认你的优先级判断是否正确——通过实验和反馈，你能快速调整方向。这三者合在一起，才是真正的高级能力。
+Quantified prioritization is not isolated. It forms a triangle with two other core capabilities: Connection and Verification. Connection lets you identify which factors truly matter — through cross-domain experience and analogy, you can see bottlenecks others miss. Verification lets you confirm whether your prioritization judgment is correct — through experiments and feedback, you can quickly adjust direction. These three together constitute true high-level capability.
 
-## 3. 应用判定
+## 3. Application Judgment
 
-### 何时使用
+### When to Use
 
-- **积压过载**：面对一个长长的待办清单，不知道从哪里开始
-- **方向不清**：面对"接下来做什么"不清晰的场景
-- **救火模式**：多个问题同时出现，需要快速分配资源
-- **规划自动化**：决定哪些重复任务值得自动化（答案：只要要做第三遍，就值得）
-- **任何选项多于时间的决策**：这是常态
+- **Backlog overload**: Facing a long to-do list, unsure where to start
+- **Unclear direction**: Facing scenarios where "what to do next" is unclear
+- **Firefighting mode**: Multiple problems arise simultaneously, requiring rapid resource allocation
+- **Automation planning**: Deciding which repetitive tasks are worth automating (answer: if you'll do it a third time, it's worth it)
+- **Any scenario with more options than time**: This is the norm
 
-### 如何练习
+### How to Practice
 
-1. **定义单一成功指标**：不是"更好"，而是一个可测量的数字（用户数、延迟、成本、准确率等）
-2. **列出候选动作**：所有可能的改进方向
-3. **估算影响与成本**：哪怕很粗糙的估算也比没有好。关键是相对大小，不是绝对精度
-4. **选出前 1-2 个**：不要试图同时做五件事
-5. **给执行设定时间盒**：限制在这个优先级上花的时间，防止完美主义
-6. **重新度量并重新排序**：这是闭环的关键，不是一次性的
+1. **Define a single success metric**: Not "better," but a measurable number (users, latency, cost, accuracy, etc.)
+2. **List candidate actions**: All possible improvement directions
+3. **Estimate impact and cost**: Even a rough estimate is better than none. The key is relative magnitude, not absolute precision
+4. **Pick the top 1-2**: Don't try to do five things at once
+5. **Time-box the execution**: Limit the time spent on this priority to prevent perfectionism
+6. **Re-measure and re-rank**: This is the key to the loop, not a one-time event
 
-### 常见陷阱
+### Common Pitfalls
 
-- **过度精确化**：花三周时间精确计算优先级，而不是花三小时粗略估算后立即行动
-- **忽视动态性**：制定了优先级后就不再看，直到项目失败
-- **混淆优先级与完美性**：优先级高不意味着要做到完美，只意味着要先做
-- **单维度优化**：只看一个指标，忽视其他约束（如成本、风险、学习价值）
+- **Over-precision**: Spending three weeks precisely calculating priorities, rather than three hours roughly estimating and then acting
+- **Ignoring dynamism**: Setting priorities and never revisiting them until the project fails
+- **Conflating priority with perfection**: High priority doesn't mean doing it perfectly, only doing it first
+- **Single-dimension optimization**: Looking at only one metric, ignoring other constraints (cost, risk, learning value)
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **X03（效率由瓶颈决定）**：量化优先级的目标就是找到当前的瓶颈
-- **M01（闭环校准）**：量化优先级需要持续的反馈循环来调整
-- **M02（逆向调试心智）**：通过假设测试来验证你的优先级判断是否正确
-- **T04（数据优于观点）**：优先级应该基于数据，而不是直觉或权力
-- **V02（可验证性是信任的地基）**：量化指标本身就是可验证的
-
+- **X03 (Efficiency Is Determined by Bottlenecks)**: The goal of quantified prioritization is to find the current bottleneck
+- **M01 (Closed-Loop Calibration)**: Quantified prioritization requires continuous feedback loops to adjust
+- **M02 (Reverse Debug Mindset)**: Verify your prioritization judgment through hypothesis testing
+- **T04 (Data Over Opinion)**: Prioritization should be based on data, not intuition or authority
+- **V02 (Verifiability Is the Foundation of Trust)**: Quantitative metrics are inherently verifiable

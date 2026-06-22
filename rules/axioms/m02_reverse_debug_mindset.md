@@ -5,63 +5,63 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# M2. 逆向调试心态
+# M2. Reverse Debug Mindset
 
-## 1. 核心公理
+## 1. Core Axiom
 
-当你卡住时，停止靠猜来修复；改为运行假设检验，用系统化的方法不断缩小可能性空间。逆向调试的本质是把问题诊断从"随机搜索"转变为"信息论驱动的二分搜索"——每次实验都应该最大化地排除候选原因，而不是盲目尝试。
+When you are stuck, stop fixing by guessing; instead, run hypothesis tests, systematically narrowing the possibility space. The essence of reverse debugging is transforming problem diagnosis from "random search" into "information-theory-driven binary search" — each experiment should maximally eliminate candidate causes, rather than blindly trying things.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 信息增益优于行动量
+### Information Gain Over Action Volume
 
-随机调试是线性搜索；反向调试追求的是让每次实验的信息增益最大化，更接近二分搜索。这不是说要做更多实验，而是要做更聪明的实验。一个好的实验应该能清晰地回答"这个假设是对还是错"，而不是产生模糊的"可能改善了"。最有杠杆的问题不是"我接下来该试什么"，而是"什么原因可能导致它，以及什么观察能证实或否定该原因"。这个思维转变很关键：从"行动驱动"转向"假设驱动"。
+Random debugging is linear search; reverse debugging pursues maximizing the information gain of each experiment, closer to binary search. This is not about doing more experiments, but about doing smarter experiments. A good experiment should clearly answer "is this hypothesis right or wrong," rather than producing a vague "it might have improved." The highest-leverage question is not "what should I try next," but "what causes could produce this, and what observation would confirm or refute each cause." This mental shift is critical: from "action-driven" to "hypothesis-driven."
 
-### 书面思考的力量
+### The Power of Written Thinking
 
-在自己的求助模式里，把候选原因和验证步骤写下来，往往在开口之前答案就变得明显。即便仍不明显，书面的思考过程也能让他人的帮助效率大幅提高。这是因为写作强制你把模糊的直觉转化为具体的陈述，而这个过程本身就是一种调试。当你试图用文字解释"为什么 A 可能导致 B"时，你会发现逻辑漏洞。同时，清晰的假设列表让他人能快速定位到问题的关键，而不是陷入无关的细节。这也是为什么代码审查、设计文档、和事后总结这么有价值——它们都强制了这种结构化思考。
+In your own help-seeking mode, writing down candidate causes and verification steps often makes the answer obvious before you even ask. Even when it doesn't, a written thought process dramatically increases the efficiency of others' help. This is because writing forces you to turn vague intuitions into concrete statements, and this process itself is a form of debugging. When you try to explain in words "why A might cause B," you discover logical gaps. At the same time, a clear list of hypotheses lets others quickly locate the crux of the problem rather than getting lost in irrelevant details. This is also why code reviews, design documents, and postmortems are so valuable — they all enforce this structured thinking.
 
-### 观察是一等工具
+### Observation as a First-Class Tool
 
-日志、埋点和小探针把"直觉"变成可复用的流程。一个好的日志不仅记录了发生了什么，还记录了为什么你认为它会发生。埋点应该被设计成能快速回答"这个假设对吗"的问题。这与 M1（闭环校准）的"感知是闭环的基础"紧密相关：没有观察，你就无法验证假设。观察的质量决定了调试的速度。一个能产生清晰信号的小探针（比如一行日志）往往比改动大量代码更有价值。
+Logs, instrumentation, and small probes turn "intuition" into reusable processes. A good log records not only what happened, but also why you thought it would happen. Instrumentation should be designed to quickly answer "is this hypothesis correct?" This is tightly connected to M1's (Closed-Loop Calibration) "sensing is the foundation of the loop": without observation, you cannot verify hypotheses. The quality of observation determines the speed of debugging. A small probe that produces a clear signal (like a single log line) is often more valuable than changing large amounts of code.
 
-### 与 AI 协作的新维度
+### A New Dimension with AI Collaboration
 
-这种心态可以无缝迁移到 AI 辅助工作。让 AI 给出"下一步实验 + 预期结果"，通常比要求一个"完美的一次性答案"更可靠。这是因为 AI 在生成假设和设计实验时往往比在一次性解决问题时更准确。当你和 AI 一起进行假设-验证循环时，你们都在学习：AI 看到了真实的反馈，你看到了 AI 的推理过程。这也是为什么"AI 改不好代码"的根本原因往往不是 AI 不够聪明，而是缺乏清晰的成功标准和反馈通道——这些都是逆向调试心态的核心。
+This mindset transfers seamlessly to AI-assisted work. Asking AI to produce "next experiment + expected result" is usually more reliable than demanding a "perfect one-shot answer." This is because AI tends to be more accurate at generating hypotheses and designing experiments than at solving problems in one shot. When you and AI engage in a hypothesis-verification cycle together, you both learn: AI sees real feedback, and you see AI's reasoning process. This is also why the root cause of "AI can't fix code well" is often not that AI isn't smart enough, but the lack of clear success criteria and feedback channels — both of which are core to the reverse debug mindset.
 
-### 跨域的一致性
+### Cross-Domain Consistency
 
-这个模式对软件 bug、抖动的基础设施、AI 输出诊断，甚至物理系统（跟踪、结露、校准）都一样。症状往往是间接的，真正的原因可能隐藏在多个层次。一个网络延迟问题可能来自 DNS、TCP、应用层，或者根本不是网络问题。一个 AI 输出错误可能来自上下文不足、指令模糊、或者模型本身的限制。系统化的假设检验能在所有这些场景中工作，因为它的核心不是领域知识，而是逻辑和实验设计。
+This pattern works the same for software bugs, flaky infrastructure, AI output diagnosis, and even physical systems (tracking, dew, calibration). Symptoms are often indirect, and the true cause may be hidden across multiple layers. A network latency problem could come from DNS, TCP, the application layer, or not be a network problem at all. An AI output error could come from insufficient context, ambiguous instructions, or inherent model limitations. Systematic hypothesis testing works in all these scenarios because its core is not domain knowledge, but logic and experimental design.
 
-## 3. 应用判定
+## 3. Application Judgment
 
-### 何时使用
+### When to Use
 
-调试模糊失败、排查线上事故、诊断 AI 输出为何错误，或任何真实原因可能是多种之一的场景。特别是在以下情况中，逆向调试是必须的：
+Debugging vague failures, investigating production incidents, diagnosing why AI output is wrong, or any scenario where the true cause could be one of many. Reverse debugging is essential especially in the following situations:
 
-- **多因素问题**：症状可能来自多个原因的组合，需要系统地排除。
-- **高成本的实验**：每次尝试都很昂贵（部署、测试、人工审查），所以必须最大化每次实验的信息量。
-- **重复出现的问题**：如果同一个问题反复出现，说明你的假设模型有问题，需要更深入的诊断。
-- **AI 协作**：当与 AI 一起工作时，清晰的假设和验证步骤能显著提高效率。
+- **Multi-factor problems**: Symptoms may come from a combination of multiple causes, requiring systematic elimination.
+- **High-cost experiments**: Each attempt is expensive (deployment, testing, human review), so you must maximize the information per experiment.
+- **Recurring problems**: If the same problem keeps appearing, your hypothesis model is flawed and needs deeper diagnosis.
+- **AI collaboration**: When working with AI, clear hypotheses and verification steps significantly improve efficiency.
 
-### 如何练习
+### How to Practice
 
-1. **建立三个列表**：观察（现象是什么）、假设（可能的原因）、实验（如何验证）。
-2. **选择最能切分空间的实验**：不是最容易的，也不是最全面的，而是能排除最多候选原因的。
-3. **每次测试只改一个变量**：这样你能清晰地知道哪个变量导致了结果的变化。
-4. **用短日志记录每个结果排除了什么**：不仅记录"成功"或"失败"，还要记录"这排除了假设 A 和 B，但不排除 C"。
-5. **迭代直到确定**：继续这个循环，直到只剩一个假设，并且它能被直接证伪或证实。
+1. **Build three lists**: Observations (what the phenomenon is), Hypotheses (possible causes), Experiments (how to verify).
+2. **Choose the experiment that best splits the space**: Not the easiest, nor the most comprehensive, but the one that eliminates the most candidate causes.
+3. **Change only one variable per test**: This way you clearly know which variable caused the change in outcome.
+4. **Use short logs to record what each result eliminated**: Record not only "success" or "failure," but also "this eliminates hypotheses A and B, but not C."
+5. **Iterate until certain**: Continue this cycle until only one hypothesis remains, and it can be directly falsified or confirmed.
 
-### 常见陷阱
+### Common Pitfalls
 
-- **假设列表太长**：如果有超过 5-7 个候选原因，说明你的问题定义太模糊，需要先缩小范围。
-- **实验设计不清晰**：如果你不能清楚地说出"如果假设 A 是对的，我会看到 X；如果是错的，我会看到 Y"，那么这个实验设计得不好。
-- **忽视观察成本**：有时候最便宜的实验是能产生清晰信号的那个，而不是改动最多代码的那个。
-- **过早下结论**：一个假设被排除不意味着问题解决了，可能还有其他原因。继续验证直到你能完整解释现象。
+- **Hypothesis list too long**: If there are more than 5-7 candidate causes, your problem definition is too vague and needs narrowing first.
+- **Unclear experiment design**: If you cannot clearly state "if hypothesis A is correct, I will see X; if wrong, I will see Y," then the experiment is poorly designed.
+- **Ignoring observation cost**: Sometimes the cheapest experiment is the one that produces a clear signal, not the one that changes the most code.
+- **Premature conclusion**: Eliminating one hypothesis does not mean the problem is solved; other causes may still exist. Keep verifying until you can fully explain the phenomenon.
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **M1（闭环校准）**：逆向调试是在闭环内部如何思考，闭环校准是整个系统的节奏。
-- **X2（假设驱动的系统化调试）**：X2 是逆向调试的跨域版本，强调受控实验和问题空间的切分。
-- **M4（主动管理）**：逆向调试的心态是主动管理的基础——你不能被动地等待问题自己解决，必须主动诊断。
-- **A04（可靠性是管理问题）**：当 AI 或人类团队成员出现问题时，逆向调试是诊断根本原因的方法。
+- **M1 (Closed-Loop Calibration)**: Reverse debugging is how you think inside the loop; closed-loop calibration is the rhythm of the entire system.
+- **X2 (Hypothesis-Driven Systematic Debugging)**: X2 is the cross-domain version of reverse debugging, emphasizing controlled experiments and splitting the problem space.
+- **M4 (Active Management)**: The reverse debug mindset is the foundation of active management — you cannot passively wait for problems to solve themselves; you must actively diagnose.
+- **A04 (Reliability Is a Management Problem)**: When AI or human team members have issues, reverse debugging is the method for diagnosing root causes.

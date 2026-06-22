@@ -1,100 +1,100 @@
-# 产品/技术决策逆向工程
+# Product/Technical Decision Reverse Engineering
 
-面对一个新产品、新功能、或竞品动作时，系统性地拆解其设计决策、目标用户、要解决的问题、以及 trade-off。避免停留在功能描述层面，穿透到成本结构和策略意图。
+When facing a new product, new feature, or competitor move, systematically deconstruct its design decisions, target users, problems being solved, and trade-offs. Avoid staying at the feature-description level; penetrate to the cost structure and strategic intent.
 
 ## When to Use
 
-遇到以下场景时触发：
-- "分析一下这个新功能/产品"
-- "X 公司发布了 Y，怎么看"
-- "这个东西到底在干嘛"
-- 任何需要对外部产品/技术做深度评估的场景
-- 调研报告的分析阶段（事实收集完毕后）
+Trigger in the following scenarios:
+- "Analyze this new feature/product"
+- "Company X released Y, what do you think"
+- "What is this thing actually doing"
+- Any scenario requiring deep evaluation of an external product/technology
+- The analysis phase of a research report (after fact collection is complete)
 
-## 五步拆解框架
+## Five-Step Deconstruction Framework
 
-### 第 1 步：还原设计空间
+### Step 1: Reconstruct the Design Space
 
-在分析"它选了什么"之前，先问"它可以选什么"。
+Before analyzing "what it chose," first ask "what it could have chosen."
 
-- 列出这个产品面前的关键决策点（通常 2-4 个）
-- 每个决策点列出可选路径
-- 不需要穷举，关注有实质差异的路径
+- List the key decision points facing this product (typically 2-4)
+- For each decision point, list the available paths
+- No need to be exhaustive; focus on paths with substantive differences
 
-**示例**（Claude Interactive Visualizations）：
-- 输出模态：图像生成 vs 代码生成 vs 预设模板
-- 生命周期：临时 vs 持久
-- 展示方式：内联 vs 侧边栏 vs 新窗口
-- 目标用户：开发者 vs 全量用户
+**Example** (Claude Interactive Visualizations):
+- Output modality: image generation vs code generation vs preset templates
+- Lifecycle: temporary vs persistent
+- Display method: inline vs sidebar vs new window
+- Target user: developers vs all users
 
-### 第 2 步：识别选择
+### Step 2: Identify the Choices
 
-它在每个决策点上选了哪条路径。这一步是事实描述，不做判断。
+Which path it chose at each decision point. This step is factual description, not judgment.
 
-### 第 3 步：反推约束
+### Step 3: Reverse-Engineer the Constraints
 
-为什么选这条？每个选择背后通常有一个或多个约束在驱动：
+Why this path? Each choice is typically driven by one or more constraints:
 
-- **能力约束**：团队/模型的强项是什么？（Anthropic 编程强 → 选代码生成）
-- **市场约束**：竞品已经占了哪个位？（Google/OpenAI 占了图像生成 → 差异化）
-- **用户约束**：目标人群的能力边界在哪？（非开发者不会用 Cursor → 需要零门槛）
-- **技术约束**：当前技术的可行性边界？（浏览器端渲染 → 不能处理大数据集）
-- **商业约束**：变现模型、用户增长需求？（全量开放 → 扩大用户基数）
+- **Capability constraint**: what is the team/model's strength? (Anthropic strong at programming → chose code generation)
+- **Market constraint**: which position is already occupied by competitors? (Google/OpenAI own image generation → differentiate)
+- **User constraint**: what is the target audience's capability boundary? (non-developers can't use Cursor → need zero barrier)
+- **Technical constraint**: what is the feasibility boundary of current technology? (browser-side rendering → can't handle large datasets)
+- **Business constraint**: monetization model, user growth needs? (open to all → expand user base)
 
-**关键问题**：约束之间有没有冲突？如果有，哪个约束赢了？这往往揭示了真正的战略优先级。
+**Key question**: are there conflicts between constraints? If so, which constraint won? This often reveals the true strategic priority.
 
-### 第 4 步：暴露 trade-off
+### Step 4: Expose the Trade-offs
 
-每个选择都有代价。问两个问题：
+Every choice has a cost. Ask two questions:
 
-1. **这个选择放弃了什么？** 不是假设性的"可能放弃了什么"，而是具体的、可指认的功能/属性/用户群。
-2. **放弃的东西对谁重要？** 这决定了这个产品的真正定位——它服务谁，不服务谁。
+1. **What did this choice give up?** Not hypothetical "what might have been given up," but concrete, identifiable features/attributes/user groups.
+2. **Who cares about what was given up?** This determines the product's true positioning — who it serves, who it doesn't.
 
-**反转测试**：如果它做了相反的选择，谁会受益、谁会受损？这个思想实验能快速暴露 trade-off 的核心。
+**Reversal test**: if it had made the opposite choice, who would benefit and who would lose? This thought experiment quickly exposes the core of the trade-off.
 
-### 第 5 步：定位在成本结构中的位置
+### Step 5: Position in the Cost Structure
 
-这是最关键的一步，也是最容易被跳过的。
+This is the most critical step, and the most easily skipped.
 
-- **这个产品改变了哪个环节的成本？** 把什么从"贵"变成了"便宜"？
-- **谁因此获得了之前没有的能力？** 新的受益者是谁？
-- **这个能力之前已经存在吗？** 如果已经存在（只是门槛更高），那这不是新能力，而是成本压缩。
-- **压缩的代价是什么？** 门槛降低通常伴随控制权/可验证性/可组合性的丢失。
+- **Which cost link did this product change?** What did it turn from "expensive" to "cheap"?
+- **Who gained a capability they didn't have before?** Who are the new beneficiaries?
+- **Did this capability already exist?** If it already existed (just with a higher barrier), then this is not a new capability but cost compression.
+- **What is the price of compression?** Lowering the barrier typically comes with loss of control/verifiability/composability.
 
-**核心判断**：它是在创造新的可能性（0→1），还是在降低已有能力的门槛（专家→大众）？这两者的战略含义完全不同。
+**Core judgment**: is it creating new possibilities (0→1), or lowering the barrier to an existing capability (expert→mass)? These two have completely different strategic implications.
 
-## 与公理系统的接口
+## Interface with the Axiom System
 
-这个框架是使用公理工具箱的方法。不同步骤自然对接不同公理：
+This framework is a method for using the axiom toolkit. Different steps naturally connect to different axioms:
 
-| 步骤 | 常用公理 | 触发条件 |
-|------|---------|---------|
-| 第 1 步：还原设计空间 | A06（框架选择即世界观锁定） | 当决策涉及框架/平台选择时 |
-| 第 3 步：反推约束 | A07（设计哲学决定上限） | 当选择反映了深层设计哲学时 |
-| 第 4 步：暴露 trade-off | X03（效率由瓶颈决定） | 当选择消除了一个瓶颈但暴露了新瓶颈时 |
-| 第 4 步：暴露 trade-off | A09（构建者思维是护城河） | 当 trade-off 涉及 Builder vs Consumer 分野时 |
-| 第 5 步：成本结构定位 | T05（认知是资产，代码是消耗品） | 当产品改变了"造工具"或"获取认知"的成本时 |
-| 第 5 步：成本结构定位 | A13（技术采用三阶段） | 当需要判断功能处于 Driver/Co-pilot/Architect 哪个阶段时 |
+| Step | Common Axioms | Trigger Condition |
+|------|--------------|-------------------|
+| Step 1: Reconstruct design space | A06 (framework choice locks worldview) | When decisions involve framework/platform choices |
+| Step 3: Reverse-engineer constraints | A07 (design philosophy determines ceiling) | When choices reflect deep design philosophy |
+| Step 4: Expose trade-offs | X03 (efficiency determined by bottleneck) | When a choice removes one bottleneck but exposes a new one |
+| Step 4: Expose trade-offs | A09 (builder mindset is the moat) | When trade-offs involve Builder vs Consumer divide |
+| Step 5: Cost structure positioning | T05 (cognition is asset, code is consumable) | When the product changes the cost of "building tools" or "acquiring cognition" |
+| Step 5: Cost structure positioning | A13 (three stages of technology adoption) | When needing to judge which stage a feature is at: Driver/Co-pilot/Architect |
 
-## 输出格式
+## Output Format
 
-分析报告应包含：
+The analysis report should contain:
 
-1. **事实层**（第 1-2 步）：技术实现、产品定位、已知限制、竞品格局。纯事实，不夹判断。
-2. **分析层**（第 3-5 步）：设计约束、trade-off、成本结构定位。这是报告的核心价值。
-3. **判断层**：基于分析得出的结论。对不同角色（Builder / Consumer / 竞争者）分别给出判断。
+1. **Fact layer** (Steps 1-2): technical implementation, product positioning, known limitations, competitive landscape. Pure facts, no judgment mixed in.
+2. **Analysis layer** (Steps 3-5): design constraints, trade-offs, cost structure positioning. This is the core value of the report.
+3. **Judgment layer**: conclusions based on the analysis. Provide separate judgments for different roles (Builder / Consumer / Competitor).
 
-## 常见陷阱
+## Common Pitfalls
 
-### 功能描述陷阱
-停留在"它能做什么"的层面，不追问"它为什么这样做"和"它放弃了什么"。这种分析对决策没有帮助。
+### Feature Description Trap
+Staying at the level of "what it can do," without asking "why it does it this way" and "what it gave up." This kind of analysis is useless for decision-making.
 
-### 孤立评估陷阱
-脱离竞品和已有能力来评价一个新功能。必须问"这个能力之前已经存在吗"——如果答案是"在 Cursor 里早就能做"，那分析的重心应该从"新能力"转向"成本压缩"。
+### Isolated Evaluation Trap
+Evaluating a new feature in isolation from competitors and existing capabilities. Must ask "did this capability already exist" — if the answer is "Cursor could already do this," the analysis focus should shift from "new capability" to "cost compression."
 
-### 官方叙事陷阱
-用产品发布时的官方话术来组织分析。官方叙事是营销视角，不是分析视角。要用自己的框架重新组织事实。
+### Official Narrative Trap
+Organizing analysis using the official messaging from the product launch. Official narrative is a marketing perspective, not an analytical one. Use your own framework to reorganize the facts.
 
-## 来源
+## Source
 
-提炼自 Claude Interactive Visualizations 调研过程（2026-03-16）。关键转折点是追问"这不就是 Cursor 早就能做的事吗"，将分析从功能描述层面拉升到成本结构层面。
+Distilled from the Claude Interactive Visualizations research process (2026-03-16). The key turning point was asking "Isn't this just what Cursor could already do," which elevated the analysis from the feature-description level to the cost-structure level.

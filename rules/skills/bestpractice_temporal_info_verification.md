@@ -1,61 +1,61 @@
-# 时间敏感信息验证
+# Temporal Information Verification
 
-## 背景
+## Background
 
-AI 模型有 knowledge cutoff date，可能错过之后发布的新版本、新功能、新产品。当遇到可能是时间敏感的信息时，不应仅凭训练数据判断，而应主动验证。
+AI models have a knowledge cutoff date and may miss new versions, features, or products released after that date. When encountering potentially time-sensitive information, do not rely solely on training data to judge; actively verify instead.
 
-## 触发条件
+## Trigger Conditions
 
-当以下类型信息与你的知识可能冲突时：
+When the following types of information may conflict with your knowledge:
 
-- 模型名称/版本号（如 Gemini、Claude、GPT 等）
-- 软件版本（框架、库、工具）
-- API 端点或参数
-- 已知产品的功能更新
+- Model names/version numbers (e.g., Gemini, Claude, GPT, etc.)
+- Software versions (frameworks, libraries, tools)
+- API endpoints or parameters
+- Feature updates for known products
 
-## 做法
+## Approach
 
-1. **不要直接否定**：用户代码中的版本号可能确实存在
-2. **使用 Tavily 搜索验证**：查询是否有新版本发布
-3. **给出准确信息**：包括完整的版本号、发布日期（如有）
+1. **Do not directly deny**: version numbers in user code may indeed exist
+2. **Use Tavily search to verify**: query whether a new version has been released
+3. **Provide accurate information**: including complete version number and release date (if available)
 
-## 案例
+## Case Study
 
-### Gemini 模型名（2026-02）
+### Gemini Model Name (2026-02)
 
-代码中出现 `gemini-3.0-flash`，初步判断可能是无效模型名。
+Code contained `gemini-3.0-flash`, initially judged as potentially an invalid model name.
 
-**验证后发现**：Gemini 3.0 Flash 确实已发布，但用户漏了 `-preview` 后缀，正确应为 `gemini-3.0-flash-preview`。
+**After verification**: Gemini 3.0 Flash had indeed been released, but the user was missing the `-preview` suffix; the correct name should be `gemini-3.0-flash-preview`.
 
-**教训**：如果模型名看起来"太新"，应先搜索确认是否已发布，而非假设用户错误。
+**Lesson**: if a model name looks "too new," search first to confirm whether it has been released, rather than assuming user error.
 
-## 搜索模板
+## Search Template
 
 ```
-{产品名} {版本号} release date
-{产品名} {版本号} official announcement
+{product name} {version number} release date
+{product name} {version number} official announcement
 ```
 
-使用 Tavily 搜索，`search_depth="advanced"`，`max_results=5`。
+Use Tavily search, `search_depth="advanced"`, `max_results=5`.
 
-## 物理锚点校验
+## Physical Anchor Verification
 
-### 原则
+### Principle
 
-在数字逻辑中，利用物理常识作为复杂逻辑校验的最终防线。AI 输出可能看似合理，但违背物理规律时应被质疑。
+In digital logic, use physical common sense as the final defense for complex logic verification. AI output may appear reasonable, but should be questioned when it violates physical laws.
 
-### 应用场景
+### Application Scenarios
 
-- AI 生成的技术参数（如卫星高度、设备规格）
-- 数值计算结果（量级是否合理）
-- 因果推理（是否违背物理定律）
+- AI-generated technical parameters (e.g., satellite altitude, device specifications)
+- Numerical calculation results (is the order of magnitude reasonable?)
+- Causal reasoning (does it violate physical laws?)
 
-### 案例
+### Case Study
 
-AI 给出同步卫星的轨道参数，但高度与赤纬关系不符合开普勒定律。物理常识（同步卫星必须在赤道上空约 35,786 km）揭示了 AI 的幻觉。
+AI provided orbital parameters for a geosynchronous satellite, but the relationship between altitude and declination did not conform to Kepler's laws. Physical common sense (geosynchronous satellites must be above the equator at approximately 35,786 km) revealed the AI's hallucination.
 
-### 执行方式
+### Execution Method
 
-1. 识别输出中涉及物理量的部分
-2. 用已知物理常识（单位换算、量级、定律）做快速校验
-3. 发现异常时要求 AI 重新解释或搜索验证
+1. Identify parts of the output involving physical quantities
+2. Perform quick verification using known physical common sense (unit conversion, order of magnitude, laws)
+3. When anomalies are found, require AI to re-explain or search for verification

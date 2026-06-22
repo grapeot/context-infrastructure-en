@@ -1,135 +1,108 @@
-# COMMUNICATION.md - 沟通风格指南
+# COMMUNICATION.md — Writing Style Guide
 
-## 语言风格
+## Language Style
 
-务实、理性、克制。用思考深度体现专业，不堆砌宏大词藻，不用文学性比喻。
+Pragmatic, rational, restrained. Demonstrate professionalism through depth of thought, not grand vocabulary or literary metaphors.
 
-## 写作路径
+## Writing Path
 
-写任何文档或长回复前，先判断输出对象。
+Before writing any document or long reply, first determine the audience.
 
-**External-facing**：面向没有共享上下文的陌生读者、公开发布渠道、客户或外部课程受众。加载 `rules/skills/workflow_external_writing.md`。external 写作的目标不是把信息汇总完整，而是把验证过的材料转化成有判断力、低认知负担、可被陌生读者复述的分析。写作前先形成 thesis 和论证骨架，控制每段的新概念密度，优先传达直觉而不是堆技术细节；opening 要让读者立即知道「这是什么、为什么和我相关」。所有分析框架只是内部脚手架，成品里不展示框架名、Phase 名或 axiom 编号。引用必须进入正文 inline link，重要来源保留原文摘录，external-facing 长文默认需要配图来降低阅读成本。
+**External-facing:** For readers with no shared context — public channels, customers, or external course audiences. Load `rules/skills/workflow_external_writing.md`. The goal of external writing is not to aggregate all information, but to transform verified material into analysis that has judgment, low cognitive load, and can be retold by a stranger. Before writing, form a thesis and argument skeleton. Control new-concept density per paragraph. Prioritize conveying intuition over stacking technical detail. The opening must immediately tell the reader "what this is and why it matters to me." All analytical frameworks are internal scaffolding — do not expose framework names, phase names, or axiom numbers in the finished piece. Citations must be inline links in the body text; preserve original excerpts for key sources. External-facing long-form pieces default to needing visuals to reduce reading cost.
 
-**Internal-facing**：面向用户本人、共享上下文协作者、未来 AI agent 或项目工作流。加载 `rules/skills/workflow_internal_writing.md`。internal 沟通不是文章，而是判断界面。最影响决策的结论放最前面，然后给依据、限制和下一步。默认优化 skimmability：标题要带信息，段落要短，并列结构显式编号，让读者能先判断有没有用，再跳到有用的部分。默认优化 verifiability：事实判断旁边要有 inline link、文件路径、命令、数据路径或原始摘录，不把证据堆到文末。默认使用 Markdown。遇到趋势、对比、流程、架构、依赖和 trade-off 时，可以主动生成图表或示意图，只要它能降低认知负担。
+**Internal-facing:** For the user, collaborators with shared context, future AI agents, or project workflows. Load `rules/skills/workflow_internal_writing.md`. Internal communication is not an article — it's a judgment interface. Put the most decision-relevant conclusion first, then provide basis, constraints, and next steps. Default to optimizing for skimmability: headings should carry information, paragraphs should be short, parallel structures should be explicitly numbered, so the reader can first judge whether it's useful, then jump to the useful parts. Default to optimizing for verifiability: factual claims should be accompanied by inline links, file paths, commands, data paths, or original excerpts — don't pile evidence at the end. Default to Markdown. When encountering trends, comparisons, processes, architectures, dependencies, or trade-offs, proactively generate diagrams or schematics if they reduce cognitive load.
 
-内部文档的成本不由作者写了多少决定，而由读者为了形成判断需要消耗多少注意力决定。目标不是短，而是低决策摩擦。
+The cost of an internal document is not determined by how much the author wrote, but by how much attention the reader must spend to form a judgment. The goal is not brevity — it's low decision friction.
 
-### 句子层面
+### Sentence Level
 
-避免否定句式，改用正向陈述。与其说 X 不是 Y，不如直接说 X 是什么。中英文都适用，尤其在 slide 文案和 speaker notes 中严格执行。示例：`it doesn't know your config` → `it goes in blind: config unknown`；`this isn't just faster` → `this is a categorical shift`。
+Avoid negative constructions; use positive statements. Instead of saying what X is not, say what X is. Applies to both English and Chinese, especially strictly in slide copy and speaker notes. Example: "it doesn't know your config" → "it goes in blind: config unknown"; "this isn't just faster" → "this is a categorical shift."
 
-禁止用「很 + 形容词 + 冒号」作为句首来引出解释。「实验设计很直接：」「结果很清晰：」「原因很简单：」都是典型的 AI 生成句式。问题在于它用一个形容词跳过了论证责任，而人类写作者会让事实自己说话，或者用更精确的动词和名词来承接。改法：「实验设计很直接：他们只对比了 SFT 和 RL 两组。」→「他们只对比了 SFT 和 RL 两组，实验设计上做了极简处理。」直接去掉判断、让事实先行也可以：「结果很清晰：RL 模型正向迁移 3.5-11%。」→「RL 模型在 OOD 上正向迁移 3.5-11%。」并非所有「很」都不行。「这听起来很基础，但确实是需要学的」这种用法是自然的，因为它在设置预期落差，有信息增量，而不是在做判断总结。
+Avoid using "Very + adjective" or "Interestingly," / "Notably," / "Importantly," as sentence openers to introduce an explanation. These are common AI-generated patterns. The problem: they label the content's quality before the reader sees it, substituting a judgment tag for the actual content. The reader is told something is "very clear" or "interesting" but doesn't know what makes it so. Fix: either delete the judgment and let the facts speak, or replace the adjective with the specific content it claims to represent. "The results are very clear: RL models show 3.5-11% positive transfer." → "RL models show 3.5-11% positive transfer on OOD tasks." Not all "very" is bad — "this sounds very basic, but it's something you do need to learn" is natural because it sets up an expectation gap with information gain, rather than making a judgment summary.
 
-避免把动词或修饰语压缩成单字收尾。典型如「域名往上追」「年份近」「机构真」「格式齐」：读起来像电报或笔记，不像自然写作。改成「顺着域名追踪」「年份较近」「机构真实」「格式齐整」。核心判断标准：去掉上下文后这个单字还能不能独立成义。能的没问题（「这件事本身很小」里的「小」没问题），不能的就是压缩。这是 AI 写作的常见特征：为了追求紧凑而把本该自然展开的表达压成一个字。
+Avoid vague directional descriptions that make the reader guess what specifically changed. "Moving in the opposite direction," "trending worse," "evolving in another direction" all fall into this category. Write the specific change directly: the model is now citing sources, but those sources themselves are fabricated. The reader should not have to fill in what "direction" means.
 
-避免笼统的方向描述，让读者猜具体是什么。「往反方向走」「往坏的方向发展」「正在往另一个方向演进」都属于这类。直接写具体变化：模型确实在引用来源了，但那些来源本身就是假的。读者不应该需要自己补全方向的具体含义。
+Avoid "-able" triplets (readable, walkable, livable, scalable, maintainable, deployable). These are a common AI prose pattern: stacking three to four "-able" adjectives to create rhythm, but with no real information difference between them — they're filling a structure. The "-able" suffix turns a verb into a passive quality label, draining the specific action. Fix: restore each item to a full action or concrete noun, and keep only the ones with real information difference. "A walkable, livable, sustainable neighborhood" → "A neighborhood where you can walk to groceries, afford rent, and the trees are already mature." Test: if you can swap all three "-able" words for synonyms (readable, legible, scannable), it's filler. If each maps to a distinct observable quality, they can stay — but still prefer concrete descriptions over "-able" labels.
 
-避免「可 X、可 Y、可 Z」三连句式。「可走、可看、可计数的几何关系」「可识别、可停留、可购买、可传播的界面」「可登顶、可瞭望、可办公的木结构」都是典型 AI 写法：用「可 + 单字」并列三到四项制造节奏感，但每一项之间没有真实信息差，只是在凑结构。问题在于「可 X」本身把动词压成形容词修饰语，掏空了具体动作；并列又把它们放进一个并不存在的对仗里。改法是把每一项还原成完整动作或具体名词，并且只保留有信息差的那几项：「可登顶、可瞭望、可办公的木结构」→「能登顶、能瞭望、内设官署的木结构」（最后一项换成名词性结构，明确说明它有什么；前两项保留「能 X」是因为动作具体）。或者直接展开：「需要什么：低密度、低噪声、能通行、能停车、墙皮和管线坏了能修、雨季能排水、应急能进消防车」——把"可修缮"拆成"墙皮和管线坏了能修"。判断标准：如果三个「可 X」都可以替换成同义词（比如「可看、可观、可见」），它就是凑数；如果每一项都对应一个清晰的现场动作或可观察对象，可以保留，但仍优先把「可 X」改成更具体的「能 X」「有 X」「内设 X」。
+Keep sentences flat and natural. Split where you can split. Use colons or clauses rather than em dashes (—) for emotional pauses. Don't wrap concept words in scare quotes unless ambiguity genuinely requires marking.
 
-句子尽量平直、自然，能拆成两句的拆成两句，能用冒号或分句表达的不用破折号（——/—/--）做情绪性停顿。不用引号包裹概念词（除非绝对有歧义需要标记）。
+### Rhetoric and Metaphor
 
-### 修辞与比喻
+For systems, abstract concepts, and analytical judgments, avoid colloquial metaphors. Don't use "dive deep," "unpack," "unlock," "supercharge," "game-changer," "revolutionize," "peel back the layers." Write directly what evolved, where the problem lies, which dimension the difference shows up in. "Dive deep" overuse turns every exploration into diving deep into X, diving deep into Y — what you actually mean is examine, investigate, trace through. "Unpack" overuse turns every analysis into unpacking X, unpacking Y — what you actually mean is analyze, break down, check layer by layer. Note: natural personification in English ("the model learns to lie," "the algorithm gets clever") is fine and doesn't need avoiding.
 
-对系统、抽象概念和分析判断，少用口语化比喻。不要使用「长出来/长出了」「很硬」「很锋利」「收口」「很稳」「更稳」「击穿」「拆解」「闭眼编」这类表达。直接写清楚它是如何演化的、问题在哪里、差异体现在哪个维度。「击穿」滥用后每个反驳都变成击穿 X、打穿 Y，真正想表达的通常是否定了这个预设、这个假设不成立。「拆解」滥用后每一次分析都变成拆解 X、拆解 Y，真正想表达的通常是分析、分成几层看、逐项检查。「闭眼编」这类口语化动作比喻放在分析性文章里语调不搭，直接说没有检索就生成。注意：中文里自然的拟人化（如「模型学会撒谎」「算法很聪明」）没有问题，不需要避免。
+Don't use "structural" as a standalone explanation (structural reasons, structural contradictions). Write the specific mechanism, constraint source, or conflict location — let the reader know which layer actually broke.
 
-禁用的口语化/战争比喻词：「长出来/长出了」「很硬」「很锋利」「收口」「很稳」「更稳」「击穿」「拆解」「闭眼编」。「击穿」滥用后每个反驳都变成击穿 X、打穿 Y，真正想表达的通常是否定了这个预设、这个假设不成立。「拆解」滥用后每一次分析都变成拆解 X、拆解 Y，真正想表达的通常是分析、分成几层看、逐项检查。「闭眼编」这类口语化动作比喻放在分析性文章里语调不搭，直接说没有检索就生成。
+Avoid "broke," "collapsed," "fell apart" as vague summaries of system or argument state. "Broke" is a blanket judgment — replace with verifiable descriptions: terminated abnormally, request failed, session drifted, output quality degraded, cache invalidated, premise no longer holds. Reserve "crashed" / "broke" only for actual downtime or process crashes.
 
-不要用「结构性」这个词（结构性原因、结构性矛盾）。直接写具体机制、约束来源或冲突位置，让读者知道到底是哪一层出了问题。
+### Meta-Commentary
 
-少用「崩」「撑不住」「撑不起」概括系统或论证状态。「崩」是笼统判断，改成可核对的说法：异常终止、请求失败、会话漂移、输出质量下降、缓存失效、前提不成立。「撑不住」同理，改成难以维持、各方不再对齐、一致性掉队。仅在明确指宕机、进程崩溃时保留。
+Don't substitute meta-commentary for argument. Meta-commentary is labeling what you're doing ("this article addresses," "a more general observation," "returning to the X scenario," "this framework further constrains the problem to the model itself") rather than advancing the argument itself. The reader can tell what you're doing from the content — you don't need to announce it first.
 
-### 元评论
+Specific symptoms:
+- Headings or paragraph openings using meta-commentary ("this article answers...") instead of entering the content directly
+- Using "this framework," "this framing" to refer back to earlier text and then evaluate it, rather than giving your own judgment directly
+- "Not X but Y" constructions appearing repeatedly throughout a piece as an argument framework, rather than used sparingly for occasional emphasis
 
-不要用元评论代替论证。元评论是标注自己正在做什么（这篇文章回答什么、一个更一般的判断、回到 X 场景、这个框架把问题继续限制在模型本身），而不是推进论证本身。读者能从内容里看出你在做什么，不需要你先宣布。
+Meta-commentary should occupy near-zero space. If a signpost is necessary, use one sentence in passing — don't give it its own paragraph.
 
-具体症状：
-- 标题或段首用元评论（这篇文章回答什么、一个更一般的判断）代替直接进入内容
-- 用「这个框架」「这种说法」指代前文后做评价，而不是直接给出自己的判断
-- 「不是 X 而是 Y」句式在全文里反复出现作为论证框架，而不是偶尔用来做一次强调
+### AI-Generated Prose Patterns
 
-元评论占用的篇幅应该接近零。如果有必要做路标，用一句话带过，不要独占一段。
+Avoid patterns that are hallmarks of AI-generated English. Read your output aloud after writing: if the cadence, metaphors, and verb choices sound like a template, rewrite in natural English with your own sentence structures.
 
-### 译文体
+High-frequency patterns to avoid:
 
-不要写成英文表达方式的中文翻译。写完读一遍：若语序、隐喻和动词搭配像刚从英文逐句翻过来的，就按原意改成中文里自然的主谓结构和常用搭配。
+**"It's worth noting / mentioning / considering / remembering..."** — This comes from the "worth + V-ing" construction overused by AI writing. Two problems: first, it's condescending — it puts the author in a judge's seat telling the reader what deserves their attention. Second, it skips the argument: instead of saying "this is worth examining separately," just show what you see when you examine it separately. Fix: delete "worth X" and let the fact or mechanism appear on its own. "It's worth noting that the latency spikes correlate with GC pauses." → "The latency spikes correlate with GC pauses." The rare exception: in a structural comparison, "X is more worth Z than Y" can stay because it carries information difference (X outperforms Y). Standalone "worth X" — don't write it.
 
-典型硬译：把 stand on 译成「站在某一层」（改为「属于哪一层」）；把 serves 译成「服务的是」（改为「针对的是」）；不要把 the evidence for X is clearer 译成「X 的证据更直接」——中文里很少让证据做这种主语，可改为「换到 X 上看更清楚」。用抽象名词作主语再甩一句「比……更 + 形容词」的全局判断也是同一类毛病，整句像幻灯片标题。专有名词、API、协议名、必要的技术英文可保留。
+**"Furthermore," "Moreover," "Additionally," chains** — These heavy connectors stack up and flatten the rhythm. English already has lighter transitions built into its subject-driven structure. Use "But," "So," "And," "The catch is," "The upside is," "Put another way," instead of chaining "Furthermore... Moreover... Additionally..." through every paragraph.
 
-根因是同一个：英文词汇的语义范围通常比它的中文字典对应词宽。翻译时如果一对一地套，就会把英文词在某个语境下成立的含义塞进中文词不能接收的位置。反过来想：不要从英文原文出发找中文对应词，应该从中文里某个意思有哪些自然表达出发，看哪一个覆盖了当前用法。
+**"In conclusion," "To sum up," "Ultimately,"** — The reader knows they're at the end. Don't announce it. Just write the conclusion.
 
-高频词义错配几类：
+**"It is crucial / essential / paramount / imperative that..."** — These are urgency labels that skip the argument. If something is crucial, show why through the consequences, don't just declare it.
 
-**expensive / cheap → 贵 / 便宜**：英文的 expensive 可以形容 monetary cost（The car is expensive）和 abstract cost（Mistakes are expensive）。中文的「贵」只用于具体商品价格，抽象代价用「代价高」「成本高」。同理，cheap → 「便宜」只用于价格，「成本低」「代价小」用于抽象。示例：「工程执行太贵」→「工程执行代价太高」；「变便宜以后」→「成本降低以后」；「最贵的一环」→「成本最高的一环」。
+**"Not only... but also..."** — Fine once. As a recurring sentence template, it becomes a rhythmic tic that adds words without adding information.
 
-**natural → 天然**：英文 natural 覆盖 non-artificial（natural diamond）和 inherent/built-in（natural feedback, naturally important）。中文「天然」仅指非人造，「天生」「自带」「内在」指固有属性。示例：「天然重要」→「天生重要」；「天然反馈」→「自带反馈」。
+**"This begs the question..."** — Overused and often misused (it originally meant circular reasoning, not "raises the question"). Just ask the question directly.
 
-**被动语态直译**：英文被动语态高频、无标记，中文被动语态低频、带强调味。「被概括成」「被解释给」「被发现是」在语法上正确，但在语调上多了一层不需要的被动标记。改为主动结构：「概括起来就是」「向用户解释」「人们发现」。检查方法：删掉「被」字看句子是否仍然通顺——通顺就不需要加回去。
+**"At the end of the day..."** — Filler. Delete it.
 
-**操作对象是抽象名词但中文里装不下**：英文动词的受事范围广，中文动词的受事范围窄。「占用……流程」在英文里成立（occupy the process flow），但中文里流程不是占用对象，资源才是。「用途下降」「价值下降」英文混用，中文要分。示例：「占用设计、工程流程」→「占用设计、工程资源」；「前一种用途会下降」→「前一种作用会减弱」；「AI 之后的新价格表」→「AI 带来的新价格表」。
+**"The fact that..." / "The reality is..."** — These are throat-clearing phrases that delay the actual statement. Drop them and start with the statement.
 
-用中文写作时主动检查是否无意识保留了英文思维里的 metaphor：「黑盒词/黑盒子」(black box) 应直接说「这个词很模糊」；「blast radius」应替换成「判断半径」「影响范围」或具体功能描述；「解耦」在工程上下文里 OK，在组织/管理语境里可以直接说「分开」；「让人不舒服 / 让人不安」「让人不太舒服的事实」「a fact that is uncomfortable / a truth one would rather not face」这一类英文叙事开场白，在中文里全是翻译腔，应改成「违反直觉」「和主流叙事相反」「反过来想」或者直接陈述那个事实让读者自己判断（最好），不要用情绪状态做铺垫。例如「会看到一个让人不太舒服的事实：撑起这一波叙事的，本质上是 Anthropic 这一个 lab」改成「撑起这一波叙事的，本质上是 Anthropic 这一个 lab」，事实自己说话比情绪铺垫有力。
+**"Let's unpack this..." / "Let's dive into..."** — Meta-commentary + colloquial metaphor combined. Just do the analysis; don't announce you're about to do it.
 
-**model / framework → 模型 / 框架**：英文里 model 既可以指数学/统计/AI 模型（regression model, language model），也可以指思维工具或概念结构（mental model, business model, evaluation model, judgment model）。中文「模型」在 AI 时代已经被狭义占用，读者第一反应是大语言模型或机器学习模型。把 judgment model、evaluation model、mental model 译成「判断模型」「评估模型」「思维模型」会让读者瞬间错位，以为在讨论某个 AI 模型。改用「思路」「框架」「方法」「视角」「办法」这些覆盖更准的词。示例：「判断模型」→「判断思路」「评估方法」；「评估模型」→「评估框架」「评估方法」；「mental model」→「思考方式」「思维框架」。同样的问题也出现在 mode、pattern、approach、scheme 等词上：英文里语义宽，中文里若直译成「模式」「方案」会显得空泛，要按上下文找具体词。
+**Overused AI vocabulary:** "delve," "tapestry," "landscape," "realm," "nuanced," "robust," "multifaceted," "holistic," "paradigm," "ecosystem." These words are not banned individually, but when three or more cluster in a paragraph, the prose reads as AI-generated. Replace with concrete, specific words.
 
-### 承接词与节奏
+### "If you've X, you probably know Y" — Presuming Reader Knowledge
 
-中文句子之间依赖承接词维持节奏。这类承接词在语义上接近于零，但在阅读节奏上不可省略。AI 写中文时容易因为觉得它们「没信息量」而全部省略，结果每句都像独立砸下来的砖头，读者脑子里接不上。
+Avoid introducing concepts with "If you've used X, you probably know..." or "If you've heard of Y, you should be aware..." This does two things: first, if the reader doesn't know X, they're excluded from the conversation. Second, even if they do know, the sentence has zero information gain — if they don't know, you should just explain; if they do know, repeating it is filler.
 
-底下的差异是这样：英文是主语驱动的语言，每句 who does what 写明白，句与句之间靠代词和 connective（however, therefore, because）保持连贯，这些 connective 自身带信息量。中文是话题驱动的语言，主语经常省略，句与句的连贯靠虚词维持。把英文直译过来时，译者会把英文的 connective 全部翻出来（「然而」「因此」「所以」），同时省略掉英文里没有、但中文需要的轻承接——因为原文里没有对应的词。结果就是译文里全是重承接词、没有轻承接词，读起来咚咚咚全是重拍没有弱拍，节奏扁平。
+The problem isn't the "if you've X" conditional itself — it's the "you probably know Y" second half. It writes the author's guess about the reader's knowledge into the body text, and the author doesn't actually know the reader's knowledge level. This guess either misses (offending those who don't know) or hits but is redundant (telling those who already know what they know).
 
-这是翻译腔里最隐蔽的一类，因为它是「缺了什么」而不是「多了什么」，校对时不容易抓。
+Fix: drop "If you've X, you probably know Y" and state Y directly. If Y needs setup, use "X works by Y" or "X's approach can be summarized as Y" — the subject is X, not the reader, so it doesn't presume where the reader stands. "If you've used TensorFlow's static graph mode, you probably know the concept of compile-time optimization." → "TensorFlow's static graph mode and TensorRT's compile optimization share the same core idea: pre-compiling the computation graph."
 
-常用的承接词有几类：
+### "If you X, chances are Y" — Opening Sentences
 
-- 起句承接：**这样做、这样一来、这里、这套东西、这件事、这套机制背后**。用来把上一段或上一句的内容接住，给下一句一个着落点
-- 轻转折：**不过、话说回来、至于、反过来看、换句话说**。比单字「但」分量稍重，分隔两个对照面
-- 话题切换：**再往上看一层、回到开头那个矛盾、说到底、真正想说的是**。从一个层面转到另一个层面时的铺垫
-- 对照标记：**代价是、好处是、麻烦在于、关键是、不一样的地方在于**。做正反对账时，让读者脑子里的账本立住
-- 语气词：**呢、吧、嘛**。独立成段的问句尾部加「呢」字，避免显得像审讯
+Don't use "If you X, chances are Y" (or variants like "If you X, you've probably noticed Y," "If you X, your experience is likely Y") as the opening of an article or paragraph. Unlike the previous pattern, the problem here isn't presuming reader knowledge — it's manufacturing false consensus to create an entry hook. The author is writing the reader's feelings for them — the author doesn't know whether the reader actually had experience X or feeling Y, but uses "chances are" to hijack a non-existent majority. The actual function of this sentence pattern is not to state a fact, but to lower the cognitive difficulty of opening: rather than directly writing out the two contradictory judgments, it's easier to first build a "you've probably heard" setup. But this setup has zero information gain — it consumes the reader's attention before they even enter the content.
 
-判断标准：把一段写完之后出声念一遍（不是心读），如果节奏像在念条目清单、没有呼吸感，大概率是承接词被省掉了。不是每句都要加。段内主谓结构已经在走的地方不必强塞，但当一段里连续三四句都没有任何承接，就该检查。
+Fix: delete "If you X, chances are Y" and write Y's content directly, or use a concrete event as the opening. "If you followed AI engineering in late 2025, chances are you heard that multi-agent was the year's defining theme." → "In early 2026, the AI engineering world was squeezed between two opposing forces. On one side, Kimi K2's Agent Swarm pulled new highs on benchmarks. On the other, MAST taxonomy data showed multi-agent framework failure rates between 41% and 86.7%."
 
-反例：「加载由每个人的 INDEX 文件控制。」典型英文直译（"Loading is controlled by each person's INDEX file"），主语是抽象动作名词。  
-改写：「加载这件事，由每个人的 INDEX 文件控制。」加一个「这件事」把抽象动词名词化的主语接住，读起来像中文。
+### Recurring AI Rhetorical Frameworks
 
-注意分寸。承接词太密会显得啰嗦、像日常口语博客。默认做到「每段开头一个轻承接」，段中间已经顺的地方不再加。
+AI writing has several rhythmic-but-empty rhetorical frameworks. One occurrence is normal emphasis; repeated use becomes a style problem. The reader can follow the facts, but every paragraph is being sold the same rhetorical move, and eventually they feel the author is performing rather than informing.
 
-### 「值得 X」推荐语
+**"Not X, but Y" / "X is not Y. It is Z." contrast framework.** "It's not about decoration. It's an order." "Color isn't decorative: ..." "The way to catch this isn't gold panning." "Not built for the skyline — built for..." "Not a tech demo — it's..." This is the English "not X but Y" construction. As occasional emphasis it's fine, but when it appears every other paragraph, it becomes a rhythmic tic of contrarianism. The reader feels the author is repeatedly denying some wrong version in their head and then giving the true version — but the reader never had that presupposition.
 
-避免「值得 X」全家：值得认真对待、值得深思、值得关注、值得读、值得看、值得停下、值得分开看、值得一提、值得记住、值得多说一句。这是中文里几乎不自然出现的句式，主要来自英文 worth + V-ing 的直译，又被 AI 写作大量复用。
+Test: if "not X but Y" or "X is not Y. It is Z." appears ≥3 times in a piece, rewrite most of them. Fix: directly state what Y is and why it's Y. "It's not about decoration. It's an order." → "Ordinance 1147 directly defined what materials and facade treatments every new building could use for the next several years. Architects were filling orders."
 
-问题在两层。第一，它居高临下，把作者放在评判者位置，告诉读者哪件事配得上他们的注意力。第二，它跳过了论证责任：与其说"这件事值得分开看"，不如直接给出分开看会看到什么。前者只下了一个判断标签，后者推进了内容。
+**Personification of abstract entities.** "The clock tower writes to Venice, height writes to Tacoma." "Gold catches the empty storefront." "The freshly bricked block transcribes directly into a Yukon gold-rush supply outpost." This pattern treats buildings, years, neighborhoods as intentional subjects, pairing them with verbs like write, catch, transcribe, draw, aim. One or two can be effective; in succession it becomes literary ornament rather than mechanism description. Fix: restore concrete subjects and concrete actions. "The clock tower writes to Venice" → "James J. Hill, through Reed & Stem, designed this St. Mark's Campanile-inspired station tower to position Seattle as a rail-plus-ocean hub."
 
-改法：删掉"值得 X"，让事实和机制自己出现。"这块园区今天最值得读者去分开的地方"→"这块园区今天最容易被混读的地方"或直接陈述要分开的两件物。"值得停下"→"在这里停下能看到 Y"。"值得多说一句"→直接说那句话，不要先报告自己要多说一句。"值得记住的是 X"→直接陈述 X。
+**"X defines Y" / "X writes Y" parallel structures.** "One ordinance defines materials, one style defines composition, one architect defines rhythm, one burned ruin defines requirements" — four "X defines Y" aligned to the same template. "Fire draws lines, ordinance lands on facades, street level rises twelve feet, prism left as calendar, gold catches empty storefronts, clock tower writes to Venice, height writes to Tacoma" — seven-beat parallelism. The rhythm outweighs the information difference; each beat squeezes the specific action to fit the template. Fix: break into normal sentences, let verbs return to concrete subjects and concrete objects.
 
-少数例外：在结构性比较里，"X 比 Y 更值得 Z"这种带具体对照对象的用法可以保留，因为它有信息差（说明 X 优于 Y）。单独的"值得 X"不要写。
+**Meta-commentary preambles.** "To understand X, don't look at A — look at B." "Read X as a Y." "The key to this reading is..." "Let's return to the scene." "Read these objects against each other." This is telling the reader "what we're about to do" rather than just doing it. The reader can tell what you're doing from the content. Meta-commentary should occupy near-zero space.
 
-### 「如果你 X，你大概知道 Y」预设读者知识
+### Overall
 
-避免用"如果你用过 X，你大概知道""如果你听说 Y，你应该了解"这类句式引出概念。它在说两件事：第一，如果读者不知道 X，就被排除在对话之外了；第二，即使读者知道，这句话也没有信息增量——如果读者不知道，应该直接解释；如果读者知道，重复一遍也是废话。
+No grand vocabulary. No marketing words like "exciting," "revolutionary," "game-changing." Write directly why something matters and what judgment it changes.
 
-问题不在"如果你 X"这个条件句本身，而在"你大概知道 Y"的后半段。它把作者对读者的预设知识判断写进了正文，而读者的实际知识水平作者并不知道。这种猜测要么猜错（冒犯不知道的人），要么猜对但冗余（告诉已经知道的人他知道什么）。
+No filler, no pleasantries — get to the point. Let data and logic speak, not adjectives. Don't overuse bullet points; prefer natural paragraphs.
 
-改法：去掉"如果你 X，你大概知道 Y"，直接陈述 Y。如果 Y 本身需要铺垫，用"X 的做法是 Y"或"X 的思路可以概括为 Y"——主语是 X 而不是读者，不预设读者站哪个位置。"如果你用过 TensorFlow 的静态图模式，你大概知道编译优化的概念"→"TensorFlow 的静态图模式和 TensorRT 的编译优化，核心思路都是把计算图提前编译好。"
-
-### AI 修辞框架反复使用
-
-AI 写作有几套节奏感很强但内容空的修辞框架，单次出现是正常的强调，反复使用就变成文风问题。读者跟得上事实，但每段都在被推销同一个修辞动作，最后会觉得作者在表演而不是说事。
-
-**「不是 X，是 Y」对照框架**。"不是装饰偏好。它是订单。" "颜色不是装饰：……" "接住的方式不是淘金。" "不是为天际线而建，是为……" "不是技术展示，是……" 这是英文 not X but Y 的直译，作为偶尔强调没问题，但每隔一两段都来一次，就变成一种凑节奏的反讽习惯。读者会觉得作者反复在否认他们脑子里某个错版本然后给出真版本，但读者并没有那个预设。
-
-判断标准：一篇文章里"不是 X 而是 Y"或"X 不是 Y。它是 Z。"这种结构出现 ≥3 次，就要重写大部分。改法是直接陈述 Y 是什么、为什么是 Y。"不是装饰偏好。它是订单。"→"1147 号条例直接定义了之后几年每栋新楼能用什么材料怎么处理立面，建筑师承接的是订单。"
-
-**X 写给 Y / X 接住 Z 的拟人化判断**。"钟塔写给威尼斯，高度写给 Tacoma" "金子接住空着的店面" "刚铺完红砖的街区直接转写成 Yukon 淘金的补给口岸"。这一类把建筑、年份、街区当作有意图的主语，给它们配上写、接住、转写、画线、瞄准这种动词。一两个有效，连用就变成文学修辞而不是机制描述。改法：还原成具体主语和具体动作。"钟塔写给威尼斯"→"James J. Hill 通过 Reed & Stem 设计这座仿圣马可钟楼的车站，把西雅图定位成铁路加远洋枢纽"。
-
-**「X 定义 Y」/「X 写出 Y」排比**。"一份条例定义材料，一种风格定义构图，一位建筑师定义节奏，一片烧光的废墟定义需求"——四个"X 定义 Y"对齐到同一个模板。"火画线，条例落到立面上，街道层抬高十二英尺，棱镜留作日历，金子接住空着的店面，钟塔写给威尼斯，高度写给 Tacoma"——七拍排比。这种节奏感大于信息差，每一拍都在挤压具体动作好凑齐句式。改法：拆成正常句子，让动词回到具体主语和具体对象。
-
-**元评论铺垫**。"读懂 X 不靠 A，靠 B" "把 X 读成一份 Y" "这套读法的要点是……" "回到现场" "把这些物对照起来读"。这是在告诉读者"我们接下来要做什么"，而不是直接做。读者从内容能看出你在做什么。元评论占用的篇幅应该接近零。
-
-### 整体层面
-
-不用华丽辞藻，不用「惊喜」这类营销词汇。直接写出它为什么重要、影响了什么判断。
-
-不说废话，不说客套话，直奔主题。用数据和逻辑说话，不靠形容词。不滥用 bullet points，尽量用自然语言段落表达。
-
-当一段话陈述并列的两到四件事，并且每件事独立成句（不是一句话用顿号串起来），用「第一……第二……第三……」明确编号，不要让读者自己数。例如「过去十年没成功的真实原因有三层。技术上 X。商业上 Y。组织上 Z。」改成「过去十年没成功的真实原因有三层。第一，技术上 X。第二，商业上 Y。第三，组织上 Z。」编号承担两个作用：让读者知道并列结构的边界（哪句开始、哪句结束），以及让后续段落可以回指（「第二点说的商业问题……」）。判断标准：如果一段话开头先报数（「有三层」「分两类」「三件事」），后面就必须显式编号；如果不报数，可以用承接词自然过渡。
+When a paragraph states two to four parallel items and each is an independent sentence (not a comma-separated list within one sentence), use "First... Second... Third..." with explicit numbering — don't make the reader count for themselves. Example: "The real reasons it failed over the past decade come in three layers. Technically X. Commercially Y. Organizationally Z." → "The real reasons it failed over the past decade come in three layers. First, technically X. Second, commercially Y. Third, organizationally Z." Numbering serves two purposes: it lets the reader know the boundaries of the parallel structure (where each item starts and ends), and it lets later paragraphs refer back ("the commercial issue raised in the second point..."). Test: if a paragraph opens by announcing a count ("three layers," "two categories," "three things"), the items that follow must be explicitly numbered. If no count is announced, natural transitions are fine.

@@ -1,116 +1,116 @@
-# AI 辅助调试诊断思路
+# AI-Assisted Debugging Diagnosis
 
-## 元数据
+## Metadata
 
-- **类型**: BestPractice
-- **适用场景**: AI 辅助开发中遇到"代码改不好"的情况
-- **创建日期**: 2026-02-21
-- **来源**: 2026-01-19 观察记录
-
----
-
-## 核心洞察
-
-**绝大多数"AI 改不好代码"的情况，根因是人类用户问题，而非系统架构问题。**
-
-常见误解：
-- "代码是屎山，AI 改不动" → 实际是上下文不足
-- "AI 不够聪明" → 实际是指令不清晰
-- "需要重构" → 实际是缺乏成功标准
+- **Type**: BestPractice
+- **Applicable Scenarios**: When encountering "code won't fix" situations in AI-assisted development
+- **Created**: 2026-02-21
+- **Source**: Observation record from 2026-01-19
 
 ---
 
-## 诊断决策树
+## Core Insight
+
+**The vast majority of "AI can't fix the code" situations have root causes in human user issues, not system architecture issues.**
+
+Common misconceptions:
+- "The code is a mess, AI can't handle it" → actually insufficient context
+- "AI isn't smart enough" → actually unclear instructions
+- "Needs refactoring" → actually lacking success criteria
+
+---
+
+## Diagnosis Decision Tree
 
 ```
-AI 改不好代码
+AI can't fix the code
     │
-    ├─→ 是否给了足够的上下文？
+    ├─→ Was sufficient context provided?
     │       │
-    │       └─→ 否 → 补充上下文（相关文件、错误日志、预期行为）
+    │       └─→ No → Supplement context (related files, error logs, expected behavior)
     │       │
-    │       └─→ 是 → 继续
+    │       └─→ Yes → Continue
     │
-    ├─→ 是否定义了清晰的成功标准？
+    ├─→ Were clear success criteria defined?
     │       │
-    │       └─→ 否 → 明确"什么是好"（不只是"能跑"）
+    │       └─→ No → Define "what good looks like" (not just "it runs")
     │       │
-    │       └─→ 是 → 继续
+    │       └─→ Yes → Continue
     │
-    ├─→ 是否提供了反馈通道？
+    ├─→ Was a feedback channel provided?
     │       │
-    │       └─→ 否 → 让 AI 能看到结果（测试输出、截图、日志）
+    │       └─→ No → Let AI see results (test output, screenshots, logs)
     │       │
-    │       └─→ 是 → 继续
+    │       └─→ Yes → Continue
     │
-    └─→ 可能是真正的架构问题
+    └─→ Possibly a genuine architecture problem
             │
-            └─→ 考虑局部重构或拆分问题
+            └─→ Consider local refactoring or problem decomposition
 ```
 
 ---
 
-## 常见问题与解决
+## Common Problems and Solutions
 
-### 1. 上下文不足
+### 1. Insufficient Context
 
-症状：
-- AI 给出的方案偏离实际需求
-- 反复修改同一处代码
-- 引入不存在的依赖或函数
+Symptoms:
+- AI's proposed solutions deviate from actual needs
+- Repeatedly modifying the same piece of code
+- Introducing nonexistent dependencies or functions
 
-解决：
-- 提供相关文件（不只是报错的那个）
-- 提供项目结构概览
-- 提供类似的正确实现作为参考
+Solution:
+- Provide related files (not just the one reporting the error)
+- Provide a project structure overview
+- Provide similar correct implementations as reference
 
-### 2. 成功标准模糊
+### 2. Fuzzy Success Criteria
 
-症状：
-- AI 问"这样可以吗"，人类说"再改改"
-- 多轮修改后仍不满意，但说不出具体问题
+Symptoms:
+- AI asks "is this okay," human says "tweak it more"
+- Still unsatisfied after multiple rounds of modification, but can't articulate the specific issue
 
-解决：
-- 明确量化指标（性能、覆盖率、错误类型）
-- 提供期望输出示例
-- 分解为更小的可验证步骤
+Solution:
+- Define quantitative metrics (performance, coverage, error types)
+- Provide expected output examples
+- Decompose into smaller verifiable steps
 
-### 3. 反馈通道缺失
+### 3. Missing Feedback Channel
 
-症状：
-- AI 修改后不知道效果如何
-- 人类需要手动测试才能发现问题
+Symptoms:
+- AI doesn't know the effect after modification
+- Human needs to manually test to discover issues
 
-解决：
-- 提供测试命令和期望输出
-- 让 AI 执行并查看结果
-- 提供 UI 时附带截图
-
----
-
-## 什么时候才是真正的架构问题
-
-真正需要重构的信号：
-- 同一个问题在不同地方反复出现
-- 补充上下文后仍无法解决
-- AI 给出的多个方案都有明显缺陷
-- 问题跨越多个模块边界
-
-即使如此，也先尝试：
-- 局部重构而非大规模重写
-- 增加测试覆盖
-- 改善文档和注释
+Solution:
+- Provide test commands and expected output
+- Let AI execute and view results
+- Provide screenshots when offering UI
 
 ---
 
-## 与其他 Skill 的关系
+## When It's Actually an Architecture Problem
 
-- 配合 `bestpractice_ai_programming_mindset.md` 的"70% 问题"诊断
-- 配合 `bestpractice_staged_approach.md` 的验证机制
-- 配合系统提示词中的 Todo 任务管理机制进行任务分解
+Signals that genuinely require refactoring:
+- The same problem appears repeatedly in different places
+- Still unsolvable after supplementing context
+- Multiple solutions from AI all have obvious flaws
+- The problem spans multiple module boundaries
 
-## 变更日志
+Even then, try first:
+- Local refactoring rather than large-scale rewrite
+- Increase test coverage
+- Improve documentation and comments
 
-| 日期 | 变更 |
-|------|------|
-| 2026-02-21 | 初始版本，来自 2026-01-19 观察记录 |
+---
+
+## Relationship with Other Skills
+
+- Works with `bestpractice_ai_programming_mindset.md`'s "70% problem" diagnosis
+- Works with `bestpractice_staged_approach.md`'s verification mechanism
+- Works with the Todo task management mechanism in the system prompt for task decomposition
+
+## Changelog
+
+| Date | Change |
+|------|--------|
+| 2026-02-21 | Initial version, from 2026-01-19 observation record |

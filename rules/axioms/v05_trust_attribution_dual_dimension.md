@@ -5,44 +5,44 @@ created: 2026-03-01
 updated: 2026-03-01
 ---
 
-# V5. 信任归因双维度
+# V5. Trust Attribution Dual Dimension
 
-## 1. 核心公理
+## 1. Core Axiom
 
-AI 产品的信任维度是二维的：**信任主体**（信任 AI vs 信任团队）和**信任域**（娱乐 vs 生产力）。大多数产品失败的根本原因是用户信任 AI，而不信任团队。
+The trust dimension of AI products is two-dimensional: **trust subject** (trusting AI vs. trusting the team) and **trust domain** (entertainment vs. productivity). The root cause of most product failures is that users trust AI but do not trust the team.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 2×2 矩阵
+### 2×2 Matrix
 
-| | 信任 AI | 不信任 AI |
+| | Trust AI | Distrust AI |
 |---|---|---|
-| **信任团队** | 健康产品 | 团队信誉透支 |
-| **不信任团队** | 高风险（用户被欺骗） | 产品死亡 |
+| **Trust Team** | Healthy product | Team credibility overdrawn |
+| **Distrust Team** | High risk (users deceived) | Product dead |
 
-### 信任错位的根源
+### The Root of Trust Misalignment
 
-用户对工程复杂性的认知偏差："不就是调个 prompt 吗？"这种心态导致用户将产品质量完全归因于 AI 能力，而非团队的工程投入。当产品失败时，用户责怪 AI，而非理解团队的约束。
+Users' cognitive bias about engineering complexity: "Isn't this just a prompt?" This mindset leads users to attribute product quality entirely to AI capability rather than the team's engineering investment. When the product fails, users blame AI rather than understanding the team's constraints.
 
-### 信任主体漂移
+### Trust Subject Drift
 
-信任可能从"AI 的能力"漂移到"AI 本身"（拟人化），再漂移到"这个想法"或"这个平台"。每次漂移都增加了用户对团队决策的盲目性。
+Trust can drift from "AI's capability" to "AI itself" (anthropomorphization), then to "the idea" or "the platform." Each drift increases users' blindness to the team's decisions.
 
-### 策略：黑箱→白箱
+### Strategy: Black Box → White Box
 
-通过可视化中间步骤，让用户看到团队的工程决策。例如：展示 prompt 工程的迭代过程、数据清洗的细节、模型选择的权衡。这不是为了炫耀，而是为了**转移信任主体**——从"AI 有多聪明"转向"团队有多用心"。
+By visualizing intermediate steps, let users see the team's engineering decisions. For example: show the iterative process of prompt engineering, the details of data cleaning, the trade-offs in model selection. This is not about showing off — it is about **shifting the trust subject** from "how smart AI is" to "how thoughtful the team is."
 
-### 正规信息 vs 规范信息分离
+### Separating Positive Information from Normative Information
 
-**正规信息**：AI 能做什么（客观能力）。**规范信息**：团队认为应该怎么用（价值判断）。混淆这两者会导致用户对 AI 的期望失控。清晰分离能帮助用户建立对团队的信任。
+**Positive information**: what AI can do (objective capability). **Normative information**: what the team believes should be done (value judgment). Confusing the two leads to uncontrolled user expectations of AI. Clear separation helps users build trust in the team.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-- **营销文案**：强调团队的工程选择，而非 AI 的神奇能力
-- **Demo 设计**：展示失败案例和团队如何处理边界情况
-- **品牌定位**：建立"我们理解 AI 的局限"的专业形象
-- **用户转化**：从"AI 很强"转向"我们很负责"
+- **Marketing copy**: emphasize the team's engineering choices, not AI's magical capabilities
+- **Demo design**: show failure cases and how the team handles edge conditions
+- **Brand positioning**: build a professional image of "we understand AI's limitations"
+- **User conversion**: shift from "AI is powerful" to "we are responsible"
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-**V03 归因塑造感知**是通用原理；**V05** 是其在 AI 产品设计中的具体应用。**V02 可验证性**提供了信任建立的基础——只有可验证的承诺才能转移信任主体。
+**V03 Attribution Shapes Perception** is the general principle; **V05** is its concrete application in AI product design. **V02 Verifiability** provides the foundation for trust building — only verifiable promises can shift the trust subject.

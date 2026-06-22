@@ -1,158 +1,158 @@
-# AI 编程核心方法论
+# Core AI Programming Methodology
 
-## 元数据
+## Metadata
 
-- **类型**: BestPractice
-- **适用场景**: AI 辅助编程、Agent 系统设计
-- **创建日期**: 2026-02-21
-- **来源**: 多次 AI 编程实践总结
-- **最后更新**: 2026-03-01
-
----
-
-## 基础公理（详见 axioms）
-
-本文件的方法论建立在以下公理之上，此处不重复展开：
-- **T05**：认知是资产，代码是消耗品
-- **T02**：结果确定性优于过程确定性
----
-
-## "70% 问题"的诊断与解决
-
-### 问题本质
-
-AI 编程中常见的"70% 问题"——AI 能完成 70%，但最后 30% 总是各种问题——根本原因是**自我迭代反馈环被打破**：
-
-1. **AI 无法感知产出是否符合期望**：没有"眼睛"看结果
-2. **成功标准太主观**：缺乏明确的"好"的定义，AI 不知道往什么方向迭代
-
-### 解决方案
-
-1. **为 AI 打开感知通道**：
-   - 让 AI 能看到运行结果（截图、日志、测试输出）
-   - 提供 UI 时附带视觉反馈
-   - 执行命令后返回完整输出
-
-2. **建立清晰的成功标准**：
-   - 明确"什么是好"（不只是"能跑"）
-   - 量化指标优于主观描述
-   - 提供参考案例或期望输出
+- **Type**: BestPractice
+- **Applicable Scenarios**: AI-assisted programming, Agent system design
+- **Created**: 2026-02-21
+- **Source**: Summarized from multiple AI programming practices
+- **Last Updated**: 2026-03-01
 
 ---
 
-## Reasoning Model 与 Agentic Workflow 的关系
+## Foundational Axioms (see axioms for details)
 
-### 互补而非替代
+The methodology in this document builds on the following axioms, not repeated here:
+- **T05**: Cognition is an asset, code is consumable
+- **T02**: Outcome determinism over process determinism
+---
 
-- **Reasoning Model**：擅长深度分析、复杂推理、规划
-- **Agentic Workflow**：擅长协调执行、工具调用、状态管理
+## Diagnosis and Resolution of the "70% Problem"
 
-### Reasoning Model 的局限
+### Problem Essence
 
-Reasoning Model 的"反思"是 stateless 的——它无法感知外部世界的变化。思考结束后，世界已经变了。
+The common "70% problem" in AI programming — AI can complete 70%, but the last 30% always has issues — has a root cause: **the self-iteration feedback loop is broken**:
 
-### 推荐架构
+1. **AI cannot perceive whether output meets expectations**: no "eyes" to see results
+2. **Success criteria are too subjective**: lacking a clear definition of "good," AI doesn't know which direction to iterate toward
 
-生产环境采用**混合架构**：
-- Reasoning Model 做深度分析和规划
-- Agentic Workflow 做协调执行和状态管理
-- 外部 orchestration 负责整体流程控制
+### Solutions
+
+1. **Open perception channels for AI**:
+   - Let AI see execution results (screenshots, logs, test output)
+   - Provide visual feedback when offering UI
+   - Return complete output after executing commands
+
+2. **Establish clear success criteria**:
+   - Define "what good looks like" (not just "it runs")
+   - Quantitative metrics over subjective descriptions
+   - Provide reference examples or expected output
 
 ---
 
-## 认知外包的界限
+## Relationship Between Reasoning Model and Agentic Workflow
 
-在 AI 能力越来越强、成本越来越低的时代，需要明确哪些任务可以外包、哪些必须保留：
+### Complementary, Not Substitutive
 
-### 可以外包的
+- **Reasoning Model**: excels at deep analysis, complex reasoning, planning
+- **Agentic Workflow**: excels at coordinating execution, tool calling, state management
 
-- 查漏补缺：信息收集、格式整理
-- 机械执行：重复性编码、文档生成
-- 快速原型：探索性实现
+### Limitations of Reasoning Model
 
-### 必须保留的
+Reasoning Model's "reflection" is stateless — it cannot perceive changes in the external world. By the time thinking ends, the world has already changed.
 
-- 形成自己的观点
-- 定义问题和成功标准
-- 关键决策的价值判断
-- 对输出质量的最终审核
+### Recommended Architecture
 
----
-
-## "直觉"优于"程序"拐点
-
-对于复杂语义任务，LLM 的"黑盒直觉"可能比显性逻辑代码更具韧性和效率。
-
-当任务涉及：
-- 复杂语义理解
-- 多因素权衡
-- 边界模糊的判断
-
-LLM 的端到端处理可能比显式规则更robust。这是从"程序思维"到"直觉思维"的范式转变。
+Adopt a **hybrid architecture** in production:
+- Reasoning Model for deep analysis and planning
+- Agentic Workflow for coordinating execution and state management
+- External orchestration for overall process control
 
 ---
 
-## 文件系统作为天然状态机
+## Boundaries of Cognitive Outsourcing
 
-本地 Agent 模式的核心设计原则：
-- 文件系统本身就是最可靠的状态持久化层
-- 状态变更 = 文件操作，天然可审计、可回滚
-- 避免「内存状态 + 手动持久化」的复杂性
+In an era of increasingly capable and affordable AI, we need clarity on which tasks can be outsourced and which must be retained:
 
----
+### Can Be Outsourced
 
-## AI 时代数据科学家三大原型
+- Gap-filling: information gathering, formatting
+- Mechanical execution: repetitive coding, document generation
+- Rapid prototyping: exploratory implementation
 
-技能正在贬值，但特质与性格越来越重要。三种角色：
+### Must Be Retained
 
-1. **架构师**：定义问题、设计系统、编排能力边界
-2. **审计师**：评估质量、发现模式、交叉验证
-3. **全栈构建者**：端到端交付、快速原型、集成验证
-
-核心洞察：同一人可以扮演不同角色，但明确当前角色能避免思维混乱。
-
-## 注意事项
-
-- **生产力陷阱**：为节省微小 Token 成本而牺牲开发者心智带宽和 Flow 状态，属于过早优化
-- **物理锚点**：复杂逻辑校验的最终防线是物理常识（见 `bestpractice_temporal_info_verification.md`）
-- **上下文腐烂**：定期反思和固化方法论，避免上下文在 session 间丢失
+- Forming your own opinions
+- Defining problems and success criteria
+- Value judgment for key decisions
+- Final review of output quality
 
 ---
 
-## AI 落地核心决策
+## The "Intuition Over Program" Inflection Point
 
-基于《以一个简单任务为例看 AI 落地的关键决策》提炼：
+For complex semantic tasks, LLM's "black-box intuition" may be more robust and efficient than explicit logic code.
 
-### 1. 用本地 Coding Agent 而非 ChatGPT
+When tasks involve:
+- Complex semantic understanding
+- Multi-factor trade-offs
+- Judgment with fuzzy boundaries
 
-- 降低上下文传递与落地摩擦
-- Agent 直接操作代码库，而非复制粘贴
-- ChatGPT 适合快速问答，不适合系统开发
-
-### 2. 动手前先定义成功标准
-
-- 建立测试作为 feedback loop
-- 明确"什么是好"，不只"能跑"
-- 测试是给 AI 的导航信号
-
-### 3. 让 Agent 自己处理 corner case
-
-- 结果确定性 vs 过程确定性
-- 不要事无巨细规定步骤，让 AI 自己决策实现路径
-- 关注产出是否符合预期，而非实现过程是否"正确"
-
-### 4. Divide and conquer 应对 context window saturation
-
-- 8 个 sub-agent 并行处理
-- 每个 sub-agent 职责单一
-- 最后汇总而非一次性塞入所有信息
-
-### 5. Prompt 自举且结果导向
-
-- 让 AI 自己迭代和改进
-- 不规定每一步怎么做
-- 用 2 分钟撬动 AI 45 分钟工作量——AI 是杠杆
+LLM's end-to-end processing may be more robust than explicit rules. This is a paradigm shift from "programmatic thinking" to "intuitive thinking."
 
 ---
 
-**最后更新**: 2026-03-01
+## File System as Natural State Machine
+
+Core design principles for local Agent mode:
+- The file system itself is the most reliable state persistence layer
+- State changes = file operations, naturally auditable and rollback-able
+- Avoid the complexity of "in-memory state + manual persistence"
+
+---
+
+## Three Archetypes of Data Scientists in the AI Era
+
+Skills are depreciating, but traits and character are becoming increasingly important. Three roles:
+
+1. **Architect**: defines problems, designs systems, orchestrates capability boundaries
+2. **Auditor**: evaluates quality, discovers patterns, cross-validates
+3. **Full-stack Builder**: end-to-end delivery, rapid prototyping, integration verification
+
+Core insight: the same person can play different roles, but clarifying the current role avoids mental confusion.
+
+## Cautions
+
+- **Productivity trap**: sacrificing developer mental bandwidth and flow state to save minor token costs is premature optimization
+- **Physical anchor**: the final defense for complex logic verification is physical common sense (see `bestpractice_temporal_info_verification.md`)
+- **Context decay**: periodically reflect and solidify methodology to avoid context loss between sessions
+
+---
+
+## Core Decisions for AI Implementation
+
+Distilled from "Key Decisions in AI Implementation Through a Simple Task":
+
+### 1. Use Local Coding Agent Instead of ChatGPT
+
+- Reduce context transfer and implementation friction
+- Agent directly operates on the codebase, not copy-paste
+- ChatGPT is suitable for quick Q&A, not system development
+
+### 2. Define Success Criteria Before Starting
+
+- Establish tests as a feedback loop
+- Define "what good looks like," not just "it runs"
+- Tests are navigation signals for AI
+
+### 3. Let Agent Handle Corner Cases Itself
+
+- Outcome determinism vs process determinism
+- Don't prescribe every step; let AI decide its own implementation path
+- Focus on whether output meets expectations, not whether the implementation process is "correct"
+
+### 4. Divide and Conquer to Handle Context Window Saturation
+
+- 8 sub-agents processing in parallel
+- Each sub-agent has a single responsibility
+- Aggregate at the end rather than stuffing all information in at once
+
+### 5. Prompt Bootstrapping and Outcome-Oriented
+
+- Let AI iterate and improve itself
+- Don't prescribe how to do each step
+- Use 2 minutes to leverage 45 minutes of AI work — AI is a lever
+
+---
+
+**Last Updated**: 2026-03-01

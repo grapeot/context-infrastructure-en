@@ -1,5 +1,5 @@
 ---
-title: API Key 管理与调用最佳实践（1Password CLI）
+title: API Key Management Best Practice (1Password CLI)
 category: BestPractice
 tags: [security, api-key, 1password, op-cli, environment-variables]
 difficulty: Medium
@@ -8,22 +8,22 @@ created: 2026-02-13
 updated: 2026-02-13
 ---
 
-# API Key 管理与调用最佳实践（1Password CLI）
+# API Key Management Best Practice (1Password CLI)
 
-本文总结本地开发与生产环境中，如何使用 1Password CLI（`op`）安全管理并注入 API Key，避免明文泄漏与长期驻留风险。
+This document summarizes how to securely manage and inject API keys using the 1Password CLI (`op`) in local development and production environments, avoiding plaintext leaks and long-term persistence risks.
 
-## 1. 核心原则
+## 1. Core Principles
 
-1. 不在 `.zshrc`、仓库文件、脚本参数中存放明文密钥。
-2. 本地开发使用 `op run --env-file ... -- <command>` 按需注入。
-3. 生产环境使用机器身份（Service Account），不要依赖桌面 App 指纹弹窗。
-4. 密钥最小权限、可轮换、可吊销，泄漏后优先 rotate。
+1. Do not store plaintext keys in `.zshrc`, repository files, or script parameters.
+2. In local development, use `op run --env-file ... -- <command>` for on-demand injection.
+3. In production, use machine identities (Service Accounts); do not rely on desktop app fingerprint prompts.
+4. Keys should have least privilege, be rotatable, and be revocable; prioritize rotation after a leak.
 
-## 2. 本地开发（Mac）推荐模式
+## 2. Recommended Pattern for Local Development (Mac)
 
-### 2.1 使用 secret reference 而非明文
+### 2.1 Use Secret References Instead of Plaintext
 
-在本地文件 `~/.config/op/env.secrets` 存放引用：
+Store references in the local file `~/.config/op/env.secrets`:
 
 ```dotenv
 OPENAI_API_KEY=op://dev/dev-api-keys/openai_api_key
@@ -31,32 +31,32 @@ TAVILY_API_KEY=op://dev/dev-api-keys/tavily_api_key
 GEMINI_API_KEY=op://dev/dev-api-keys/gemini_api_key
 ```
 
-此文件不包含明文密钥，可安全于本机保存（建议权限 `600`）。
+This file contains no plaintext keys and can be safely stored locally (recommended permissions `600`).
 
-### 2.2 命令级注入
+### 2.2 Command-Level Injection
 
 ```bash
 op run --env-file ~/.config/op/env.secrets -- python app.py
 op run --env-file ~/.config/op/env.secrets -- nvim
 ```
 
-优点：只对目标进程生效，不污染当前 shell 的全局环境变量。
+Advantage: only affects the target process, does not pollute the current shell's global environment variables.
 
-### 2.3 关于指纹/密码授权
+### 2.3 About Fingerprint/Password Authorization
 
-本地出现 1Password 授权弹窗是正常安全行为。通常只在 1Password 锁定时触发，并非每条命令都重复授权。频率由自动锁定策略决定。
+A 1Password authorization prompt appearing locally is normal security behavior. It typically triggers only when 1Password is locked, not on every command. Frequency is determined by the auto-lock policy.
 
-## 3. 生产环境（无交互）推荐模式
+## 3. Recommended Pattern for Production (Non-Interactive)
 
-生产环境目标是“可自动重启、可无人值守”，不应依赖桌面授权。
+The production goal is "auto-restartable, unattended" and should not depend on desktop authorization.
 
-推荐方案：
+Recommended approach:
 
-1. 创建 1Password Service Account（只读、限定 vault）。
-2. 在服务器安全保存 `OP_SERVICE_ACCOUNT_TOKEN`（如 systemd EnvironmentFile）。
-3. 启动脚本内使用 `op read` 拉取密钥后启动进程管理器（如 PM2）。
+1. Create a 1Password Service Account (read-only, scoped to a specific vault).
+2. Securely store `OP_SERVICE_ACCOUNT_TOKEN` on the server (e.g., systemd EnvironmentFile).
+3. In the startup script, use `op read` to pull keys, then start the process manager (e.g., PM2).
 
-示意：
+Illustration:
 
 ```bash
 export OPENAI_API_KEY="$(op read 'op://dev/dev-api-keys/openai_api_key')"
@@ -64,41 +64,41 @@ pm2 start ecosystem.config.js --env production --update-env
 pm2 save
 ```
 
-## 4. 避免的反模式
+## 4. Anti-Patterns to Avoid
 
-1. 在 `.zshrc` 里 `export API_KEY=...` 明文。
-2. 在命令行参数里直接传密钥（会落历史、可被进程查看）。
-3. 把同一组 key 混用在 dev/staging/prod。
-4. 只做“导入”不做“轮换”，导致历史泄漏长期有效。
+1. `export API_KEY=...` in plaintext in `.zshrc`.
+2. Passing keys directly in command-line arguments (will land in history, can be inspected by other processes).
+3. Mixing the same set of keys across dev/staging/prod.
+4. Only doing "import" without "rotation," making historical leaks permanently valid.
 
-## 5. 最小落地清单
+## 5. Minimum Implementation Checklist
 
-1. 清理 dotfiles 中明文密钥。
-2. 建立 `dev-api-keys` item，并统一字段命名（snake_case）。
-3. 使用 `~/.config/op/env.secrets` + `op run`。
-4. 为生产环境配置 Service Account token 注入链路。
-5. 为密钥设置定期轮换流程与泄漏应急流程。
+1. Clean plaintext keys from dotfiles.
+2. Create a `dev-api-keys` item with unified field naming (snake_case).
+3. Use `~/.config/op/env.secrets` + `op run`.
+4. Configure Service Account token injection chain for production.
+5. Establish a regular key rotation process and a leak emergency procedure.
 
-## 6. 代码中调用 API Key
+## 6. Calling API Keys in Code
 
-在 Python/Node 脚本中，不要硬编码或读取 .env，而是通过 `op read` 获取：
+In Python/Node scripts, do not hardcode or read `.env`; instead, retrieve via `op read`:
 
 ```python
 import subprocess
 import os
 
 def get_api_key(service: str) -> str:
-    """从 1Password 获取 API key。
+    """Retrieve API key from 1Password.
     
     Args:
-        service: 如 'tavily_api_key', 'openai_api_key'
+        service: e.g., 'tavily_api_key', 'openai_api_key'
     """
-    # 优先环境变量（CI/CD 场景）
+    # Prefer environment variable (CI/CD scenario)
     env_key = os.environ.get(service.upper())
     if env_key:
         return env_key
     
-    # 从 1Password 读取
+    # Read from 1Password
     result = subprocess.run(
         ["op", "read", f"op://dev/dev-api-keys/{service}"],
         capture_output=True,
@@ -107,11 +107,11 @@ def get_api_key(service: str) -> str:
     )
     return result.stdout.strip()
 
-# 使用
+# Usage
 api_key = get_api_key("tavily_api_key")
 ```
 
-**要点**：
-1. 优先检查环境变量（兼容 CI/CD）
-2. 本地开发走 `op read`
-3. vault 路径统一为 `op://dev/dev-api-keys/<service>`
+**Key points**:
+1. Check environment variables first (CI/CD compatibility)
+2. Local development uses `op read`
+3. Vault path unified as `op://dev/dev-api-keys/<service>`

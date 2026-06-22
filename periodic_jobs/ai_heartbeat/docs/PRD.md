@@ -1,70 +1,70 @@
-# AI Heartbeat: 渐进式披露记忆系统产品需求文档 (PRD)
+# AI Heartbeat: Progressive Disclosure Memory System — Product Requirements Document (PRD)
 
-## 1. 产品概述
+## 1. Product Overview
 
-### 1.1 愿景
-构建一个**Agentic 驱动的、全局统一但按需披露的观测记忆系统**。彻底摆脱由外部脚本“拼凑 Prompt 并喂给 AI”的低级模式，转而让 AI 引擎（OpenCode-Builder）在接收到简单的“路径与目标”后，自主探索文件系统、分配子任务并提纯观测结果。系统遵循 **Progressive Disclosure** 理念：记忆池是全局的，但 Agent 接收到的上下文始终保持稀疏（Sparse）和高密度（High Density）。
+### 1.1 Vision
+Build an **agentic-driven, globally unified but on-demand disclosure observation memory system**. Move away from the low-level pattern of external scripts "assembling prompts and feeding them to AI." Instead, let the AI engine (OpenCode-Builder) receive a simple "path and goal," autonomously explore the file system, assign sub-tasks, and distill observations. The system follows **Progressive Disclosure**: the memory pool is global, but the context the agent receives stays sparse and high-density.
 
-### 1.2 核心价值主张
-- **Agentic 自主探索**: 脚本只负责触发任务和提供线索（文件路径），AI 负责阅读、过滤（如排除仅格式变动的 Blog）和总结。
-- **渐进式披露 (Progressive Disclosure)**: 默认不加载详细记忆，仅由 Agent 根据当前任务逻辑主动检索相关的 L1/L2 观测点。
-- **全局分层架构**: 
-  - **L3**: 全局硬性约束（存放在 `rules/`，全局被动加载）。
-  - **L1/L2**: 动态观测日志（存放在全局记忆池，Agent 主动检索）。
-- **抗噪设计**: 利用 AI 的语义理解能力识别真正的“新内容”。例如，针对 300+ 篇 Blog 的格式变动，AI 应通过检查元数据（Metadata）中的创建日期来识别真正的新文章。
+### 1.2 Core Value Proposition
+- **Agentic autonomous exploration**: Scripts only trigger tasks and provide clues (file paths). The AI handles reading, filtering (e.g., excluding blog posts that only had formatting changes), and summarizing.
+- **Progressive Disclosure**: Detailed memory is not loaded by default. The agent actively retrieves only the L1/L2 observations relevant to the current task.
+- **Global layered architecture**:
+  - **L3**: Global hard constraints (stored in `rules/`, passively loaded globally).
+  - **L1/L2**: Dynamic observation log (stored in a global memory pool, agent actively retrieves).
+- **Noise-resistant design**: Uses the AI's semantic understanding to identify genuinely "new content." For example, when 300+ blog posts show file changes, the AI checks the `Date` field in metadata to identify truly new articles.
 
-### 1.3 目标用户
-- **OpenCode-Builder**: 作为记忆的生产者和核心消费者。
-- **开发者**: 仅作为系统边界的定义者和记忆日志的最终审计者。
-
----
-
-## 2. 核心设计原则 (The Agentic Way)
-
-### 2.1 拒绝 Push 模式，拥抱 Pull 模式
-传统的系统试图把所有 Context “推送”给模型。本系统要求 Agent 具备“拉取”意识。脚本告诉 Agent：“这些文件变了，去把有价值的 lessons 学回来”，Agent 应该自己决定读什么、读多少。
-
-### 2.2 记忆稀疏性假设 (Sparse Context Assumption)
-我们假设：对于任何给定任务，真正相关的记忆是极少数的。因此，全局记忆池（OBSERVATIONS.md）允许不断增长，但 Agent 必须能够通过标签（Tags）或关键字进行高效的局部加载。
-
-### 2.3 零摩擦资产化
-记忆日志采用纯文本追加模式。它不仅是 Agent 的运行状态机，也是开发者的知识资产。
+### 1.3 Target Users
+- **OpenCode-Builder**: The producer and core consumer of memory.
+- **Developer**: Only as the definer of system boundaries and the final auditor of the memory log.
 
 ---
 
-## 3. 功能需求：三层分级体系
+## 2. Core Design Principles (The Agentic Way)
 
-### 3.1 L3: 全局约束与哲学 (Global Constraints)
-- **内容**: 存放于 `rules/SOUL.md` 和 `rules/USER.md`。
-- **硬性约束**: 必须包含语言风格约束（不准用大词、不准用营销词、不准用引号、尽量避免 "not" 负向句式）、应对策略等。
-- **加载方式**: Session 启动时被动全局加载。
+### 2.1 Reject Push, Embrace Pull
+Traditional systems try to "push" all context to the model. This system requires the agent to have "pull" awareness. The script tells the agent: "These files changed. Go learn the valuable lessons." The agent decides what to read and how much.
 
-### 3.2 L1: 每日观测与心跳 (Daily Observation)
-- **内容**: 过去 24 小时的关键事件、技术决策、真实的错误修复经验。
-- **打标格式**: `🔴 High (方法论/约束)`、`🟡 Medium (项目状态/决策)`、`🟢 Low (任务流水)`。
-- **产生方式**: 脚本仅提供 `find` 命令找出的文件路径集合，交给 OpenCode-Builder。Agent 自主处理（包括调用 Sub-agent 读文件、检查 Metadata）。
+### 2.2 Sparse Context Assumption
+We assume: for any given task, truly relevant memories are very few. Therefore, the global memory pool (OBSERVATIONS.md) is allowed to grow continuously, but the agent must be able to efficiently load subsets through tags or keywords.
 
-### 3.3 L2: 记忆蒸馏与反思 (Weekly Reflection)
-- **职责**: 垃圾回收。
-- **逻辑**: 每周运行，AI 自主读取 L1 记忆池，删除过期的 🟢，合并同主题的 🟡，将共性经验晋升为 🔴。
+### 2.3 Zero-Friction Assetization
+The memory log uses a plain-text append-only format. It is both the agent's runtime state machine and the developer's knowledge asset.
 
 ---
 
-## 4. 关键业务流 (User Story)
+## 3. Functional Requirements: Three-Tier Hierarchy
 
-### 4.1 智能体自发的心跳任务
-1. **触发**: 系统 Cron Job 触发脚本。
-2. **输入**: 脚本执行 `find -mtime -1`，获得一个长路径列表（可能包含 300+ 篇变动的 Blog）。
-3. **分配**: 脚本启动一个 OpenCode-Builder Session。
-4. **指令**: “这是过去 24 小时变动的文件列表。你的目标是生成观测记录。注意：对于 blog/ 目录下的文章，请检查其 Metadata 中的 Date 字段，仅处理真正今天创作的内容。如果是格式重排，请忽略。”
-5. **执行**: Agent 看到任务后，自主启动 sub-agents (librarian/explore) 分头读取文件，最后汇总输出。
-6. **产出**: 结果 Append 到全局 `contexts/memory/OBSERVATIONS.md`。
+### 3.1 L3: Global Constraints and Philosophy
+- **Content**: Stored in `rules/SOUL.md` and `rules/USER.md`.
+- **Hard constraints**: Must include language style constraints (no big words, no marketing terms, no quotation marks, avoid negative "not" sentence patterns as much as possible), coping strategies, etc.
+- **Loading method**: Passively loaded globally at session start.
+
+### 3.2 L1: Daily Observation and Heartbeat
+- **Content**: Key events, technical decisions, and real bug-fix experiences from the past 24 hours.
+- **Tagging format**: `🔴 High (methodology/constraint)`, `🟡 Medium (project status/decision)`, `🟢 Low (task log)`.
+- **Generation method**: The script only provides a set of file paths found by `find`. The rest is handed to OpenCode-Builder. The agent processes autonomously (including calling sub-agents to read files and check metadata).
+
+### 3.3 L2: Memory Distillation and Reflection (Weekly)
+- **Responsibility**: Garbage collection.
+- **Logic**: Runs weekly. The AI autonomously reads the L1 memory pool, deletes expired 🟢 entries, merges same-topic 🟡 entries, and promotes common patterns to 🔴.
 
 ---
 
-## 5. 技术约束与集成
+## 4. Key Business Flow (User Story)
 
-- **执行引擎**: 本地 OpenCode Server (localhost:<your-port>)。
-- **核心模型**: `<your-model>`。
-- **Agent Identity**: `<your-agent>`。
-- **记忆存储**: Markdown 文件（支持 Git 版本控制）。
+### 4.1 Agent-Initiated Heartbeat Task
+1. **Trigger**: System cron job triggers the script.
+2. **Input**: The script runs `find -mtime -1`, producing a long path list (potentially including 300+ changed blog posts).
+3. **Dispatch**: The script starts an OpenCode-Builder session.
+4. **Instruction**: "Here is the list of files changed in the past 24 hours. Your goal is to generate observation records. Note: for articles under the blog/ directory, check the Date field in their metadata. Only process content genuinely created today. Ignore formatting rearrangements."
+5. **Execution**: The agent sees the task, autonomously starts sub-agents (librarian/explore) to read files in parallel, then aggregates the output.
+6. **Output**: Results appended to the global `contexts/memory/OBSERVATIONS.md`.
+
+---
+
+## 5. Technical Constraints and Integration
+
+- **Execution engine**: Local OpenCode Server (localhost:<your-port>).
+- **Core model**: `<your-model>`.
+- **Agent identity**: `<your-agent>`.
+- **Memory storage**: Markdown files (supports Git version control).

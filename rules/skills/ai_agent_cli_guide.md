@@ -1,238 +1,275 @@
-# AI CLI Agent 实用指南
+# AI CLI Agent Practical Guide
 
-## 元数据
-- 类型: API Guide
-- 适用场景: 用 CLI Agent 构建自动化流水线、AI 调用 AI
-- 最后更新: 2026-03-10
-
----
-
-## 何时用 CLI Agent 而非原始 API
-
-直接调用 LLM API 在处理复杂任务时存在短板。CLI Agent 作为中间层的核心优势：
-
-1. **对抗"模型偷懒"**: 大任务时 API 易输出截断，Agent 天生具备循环执行和自我纠正能力
-2. **原生文件上下文**: Agent 自动处理文件读取、编码和写入，将推理与 IO 解耦
-3. **继承工具链**: 内置 MCP 插件，可随时调用 Tavily 搜索、执行脚本等
-4. **优化上下文管理**: 自动处理 Context Window 消耗和长对话压缩
+## Metadata
+- Type: API Guide
+- Use when: building automation pipelines with CLI Agents, AI-calling-AI
+- Last updated: 2026-04-29
 
 ---
 
-## 工具速查
+## When to Use a CLI Agent Instead of Raw API
 
-| 维度 | Claude Code | Codex CLI | OpenCode |
+Direct LLM API calls have shortcomings for complex tasks. CLI Agents as an intermediate layer provide these core advantages:
+
+1. **Countering "model laziness"**: Raw APIs tend to truncate output on large tasks; agents natively have loop execution and self-correction capabilities
+2. **Native file context**: Agents automatically handle file reading, encoding, and writing, decoupling reasoning from I/O
+3. **Inherited toolchain**: Built-in MCP plugins allow calling Tavily search, executing scripts, etc. on demand
+4. **Optimized context management**: Automatic handling of context window consumption and long-conversation compression
+
+---
+
+## Tool Quick Reference
+
+| Dimension | Claude Code | Codex CLI | OpenCode |
 |------|-------------|-----------|----------|
-| **开源** | ❌ | ❌ | ✅ 100% |
-| **模型绑定** | 仅 Claude | 仅 OpenAI | Provider-agnostic（xAI, Anthropic, OpenAI, Google 等） |
-| **CLI 非交互** | `claude --print` | `codex exec` | `opencode serve` + `opencode run --attach`（两步） |
-| **Web API** | ❌ | ❌ | ✅ 完整 |
-| **推荐场景** | 深度推理 | 自动化 | 多模型对比、自动化 + 可视化 |
+| **Open source** | No | No | Yes, 100% |
+| **Model lock-in** | Claude only | OpenAI only | Provider-agnostic (xAI, Anthropic, OpenAI, Google, etc.) |
+| **CLI non-interactive** | `claude --print` | `codex exec` | `opencode serve` + `opencode run --attach` (two-step) |
+| **Web API** | No | No | Yes, full |
+| **Recommended use** | Deep reasoning | Automation | Multi-model comparison, automation + visualization |
 
 ---
 
-## 文件响应模式（核心设计原则）
+## File Response Pattern (Core Design Principle)
 
-**原则**: 在生产环境中，所有输入输出都通过文件，严禁使用管道模式处理核心逻辑。
+**Principle**: In production, all input and output go through files. Never use pipe mode for core logic.
 
-**为什么**:
-- **确定性**: AI 在"编辑文件"时的心理模型是"完成工作并保存"，不容易产生截断
-- **可审计**: 任务前后文件系统的变化（git diff）是唯一的真理
-- **大容量**: 绕过命令行参数长度限制
+**Why**:
+- **Determinism**: When AI "edits a file", its mental model is "complete the work and save", making truncation less likely
+- **Auditability**: File system changes before and after a task (git diff) are the single source of truth
+- **High capacity**: Bypasses command-line argument length limits
 
-**实现要点**:
-- **输入**: Prompt 必须先落到本地文件，再由程序读入
-- **输出**: CLI 输出必须写入本地文件，再由程序读取解析
-- **JSON 输出**: 在 Prompt 中显式要求"只输出 JSON"
+**Implementation points**:
+- **Input**: Prompts must first be written to a local file, then read by the program
+- **Output**: CLI output must be written to a local file, then read and parsed by the program
+- **JSON output**: Explicitly require "output only JSON" in the prompt
 
-**Python 示例**:
+**Python example**:
 ```python
 import subprocess
 from pathlib import Path
 
-# 1. 写 prompt 到文件
+# 1. Write prompt to file
 Path("prompt.txt").write_text("Your task here...")
 
-# 2. 构造驱动 prompt
+# 2. Construct driver prompt
 driver_prompt = (
     f"Read the full prompt from {Path('prompt.txt').resolve()}\n"
     f"Write ONLY a JSON object to {Path('output.json').resolve()}\n"
     "Do not include Markdown or extra text."
 )
 
-# 3. 执行（以 Claude Code 为例）
+# 3. Execute (Claude Code example)
 subprocess.run([
     "claude", "--print", "--output-format", "json",
-    "--model", "claude-sonnet-4-6-20260217",
-    driver_prompt.replace('\0', '')  # 清理 null byte
+    "--model", "claude-opus-4-6",
+    driver_prompt.replace('\0', '')  # Strip null bytes
 ])
 ```
 
 ---
 
-## Claude Code 快速参考
+## Claude Code Quick Reference
 
-**基本命令**: `claude --print "prompt"`
+Claude Code content has been split into a separate skill: [`claude_code.md`](./claude_code.md).
 
-**关键参数**:
-- `--model`: `claude-sonnet-4-6-20260217` (推荐) 或 `claude-opus-4-6-20260205` (深度推理)
-- `--output-format`: `text` / `json` / `stream-json`
-- `--permission-mode`: `acceptEdits` / `bypassPermissions`
-- `--json-schema`: 强制输出符合 JSON Schema
+This overview page only retains cross-tool common content. For the following topics, jump directly to `claude_code.md`:
 
-**推荐**: Sonnet 4.6 性能接近 Opus，价格仅 1/5
-
----
-
-## Codex CLI 快速参考
-
-**基本命令**: `codex exec [options] "prompt"`
-
-**关键参数**:
-- `-m, --model`: `gpt-5.2` (推荐)
-- `-c model_reasoning_effort`: `low` (翻译) / `medium` (常规) / `high` (深度重构)
-- `--full-auto`: 自动接受所有操作
-- `--json`: JSON 输出格式
-
-**推荐**: 简单任务用 `low`，复杂任务用 `high`
+- Using the `claude` CLI, not the Claude routing subagent
+- Default to Opus
+- Wrap Claude Code with a background subagent to stay non-blocking, but don't pre-do research for it
+- Launch from workspace root
+- `claude -p` non-interactive invocation, permissions, and tool control
+- Temporary context files and Python wrapper notes
 
 ---
 
-## OpenCode 快速参考
+## Codex CLI Quick Reference
 
-OpenCode 有两种非交互调用方式：CLI（`opencode run`）和 Web Server API。
+**Basic command**: `codex exec [options] "prompt"`
 
-### 方式 A：CLI（serve + run --attach）
+**Key parameters**:
+- `-m, --model`: `gpt-5.2` (recommended)
+- `-c model_reasoning_effort`: `low` (translation) / `medium` (regular) / `high` (deep refactoring)
+- `--full-auto`: Auto-accept all operations
+- `--json`: JSON output format
 
-`opencode run` 单独执行会因内置 server 启动失败报 "Session not found"。**正确用法**是先起 headless server，再 attach 上去：
+**Recommendation**: Use `low` for simple tasks, `high` for complex tasks
+
+### Codex Built-in imagegen
+
+Codex CLI can currently trigger the built-in `imagegen` capability through natural language. The key is having `codex exec` receive an instruction like `Use imagegen to create an image with this request:`; the prompt can be natural language, not necessarily JSON. JSON's value is mainly in templating and stable reuse, e.g. managing `subject / background / lighting / composition` separately for e-commerce assets.
+
+Minimal working command:
 
 ```bash
-# 1. 启动 headless server（后台常驻，端口可自定义）
+codex exec --ephemeral --skip-git-repo-check --sandbox read-only --color never - <<< "Use imagegen to create an image with this request:
+A single transparent glass lemon sculpture on a clean white studio background. The lemon is made of thick translucent glass with subtle yellow tint, realistic refraction, caustic light patterns on the surface below, soft diffused studio lighting, centered product photography composition, high-end commercial still life, crisp details, no text, no watermark.
+
+Requirements:
+- Generate the image directly
+- Do not provide explanation
+- Return only the image result"
+```
+
+With reference images, pass them via `--image` to Codex and explain the reference usage in the prompt:
+
+```bash
+codex exec --ephemeral --skip-git-repo-check --sandbox read-only --color never \
+  --image /path/to/product.png \
+  - <<< "Use imagegen to create an image with this request:
+Create a premium e-commerce hero image of the same product as the reference image, clean white studio background, soft diffused lighting, centered product photography composition, no text, no watermark.
+
+Reference image(s) are attached. Use them as visual identity/style references.
+Requirements:
+- Generate the image directly
+- Do not provide explanation
+- Return only the image result"
+```
+
+Generated results typically land in `~/.codex/generated_images/<session_id>/`. In practice, `codex exec` stdout may only output brief text and not directly print the image path; after calling, check this directory and copy the final image to the current project or user-specified path. This capability uses Codex/ChatGPT subscription quota, not the local `image-generation-skill` repo's Gemini/OpenAI API key path.
+
+---
+
+## OpenCode Quick Reference
+
+OpenCode has two non-interactive invocation methods: CLI (`opencode run`) and Web Server API.
+
+### Method A: CLI (serve + run --attach)
+
+Running `opencode run` alone fails with "Session not found" due to built-in server startup failure. **The correct usage** is to start a headless server first, then attach to it:
+
+```bash
+# 1. Start headless server (background daemon, port customizable)
 opencode serve --port 14097 &
 
-# 2. 发送任务（attach 到已有 server）
+# 2. Send task (attach to existing server)
 opencode run \
   --attach "http://localhost:14097" \
   -m "xai/grok-4.20-experimental-beta-0304-non-reasoning" \
   --dir "/path/to/project" \
-  "你的 prompt"
+  "your prompt"
 ```
 
-**关键参数**:
-- `--attach`: 连接到已运行的 server（必须）
-- `-m, --model`: `provider/model` 格式（如 `xai/grok-4.20-experimental-beta-0304-non-reasoning`）
-- `--dir`: 指定 agent 的工作目录（server 端路径）
-- `--format json`: JSON 事件流输出（适合程序解析）
-- `--agent`: 指定 agent（默认 build）
-- `--variant`: reasoning effort（如 `high`, `max`, `minimal`，provider-specific）
+**Key parameters**:
+- `--attach`: Connect to a running server (required)
+- `-m, --model`: `provider/model` format (e.g. `xai/grok-4.20-experimental-beta-0304-non-reasoning`)
+- `--dir`: Specify the agent's working directory (server-side path)
+- `--format json`: JSON event stream output (suitable for program parsing)
+- `--agent`: Specify agent (default: build)
+- `--variant`: Reasoning effort (e.g. `high`, `max`, `minimal`, provider-specific)
 
-**查看可用模型**: `opencode models | grep xai`
+**View available models**: `opencode models | grep xai`
 
-**Server 管理**:
-- Server 和工作目录绑定。建议从一个固定目录启动以统一 session 管理
-- Server 启动后可处理多个 `run --attach` 请求
-- 停止：`kill` 进程或 `Ctrl+C`
+**Server management**:
+- Server is bound to a working directory. Start from a fixed directory for unified session management
+- After startup, the server can handle multiple `run --attach` requests
+- Stop: `kill` the process or `Ctrl+C`
 
-### 方式 B：Web Server API（Python 编程调用）
+### Method B: Web Server API (Python programmatic calls)
 
-适合需要精细控制 session 生命周期的场景。
+Suitable for scenarios requiring fine-grained session lifecycle control.
 
-**启动 Server**: `opencode web --port 4096`（或 `opencode serve --port 4096`）
+**Start server**: `opencode web --port 4096` (or `opencode serve --port 4096`)
 
-**Python 客户端**: `periodic_jobs/ai_heartbeat/src/v0/opencode_client.py` 已实现常用 API 封装
+**Python client**: `periodic_jobs/ai_heartbeat/src/v0/opencode_client.py` has implemented common API wrappers
 - `create_session()` / `send_message()` / `get_session_messages()` / `wait_for_session_complete()`
 
-**模型格式**: `provider/model` (如 `xai/grok-4.20-experimental-beta-0304-non-reasoning`, `anthropic/claude-sonnet-4-20250514`)
+**Model format**: `provider/model` (e.g. `xai/grok-4.20-experimental-beta-0304-non-reasoning`, `anthropic/claude-opus-4-6`)
 
-### 方式选择
+### Method Selection
 
-| 场景 | 推荐方式 |
+| Scenario | Recommended Method |
 |------|----------|
-| 单次任务、快速实验 | CLI（serve + run --attach） |
-| 批量实验、需程序控制 session | Web Server API |
-| AI 调用 AI（文件响应模式） | CLI（更简单）或 API（更可控） |
+| One-off task, quick experiment | CLI (serve + run --attach) |
+| Batch experiments, programmatic session control | Web Server API |
+| AI-calling-AI (file response pattern) | CLI (simpler) or API (more controllable) |
 
-### 常用模型速查
+### Common Model Quick Reference
 
-| Provider | Model ID | 特点 |
+Claude Code default model selection rule: **Always use Opus 4.6.** No longer distinguish trivial vs. non-trivial, and no proactive downgrade to Sonnet. For any Claude Code invocation, default to explicitly specifying Opus.
+
+| Provider | Model ID | Characteristics |
 |----------|----------|------|
-| xai | `grok-4.20-experimental-beta-0304-non-reasoning` | Grok 4.20 非推理，快速 |
-| xai | `grok-4.20-experimental-beta-0304-reasoning` | Grok 4.20 推理版 |
-| xai | `grok-4-1-fast-non-reasoning` | Grok 4.1 非推理，$0.20/1M input |
-| anthropic | `claude-opus-4-6` | Claude 深度推理 |
-| anthropic | `claude-sonnet-4-6` | Claude 常规，性价比高 |
-| openai | `gpt-5.4` | GPT-5.4（需 Codex 插件） |
+| xai | `grok-4.20-experimental-beta-0304-non-reasoning` | Grok 4.20 non-reasoning, fast |
+| xai | `grok-4.20-experimental-beta-0304-reasoning` | Grok 4.20 reasoning edition |
+| xai | `grok-4-1-fast-non-reasoning` | Grok 4.1 non-reasoning, $0.20/1M input |
+| anthropic | `claude-opus-4-6` | Claude Code default and sole first choice; suitable for research, comprehensive analysis, multi-step tasks, and high-quality output |
+| openai | `gpt-5.4` | GPT-5.4 (requires Codex plugin) |
 
 ---
 
-## AI 调用 AI 模式
+## AI-Calling-AI Pattern
 
-如果你正在编写一个 Agent 来调用这些 CLI，提供如下元指令：
+If you are writing an Agent to call these CLIs, provide the following meta-instruction:
 
-> "当面临大规模文本处理或文件系统操作时，请调用底层的 CLI Agent：
-> 1. 优先使用文件响应模式，先将待处理内容存入本地临时文件
-> 2. 使用流模式 (`--json`) 并实时解析事件以便监控进度
-> 3. 设置合理的推理强度（如翻译设为 `low`）
-> 4. 传递 Prompt 前清理空字符 (`.replace('\0', '')`)
-> 5. 对于 OpenCode，优先使用 Web Server API"
-
----
-
-## 极简主义设计哲学 (pi-mono)
-
-来自 pi-mono 项目的核心原则：**"What's missing matters more than what's included"**
-
-**核心理念**:
-- **Context Engineering is Paramount**: 上下文工程比工具数量更重要
-- **Full Observability**: 完全可观测，无隐藏状态
-- **External State**: 写文件而非维护内部状态
-- **Builder's Mindset**: 面向构建者而非消费者设计
-
-**启发**: 在复杂任务中，添加功能往往是逃避问题。真正难的决策是：**什么不该有**。
+> "When facing large-scale text processing or filesystem operations, call the underlying CLI Agent:
+> 1. Prefer the file response pattern: first save content to a local temporary file
+> 2. Use stream mode (`--json`) and parse events in real time to monitor progress
+> 3. Set appropriate reasoning intensity (e.g. `low` for translation)
+> 4. Strip null characters from the prompt before passing (`.replace('\0', '')`)
+> 5. For OpenCode, prefer the Web Server API"
 
 ---
 
-## 模型选择速查
+## Minimalist Design Philosophy (pi-mono)
 
-| 任务类型 | Claude Code | Codex | OpenCode |
+Core principle from the pi-mono project: **"What's missing matters more than what's included"**
+
+**Core ideas**:
+- **Context Engineering is Paramount**: Context engineering matters more than tool count
+- **Full Observability**: Fully observable, no hidden state
+- **External State**: Write files rather than maintain internal state
+- **Builder's Mindset**: Design for builders, not consumers
+
+**Insight**: In complex tasks, adding features is often a way to avoid the problem. The hard decision is: **what should not be there**.
+
+---
+
+## Model Selection Quick Reference
+
+Default strategy: **Claude Code always uses Opus 4.6.** No Sonnet fallback, no downgrade based on triviality judgment.
+
+| Task Type | Claude Code | Codex | OpenCode |
 |---------|-------------|-------|----------|
-| **翻译/格式转换** | Sonnet 4.6 | gpt-5.2 + low | *(你的轻量模型)* |
-| **常规开发** | Sonnet 4.6 | gpt-5.2 + medium | *(你的标准模型)* |
-| **深度推理/重构** | Opus 4.6 | gpt-5.2 + high | *(你的推理模型)* |
+| **Translation / format conversion (clearly trivial)** | Opus 4.6 | gpt-5.2 + low | glm-5 / grok-4-1-fast-non-reasoning |
+| **Regular development** | Opus 4.6 | gpt-5.2 + medium | glm-5 / grok-4.20-non-reasoning |
+| **Deep reasoning / refactoring** | Opus 4.6 | gpt-5.2 + high | grok-4.20-reasoning / claude-opus-4-6 |
 
 ---
 
-## OpenCode 生产经验（量化交易实验总结）
+## OpenCode Production Experience (agentic_trading experiment summary)
 
-以下来自在 某量化交易实验项目中用 OpenCode + Grok 4.20 跑 回测实验的实战经验。
+The following comes from practical experience running V9.4 backtest experiments with OpenCode + Grok 4.20 in the agentic_trading project.
 
-### 权限模型：文件必须在项目根目录下
+### Permission Model: Files Must Be Under Project Root
 
-OpenCode agent **无法访问项目根目录之外的路径**（包括 `/tmp/`）。所有 file IO（prompt 输入文件、JSON 输出文件）必须放在 server 启动时的工作目录下。
+OpenCode agent **cannot access paths outside the project root** (including `/tmp/`). All file I/O (prompt input files, JSON output files) must be placed under the working directory where the server was started.
 
 ```python
-# ❌ 错误：/tmp 会被 agent 拒绝访问
+# Wrong: /tmp will be rejected by the agent
 prompt_path = Path("/tmp/opencode_prompt.txt")
 
-# ✅ 正确：放在 run 目录或项目本地目录
+# Correct: place in run directory or project-local directory
 prompt_path = run_dir / "opencode_prompts" / f"{invocation_id}.txt"
-# 或 fallback 到项目根目录下
+# Or fallback to project root
 prompt_path = Path(".opencode_tmp") / f"{invocation_id}.txt"
 ```
 
-### 可靠性：stdout JSON 兜底
+### Reliability: stdout JSON Fallback
 
-即使 prompt 明确要求"写入文件"，agent 有时会直接在 stdout 输出 JSON 而不写文件（或写入空文件）。**生产环境必须实现 stdout JSON 提取作为 fallback**：
+Even when the prompt explicitly requires "write to file", the agent sometimes outputs JSON directly to stdout without writing the file (or writes an empty file). **Production must implement stdout JSON extraction as fallback**:
 
 ```python
 import re
 
 def _extract_json_from_text(text: str) -> dict | None:
-    """从 stdout 中提取 JSON 对象（兜底方案）"""
-    # 优先匹配 ```json 代码块
+    """Extract JSON object from stdout (fallback)"""
+    # Prefer ```json code blocks
     m = re.search(r"```json\s*(\{.*?\})\s*```", text, re.DOTALL)
     if m:
         return json.loads(m.group(1))
-    # 回退：找最大的 {...} 块
+    # Fallback: find the largest {...} block
     candidates = re.findall(r"\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", text)
     for c in sorted(candidates, key=len, reverse=True):
         try:
@@ -242,35 +279,35 @@ def _extract_json_from_text(text: str) -> dict | None:
     return None
 ```
 
-### 并发能力
+### Concurrency
 
-一个 `opencode serve` 进程可以处理多个并发的 `run --attach` 请求。每个请求创建独立的 session。实测 2 并发稳定，更高并发取决于 LLM provider 的 rate limit。
+One `opencode serve` process can handle multiple concurrent `run --attach` requests. Each request creates an independent session. In practice, 2 concurrent requests are stable; higher concurrency depends on the LLM provider's rate limit.
 
-### Grok 4.20 不支持的参数
+### Parameters Not Supported by Grok 4.20
 
-`xai/grok-4.20-experimental-beta-0304-non-reasoning` 不支持 `presence_penalty`、`frequency_penalty`、`stop` 参数。如果 OpenCode 转发了这些参数，API 会报错。
+`xai/grok-4.20-experimental-beta-0304-non-reasoning` does not support `presence_penalty`, `frequency_penalty`, or `stop` parameters. If OpenCode forwards these parameters, the API will error.
 
-### 典型调用流程（文件响应模式）
+### Typical Call Flow (File Response Pattern)
 
 ```
-1. 写 prompt → run_dir/opencode_prompts/XXXX.txt
-2. 构造 driver prompt: "Read from {prompt_path}, write JSON to {response_path}"
+1. Write prompt → run_dir/opencode_prompts/XXXX.txt
+2. Construct driver prompt: "Read from {prompt_path}, write JSON to {response_path}"
 3. opencode run --attach http://localhost:14097 -m model "driver_prompt"
-4. 读 run_dir/opencode_responses/XXXX.json
-5. 如果文件为空 → 从 stdout 提取 JSON（fallback）
-6. 如果仍然失败 → retry（最多 3 次）
+4. Read run_dir/opencode_responses/XXXX.json
+5. If file is empty → extract JSON from stdout (fallback)
+6. If still fails → retry (max 3 times)
 ```
 
-### 关键数据
+### Key Data
 
-- Smoke test: 7/7 成功（零 retry），约 3 分钟 wall clock（6 个 30 分钟间隔）
-- 每个 decision 平均耗时: ~20-30 秒（Grok 4.20 non-reasoning）
-- Server 启动命令: `opencode serve --port 14097`（从 <your-project> 目录启动）
+- Smoke test: 7/7 success (zero retries), ~3 minutes wall clock (6 × 30-minute intervals)
+- Average per-decision time: ~20-30 seconds (Grok 4.20 non-reasoning)
+- Server start command: `opencode serve --port 14097` (started from agentic_trading directory)
 
 ---
 
-## 参考
+## References
 
-- [Claude Code 官方文档](https://docs.anthropic.com)
-- [OpenAI Codex 文档](https://platform.openai.com/docs)
-- [OpenCode 官方文档](https://opencode.ai/docs)
+- [Claude Code Official Documentation](https://docs.anthropic.com)
+- [OpenAI Codex Documentation](https://platform.openai.com/docs)
+- [OpenCode Official Documentation](https://opencode.ai/docs)

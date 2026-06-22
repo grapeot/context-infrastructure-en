@@ -1,28 +1,28 @@
 ---
-title: PDF 转 Markdown
+title: PDF to Markdown
 category: BestPractice
 tags: [pdf, markdown, docling, document-conversion]
 difficulty: Easy
 created: 2026-04-27
 ---
 
-# PDF 转 Markdown
+# PDF to Markdown
 
-需要把 PDF 转成 Markdown（喂给 LLM、做内容提取、归档原始资料）时，**默认用 Docling**。
+When you need to convert PDF to Markdown (for feeding to LLMs, content extraction, archiving source materials), **default to Docling**.
 
-## 为什么是 Docling
+## Why Docling
 
-OpenDataLoader benchmark 12 个 PDF→Markdown 引擎里 Docling 综合得分最高（0.882），表格和标题保真都最好。MIT 许可证，纯 Python，CPU 也能跑（约 3 秒/页），有 GPU 更快。
+In the OpenDataLoader benchmark of 12 PDF→Markdown engines, Docling scored the highest overall (0.882), with the best table and heading fidelity. MIT license, pure Python, runs on CPU (~3 seconds/page), faster with GPU.
 
-实测过的几类反例不要用：
+Tested counterexamples to avoid:
 
-- **MarkItDown**：底层是 pdfminer.six，标题层级保留率 0%，表格基本崩溃。Office 文档 OK，PDF 不行。
-- **PyMuPDF4LLM**：速度最快但 AGPL，商用受限。
-- **Marker**：质量接近 Docling 但 GPL，商用要付费。
+- **MarkItDown**: underlying engine is pdfminer.six, heading hierarchy retention rate 0%, tables essentially collapse. OK for Office documents, not for PDF.
+- **PyMuPDF4LLM**: fastest but AGPL, commercially restricted.
+- **Marker**: quality close to Docling but GPL, commercial use requires payment.
 
-如果你要在自己的 workspace 里保留引擎对比调研，把调研记录放在项目文档或 `contexts/` 下，并在本 skill 里链接到你的本地报告。
+If you want to keep engine comparison research in your own workspace, place the research notes in project docs or under `contexts/`, and link to your local report from this skill.
 
-## 快速用法
+## Quick Usage
 
 ```bash
 uv pip install --python .venv/bin/python docling
@@ -36,9 +36,9 @@ result = conv.convert("input.pdf")
 md = result.document.export_to_markdown()
 ```
 
-首次调用会下载约 1 GB 模型权重到 HuggingFace 缓存，之后复用。同一个 `DocumentConverter()` 实例可以连续转多份，不要每份都新建。
+The first call downloads ~1 GB of model weights to the HuggingFace cache; subsequent calls reuse them. The same `DocumentConverter()` instance can convert multiple files consecutively; don't create a new one for each file.
 
-也可以直接使用本 skill 自带的 CLI。它把 Docling、LM Studio VLM OCR 和环境检查封装成固定命令，适合 agent 反复调用：
+You can also directly use the CLI bundled with this skill. It wraps Docling, LM Studio VLM OCR, and environment checks into fixed commands suitable for repeated agent invocation:
 
 ```bash
 source .venv/bin/activate
@@ -46,109 +46,109 @@ python rules/skills/pdf_to_markdown_cli.py doctor --format json
 python rules/skills/pdf_to_markdown_cli.py docling input.pdf --output output.md --format json
 ```
 
-在 macOS，尤其是 Apple Silicon 上，直接调用 Docling 官方 CLI 时优先显式走 CPU，避免 MPS 后端在 layout detection 中遇到 `torch.float64` 后崩溃：
+On macOS, especially Apple Silicon, when calling Docling's official CLI directly, prefer explicitly using CPU to avoid MPS backend crashes on `torch.float64` during layout detection:
 
 ```bash
 docling input.pdf --to md --device cpu --no-ocr --output output_dir
 ```
 
-## 验收
+## Acceptance
 
-- 输出 Markdown 中表格用标准 `| ... |` 语法保留，列对齐
-- 标题层级（`#`、`##`、`###`）和原 PDF 视觉层级一致
-- 体积上：纯文字 PDF 一般 5–10x 压缩到 Markdown，纯扫描件不会显著变小
+- Output Markdown preserves tables using standard `| ... |` syntax, columns aligned
+- Heading hierarchy (`#`, `##`, `###`) matches the original PDF visual hierarchy
+- Size-wise: text-only PDFs typically compress 5–10x to Markdown; pure scans won't shrink significantly
 
-## 已知陷阱
+## Known Pitfalls
 
-**Section 标题被吞掉**。当 PDF 里某个标题是表格内的强调文字（不是真正的 layout heading），docling 可能识别成普通单元格。表现是连续两个 `## HOLDINGS` 中间没有账户名区分。处理方法：用上下文（账户编号、beginning balance）回查原 PDF 对应页，必要时手动补 section header。
+**Section headings swallowed**. When a heading in the PDF is emphasized text inside a table (not a true layout heading), Docling may recognize it as a regular cell. The symptom is two consecutive `## HOLDINGS` without account name differentiation. Handling: use context (account numbers, beginning balance) to cross-reference the original PDF page, manually supplement section headers if needed.
 
-**两份 PDF 内容相同但文件名不同**。如果两份转出来字符数完全相等，先 `md5` 比较原文件——很可能是上传时弄错了。docling 不会主动 dedupe。
+**Two PDFs with identical content but different filenames**. If two conversions produce exactly the same character count, first `md5` compare the source files — it's likely a mix-up during upload. Docling won't proactively deduplicate.
 
-**venv 里 pip 不存在**。在用 uv 创建的 venv 里通常没装 pip，`venv/bin/python -m pip install` 会报 `No module named pip`。改用 `uv pip install --python .venv/bin/python <pkg>`。
+**pip missing in venv**. In a venv created by uv, pip is typically not installed; `venv/bin/python -m pip install` will error with `No module named pip`. Use `uv pip install --python .venv/bin/python <pkg>` instead.
 
-## 已知陷阱（续）
+## Known Pitfalls (continued)
 
-**macOS MPS float64 崩溃**。Apple Silicon 上 Docling 的 RT-DETR V2 模型做 layout 检测时会调用 `torch.float64`，MPS 后端不支持，整份 PDF 转换崩溃。最省事的 workaround 是直接让 Docling 走 CPU：
+**macOS MPS float64 crash**. On Apple Silicon, Docling's RT-DETR V2 model calls `torch.float64` during layout detection, which the MPS backend doesn't support, causing the entire PDF conversion to crash. The simplest workaround is to run Docling on CPU directly:
 
 ```bash
 docling input.pdf --to md --device cpu --output output_dir
 ```
 
-文本型 PDF 不需要 OCR 时加 `--no-ocr`，可以减少额外模型路径和误识别：
+For text-only PDFs that don't need OCR, add `--no-ocr` to reduce extra model paths and false recognition:
 
 ```bash
 docling input.pdf --to md --device cpu --no-ocr --output output_dir
 ```
 
-不要优先依赖 `PYTORCH_ENABLE_MPS_FALLBACK=1`。实测特定版本组合下 fallback 仍可能不生效；直接 `--device cpu` 更确定。如果 CPU 路径仍然失败，或者 PDF 是中文扫描件、图片 PDF、pitch deck，再切换到 VLM OCR 路径。
+Don't rely on `PYTORCH_ENABLE_MPS_FALLBACK=1` as the first option. In practice, fallback may still not take effect with certain version combinations; `--device cpu` directly is more deterministic. If the CPU path still fails, or the PDF is a Chinese-language scan, image PDF, or pitch deck, then switch to the VLM OCR path.
 
-## 适用边界与路径选择
+## Applicability Boundaries and Path Selection
 
-| PDF 类型 | 首选 | fallback | 不推荐 |
-|---------|------|----------|--------|
-| 文本 PDF（Office/WPS 导出、LaTeX） | Docling | — | MarkItDown |
-| 扫描件（英文为主） | Docling（自带 OCR） | Tesseract | — |
-| 扫描件/图片 PDF（中文为主、图文混排、pitch deck） | **LM Studio VLM OCR** | Tesseract（精度低） | Docling（MPS float64 风险） |
-| 复杂数学公式 | Docling（导出 LaTeX） | 人工校对 | — |
+| PDF Type | Preferred | Fallback | Not Recommended |
+|----------|-----------|----------|-----------------|
+| Text PDF (Office/WPS export, LaTeX) | Docling | — | MarkItDown |
+| Scanned (primarily English) | Docling (built-in OCR) | Tesseract | — |
+| Scanned/Image PDF (primarily Chinese, mixed text/images, pitch deck) | **LM Studio VLM OCR** | Tesseract (low accuracy) | Docling (MPS float64 risk) |
+| Complex math formulas | Docling (export LaTeX) | Manual proofreading | — |
 
-## CLI：PDF→Markdown
+## CLI: PDF→Markdown
 
-CLI 文件位于 `rules/skills/pdf_to_markdown_cli.py`。它不是独立服务，不保存状态；每次运行只读取输入 PDF，写出 Markdown，并把结果摘要输出到 stdout。进度和错误写到 stderr。
+The CLI file is located at `rules/skills/pdf_to_markdown_cli.py`. It is not a standalone service and does not persist state; each run reads the input PDF, writes Markdown, and outputs a result summary to stdout. Progress and errors go to stderr.
 
-### 前置环境
+### Prerequisites
 
-在 workspace 根目录使用 `.venv`：
+Use `.venv` at the workspace root:
 
 ```bash
 source .venv/bin/activate
 uv pip install docling
 ```
 
-如果要走 LM Studio VLM OCR fallback，还需要：
+If using the LM Studio VLM OCR fallback, also need:
 
 ```bash
 uv pip install pdf2image pillow requests
 ```
 
-`pdf2image` 依赖系统里的 Poppler。macOS 可用：
+`pdf2image` depends on system Poppler. On macOS:
 
 ```bash
 brew install poppler
 ```
 
-LM Studio 需要手动打开并加载视觉模型。默认 API 是 `http://127.0.0.1:1234/v1`，默认模型名是 `qwen/qwen3.5-35b-a3b`。
+LM Studio needs to be manually opened with a vision model loaded. Default API is `http://127.0.0.1:1234/v1`, default model name is `qwen/qwen3.5-35b-a3b`.
 
 ### Doctor
 
-先跑 doctor 看本地环境是否齐全：
+Run doctor first to check whether the local environment is complete:
 
 ```bash
 python rules/skills/pdf_to_markdown_cli.py doctor --format json
 ```
 
-需要检查 LM Studio 是否在线、目标模型是否已加载时：
+When needing to check whether LM Studio is online and the target model is loaded:
 
 ```bash
 python rules/skills/pdf_to_markdown_cli.py doctor --check-lmstudio --format json
 ```
 
-### Docling 路径（默认首选）
+### Docling Path (Default Preferred)
 
-普通文本 PDF、LaTeX PDF、Office 导出的 PDF，优先走 Docling：
+For regular text PDFs, LaTeX PDFs, Office-exported PDFs, prefer Docling:
 
 ```bash
 python rules/skills/pdf_to_markdown_cli.py docling input.pdf --output output.md --format json
 ```
 
-等价的通用命令：
+Equivalent generic command:
 
 ```bash
 python rules/skills/pdf_to_markdown_cli.py convert input.pdf --engine docling --output output.md --format json
 ```
 
-### LM Studio VLM OCR 路径
+### LM Studio VLM OCR Path
 
-当 Docling 对中文扫描件、图片 PDF、pitch deck 的 OCR 明显失败时，再显式切换到 VLM OCR：
+When Docling's OCR clearly fails on Chinese scans, image PDFs, or pitch decks, explicitly switch to VLM OCR:
 
 ```bash
 python rules/skills/pdf_to_markdown_cli.py vlm-ocr input.pdf \
@@ -158,38 +158,38 @@ python rules/skills/pdf_to_markdown_cli.py vlm-ocr input.pdf \
   --format json
 ```
 
-常用调参：
+Common tuning parameters:
 
-- `--dpi 150`：图片太大、模型响应慢或输出漂移时降低 DPI
-- `--start-page N --end-page M`：只处理部分页面，先验证再跑整份
-- `--api-base http://127.0.0.1:1234/v1`：LM Studio 不在默认端口时显式指定
+- `--dpi 150`: lower DPI when images are too large, model response is slow, or output drifts
+- `--start-page N --end-page M`: process only a page range, verify first then run the full document
+- `--api-base http://127.0.0.1:1234/v1`: explicitly specify when LM Studio is not on the default port
 
-VLM OCR 输出带 `=== PAGE N ===` 分页标记。大 PDF 每页约 30-60 秒，17 页 pitch deck 约 10-15 分钟，取决于模型和机器负载。
+VLM OCR output includes `=== PAGE N ===` page markers. Large PDFs take ~30-60 seconds per page; a 17-page pitch deck takes ~10-15 minutes, depending on model and machine load.
 
-### CLI 验收
+### CLI Acceptance
 
-- `--format json` 时 stdout 必须是可解析 JSON
-- `doctor` 能准确报告缺失依赖或 LM Studio 不在线
-- Docling 输出应保留标题层级和 Markdown 表格
-- VLM OCR 输出应保留原文语言，不总结、不翻译，并包含页码分隔
+- With `--format json`, stdout must be parseable JSON
+- `doctor` must accurately report missing dependencies or LM Studio offline status
+- Docling output must preserve heading hierarchy and Markdown tables
+- VLM OCR output must preserve the original language, not summarize or translate, and include page separators
 
-## LM Studio VLM OCR 原理
+## LM Studio VLM OCR Principles
 
-当 Docling 和 Tesseract 都处理不好时（中文 pitch deck、图像密集的幻灯片），用本地视觉模型做 OCR。CLI 位于 `rules/skills/pdf_to_markdown_cli.py`：
+When both Docling and Tesseract fail (Chinese pitch decks, image-dense slides), use a local vision model for OCR. The CLI is at `rules/skills/pdf_to_markdown_cli.py`:
 
 ```bash
 source .venv/bin/activate
 python rules/skills/pdf_to_markdown_cli.py vlm-ocr input.pdf --output output.md --timeout 300
 ```
 
-前提：LM Studio 在本地运行（默认 `http://127.0.0.1:1234`），已加载视觉模型。默认模型为 `qwen/qwen3.5-35b-a3b`，该模型对中英文混排 pitch deck 的 OCR 效果远超 Tesseract。
+Prerequisite: LM Studio running locally (default `http://127.0.0.1:1234`), with a vision model loaded. Default model is `qwen/qwen3.5-35b-a3b`, whose OCR performance on mixed Chinese-English pitch decks far exceeds Tesseract.
 
-脚本会逐页渲染 PDF 为图片（200 DPI），通过 LM Studio 的 `/v1/chat/completions` 端点逐页喂图，输出带 `=== PAGE N ===` 分页的 Markdown。prompt 为通用 OCR，不做财务 schema 约束。大 PDF 每页约 30-60 秒，整份 17 页 pitch deck 约 10-15 分钟。
+The script renders each PDF page as an image (200 DPI), feeds each page image through LM Studio's `/v1/chat/completions` endpoint, and outputs Markdown with `=== PAGE N ===` page separators. The prompt is generic OCR, without financial schema constraints. Large PDFs take ~30-60 seconds per page; a full 17-page pitch deck takes ~10-15 minutes.
 
-注意：LM Studio 的 VLM API 是 OpenAI-compatible 的，不是专用 OCR API。输出质量取决于模型能力和 prompt。如果某页 OCR 结果明显偏离原图，降低 DPI（`--dpi 150`）或缩短 prompt 指令再试。
+Note: LM Studio's VLM API is OpenAI-compatible, not a dedicated OCR API. Output quality depends on model capability and prompt. If a page's OCR result clearly deviates from the original image, lower DPI (`--dpi 150`) or shorten the prompt instructions and retry.
 
-## 仍需人工复核的场景
+## Scenarios Still Requiring Manual Review
 
-- 复杂数学公式：Docling 可以导出 LaTeX，但保真度有限
-- 需要保留页码、页眉页脚的归档场景：Docling 默认会清掉这些，VLM OCR 也可能改写布局
-- 法律、财务、医疗等高风险文档：转换后必须抽样回查原 PDF
+- Complex math formulas: Docling can export LaTeX, but fidelity is limited
+- Archival scenarios requiring preserved page numbers, headers, and footers: Docling defaults to stripping these; VLM OCR may also alter layout
+- Legal, financial, medical, and other high-risk documents: must sample-check against the original PDF after conversion

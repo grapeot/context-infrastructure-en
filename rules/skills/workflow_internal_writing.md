@@ -1,282 +1,282 @@
-# 内部写作工作流
+# Internal Writing Workflow
 
-## 元数据
+## Metadata
 
-- **类型**: Workflow
-- **适用场景**: 面向有共享上下文的读者：用户本人、协作者、AI agent、项目工作流。覆盖调研 memo、决策 brief、工作记录、执行总结。
-- **创建日期**: 2026-06-11
+- **Type**: Workflow
+- **Applicable Scenarios**: For readers with shared context: the user themselves, collaborators, AI agents, project workflows. Covers research memos, decision briefs, work records, executive summaries.
+- **Created**: 2026-06-11
 
-## 何时使用
+## When to Use
 
-加载条件：输出对象已共享上下文，目标是帮对方快速形成判断、复查证据、决定下一步。
+Loading condition: the output audience already shares context; the goal is to help them quickly form judgments, review evidence, and decide next steps.
 
-internal-facing writing 不是 public article，不是 presentation。它的价值是让读者用最小阅读成本判断：这东西有没有用，哪里有用，凭什么信，下一步怎么走。
+Internal-facing writing is not a public article, not a presentation. Its value is enabling the reader to judge with minimal reading cost: is this useful, where is it useful, what is the basis for belief, what's the next step.
 
-输出对象为无共享上下文的陌生读者、公开发布渠道、客户或外部课程受众时，使用 `workflow_external_writing.md`。
+When the output audience is unfamiliar readers without shared context, public distribution channels, clients, or external course audiences, use `workflow_external_writing.md`.
 
-## 核心原则
+## Core Principles
 
-内部文档的成本不由作者写了多少决定，由读者为形成判断需要消耗的注意力决定。目标不是短，是低决策摩擦。
+The cost of an internal document is not determined by how much the author wrote, but by the attention the reader must expend to form a judgment. The goal is not brevity — it's low decision friction.
 
-有时三句话足够，有时一张表、一张图、一个证据索引更省认知。根据内容选形式，不根据篇幅做判断。
+Sometimes three sentences are enough; sometimes a table, a diagram, or an evidence index saves more cognition. Choose form based on content, not based on length.
 
-## 信息顺序
+## Information Order
 
-最重要的信息放最前面。不要从「我做了什么」开始，不要先铺垫背景。先给最影响决策的结论、判断、风险或建议动作，再给依据、限制和下一步。
+Put the most important information first. Don't start with "what I did"; don't lay out background first. First give the conclusions, judgments, risks, or recommended actions that most affect decisions, then give basis, constraints, and next steps.
 
-开头应在 15 秒内让读者判断三件事：是否值得继续看；如果值得，最该看哪一段；如果不值得，为什么可以关掉。
+The opening should let the reader judge three things within 15 seconds: whether it's worth continuing; if so, which section to read most; if not, why they can close it.
 
-结论前置不等于直接抛项目内术语。内部读者也可能在手机上、在不同任务之间切换，短期上下文未必在脑中。开头第一屏要先用一两句话恢复最小背景：这是什么项目、本轮工作在回答什么问题、为什么现在要看。不要用只有当前 session 才懂的 shorthand 作为第一句，例如直接写 `news -> direction -> gating` 或 `taxonomy 不迁移`；先说明“这周在用公开外汇新闻测试 LLM 能否做交易信号筛选”。
+Putting conclusions first does not mean directly throwing out project-internal terminology. Internal readers may also be on mobile, switching between tasks, and short-term context may not be in mind. The first screen of the opening must first restore minimal background in 1-2 sentences: what project this is, what question this round of work answers, why read now. Don't use shorthand only understandable within the current session as the first sentence, e.g., directly writing `news -> direction -> gating` or `taxonomy not migrated`; first explain "this week we're testing whether LLMs can screen trading signals using public forex news."
 
-可选结构：
+Optional structure:
 
 ```markdown
 ## Bottom Line
 
-一句话结论。
+One-sentence conclusion.
 
 ## Why This Matters
 
-这件事影响什么判断或动作。
+What judgment or action this affects.
 
 ## Recommended Action
 
-建议做什么，或暂时不做什么。
+What to do, or what not to do for now.
 ```
 
-不要求每篇套模板，但信息顺序要稳定：结论先于过程，判断先于材料，行动先于背景。
+Not every piece must follow a template, but the information order should be stable: conclusions before process, judgments before materials, actions before background.
 
 ## Skimmability
 
-internal 文档必须允许跳读。读者不应被迫从头读到尾才知道结构。
+Internal documents must allow skip-reading. Readers should not be forced to read from beginning to end to know the structure.
 
-- 标题承担信息量，不只是分类标签。不要写 `Findings`，写具体结论或发现。
-- 每段只解决一个判断点，段落保持简短。
-- 并列项显式编号。尤其是已写明「有三点」「两类风险」时，必须编号对应。
-- 超过 1000 字的 memo，开头给出 mini TOC。
-- 表格仅用于比较维度稳定的场景。不要为追求整齐把复杂判断硬塞进表格。
-- 默认按手机阅读优化第一屏：短段落、窄表格、少列数，避免必须横向滚动才能读懂。宽表格最多作为审计层，首屏判断区优先用短列表、2-3 列小表或分块卡片。
-- 中文 internal 文档默认全中文。保留必要英文术语、代码名、模型名、文件名和指标名，但不要出现大段中文后突然切到英文标题、英文解释或英文表格列名。中英文漂移会显著增加手机阅读负担。
+- Headings carry information, not just classification labels. Don't write `Findings`; write the specific conclusion or discovery.
+- Each paragraph addresses only one judgment point; keep paragraphs short.
+- Parallel items are explicitly numbered. Especially when "there are three points" or "two types of risks" is stated, they must be numbered accordingly.
+- Memos over 1000 words should have a mini TOC at the beginning.
+- Tables are only for scenarios with stable comparison dimensions. Don't force complex judgments into tables for the sake of neatness.
+- Default to optimizing the first screen for mobile reading: short paragraphs, narrow tables, few columns, avoiding the need for horizontal scrolling to understand. Wide tables at most serve as audit layers; the first-screen judgment zone prioritizes short lists, 2-3 column small tables, or chunked cards.
+- Chinese internal documents default to full Chinese. Retain necessary English terms, code names, model names, filenames, and metric names, but do not have large blocks of Chinese suddenly switching to English headings, English explanations, or English table column names. Chinese-English drift significantly increases mobile reading burden.
 
 ## Verifiability
 
-internal communication 的信任来自可核查，不来自语气自信。事实判断、外部信息、项目状态、代码行为、历史结论，默认把证据放在判断旁边。
+Trust in internal communication comes from verifiability, not from confident tone. For factual judgments, external information, project status, code behavior, and historical conclusions, default to placing evidence next to the judgment.
 
-可用证据形式：inline link、文件路径、命令、commit hash、issue 编号、日志路径、原始数据路径、原文摘录。
+Usable evidence forms: inline links, file paths, commands, commit hashes, issue numbers, log paths, raw data paths, original excerpts.
 
-证据不要堆到文末，应贴在它支撑的那句话旁边。读者看到判断时能立刻验证，无需翻找。
+Evidence should not be piled at the end; it should be placed next to the sentence it supports. Readers can verify immediately upon seeing the judgment, without needing to search.
 
 ## Navigation
 
-内部文档常不是最终答案，而是未来行动的入口，应作为导航系统来组织。
+Internal documents are often not final answers but entry points for future actions, and should be organized as navigation systems.
 
-- 默认使用 Markdown。
-- 本地文件用相对路径或 workspace 稳定路径。
-- 外部来源用 inline Markdown link。
-- 涉及代码时给出 `file:line` 或至少文件路径。
-- 涉及数据时给出原始数据路径和生成脚本路径。
-- 涉及图片时，图片放在同目录，或清楚标注生成方式。
-- 某段来自另一份文档时，链接回原文，不复制无来源的大段摘要。
+- Default to Markdown.
+- Local files use relative paths or workspace-stable paths.
+- External sources use inline Markdown links.
+- When involving code, give `file:line` or at least the file path.
+- When involving data, give raw data path and generation script path.
+- When involving images, place images in the same directory, or clearly annotate the generation method.
+- When a section comes from another document, link back to the original; don't copy large unsourced summaries.
 
 ## Visual Cognitive Load Reduction
 
-### 为什么现在需要这一节
+### Why This Section Is Needed Now
 
-过去的写作方法论（Markdown-first、形式服务内容、bottom-line up front 等等）都建立在一个隐含假设上：**写文档贵，读文档便宜到不值得专门优化**。一个工程师一周写一份 design doc，读者愿意花 30 分钟仔细读 — ROI 自然成立。在这个 cost structure 下，优化点是"内容质量"，形式只是不要碍事就好。
+Past writing methodologies (Markdown-first, form serves content, bottom-line up front, etc.) were all built on an implicit assumption: **writing documents is expensive, reading documents is cheap enough not to warrant dedicated optimization**. An engineer writes one design doc per week; readers are willing to spend 30 minutes reading carefully — ROI naturally holds. Under this cost structure, the optimization point is "content quality"; form just needs to not get in the way.
 
-AI 改了这个 cost structure。写文档的边际成本接近零（起草、改写、扩展、跨文档同步都是分钟级；一周可以产生 50 份 design doc 而不是 1 份），publish 文档也降到零（Web Preview、HTML artifact、自动 share）。但**读文档的成本没变** — 仍受限于人类注意力带宽。一个团队成员一天能审 30 分钟文档（乐观），不会因为 AI 多产 50 倍就跟着扩到 25 小时。
+AI changed this cost structure. The marginal cost of writing documents approaches zero (drafting, rewriting, expanding, cross-document syncing are all minute-level; one week can produce 50 design docs instead of 1), and publishing documents also dropped to zero (Web Preview, HTML artifact, auto share). But **the cost of reading documents hasn't changed** — still constrained by human attention bandwidth. A team member can review 30 minutes of documents per day (optimistically); they won't expand to 25 hours just because AI produces 50x more.
 
-结果：文档产能爆炸，消化产能没动。瓶颈从"写"切到"读"。"形式服务内容"这条公理没错，但"内容是全部"这条隐含 corollary 错了。当读不再廉价，**形式开始独立承载价值** — 形式好的文档能在同样阅读时间内传递更多 actionable 判断；形式糟的文档让读者过载或假装看懂。
+Result: document production capacity exploded; consumption capacity didn't move. The bottleneck shifted from "writing" to "reading." The axiom "form serves content" isn't wrong, but the implicit corollary "content is everything" is wrong. When reading is no longer cheap, **form begins to independently carry value** — well-formed documents convey more actionable judgments in the same reading time; poorly-formed documents cause reader overload or feigned understanding.
 
-这一节就是显式优化"读的速率"。
+This section explicitly optimizes "reading rate."
 
-### 三条公理
+### Three Axioms
 
-方法论不是规则集，是少数根本判断，从它们能推出具体规则。本 skill commit 三条：
+The methodology is not a rule set; it's a few fundamental judgments from which specific rules can be derived. This skill commits to three:
 
-1. **Visual 是 bandwidth 工具，不是装饰**。每个 visual 元素必须回答："它为读者降低了什么具体认知阻力？" 三个真正的减负机制：**平行通道**（颜色 chip + 文字标题 = 视觉扫读 + 语言精读并行）、**空间记忆**（表格用位置承载关系，同列=同维度，读者用空间索引代替线性搜索）、**预期模板**（形式自带语义 — 进度条=线性、矩阵=二维 tradeoff、卡片=并列状态 — 读者套模板代替从头建构）。三个机制都不触发的 visual = 装饰，删。
-2. **Adaptive 优于静态**。读者"愿意花多少时间"是变量不是常数。同一份 RFC，intuitive 小改的读者 30 秒扫完就够；大改动审查的读者会逐段 audit。把注意力预算预设成单一值，无论选哪边都会错。文档应**同时承载多种 trajectory**，靠 anchor / `<details>` / link 让扫读和深读共存。
-3. **Markdown 是 source of truth，HTML 是认知优化层**。Markdown 必须独立可读 — 任何 stripped-HTML 的渲染器（GitHub、纯文本邮件、grep 输出）都能拿到 80% 价值。HTML 扩展给已有的 Markdown 加上扫读结构、adaptive hook、视觉模板，但不承载唯一信息。
+1. **Visual is a bandwidth tool, not decoration**. Every visual element must answer: "What specific cognitive friction does it reduce for the reader?" Three genuine reduction mechanisms: **parallel channels** (color chip + text title = visual scanning + linguistic deep reading in parallel), **spatial memory** (tables use position to carry relationships, same column = same dimension, readers use spatial indexing instead of linear search), **expectation templates** (form carries its own semantics — progress bar = linear, matrix = two-dimensional tradeoff, card = side-by-side status — readers apply templates instead of constructing from scratch). A visual that triggers none of these three mechanisms = decoration; delete it.
+2. **Adaptive beats static**. "How much time the reader is willing to spend" is a variable, not a constant. For the same RFC, a reader making an intuitive small change can scan in 30 seconds; a reader auditing a major change will go paragraph by paragraph. Presetting the attention budget to a single value will be wrong no matter which side you pick. Documents should **simultaneously carry multiple trajectories**, using anchors / `<details>` / links to let scanning and deep reading coexist.
+3. **Markdown is source of truth; HTML is the cognitive optimization layer**. Markdown must be independently readable — any stripped-HTML renderer (GitHub, plain text email, grep output) can get 80% of the value. HTML extensions add scanning structure, adaptive hooks, and visual templates to existing Markdown, but do not carry unique information.
 
 ---
 
-**根本目标**：所有 visual 决策都服务于一件事 — 让读者**更少读字、更快判断**。Visual 不是文档好看，不是"加个功能"，不是"看起来 visual"。它是给读者**提升认知带宽 / 加速决策精度**的工具。如果一个 visual block 读完后读者并没有比看普通段落更快得出判断，它就失败了 — 哪怕它有 chip、有颜色、有边框。
+**Fundamental goal**: All visual decisions serve one thing — letting readers **read fewer words, judge faster**. Visual is not about making documents pretty, not "adding a feature," not "looking visual." It is a tool for **increasing cognitive bandwidth / accelerating decision precision** for the reader. If after reading a visual block the reader hasn't reached a judgment faster than reading a plain paragraph, it has failed — even if it has chips, colors, and borders.
 
-internal 文档应主动用视觉结构降低认知负担。
+Internal documents should proactively use visual structure to reduce cognitive load.
 
-当问题涉及时间趋势、依赖关系、分类、决策树、流程、架构、对比矩阵时，生成图、表格或示意图。图的目标是帮助读者更快判断，不是装饰。
+When the problem involves temporal trends, dependency relationships, classification, decision trees, processes, architecture, or comparison matrices, generate diagrams, tables, or schematics. The goal of diagrams is to help readers judge faster, not decoration.
 
-默认采用 **MD-first visual**：Markdown 是 source of truth，visual block 是认知压缩层。优先使用手机上能直接读懂的视觉结构：短表、对照卡片、编号状态图、ASCII/Unicode 简图、内嵌图片、少列矩阵和 `<details>` 渐进披露。Mermaid 可以作为增强视图，但不能作为唯一承载信息的图，因为移动端或某些 Markdown 浏览器可能不渲染；Mermaid 前后必须有同等信息量的纯 Markdown fallback。
+Default to **MD-first visual**: Markdown is source of truth; visual blocks are cognitive compression layers. Prioritize visual structures directly readable on mobile: short tables, comparison cards, numbered state diagrams, ASCII/Unicode simple diagrams, inline images, few-column matrices, and `<details>` progressive disclosure. Mermaid can serve as an enhanced view but must not be the sole carrier of information, as mobile or certain Markdown browsers may not render it; Mermaid must have an equivalent-information plain Markdown fallback before and after.
 
-每个 visual block 必须回答一个明确问题，例如"这周哪条研究路径被否定了""哪个 feature 跨产品迁移了""下周有哪三个选择"。不要为了显得 visual 而把文字塞进大图。表格、图、卡片的标题要写出结论，而不是写 `Flowchart`、`Matrix` 这类形式标签。
+Each visual block must answer a clear question, e.g., "which research path was negated this week," "which feature migrated across products," "what are the three choices for next week." Don't stuff text into large diagrams just to appear visual. Table, diagram, and card titles should state conclusions, not write form labels like `Flowchart` or `Matrix`.
 
-### 判断单位是块，不是整篇
+### The Unit of Judgment Is the Block, Not the Whole Document
 
-不要把整份文档锁定在"全是 commit"或"全是 explore"一端。一份周报可以首屏是 commit（状态卡顶用，扫一眼下决策）、下面是 explore（论证段必须文字让读者审推理）。每个 visual 决定都是块级判断，不是整篇判断。整篇一刀切是 overfitting，常见症状是首屏简单结构后面跟着同形态的复杂结构（卡片网格塞论证段），或反过来（论证段开头硬加一张状态卡）。
+Don't lock the entire document into "all commit" or "all explore" mode. A weekly report can have the first screen be commit (status cards at top, one glance for decisions) and below be explore (argument paragraphs must be text for readers to audit reasoning). Every visual decision is a block-level judgment, not a whole-document judgment. Whole-document one-size-fits-all is overfitting; common symptoms are simple structures on the first screen followed by same-form complex structures (card grids cramming argument paragraphs), or the reverse (argument paragraphs with a status card forced at the beginning).
 
-### 前置 gate：共享上下文厚度（先过这一关）
+### Front Gate: Shared Context Thickness (Pass This First)
 
-进入任何 visual 判断前，先问：读者能否解码你打算用的视觉语义？
+Before entering any visual judgment, first ask: Can the reader decode the visual semantics you intend to use?
 
-- **厚**（读者集合 ≤ 3 人 + 同项目同周）→ 可以用任何 chip / 颜色 / 卡片，语义不需自解释
-- **薄**（跨团队 / 跨季度 / 新人 / 外部读者）→ 任何 visual 都要先付解释税。chip 必须在第一次出现时附图例；颜色语义必须本文档内自含；不能假设读者继承上下文
+- **Thick** (reader set ≤ 3 people + same project same week) → can use any chips / colors / cards; semantics don't need to be self-explanatory
+- **Thin** (cross-team / cross-quarter / newcomers / external readers) → any visual must first pay the explanation tax. Chips must have a legend at first appearance; color semantics must be self-contained within this document; cannot assume readers inherit context
 
-薄上下文 + 复杂 visual = 直接否决 visual，无论后面的张力轴怎么说。这一 gate 不是张力，是先决条件。
+Thin context + complex visual = directly veto the visual, regardless of what the tension axis says later. This gate is not a tension; it's a prerequisite.
 
-### 后置 gate：事实可信度（事实未稳时降级 visual）
+### Back Gate: Factual Confidence (Downgrade Visual When Facts Are Unstable)
 
-Visual 让"看起来很确定"。当底层事实在变 — 决策反转中、数据未稳、PR 还没 merge、实验未复现 — visual 的确定性外观就是负债，读者会过度信任。**事实未稳时，visual 降级为表格 + 时间戳，或纯文字**。状态 chip 用绿色"上线"是承诺，事实没稳就别承诺。
+Visual makes things "look very certain." When underlying facts are changing — decisions reversing, data unstable, PR not yet merged, experiment not reproduced — visual's appearance of certainty is a liability; readers will over-trust. **When facts are unstable, downgrade visual to table + timestamp, or plain text**. A status chip with green "live" is a commitment; don't commit when facts aren't stable.
 
-### Adaptive 阅读路径：让文档同时承载多种 trajectory
+### Adaptive Reading Paths: Let Documents Simultaneously Carry Multiple Trajectories
 
-不要预设读者会花 30 秒还是 30 分钟。同一份文档（特别是 RFC / 长 doc）可能被 intuitive 小改的读者扫读完，也可能被大改动审查的读者逐段 audit。把"注意力预算"当一个静态值预设，无论选哪边都会错。
+Don't preset whether the reader will spend 30 seconds or 30 minutes. The same document (especially RFCs / long docs) may be scanned by a reader making an intuitive small change, or audited paragraph by paragraph by a reader reviewing a major change. Treating "attention budget" as a static preset will be wrong no matter which side you pick.
 
-正确的做法是同时承载两种 trajectory：
+The correct approach is to simultaneously carry both trajectories:
 
-1. **首屏扫读层**：visual + 一句话 takeaway + 状态 chip，30 秒能拿到核心判断
-2. **深读 hook**：通过 anchor / link / `<details>` 提供"我想细看"的入口，让扫读层的每个声明都能 zoom in 到证据 / tradeoff / 推理
-3. **深读层**：详细论证、否决方案、tradeoff、原始数据 — 默认折叠或锚定在文末，不挡首屏
+1. **First-screen scan layer**: visual + one-sentence takeaway + status chip; 30 seconds gets the core judgment
+2. **Deep-read hooks**: provide "I want to look closer" entry points via anchors / links / `<details>`, letting every claim in the scan layer zoom into evidence / tradeoffs / reasoning
+3. **Deep-read layer**: detailed argumentation, rejected alternatives, tradeoffs, raw data — default collapsed or anchored at the end, not blocking the first screen
 
-这就是为什么我们需要 HTML 扩展层而不是只用 markdown：adaptive 路径靠的是 anchor / 折叠 / hover preview 这些机制，markdown 本身不够。Markdown 是 source of truth，HTML 是认知优化层。
+This is why we need the HTML extension layer rather than just Markdown: adaptive paths rely on mechanisms like anchors / collapsing / hover preview; Markdown alone isn't enough. Markdown is source of truth; HTML is the cognitive optimization layer.
 
-**具体 adaptive 机制（按已 commit / 演化中分层）**：
+**Specific adaptive mechanisms (stratified by committed / evolving)**:
 
-已 commit、可立刻用：
-1. **首屏 takeaway 锚** — 文档第一句必须是一句话结论，扫读读者拿到就走
-2. **anchor 跳转** — `[详见](#deep-link)` 让扫读读者一跳到深读层；表格行的 `详见 RFC §7.5` 跨文档单一 source
-3. **`<details>` 折叠** — 深读层默认收起，不挡扫读
+Committed, usable immediately:
+1. **First-screen takeaway anchor** — the document's first sentence must be a one-sentence conclusion; scan readers take it and leave
+2. **Anchor jumps** — `[see details](#deep-link)` lets scan readers jump to the deep-read layer in one click; table row `see RFC §7.5` for cross-document single source
+3. **`<details>` collapsing** — deep-read layer default collapsed, not blocking scanning
 
-演化中（OpenCode Web Preview 后续 phase 的能力，可作为方法论的演化方向，不是当前必备）：
-4. **hover preview / tooltip** — 鼠标悬停在 anchor 上预览目标内容，让深读 hook 不需要真跳页
-5. **chunked progressive disclosure** — 长 doc 按 milestone 把后续章节 lazy-load，扫读不付加载成本
+Evolving (OpenCode Web Preview future phase capabilities, usable as methodological evolution direction, not current requirements):
+4. **hover preview / tooltip** — mouse hover on anchor previews target content, so deep-read hooks don't require actual page jumps
+5. **chunked progressive disclosure** — long docs lazy-load subsequent chapters by milestone; scanning doesn't pay load cost
 
-低认知负担**不等于短**，也**不等于长**。关键是单位空间引入的**新概念数量**要匹配读者当前的 mental model — 既不超载也不冗余。
+Low cognitive load **does not equal short**, nor **does it equal long**. The key is that the **number of new concepts introduced per unit space** matches the reader's current mental model — neither overloaded nor redundant.
 
-- **太高（密集塞专业名词）**：一句"WKWebView 加载 bundle 内 preview.html，Swift 经 JSON serialization 注入 markdown"读起来短，但里面 4 个新概念（WKWebView、bundle、preview.html、JSON serialization）读者第一反应是"bundle 是哪个 bundle、preview.html 是什么"，要先在脑里搞清楚 4 件事才能接住这一句 — 这是高认知负担，哪怕字数少。
-- **太低（每个概念从头复述）**：把每个名词都展开讲一遍，已知内容反复重复，读者已经知道的部分被浪费，整段变长且无新信息密度 — 这也是高认知负担。
-- **最优**：每一段引入 1–2 个新概念，用读者**已有的概念**做锚锚定它们；下一段在此基础上叠加。这是 Vygotsky "zone of proximal development" 的写作版本 — 每一步的新内容必须落在读者"能接住"的范围。
+- **Too high (densely packed jargon)**: A sentence like "WKWebView loads preview.html from bundle, Swift injects markdown via JSON serialization" reads short, but contains 4 new concepts (WKWebView, bundle, preview.html, JSON serialization); the reader's first reaction is "which bundle, what preview.html," needing to mentally clarify 4 things before absorbing this one sentence — this is high cognitive load, even with few words.
+- **Too low (re-explaining every concept from scratch)**: Expanding every term, repeating known content, wasting the reader's time on what they already know, the whole paragraph becomes long with no new information density — this is also high cognitive load.
+- **Optimal**: Each paragraph introduces 1–2 new concepts, anchored by concepts the reader **already knows**; the next paragraph builds on this foundation. This is the writing version of Vygotsky's "zone of proximal development" — each step's new content must fall within the reader's "can absorb" range.
 
-**判断"一条信息是否合适放在这里"的硬测试**：预期读者能用他已经知道的概念在脑里接住吗？如果不能，三种处理：
-- **类比 anchor**：用读者已知的事物做锚（"像浏览器 view-source 那种本地 HTML"）。
-- **延后展开**：先给一句无前置概念的结论，专业细节放 `<details>` 或下一段。
-- **干脆不说**：如果这条细节不影响读者要做的判断，就别讲；保留在工程层文档。
+**Hard test for "is this piece of information appropriate here"**: Can the expected reader mentally absorb it using concepts they already know? If not, three treatments:
+- **Analogy anchor**: Use something the reader knows as an anchor ("like browser view-source, that kind of local HTML").
+- **Deferred expansion**: First give a conclusion sentence with no prerequisite concepts; put technical details in `<details>` or the next paragraph.
+- **Simply don't say it**: If this detail doesn't affect the judgment the reader needs to make, don't mention it; keep it in engineering-layer documentation.
 
-写决策表 / 状态卡时，"决策"那一列要用**业务语言**（用户做什么、看到什么），不用实现细节（WKWebView、DOMPurify、data URI）— 实现细节进 `<details>` 或后续段落。第一遍扫读时读者要的是"在哪、在做什么、状态如何"，不是"用了什么技术"。
+When writing decision tables / status cards, the "decision" column should use **business language** (what the user does, what they see), not implementation details (WKWebView, DOMPurify, data URI) — implementation details go into `<details>` or subsequent paragraphs. On the first scan pass, the reader wants "where, doing what, what status," not "what technology was used."
 
-### 武器库（像 UI library 一样组织）
+### Arsenal (Organized Like a UI Library)
 
-Cognitive bandwidth 优化的 visual 武器不是"feels visual"的形式，是当前 dogfood 反复证明 proven 的最小集。每个武器对应一个具体认知问题；不为"丰富武器库"而加。补武器的标准：dogfood 反复证明缺位再补。
+Cognitive bandwidth optimization visual weapons are not "feels visual" forms; they are the minimal set repeatedly proven in current dogfood. Each weapon corresponds to a specific cognitive problem; don't add weapons just to "enrich the arsenal." Standard for adding weapons: only add when dogfood repeatedly proves a gap.
 
-| 武器 | 解决的认知问题 | 何时用 |
-|---|---|---|
-| 短段落 | 默认形态，承载论证和推理 | 几乎总是 |
-| 紧凑表格 | 多项之间稳定维度对比（触发空间记忆） | 行数 ≥ 4 且每行同结构 |
-| 状态卡片网格 | 数项并列状态，扫一眼看色块判定（触发预期模板） | 项数 ≤ 4-6 且色块分布均衡 |
-| chip / pill | 标记单一项的语义（触发平行通道） | 同列分布均衡 ≥ 2 类，颜色语义本文档自含 |
-| `<details>` | 审计材料 / 否决方案 / 长 fixture / 实现细节 | 内容是"读者可能想 verify 但不必读" |
-| anchor 链接 | 让扫读读者能 zoom in 到深读层 | 任何"声明 → 证据"对都该挂 anchor |
-| 内嵌 SVG | 3-7 节点的依赖网或流程 | Mermaid 不可用且形态稳定 |
-| 代码块 + 行号引用 | 引证具体代码位置 | 决策依赖具体源码片段 |
-| 时间序列图 | 看趋势、拐点、异常 | 数据点跨时间 |
-| 二维矩阵 | 看 trade-off、定位、优先级 | 两个维度的对比 |
+| Weapon | Cognitive Problem Solved | When to Use |
+|--------|-------------------------|-------------|
+| Short paragraphs | Default form, carries argumentation and reasoning | Almost always |
+| Compact tables | Stable-dimension comparison across multiple items (triggers spatial memory) | Rows ≥ 4 and each row has the same structure |
+| Status card grid | Several side-by-side items, one glance at color blocks for judgment (triggers expectation templates) | Items ≤ 4-6 and color distribution is balanced |
+| chip / pill | Mark semantics of a single item (triggers parallel channels) | Same column distribution balanced ≥ 2 categories; color semantics self-contained in this document |
+| `<details>` | Audit materials / rejected alternatives / long fixtures / implementation details | Content is "reader might want to verify but doesn't need to read" |
+| anchor links | Let scan readers zoom into deep-read layer | Every "claim → evidence" pair should have an anchor |
+| Inline SVG | Dependency network or flow with 3-7 nodes | Mermaid unavailable and form is stable |
+| Code block + line number reference | Cite specific code locations | Decision depends on specific source snippets |
+| Time series chart | See trends, inflection points, anomalies | Data points span time |
+| Two-dimensional matrix | See tradeoffs, positioning, priorities | Comparison across two dimensions |
 
-每个武器的详细条件、anti-pattern、复合用法见下面具体节。
+Detailed conditions, anti-patterns, and compound usage for each weapon are in the specific sections below.
 
-### 形式选择：表格 / 卡片网格 / `<details>` 的边界
+### Form Selection: Boundaries of Tables / Card Grids / `<details>`
 
-**首屏一眼扫读，详情进 `<details>`**。判断 visual block 是否真正"低认知负担"的硬测试：压缩到一张表 / 一行 chip / 一段 takeaway 后，读者扫一眼是否还能拿到核心结论？如果"压缩后扔掉的字"读者本来就不会读，那原版本就是冗余。
+**First-screen one-glance scan; details into `<details>`**. The hard test for whether a visual block is truly "low cognitive load": after compressing to one table / one row of chips / one takeaway paragraph, can the reader still get the core conclusion in one glance? If "the words thrown away by compression" are words the reader wouldn't have read anyway, the original version was redundant.
 
-- **卡片网格**：只适合数量 ≤ 4–6、每张卡的 takeaway 真的需要小空间承载图标 + 简短判断的场景（"哪条路径成立"这种"扫一眼颜色就知道答案"的）。
-- **表格**：超过这个数、或每条记录都需要解释半句话以上，就用表格。每行一个决策（决策名 / 状态 / 一句话理由），紧凑、可一次扫完。
-- **`<details>`**：详情、tradeoff、过程、实现细节、工程坑。第一阅读层不需要的，全部塞这里。
+- **Card grid**: Only suitable when count ≤ 4–6 and each card's takeaway genuinely needs a small space to carry an icon + short judgment (scenarios like "which path holds" — "one glance at color tells the answer").
+- **Table**: Beyond this count, or when each record needs more than half a sentence of explanation, use a table. One row per decision (decision name / status / one-sentence reason), compact, scannable in one pass.
+- **`<details>`**: Details, tradeoffs, process, implementation details, engineering pitfalls. Everything not needed in the first reading layer goes here.
 
-**反模式：状态卡当百科条目写**。每张卡 chip + 标题 + 一段 80–150 字说明文 — 看起来 visual 实际仍要读一段才知道结论。改成上面三种形式的组合。
+**Anti-pattern: Status cards written like encyclopedia entries**. Each card has chip + title + 80–150 word explanatory paragraph — looks visual but still requires reading a paragraph to get the conclusion. Change to a combination of the three forms above.
 
-合适的图类型：
+Suitable diagram types:
 
-- 时间序列：看趋势、拐点、异常
-- 二维矩阵：看 trade-off、定位、优先级
-- 流程图：看依赖和阻塞点
-- stack diagram：看系统分层
-- decision tree：看下一步判断路径
+- Time series: see trends, inflection points, anomalies
+- Two-dimensional matrix: see tradeoffs, positioning, priorities
+- Flowchart: see dependencies and blocking points
+- Stack diagram: see system layering
+- Decision tree: see next-step judgment paths
 
-对手机阅读特别有用的 visual 形式：
+Visual forms particularly useful for mobile reading:
 
-- **结论卡片**：一个问题、一句答案、一个行动影响，适合首屏恢复上下文。
-- **Before / After 对照**：适合解释一周工作如何改变原来的判断。
-- **路径状态表**：每条路径标成“成立 / 否定 / 仍阻塞 / 只作候选”，替代渲染不稳定的流程图。
-- **证据地图**：把关键结论映射到 1-3 个证据文件，避免读者在长文中找来源。
-- **折叠审计层**：把脚本、成本、口径、候选列表放进 `<details>`，保留可验证性但不占第一阅读层。
+- **Conclusion cards**: One question, one answer, one action impact; suitable for first-screen context restoration.
+- **Before / After comparison**: Suitable for explaining how a week's work changed previous judgments.
+- **Path status table**: Each path marked as "holds / negated / still blocked / candidate only," replacing unstable-rendering flowcharts.
+- **Evidence map**: Map key conclusions to 1-3 evidence files, avoiding readers searching through long text for sources.
+- **Collapsible audit layer**: Put scripts, costs, methodology, candidate lists into `<details>`, preserving verifiability without occupying the first reading layer.
 
-### HTML-in-Markdown 试验规则
+### HTML-in-Markdown Experimentation Rules
 
-Markdown 中可以少量夹 HTML/CSS 来做卡片、左右对照、状态条、内联 SVG，但它是增强层，不是默认依赖。不同渲染器对 `<style>`、内联 SVG、`class`、暗色主题继承和 HTML block 内的 Markdown 支持差异很大，手机端尤其不稳定。
+Markdown can contain small amounts of HTML/CSS for cards, side-by-side comparisons, status bars, inline SVG, but it is an enhancement layer, not a default dependency. Different renderers vary greatly in support for `<style>`, inline SVG, `class`, dark theme inheritance, and Markdown parsing within HTML blocks; mobile is especially unstable.
 
-使用 HTML-in-MD 时遵守以下约束：
+When using HTML-in-MD, observe the following constraints:
 
-- **只做局部增强**：不要用一个外层 `<div>` 包住整篇文档，也不要给整篇设置固定 `color`、`background` 或字体。只给卡片、callout、SVG 等局部组件设样式。
-- **显式闭合每个 HTML block**：漏掉 `</div>` 会让后续 Markdown 被吞进 HTML 容器，常见症状是暗色主题下正文颜色错误、标题样式漂移、后续 Markdown 不再解析。
-- **CSS 颜色用「主题变量 + fallback」，不写死单一明暗**：这是避免暗色模式翻车的核心规则。卡片/状态条/chip 的颜色用 `var(--名字, 回退值)` 形式，例如 `background:var(--card-bg, #f6f6f6)`、`color:var(--fg, #1a1a1a)`、`border-left:5px solid var(--ok-border, #10b981)`。支持主题变量的渲染器（OpenCode iOS Web Preview）会自动按 light/dark 取色，同一份 MD 双模式都成立；不支持的渲染器（Cursor/VS Code、GitHub 若保留 `<style>`）退回 fallback 值，视觉等于 light 模式。**绝对不要**只写一个硬编码浅色背景（`background:white`、`#f8fafc`）配深色文字——它在宿主深色背景下会糊成一片。普通 Markdown 段落仍然不手工指定颜色，交给渲染器主题。
-  - 可用的主题变量（OpenCode Web Preview 暴露，fallback 在不支持的渲染器生效）：正文 `--fg` / 背景 `--bg` / 次要文字 `--fg-muted` / 边框 `--border` / 链接 `--link` / 代码 `--code-bg`·`--code-fg` / 卡片底 `--card-bg`；语义状态色每组有 `-border`（强色，描边/左条）、`-bg`（淡底）、`-fg`（文字）三档：`--ok-*`（成立/绿）、`--bad-*`（否定/红）、`--warn-*`（警告/黄）、`--block-*`（阻塞/灰）。
-  - 写法示例：`.card.ok{border-left:5px solid var(--ok-border,#10b981);background:var(--card-bg,#f6f6f6);color:var(--fg,#1a1a1a)}`；chip：`.chip.ok{background:var(--ok-bg,#d1fae5);color:var(--ok-fg,#065f46)}`。
-  - **语义类要用复合选择器，不要写裸单类**。装饰性 inline 元素（chip/badge/pill）的语义色必须绑双类 `.vx-chip.ok` / `.chip.ok`，**不要**只写 `.ok{...}`。原因：裸 `.ok` 特异性 (0,0,1,0) 等于卡片的 `.vx-card`，会被卡片正文 `color:var(--fg)` 继承/覆盖，导致 chip 文字落到 `--fg` 而非 `--ok-fg`，dark 模式下 chip 几乎看不见；双类特异性 (0,0,2,0) 高于卡片单类，能稳定命中。
-- **每个 HTML visual 都要有 Markdown fallback**：状态卡片后放状态表，内联 SVG 前后放等价文字/表格。渲染器禁用 HTML 时，读者仍能获得同等判断。
-- **避免在 HTML block 内依赖 Markdown 解析**：`<div>` 内的 `## 标题`、反引号代码和 Markdown 链接在很多渲染器中不会按 Markdown 解析。HTML block 内用 HTML 标签；Markdown 内容放在 block 外。
-- **外发或长期复用前要跨渲染器检查**：至少检查 Cursor/VS Code、GitHub/GitLab 预览、目标手机客户端。若目标端不支持 HTML-in-MD，改为渲染成 PNG/SVG 图片再嵌入，或派生独立 HTML artifact。
+- **Only local enhancement**: Don't wrap the entire document in an outer `<div>`, and don't set fixed `color`, `background`, or fonts for the whole document. Only set styles for local components like cards, callouts, SVG.
+- **Explicitly close every HTML block**: Missing `</div>` will swallow subsequent Markdown into the HTML container; common symptoms are body text color errors in dark themes, heading style drift, subsequent Markdown no longer parsing.
+- **CSS colors use "theme variables + fallback," never hardcode a single light/dark**: This is the core rule for avoiding dark mode breakage. Card/status bar/chip colors use `var(--name, fallback)` form, e.g., `background:var(--card-bg, #f6f6f6)`, `color:var(--fg, #1a1a1a)`, `border-left:5px solid var(--ok-border, #10b981)`. Renderers supporting theme variables (OpenCode iOS Web Preview) automatically pick colors per light/dark; the same MD works in both modes. Renderers that don't support them (Cursor/VS Code, GitHub if retaining `<style>`) fall back to fallback values, visually equivalent to light mode. **Absolutely do not** write only a hardcoded light background (`background:white`, `#f8fafc`) with dark text — it will blur into a mess on a host dark background. Plain Markdown paragraphs still do not manually specify colors; leave them to the renderer theme.
+  - Available theme variables (exposed by OpenCode Web Preview, fallback works in unsupported renderers): body `--fg` / background `--bg` / muted text `--fg-muted` / border `--border` / link `--link` / code `--code-bg`·`--code-fg` / card background `--card-bg`; semantic status colors each have `-border` (strong color, stroke/left bar), `-bg` (light background), `-fg` (text) three levels: `--ok-*` (holds/green), `--bad-*` (negated/red), `--warn-*` (warning/yellow), `--block-*` (blocked/gray).
+  - Writing example: `.card.ok{border-left:5px solid var(--ok-border,#10b981);background:var(--card-bg,#f6f6f6);color:var(--fg,#1a1a1a)}`; chip: `.chip.ok{background:var(--ok-bg,#d1fae5);color:var(--ok-fg,#065f46)}`.
+  - **Semantic classes must use compound selectors, never write bare single classes**. Decorative inline elements (chip/badge/pill) semantic colors must bind dual classes `.vx-chip.ok` / `.chip.ok`; **do not** write only `.ok{...}`. Reason: bare `.ok` specificity (0,0,1,0) equals card's `.vx-card`, will be inherited/overridden by card body `color:var(--fg)`, causing chip text to fall to `--fg` instead of `--ok-fg`, making chips nearly invisible in dark mode; dual-class specificity (0,0,2,0) exceeds card single-class and can reliably hit.
+- **Every HTML visual must have a Markdown fallback**: Status cards followed by status table; inline SVG preceded/followed by equivalent text/table. When the renderer disables HTML, readers can still get equivalent judgment.
+- **Avoid relying on Markdown parsing inside HTML blocks**: `## headings`, backtick code, and Markdown links inside `<div>` will not parse as Markdown in many renderers. Use HTML tags inside HTML blocks; Markdown content goes outside blocks.
+- **Cross-renderer check before external distribution or long-term reuse**: At minimum check Cursor/VS Code, GitHub/GitLab preview, target mobile client. If the target end doesn't support HTML-in-MD, convert to rendered PNG/SVG images for embedding, or derive a standalone HTML artifact.
 
-### 跟旧 markdown-first 实践的 delta
+### Delta from Old Markdown-First Practice
 
-显式说清楚"以前 markdown 怎么写、现在按这套方法论怎么写、为什么变"。如果某条 skill 听起来跟旧实践冲突，看这张表 — 通常是 cost structure 变化（读是新瓶颈）的直接 implication。
+Explicitly state "how Markdown was written before, how to write per this methodology now, why the change." If a skill item sounds like it conflicts with old practice, check this table — it's usually a direct implication of the cost structure change (reading is the new bottleneck).
 
-| 维度 | 旧 markdown-first 实践 | 本 skill 提倡的实践 | 为什么变 |
-|---|---|---|---|
-| 阅读路径假设 | 线性，读者从头读到尾 | 多 trajectory，扫读 + 深读并存 | AI 多产，读者预算固定 |
-| 形式角色 | 服务内容，minimal | 独立承载价值（扫读层 / adaptive hook） | 读是新瓶颈 |
-| HTML 用法 | 不用或 freestyle | 受控扩展层（像 UI library，固定武器集） | freestyle = 维护税源 |
-| 决策机制 | 经验 + 风格指南 | 三公理 + 两 gate + 块级判断 | 经验不可扩展给 AI |
-| 错误检测 | 同行评审 | 写完扫描（scan + 阈值 + 修复） | AI 作者不会自审 |
-| 跨文档同一决策 | 每份文档都写一遍 | 单一 source + anchor link | AI 多产导致漂移 |
+| Dimension | Old Markdown-First Practice | This Skill's Advocated Practice | Why Changed |
+|-----------|----------------------------|--------------------------------|-------------|
+| Reading path assumption | Linear, reader reads start to finish | Multi-trajectory, scanning + deep reading coexist | AI produces more; reader budget is fixed |
+| Form's role | Serves content, minimal | Independently carries value (scan layer / adaptive hooks) | Reading is the new bottleneck |
+| HTML usage | Not used or freestyle | Controlled extension layer (like UI library, fixed weapon set) | Freestyle = maintenance tax source |
+| Decision mechanism | Experience + style guide | Three axioms + two gates + block-level judgment | Experience doesn't scale to AI |
+| Error detection | Peer review | Post-write scan (scan + threshold + fix) | AI authors don't self-review |
+| Cross-document same decision | Write it in every document | Single source + anchor link | AI overproduction causes drift |
 
-### 还没拍板的事（live working items）
+### Unresolved Matters (Live Working Items)
 
-这些是当前还在 evolve 的判断，遇到时按当前最佳猜测做，记录到 dogfood 笔记里下次复盘：
+These are judgments still evolving; when encountered, act on current best guess and record in dogfood notes for next review:
 
-1. **chip 的边界**：目前规则说"同列分布均衡 ≥ 2 类"，但实际写时大部分场景都不满足。是不是该把 chip 列为"特殊场景武器"而不是常用？
-2. **跨文档同一决策的标准**：(a) 单一 source + 其他文档 link / (b) 接受复制 + last-synced 戳 — 当前倾向 (a)，但 (a) 需要工具支持（broken link 检测）。
-3. **HTML 扩展层要不要具象化成可复用 CSS 模块**（一个跨项目共享的 `cognitive_writing.css`），所有项目复用同一组 chip / 卡片 / details 样式？
-4. **方法论自审节奏**：每次 dogfood 完发现新 anti-pattern 就 sink 进 skill，还是按季度复盘？目前是前者。
+1. **Chip boundaries**: Current rule says "same column distribution balanced ≥ 2 categories," but in practice most scenarios don't meet this. Should chips be classified as "special scenario weapon" rather than common?
+2. **Cross-document single decision standard**: (a) single source + other docs link / (b) accept duplication + last-synced stamp — currently leaning toward (a), but (a) requires tool support (broken link detection).
+3. **Should the HTML extension layer be concretized into reusable CSS modules** (a cross-project shared `cognitive_writing.css`), with all projects reusing the same set of chip / card / details styles?
+4. **Methodology self-review cadence**: Sink new anti-patterns into the skill after each dogfood discovery, or review quarterly? Currently the former.
 
-## 写完扫描（self-eval）
+## Post-Write Scan (Self-Eval)
 
-写完一遍后,执行下面这些**扫描动作**——不是写之前问问题（AI 写之前没答案）,是写完后**扫描 + 阈值 + 修复**三元组。
+After writing one pass, execute the following **scan actions** — not asking questions before writing (AI has no answers before writing), but **scan + threshold + fix** triples after writing.
 
-| 扫描 | 阈值 = 触发 | 修复 |
-|---|---|---|
-| chip 那一列颜色枚举值出现次数 | 主色 ≥ 80% | 删 chip 列，例外行改成行末 `⚠ 阻塞` 标注 |
-| 本段核心结论 grep 当前 repo | 命中 ≥ 2 处 | 本段改成 `详见 [path]`，不复制文本 |
-| 每个 `##` / `###` 标题：删掉后正文第一句话能否独当小标题 | 能 = 标题是范畴名 | 重写标题为正文那句判决 |
-| 文中是否出现删除线 + "(日期)" 戳 | 有 = 历史倒灌正文 | 重写正文为最新决策，旧版搬文末 changelog 或 `<details>` |
-| `<details>` 里的内容删掉，读者还能完成首要判断吗 | 不能 = details 装了核心 | 把核心搬出 details，折叠区只留审计材料 |
-| chip / 状态分类的枚举值，本文档前后章节是否同一套 | 不同 = 语义漂移 | 全文统一一套（建议 ok/warn/bad/block 封顶） |
+| Scan | Threshold = Trigger | Fix |
+|------|---------------------|-----|
+| Chip column color enum value occurrence count | Dominant color ≥ 80% | Delete chip column; annotate exception rows with end-of-row `⚠ blocked` marker |
+| Grep current repo for this paragraph's core conclusion | Hits ≥ 2 | Change this paragraph to `see [path]`; don't duplicate text |
+| Each `##` / `###` heading: after deleting it, can the body's first sentence stand alone as a subheading | Yes = heading is a category name | Rewrite heading as that body sentence's judgment |
+| Does the text contain strikethrough + "(date)" stamp | Yes = history dumped into body | Rewrite body as latest decision; move old version to end-of-article changelog or `<details>` |
+| If `<details>` content is deleted, can the reader still complete the primary judgment | No = details contain core | Move core out of details; collapsible area only keeps audit materials |
+| Chip / status classification enum values — are they the same set across this document's sections | Different = semantic drift | Unify to one set across the document (recommend ok/warn/bad/block cap) |
 
-## 常见失败模式
+## Common Failure Modes
 
-| 失败模式 | 症状 | 解法 |
-|---|---|---|
-| 写成文章 | 大量铺垫和叙事，读者要读完才知道结论 | 把 bottom line、依据和下一步移到开头 |
-| 只短不清楚 | 文字少，但判断、证据、行动混在一起 | 拆成结论、依据、限制、下一步 |
-| 无法验证 | 判断旁边没有链接、文件路径或数据来源 | 把证据放到对应判断旁边 |
-| 标题无信息 | 标题全是 `Background`、`Findings`、`Notes` | 标题直接写发现或判断 |
-| 图表装饰化 | 图好看但不帮助判断 | 只保留降低认知负担的图 |
-| Mermaid 依赖过强 | 手机端不渲染或图太宽，读者仍要脑补 | 每个 Mermaid 必须配纯 Markdown fallback；首屏不用 Mermaid 承载唯一结论 |
-| HTML block 泄漏 | 漏闭合标签或全局 CSS 影响后续正文，暗色主题下变成深底深字 | HTML 只局部增强、显式闭合、普通 Markdown 不设颜色 |
-| 暗色模式卡片变淡/糊 | 卡片用硬编码浅色背景（`white`、`#f8fafc`），在渲染器深色背景下几乎看不见 | 卡片颜色改用 `var(--card-bg,#f6f6f6)`/`var(--fg,#1a1a1a)`/`var(--ok-border,#10b981)` 形式，主题变量 + fallback，双模式自适应 |
-| 术语冷启动失败 | 开头直接使用项目 shorthand，读者跨任务切回来时看不懂 | 第一屏先恢复最小背景，再给结论 |
-| 中英文漂移 | 标题、表头、解释突然切英文，阅读节奏断裂 | internal 默认中文，英文只保留必要术语和代码/指标名 |
-| 证据堆到文末 | 读者需要来回翻找来源 | 改用 inline link 或紧邻判断的路径 |
-| 跨文档复制同一结论文本 | 同一决策在 3+ 文档里都写一遍，半年后必然漂移、互相打架 | 单一 source of truth，其他文档只 `详见 [path]`；不复制结论文本 |
-| `<details>` 装核心结论 | "按需展开"暗示非必读，但内容是必读；不点开就丢核心信息 | `<details>` 只放审计材料 / 否决方案 / 长 fixture；核心结论展开放正文 |
-| 状态表行 key 用 Phase/Sprint | AI 默认退回工程时序，读者要反向映射"Phase 1 等于什么用户价值" | 行 key 用"用户能体验到的"；Phase 编号进列名或 details |
-| Chip 列 ≥80% 同色 | chip 无筛选无对比价值，纯装饰；读者反而要逐行找异常 | 删 chip 列，把例外行改成行末 `⚠ 阻塞` 标注 |
-| 决策反转用删除线 + 更新戳堆叠 | 把 git history 倒灌进正文，反转层叠后半年后失修 | 直接重写正文为最新决策，旧版搬文末 changelog 或 `<details>` |
-| 标题写范畴名而非判决 | "安全模型"、"方案总览"、"架构决策" 没带 takeaway，读者扫目录拿不到信息 | 标题写判决，例如 "WebView 只跑 bundle JS，sanitizer 渲染后剥脚本" |
+| Failure Mode | Symptom | Solution |
+|-------------|---------|----------|
+| Written like an article | Heavy buildup and narrative; reader must finish to know the conclusion | Move bottom line, basis, and next steps to the beginning |
+| Short but unclear | Few words, but judgment, evidence, and actions mixed together | Separate into conclusion, basis, constraints, next steps |
+| Unverifiable | No links, file paths, or data sources next to judgments | Place evidence next to the corresponding judgment |
+| Headings without information | Headings are all `Background`, `Findings`, `Notes` | Write discoveries or judgments directly in headings |
+| Decorative diagrams | Diagrams look good but don't help judgment | Only keep diagrams that reduce cognitive load |
+| Excessive Mermaid dependency | Doesn't render on mobile or diagram too wide; reader still must mentally reconstruct | Every Mermaid must have plain Markdown fallback; first screen doesn't use Mermaid for sole conclusions |
+| HTML block leakage | Missing closing tags or global CSS affecting subsequent body; dark theme becomes dark background with dark text | HTML only local enhancement, explicitly closed; plain Markdown doesn't set colors |
+| Dark mode cards fading/blurring | Cards use hardcoded light backgrounds (`white`, `#f8fafc`), nearly invisible on renderer dark background | Card colors use `var(--card-bg,#f6f6f6)`/`var(--fg,#1a1a1a)`/`var(--ok-border,#10b981)` form; theme variables + fallback, dual-mode adaptive |
+| Terminology cold start failure | Opening directly uses project shorthand; reader switching back between tasks can't understand | First screen first restores minimal background, then gives conclusion |
+| Chinese-English drift | Headings, headers, explanations suddenly switch to English; reading rhythm breaks | Internal defaults to Chinese; English only retains necessary terms and code/metric names |
+| Evidence piled at the end | Reader must flip back and forth to find sources | Use inline links or paths adjacent to judgments |
+| Cross-document duplication of same conclusion text | Same decision written in 3+ documents; inevitably drifts and conflicts after half a year | Single source of truth; other documents only `see [path]`; don't duplicate conclusion text |
+| `<details>` containing core conclusions | "Expand on demand" implies non-essential reading, but content is essential; not expanding loses core information | `<details>` only holds audit materials / rejected alternatives / long fixtures; core conclusions expanded in body |
+| Status table row keys using Phase/Sprint | AI defaults to engineering timeline; reader must reverse-map "Phase 1 equals what user value" | Row keys use "what the user can experience"; Phase numbers go into column names or details |
+| Chip column ≥80% same color | Chips have no filtering or comparison value, purely decorative; reader instead must scan row by row for exceptions | Delete chip column; annotate exception rows with end-of-row `⚠ blocked` marker |
+| Decision reversals using strikethrough + update stamp stacking | Dumping git history into body; reversal layers become unmaintained after half a year | Directly rewrite body as latest decision; move old version to end-of-article changelog or `<details>` |
+| Headings write category names instead of judgments | "Security Model," "Solution Overview," "Architecture Decisions" carry no takeaway; reader scanning TOC gets no information | Headings write judgments, e.g., "WebView only runs bundle JS; sanitizer strips scripts after rendering" |

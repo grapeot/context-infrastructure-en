@@ -1,93 +1,93 @@
-# Crontab 配置指南
+# Crontab Configuration Guide
 
-本文档描述 context infrastructure 系统所需的定时任务。
+This document describes the scheduled tasks required by the context infrastructure system.
 
 ---
 
-## 时间线总览
+## Timeline Overview
 
 ```
-3:05 AM   → Situation Awareness: 每日摘要 + 摄像头缓存刷新
-4:00 AM   → Session Sync: 导出 AI session 归档
-6:30 AM   → WeChat DB Parser: 导出每日消息为 CSV（如适用）
-7:00 AM   → Daily Briefing: 生成个人晨报 → Email
-8:00 AM   → AI Heartbeat Observer: 扫描文件变动，提取观察写入 OBSERVATIONS.md
-Every 2m  → Situation Awareness: 快照采集（交通/摄像头/警报）
-Every 12h → Situation Awareness: 风力预警检查
-Weekly    → AI Heartbeat Reflector: 合并/提升/清理记忆
-Daily     → Crontab Monitor: 健康审计，发现异常则发告警邮件
+3:05 AM   → Situation Awareness: daily summary + camera cache refresh
+4:00 AM   → Session Sync: export AI session archive
+6:30 AM   → WeChat DB Parser: export daily messages as CSV (if applicable)
+7:00 AM   → Daily Briefing: generate personal morning briefing → Email
+8:00 AM   → AI Heartbeat Observer: scan file changes, extract observations, write to OBSERVATIONS.md
+Every 2m  → Situation Awareness: snapshot collection (traffic/camera/alerts)
+Every 12h → Situation Awareness: wind warning check
+Weekly    → AI Heartbeat Reflector: merge/promote/clean up memory
+Daily     → Crontab Monitor: health audit, send alert email on anomalies
 ```
 
 ---
 
-## 核心任务说明
+## Core Task Descriptions
 
-### AI Heartbeat Observer（每日）
+### AI Heartbeat Observer (daily)
 
-扫描 workspace 文件变动，提取有价值的观察写入 `contexts/memory/OBSERVATIONS.md`。这是三层记忆系统的"输入端"。
+Scans workspace file changes and extracts valuable observations into `contexts/memory/OBSERVATIONS.md`. This is the "input end" of the three-tier memory system.
 
-- **脚本**：`periodic_jobs/ai_heartbeat/src/v0/observer.py`
-- **依赖**：OpenCode Server API（`OPENCODE_API_URL`）
-- **建议时间**：每日 8:00 AM（在 daily briefing 之后）
+- **Script**: `periodic_jobs/ai_heartbeat/src/v0/observer.py`
+- **Dependency**: OpenCode Server API (`OPENCODE_API_URL`)
+- **Recommended time**: Daily 8:00 AM (after daily briefing)
 
-### AI Heartbeat Reflector（每周）
+### AI Heartbeat Reflector (weekly)
 
-合并、提升、清理 OBSERVATIONS.md 中积累的观察，蒸馏为更高层次的认知。
+Merges, promotes, and cleans up observations accumulated in OBSERVATIONS.md, distilling them into higher-level insights.
 
-- **脚本**：`periodic_jobs/ai_heartbeat/src/v0/reflector.py`
-- **依赖**：OpenCode Server API（`OPENCODE_API_URL`）
-- **建议时间**：每周日 9:00 AM
+- **Script**: `periodic_jobs/ai_heartbeat/src/v0/reflector.py`
+- **Dependency**: OpenCode Server API (`OPENCODE_API_URL`)
+- **Recommended time**: Every Sunday 9:00 AM
 
-### Crontab Monitor（每日）
+### Crontab Monitor (daily)
 
-自主审计所有 crontab 任务的健康状态，发现异常时发送告警邮件。
+Autonomously audits the health of all crontab tasks and sends alert emails on anomalies.
 
-- **脚本**：`periodic_jobs/ai_heartbeat/src/v0/jobs/crontab_monitor.py`
-- **依赖**：OpenCode Server API、Gmail（`GMAIL_USERNAME` / `GMAIL_APP_PASSWORD`）
-- **建议时间**：每日 9:00 AM
+- **Script**: `periodic_jobs/ai_heartbeat/src/v0/jobs/crontab_monitor.py`
+- **Dependencies**: OpenCode Server API, Gmail (`GMAIL_USERNAME` / `GMAIL_APP_PASSWORD`)
+- **Recommended time**: Daily 9:00 AM
 
-### AI News Survey（每日/每周）
+### AI News Survey (daily/weekly)
 
-调用 AI Agent 生成 AI 行业日报或周报，可发布到 Kit 订阅者或发送个人邮件。
+Calls an AI agent to generate a daily or weekly AI industry report, publishable to Kit subscribers or sent as personal email.
 
-- **脚本**：`periodic_jobs/ai_heartbeat/src/v0/jobs/ai_news_survey.py`
-- **依赖**：OpenCode Server API、Gmail 或 Kit API
-- **建议时间**：每日 8:00 AM（日报）或每周一 8:00 AM（周报）
+- **Script**: `periodic_jobs/ai_heartbeat/src/v0/jobs/ai_news_survey.py`
+- **Dependencies**: OpenCode Server API, Gmail or Kit API
+- **Recommended time**: Daily 8:00 AM (daily report) or Monday 8:00 AM (weekly report)
 
 ---
 
-## 示例 crontab 配置
+## Example Crontab Configuration
 
-将以下内容添加到 `crontab -e`。**使用前请将 `/path/to/your/workspace` 替换为实际路径。**
+Add the following to `crontab -e`. **Replace `/path/to/your/workspace` with your actual path before using.**
 
 ```cron
-# ── 时区说明 ──────────────────────────────────────────────
-# 以下时间均为本地时间。如需指定时区，在 crontab 顶部添加：
+# ── Timezone note ──────────────────────────────────────────────
+# All times below are local time. To specify a timezone, add at the top of crontab:
 # TZ=America/Los_Angeles
 
-# AI Heartbeat Observer — 每日 8:00 AM
+# AI Heartbeat Observer — daily 8:00 AM
 0 8 * * * cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/observer.py >> /tmp/observer.log 2>&1
 
-# AI Heartbeat Reflector — 每周日 9:00 AM
+# AI Heartbeat Reflector — every Sunday 9:00 AM
 0 9 * * 0 cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/reflector.py >> /tmp/reflector.log 2>&1
 
-# Crontab Monitor — 每日 9:00 AM
+# Crontab Monitor — daily 9:00 AM
 0 9 * * * cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/jobs/crontab_monitor.py >> /tmp/crontab_monitor.log 2>&1
 
-# AI News Survey 日报 — 每日 8:00 AM（发个人邮件）
+# AI News Survey daily report — daily 8:00 AM (send personal email)
 0 8 * * * cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/jobs/ai_news_survey.py --mode daily >> /tmp/ai_news_survey.log 2>&1
 
-# AI News Survey 周报 — 每周一 8:00 AM（发布到 Kit 订阅者）
+# AI News Survey weekly report — every Monday 8:00 AM (publish to Kit subscribers)
 0 8 * * 1 cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/jobs/ai_news_survey.py --mode weekly --publish-to-kit >> /tmp/ai_news_weekly.log 2>&1
 ```
 
 ---
 
-## 注意事项
+## Notes
 
-1. **路径替换**：所有 `/path/to/your/workspace` 必须替换为你的实际绝对路径。
-2. **虚拟环境**：脚本依赖 `.venv` 中的 Python 包，确保先运行 `uv pip install -r requirements.txt`（如有）。
-3. **环境变量**：cron 环境不会自动加载 `.env`，建议在脚本中显式加载，或在 crontab 中用 `env $(cat .env | xargs)` 注入。
-4. **时区**：macOS cron 默认使用系统时区；Linux 服务器建议在 crontab 顶部显式设置 `TZ=`。
-5. **日志**：示例中日志写入 `/tmp/`，生产环境建议改为持久化路径（如 `logs/` 目录）。
-6. **依赖顺序**：Observer 依赖当天的文件变动，建议在 daily briefing 和 news survey 之后运行（8:30 AM 以后）。
+1. **Path replacement**: All `/path/to/your/workspace` must be replaced with your actual absolute path.
+2. **Virtual environment**: Scripts depend on Python packages in `.venv`. Run `uv pip install -r requirements.txt` first (if a requirements file exists).
+3. **Environment variables**: The cron environment does not automatically load `.env`. Either load it explicitly in the script, or inject it in crontab with `env $(cat .env | xargs)`.
+4. **Timezone**: macOS cron uses the system timezone by default. On Linux servers, set `TZ=` explicitly at the top of crontab.
+5. **Logs**: The examples write logs to `/tmp/`. For production, use a persistent path (e.g., a `logs/` directory).
+6. **Dependency order**: The observer depends on the day's file changes. Run it after daily briefing and news survey (8:30 AM or later).

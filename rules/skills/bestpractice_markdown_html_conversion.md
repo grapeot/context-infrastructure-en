@@ -1,5 +1,5 @@
 ---
-title: Markdown 转 HTML 最佳实践
+title: Markdown to HTML Best Practice
 category: BestPractice
 tags: [markdown, html, pandoc, document-conversion]
 difficulty: Easy
@@ -8,52 +8,52 @@ created: 2025-02-12
 updated: 2025-02-12
 ---
 
-# Markdown 转 HTML 最佳实践与教训
+# Markdown to HTML Best Practice and Lessons Learned
 
-在将精心编写的 Markdown 文档转换为 HTML（特别是使用 Pandoc 等工具）时，我们总结了以下核心教训，以确保格式的准确性和专业性。
+When converting carefully authored Markdown documents to HTML (especially using tools like Pandoc), we have summarized the following core lessons to ensure formatting accuracy and professionalism.
 
-## 1. 列表格式的严格要求
+## 1. Strict Requirements for List Formatting
 
-### 必须留出空行
-Markdown 转换器（如 Pandoc）通常需要列表（无序或有序列表）与其上方的段落之间有一个**完整的空行**。
+### Must Leave Blank Lines
+Markdown converters (such as Pandoc) typically require a **complete blank line** between a list (unordered or ordered) and the paragraph above it.
 
-- **错误做法**：
+- **Wrong approach**:
   ```markdown
-  相语在婚恋中的应用：
-  * 强弱匹配
-  * 福气匹配
+  Applications of physiognomy in relationships:
+  * Strength matching
+  * Fortune matching
   ```
-  *结果：列表可能被识别为普通文本，导致 HTML 中无法显示为点选符号。*
+  *Result: the list may be recognized as plain text, causing bullet points to not display in HTML.*
 
-- **正确做法**：
+- **Correct approach**:
   ```markdown
-  相语在婚恋中的应用：
+  Applications of physiognomy in relationships:
 
-  * 强弱匹配
-  * 福气匹配
+  * Strength matching
+  * Fortune matching
   ```
 
-## 2. 章节合并的结构完整性
+## 2. Structural Integrity When Merging Chapters
 
-### 章节间的换行符
-当合并多个 Markdown 文件为一个大文档时，必须在文件之间插入**至少两个换行符**（即一个空行）。
+### Line Breaks Between Chapters
+When merging multiple Markdown files into one large document, you must insert **at least two line breaks** (i.e., one blank line) between files.
 
-- **原因**：如果前一个文件以文本结束，而下一个文件以 `#` 标题开始，且中间没有空行，解析器可能会将标题逻辑混淆。
-- **最佳实践**：在 `cat` 或脚本合并时显式添加 `\n\n`。
+- **Reason**: if the previous file ends with text and the next file starts with a `#` heading without a blank line in between, the parser may confuse the heading logic.
+- **Best practice**: explicitly add `\n\n` when merging with `cat` or scripts.
 
-## 3. 标题与引言的逻辑重组
+## 3. Logical Reorganization of Headings and Introductions
 
-### 移除冗余标题
-在电子书或长篇教程中，如果每个章节都有一个单独的 `## 引言` 标题，会增加目录的负担且视觉上显得断裂。
+### Remove Redundant Headings
+In ebooks or long tutorials, if each chapter has a separate `## Introduction` heading, it adds burden to the table of contents and appears visually fragmented.
 
-- **改进建议**：移除 `## 引言` 字样，直接将引言文字紧跟在章标题（`#`）之后。这使得阅读体验更加流畅，更符合现代书籍排版。
+- **Improvement suggestion**: remove the `## Introduction` text and place the introduction text directly after the chapter heading (`#`). This makes the reading experience smoother and more aligned with modern book typography.
 
-## 4. 移动端适配的 CSS 细节
+## 4. CSS Details for Mobile Adaptation
 
-### 间距管理
-确保 HTML 的 `body` 或主容器具有足够的 `padding`（建议 24px 或更多），防止文字在移动设备上紧贴屏幕边缘。
+### Spacing Management
+Ensure the HTML `body` or main container has sufficient `padding` (recommended 24px or more) to prevent text from hugging the screen edge on mobile devices.
 
-## 5. 符号与括号的规范化
+## 5. Standardization of Symbols and Brackets
 
-### 标题纯净化
-在最终汇总文档中，尽量移除标题（如 `## 【本章小结】`）中的非必要中括号或特殊符号。使用简洁的 `## 本章小结` 不仅视觉上更专业，也有利于自动生成的目录（TOC）显得整洁。
+### Heading Purity
+In the final aggregated document, try to remove unnecessary brackets or special symbols from headings (such as `## 【Chapter Summary】`). Using concise `## Chapter Summary` is not only visually more professional but also helps the auto-generated table of contents (TOC) appear clean.

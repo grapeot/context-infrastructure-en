@@ -5,63 +5,62 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# V2. 可验证性是信任的地基
+# V2. Verifiability Is the Foundation of Trust
 
-## 1. 核心公理
+## 1. Core Axiom
 
-信任来自可验证性：设计系统时要让错误易于被发现，而不是假设它一定正确。在 AI 时代，这意味着不能依赖过程的确定性（我们无法控制 AI 的每一步），而必须依赖结果的可验证性（我们可以定义什么是"对的"，并用自动化或人工的方式检查）。
+Trust comes from verifiability: design systems so that errors are easy to discover, rather than assuming correctness. In the AI era, this means you cannot rely on process determinism (you cannot control every step AI takes), but must rely on outcome verifiability (you can define what "right" looks like and check it through automated or manual means).
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 2.1 正确性的廉价性与验证的必要性
+### 2.1 The Cheapness of Correctness and the Necessity of Verification
 
-在简单问题里，"正确"很便宜；在复杂系统里，难的是设计能经受时间延迟、依赖关系与模糊信号的验证机制。这个观察来自一个更深层的认知：正确性本身是一个低价值的东西。它难以定义（因为依赖前提假设），容易被推翻（总能找到反例），而且一旦获得就立刻贬值（知识可以被告知，不需要长期积累）。相比之下，真正有价值的是能够识别什么时候出错、如何快速纠正的能力。这就是为什么可验证性比正确性本身更重要：它不是说"我一定做对了"，而是说"我有办法知道自己是否做对了"。当你能够快速发现错误，错误就不会积累成债务；当你能够追踪错误的来源，问题就变得可解决。
+In simple problems, "correctness" is cheap; in complex systems, the hard part is designing verification mechanisms that can withstand time delays, dependency chains, and ambiguous signals. This observation comes from a deeper insight: correctness itself is a low-value commodity. It is hard to define (because it depends on premises), easy to overturn (counterexamples can always be found), and depreciates the moment it is obtained (knowledge can be told — it does not require long-term accumulation). By contrast, what is truly valuable is the ability to recognize when something is wrong and how to correct it quickly. This is why verifiability matters more than correctness itself: it is not saying "I definitely got it right," but "I have a way to know whether I got it right." When you can quickly discover errors, errors do not accumulate into debt; when you can trace the source of errors, problems become solvable.
 
-### 2.2 Agentic Loop 与结果确定性
+### 2.2 Agentic Loop and Outcome Determinism
 
-Agentic loop 把确定性从过程转移到结果：你不必控制每一步，但你可以控制"完成"的定义以及如何检查。传统程序员的安全感来自过程确定性——每一行代码都在控制之下，每一个分支都被考虑过。但 AI 系统的非确定性使这种方法失效。同一个 prompt 在不同时刻、不同模型版本、不同温度参数下可能产生完全不同的结果。与其试图用规则去约束这种非确定性（这会导致无穷无尽的防御性代码），不如接受过程的不确定性，转而通过定义清晰的验收标准来约束结果。这样 AI 的灵活性就不再是风险，而是完成任务的资源。当 AI 能够观测到自己行动的结果（通过执行脚本、读取文件、看到错误信息），它就能进入一个闭环：执行 → 观测 → 纠错 → 再执行。这个闭环一旦建立，就能自动处理很多之前需要人工干预的边界情况。关键在于，AI 不是在猜测"我做完了吗"，而是在读一个明确的信号："这个检查通过了吗"。
+The agentic loop shifts determinism from process to outcome: you don't have to control every step, but you can control the definition of "done" and how to check it. A traditional programmer's sense of security comes from process determinism — every line of code is under control, every branch has been considered. But the non-deterministic nature of AI systems makes this approach invalid. The same prompt at different times, with different model versions, or at different temperature settings can produce completely different results. Rather than trying to constrain this non-determinism with rules (which leads to endless defensive code), it is better to accept process uncertainty and instead constrain the outcome by defining clear acceptance criteria. This way, AI's flexibility becomes a resource for completing tasks rather than a risk. When AI can observe the results of its own actions (by executing scripts, reading files, seeing error messages), it can enter a closed loop: execute → observe → correct → re-execute. Once this loop is established, it can automatically handle many edge cases that previously required human intervention. The key is that AI is not guessing "am I done?" — it is reading a clear signal: "did this check pass?"
 
-### 2.3 可验证性作为接口
+### 2.3 Verifiability as an Interface
 
-可验证性是一种接口：tests、diffs、logs、metrics、screenshots，以及独立的交叉验证，都是把猜测变成知识的传感器。在财务数据处理的例子中，当我尝试把敏感的财务数据交给 AI 时，直到我设计出"人在回路中"的工作流，并加入明确的双重验证，才真正放心——错误无处藏身。具体来说，我用一个确定性的程序来计算所有资产的总和，然后与历史记录对比，如果偏差超过 5% 就触发警报。这个验证机制不仅发现了 AI 的错误，还意外地发现了十年前的手工记账错误。这说明验证的价值不仅在于防守，还在于发现隐藏的问题。验证接口的设计应该在系统设计阶段就完成，而不是事后补上。这意味着你需要提前问自己：什么样的输出算是"正确的"？如何用自动化的方式检查这一点？这个接口可以是单元测试、集成测试，可以是对比预期和实际的 diff，可以是人工审核的清单，也可以是性能指标或数据质量指标。一旦这个接口被定义出来，验证就变成了一个可执行的、可重复的、可追踪的过程。
+Verifiability is an interface: tests, diffs, logs, metrics, screenshots, and independent cross-validation are all sensors that turn guesswork into knowledge. In the financial data processing case, when I tried to hand sensitive financial data to AI, I was not truly at ease until I designed a human-in-the-loop workflow with explicit double verification — errors had nowhere to hide. Specifically, I used a deterministic program to calculate the sum of all assets and compared it against historical records; if the deviation exceeded 5%, an alert was triggered. This verification mechanism not only caught AI errors but also unexpectedly discovered manual bookkeeping errors from a decade ago. This shows that the value of verification is not only defensive but also in uncovering hidden problems. Verification interfaces should be designed during the system design phase, not bolted on afterward. This means you need to ask yourself in advance: what does a "correct" output look like? How can I check this in an automated way? This interface can be unit tests, integration tests, diffs comparing expected vs. actual, a manual review checklist, or performance or data quality metrics. Once this interface is defined, verification becomes an executable, repeatable, and traceable process.
 
-### 2.4 隔离-处理-验证的闭环
+### 2.4 The Isolate-Process-Verify Closed Loop
 
-无法验证就不该规模化：没有检测能力的速度会把错误变成债务。这是为什么隔离-处理-验证的三阶段闭环如此重要。第一阶段是隔离：从源系统导出冻结的数据快照，与线上系统完全解耦。这样即使 AI 生成了垃圾输出，也只是本地沙盒中的垃圾，不会污染真实数据。冻结输入还有一个深层好处：它让处理过程变得可重复、可调试、可验证。同一个输入总是产生同样的输出，这样你可以在本地重现问题，可以对比输入和输出来判断是数据问题还是处理问题。第二阶段是处理：在沙盒中执行 AI 处理，生成 dry-run 输出或预览。第三阶段是验证与发布：提供明确的验证工件（diff、tests、checklist），人工审核后才发布。这三个阶段形成了一条完整的审计链：你可以追溯每一个变更来自哪个输入、经过了哪个 AI 处理、被谁审核过、最终是否发布。当出现问题时，你不是在猜测"发生了什么"，而是在读一份清晰的日志。
+If you cannot verify, you should not scale: speed without detection capability turns errors into debt. This is why the three-phase closed loop of isolate-process-verify is so important. Phase one is isolation: export a frozen data snapshot from the source system, fully decoupled from the live system. This way, even if AI generates garbage output, it is only garbage in a local sandbox and will not contaminate real data. Freezing input has an additional deep benefit: it makes the processing repeatable, debuggable, and verifiable. The same input always produces the same output, so you can reproduce problems locally and compare input against output to determine whether the issue is data or processing. Phase two is processing: execute AI processing in the sandbox, generating dry-run output or previews. Phase three is verification and release: provide clear verification artifacts (diffs, tests, checklists), reviewed by a human before release. These three phases form a complete audit chain: you can trace every change back to which input it came from, which AI processing it went through, who reviewed it, and whether it was ultimately released. When problems arise, you are not guessing "what happened" — you are reading a clear log.
 
-### 2.5 成本结构的转变
+### 2.5 The Shift in Cost Structure
 
-这种从过程确定性到结果确定性的转变背后，其实是成本结构的根本改变。过程确定性的经济学是：代码执行起来几乎不花钱，但写代码的人力很贵。所以我们要精心设计逻辑、追求复用、避免重复。结果确定性的经济学正好反过来：intelligence 越来越便宜，让 AI 反复尝试、检查、纠错的成本在快速下降。我们可以挥霍 token 来换取确定性——不是通过写更多的防御性代码，而是让 AI 用它的推理能力去对抗不确定性。这意味着我们可以让 AI 每次都现场做检查、现场写验证脚本、反复循环直到结果正确，而不需要像以前那样把所有可能的情况都预先在代码里写成规则。这种转变也带来了天花板的差别：过程确定性的上限是我们的想象力和精力，我们能想到的情况、能写出来的逻辑，就是系统能处理的边界。结果确定性的上限更高：我们不需要穷举所有可能的路径，只需要定义清楚什么是对的，agent 会自己想办法到达那个状态。
+Behind this shift from process determinism to outcome determinism is a fundamental change in cost structure. The economics of process determinism is: code execution costs almost nothing, but the human labor of writing code is expensive. So we carefully design logic, pursue reuse, and avoid duplication. The economics of outcome determinism is the reverse: intelligence is getting cheaper, and the cost of letting AI repeatedly try, check, and correct is rapidly declining. We can spend tokens freely to buy determinism — not by writing more defensive code, but by letting AI use its reasoning ability to fight uncertainty. This means we can let AI do on-the-spot checks every time, write verification scripts on the fly, and loop repeatedly until the result is correct, without needing to pre-encode every possible scenario as rules in code as we used to. This shift also brings a difference in ceiling: the upper bound of process determinism is our imagination and energy — the scenarios we can think of and the logic we can write define the boundaries the system can handle. The upper bound of outcome determinism is higher: we don't need to exhaustively enumerate all possible paths; we only need to clearly define what "right" looks like, and the agent will find its own way to reach that state.
 
-### 2.6 验证的隐性成本与收益
+### 2.6 The Hidden Costs and Benefits of Verification
 
-验证看起来会增加流程的复杂性，但实际上它是在用前期的设计成本换取后期的运维成本。一个没有验证机制的系统，初期看起来很快，但一旦出错，修复的成本是指数级的：发现问题需要时间，定位问题需要时间，修复问题需要时间，验证修复也需要时间。而且错误往往会级联：一个财务数据的错误可能导致后续的所有决策都是错的，一个邮件模板的错误可能导致 10000 个用户收到错误的内容。相比之下，在设计阶段花时间定义验证接口，在执行前花时间做 dry-run，这些都是相对廉价的投资。而且，验证机制一旦建立，就可以被复用。你为财务系统设计的验证接口，可能对其他数据处理系统也有启发。
+Verification may appear to add complexity to the process, but in reality it trades upfront design cost for downstream operational cost. A system without verification mechanisms looks fast initially, but once errors occur, the cost of fixing them is exponential: discovering the problem takes time, locating it takes time, fixing it takes time, and verifying the fix also takes time. Moreover, errors tend to cascade: one financial data error can make all subsequent decisions wrong; one email template error can cause 10,000 users to receive incorrect content. By contrast, spending time during the design phase to define verification interfaces, and spending time before execution to do dry-runs — these are relatively cheap investments. And once verification mechanisms are established, they can be reused. The verification interface you design for a financial system may also inspire other data processing systems.
 
-### 2.7 冻结输入与可重复性
+### 2.7 Frozen Input and Repeatability
 
-冻结输入是可验证性的基础。当你在处理过程中不断调整输入或上下文，推理链条就会变得模糊，幻觉也会增加。隔离-处理-验证闭环通过让流水线运行在冻结的输入上来抑制这种幻觉。你在第一阶段导出的数据是一个快照，在第二阶段中不会改变。AI 处理的是这个固定的数据集，而不是在不断变化的在线系统上即兴发挥。这样做的好处是：处理过程变得可重复（同样的输入总是产生同样的输出），可调试（你可以在本地重现问题），可验证（你可以对比输入和输出）。冻结输入还有一个深层的认知好处：它让你能够清晰地分离"输入的问题"和"处理的问题"。如果输出有问题，你可以快速判断是因为输入数据本身有缺陷，还是因为 AI 的处理逻辑有问题。
+Frozen input is the foundation of verifiability. When you continuously adjust input or context during processing, the reasoning chain becomes blurred and hallucinations increase. The isolate-process-verify closed loop suppresses such hallucinations by running the pipeline on frozen input. The data you export in phase one is a snapshot that does not change during phase two. AI processes this fixed dataset rather than improvising on a constantly changing live system. The benefits: processing becomes repeatable (same input always produces same output), debuggable (you can reproduce problems locally), and verifiable (you can compare input against output). Frozen input also has a deep cognitive benefit: it lets you cleanly separate "input problems" from "processing problems." If the output is wrong, you can quickly determine whether the input data itself was flawed or whether the AI's processing logic was at fault.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-**适用场景**：当输出具有非确定性、高影响，或端到端难以推理（agents、研究、重大重构、决策）。特别是涉及财务数据、用户隐私、关键基础设施的操作，或任何包含 AI、随机算法、外部 API 调用的自动化。
+**When it applies**: when outputs are non-deterministic, high-impact, or hard to reason about end-to-end (agents, research, major refactoring, decisions). Especially operations involving financial data, user privacy, critical infrastructure, or any automation that includes AI, random algorithms, or external API calls.
 
-**实践方式**：
-1. 尽可能把验收标准定义为可执行的检查（脚本、测试、指标）
-2. 构建分阶段流水线：隔离（冻结输入）→ 处理（沙盒执行）→ 验证（人工闸门）→ 发布
-3. 对每个关键主张至少增加一条独立的验证路径（交叉验证）
-4. 保留完整的审计链：输入快照、处理日志、审核记录、变更日志
-5. 在设计阶段就定义验证接口，而不是事后补上
+**How to practice**:
+1. Define acceptance criteria as executable checks wherever possible (scripts, tests, metrics)
+2. Build staged pipelines: isolate (freeze input) → process (sandbox execution) → verify (human gate) → release
+3. Add at least one independent verification path for every critical claim (cross-validation)
+4. Maintain a complete audit chain: input snapshots, processing logs, review records, change logs
+5. Define verification interfaces during the design phase, not as an afterthought
 
-**关键原则**：
-- 冻结输入抑制幻觉：处理过程运行在固定的数据集上，不会因为源数据变化而产生不可重复的结果
-- 破坏性操作必须 dry-run：所有可能造成损害的操作（覆盖、删除、DB 写入、API 变更、邮件发送）都必须先生成预览，经人工审核后才执行
-- 验证不是感觉型 review：必须是可自动化、可追踪、可重复的过程
-- 低风险操作可以简化流程，但高风险操作没有例外
-- 验证的目标不是追求完美，而是让错误无处藏身
+**Key principles**:
+- Frozen input suppresses hallucination: processing runs on a fixed dataset, producing repeatable results unaffected by source data changes
+- Destructive operations must be dry-run: all potentially harmful operations (overwrites, deletions, DB writes, API changes, email sends) must first generate a preview, reviewed by a human before execution
+- Verification is not a gut-feel review: it must be an automatable, traceable, repeatable process
+- Low-risk operations can use simplified processes, but high-risk operations have no exceptions
+- The goal of verification is not perfection, but making errors impossible to hide
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **V01 责任无法被委派**：虽然可以委派执行，但审核和发布的责任必须由人承担
-- **T07 隔离-处理-验证**：验证是信任的地基；隔离-处理-验证闭环是可验证性的具体实现
-- **T02 结果确定性**：不强制流程，但强制验证输出；这个闭环确保了输出的可验证性
-
+- **V01 Responsibility Cannot Be Delegated**: while execution can be delegated, the responsibility for review and release must rest with the human
+- **T07 Isolate-Process-Verify**: verification is the foundation of trust; the isolate-process-verify closed loop is the concrete implementation of verifiability
+- **T02 Outcome Determinism**: does not mandate process, but mandates verification of output; this closed loop ensures output verifiability

@@ -5,156 +5,155 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# M5. 简洁即认知效率
+# M5. Simplicity as Cognitive Efficiency
 
-## 1. 核心公理
+## 1. Core Axiom
 
-选择你每天真的会运行的最简单系统，因为每多一层流程都会把注意力从工作本身偷走。认知资源是稀缺的，而系统的复杂度与其维护成本成指数关系。一个你实际使用的纸笔清单，永远胜过一个精心设计但需要启动仪式的工具。
+Choose the simplest system you will actually run every day, because every additional layer of process steals attention from the work itself. Cognitive resources are scarce, and a system's complexity has an exponential relationship with its maintenance cost. A pen-and-paper checklist you actually use will always beat an elaborately designed tool that requires a startup ritual.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 2.1 认知资源的竞争
+### 2.1 The Competition for Cognitive Resources
 
-工作记忆才是真正的稀缺资源。当你的系统迫使你记住太多东西——状态、快捷键、结构、规则、例外——它就会直接与真正的思考竞争。这不是一个边际成本问题，而是一个指数级的认知税。每增加一层流程，你就需要在脑子里维护一个额外的心智模型。当这些心智模型开始相互作用时，复杂度会爆炸性增长。
+Working memory is the truly scarce resource. When your system forces you to remember too many things — states, shortcuts, structures, rules, exceptions — it directly competes with actual thinking. This is not a marginal cost problem, but an exponential cognitive tax. Every additional layer of process requires you to maintain an extra mental model in your head. When these mental models begin to interact, complexity explodes.
 
-2013 年我放弃了花哨的 org-mode "时间管理"配置，就是因为管理本身变成了工作。我花在调整快捷键、设计项目结构、维护自动生成的日程表上的时间，远超过了这个系统为我节省的时间。更糟的是，每次我看着那个精美的日程表时，我的大脑就在两件事之间分裂：一是"我应该做什么"，二是"我的系统说我应该做什么"。这种分裂本身就是一种认知损耗。改用纸笔后，工作流变成了"写下来 -> 去做"，中间没有任何中介。我的大脑可以完全专注于任务本身，而不是被系统的维护分散。
+In 2013 I abandoned a fancy org-mode "time management" configuration precisely because the management itself became the work. The time I spent adjusting shortcuts, designing project structures, and maintaining auto-generated agendas far exceeded the time the system saved me. Worse, every time I looked at that beautiful agenda, my brain split between two things: "what should I do" and "what does my system say I should do." This split itself is a cognitive drain. After switching to pen and paper, the workflow became "write it down → do it," with no intermediary. My brain could fully focus on the task itself, undistracted by system maintenance.
 
-### 2.2 摩擦与启动能量
+### 2.2 Friction and Activation Energy
 
-低摩擦工具会复利增长，因为它们不需要启动能量。这是一个被严重低估的因素。一个需要打开应用、登录、导航到正确的视图、然后才能开始工作的系统，会在你每次使用时都消耗一部分意志力。这个消耗是累积的。如果你一天要做 10 次这个动作，那就是 10 倍的启动成本。而一个总是在你面前、随时可用的纸笔清单，消除了这个成本。
+Low-friction tools compound because they require no activation energy. This is a severely underestimated factor. A system that requires opening an app, logging in, navigating to the right view, and then starting work consumes a portion of willpower every time you use it. This consumption is cumulative. If you do this 10 times a day, that's 10x the startup cost. A pen-and-paper checklist that is always in front of you, always ready, eliminates this cost.
 
-这就是为什么我会明确偏好自动追踪与备份之类的能力。RescueTime 不需要我做任何事就能追踪我的时间；Dropbox 不需要我手动备份；Time Machine 不需要我记住备份日期。这些工具的价值不在于它们做了什么，而在于它们让我不用想起它们。它们在背景中工作，零摩擦。相比之下，一个需要我每天手动输入数据的系统，即使功能更强大，也会因为摩擦而逐渐被放弃。
+This is why I explicitly prefer capabilities like automatic tracking and backup. RescueTime tracks my time without me doing anything; Dropbox backs up without manual effort; Time Machine doesn't require me to remember backup dates. The value of these tools is not in what they do, but in letting me not have to think about them. They work in the background, zero friction. In contrast, a system that requires me to manually input data every day, even if more powerful, will gradually be abandoned due to friction.
 
-### 2.3 复杂度的边界与重置
+### 2.3 Complexity Boundaries and Reset
 
-简单系统更容易保持有界。这是一个关键的洞察。当你的系统变得太复杂时，唯一的解决方案就是重写它。而重写的成本是什么？零。你只需要拿出一张新纸，重新写下你的待办清单。这个重置过程本身就是一个过滤：你只会写下那些真正重要的东西，而不是把所有的历史包袱都搬过来。
+Simple systems are easier to keep bounded. This is a key insight. When your system becomes too complex, the only solution is to rewrite it. And the cost of rewriting? Zero. You just take out a fresh sheet of paper and rewrite your to-do list. This reset process is itself a filter: you will only write down what truly matters, rather than carrying over all the historical baggage.
 
-相比之下，一个无休止地修订的宏大计划只会累积流程债。每次你添加一个新的规则、一个新的分类、一个新的视图，你都在增加系统的复杂度。而且这些增加往往是不可逆的——你很难删除一个已经被使用的功能，因为可能有人依赖它。结果是，系统变得越来越复杂，越来越难以维护，最终变成了一个你不再使用的遗迹。
+In contrast, an endlessly revised grand plan only accumulates process debt. Every time you add a new rule, a new category, a new view, you increase the system's complexity. And these additions are often irreversible — it's hard to delete a feature that's already in use, because someone might depend on it. The result: the system grows increasingly complex, increasingly hard to maintain, and eventually becomes a relic you no longer use.
 
-### 2.4 分离模式的力量
+### 2.4 The Power of Separating Modes
 
-分离模式很重要。下一步行动要无摩擦、随时可见；宏观思考值得单独的时间段与单独的一页。这个原则来自 GTD（Getting Things Done）的核心洞察，但我的实践表明，它的价值远超过 GTD 本身。
+Separating modes matters. Next actions should be frictionless and always visible; macro thinking deserves its own time block and its own page. This principle comes from the core insight of GTD (Getting Things Done), but my practice shows its value extends far beyond GTD itself.
 
-当你把"下一步行动"和"宏观思考"混在一起时，会发生什么？你会陷入一种不断的上下文切换。你在执行一个任务时，突然想到一个大的战略问题，然后你的注意力就被拉走了。或者反过来，你在做宏观规划时，被一个紧急的小任务打断。这种切换的成本是巨大的。研究表明，从一个任务切换到另一个任务需要 15-25 分钟才能恢复完整的认知能力。
+What happens when you mix "next actions" with "macro thinking"? You fall into constant context switching. While executing a task, you suddenly think of a big strategic question, and your attention gets pulled away. Or conversely, while doing macro planning, you get interrupted by an urgent small task. The cost of this switching is enormous. Research shows it takes 15-25 minutes to recover full cognitive ability after switching tasks.
 
-解决方案是物理上的分离。我的笔记本有两部分：一部分是"今天的下一步"，总是在我面前；另一部分是"宏观思考"，我只在特定的时间（比如周末）才会打开。这个分离不仅减少了认知负荷，还让我能够在两种模式之间更清晰地切换。当我在执行模式时，我知道我不需要考虑大局；当我在规划模式时，我知道我不需要担心今天的细节。
+The solution is physical separation. My notebook has two parts: one for "today's next actions," always in front of me; the other for "macro thinking," which I only open at specific times (like weekends). This separation not only reduces cognitive load, but also lets me switch more cleanly between the two modes. When I'm in execution mode, I know I don't need to think about the big picture; when I'm in planning mode, I know I don't need to worry about today's details.
 
-### 2.5 多线程生活中的简洁性
+### 2.5 Simplicity in a Multi-Threaded Life
 
-在一个多线程、高速运转的生活中，简洁性变得更加关键。当你同时在处理工作、家庭、多个兴趣项目时，你的认知资源已经被分散了。在这种情况下，你的系统必须是极其简洁的，否则它会成为另一个需要管理的线程。
+In a multi-threaded, high-speed life, simplicity becomes even more critical. When you are simultaneously handling work, family, and multiple interest projects, your cognitive resources are already dispersed. In this situation, your system must be extremely simple, or it becomes yet another thread to manage.
 
-2024 年的时间记录分析显示，我的生活涉及多个领域：带娃、视频剪辑、3D 打印、自动化编程、家务维修。每个领域都有自己的任务和截止日期。如果我试图用一个复杂的系统来管理所有这些，我会被系统本身淹没。相反，我的策略是保持一个极其简洁的"下一步"清单，每天只关注最重要的 3-5 项。其他的东西都被放在一个简单的"待办"列表中，但我不会试图优先级排序或组织它们。这种"粗粒度"的管理方式看起来不够精细，但它的好处是，我永远不会被系统的维护所困扰。
+My 2024 time-tracking analysis shows my life spans multiple domains: childcare, video editing, 3D printing, automation programming, home repairs. Each domain has its own tasks and deadlines. If I tried to manage all of this with a complex system, I would be overwhelmed by the system itself. Instead, my strategy is to maintain an extremely simple "next actions" list, focusing on only the most important 3-5 items each day. Everything else goes into a simple "backlog" list, but I don't try to prioritize or organize them. This "coarse-grained" management approach looks insufficiently refined, but its benefit is that I am never burdened by system maintenance.
 
-### 2.6 与其他公理的关系
+### 2.6 Relationship to Other Axioms
 
-简洁性与 M1（闭环校准）相辅相成。闭环需要快速的反馈，而复杂的系统会减缓反馈。一个简洁的系统能让你更快地看到结果，从而更快地调整。简洁性也与 M4（主动管理）相关：当你的系统足够简洁时，你就能把更多的精力投入到主动管理上，而不是被动地维护系统。
+Simplicity and M1 (Closed-Loop Calibration) reinforce each other. Closed loops require fast feedback, and complex systems slow feedback down. A simple system lets you see results faster, and thus adjust faster. Simplicity also relates to M4 (Active Management): when your system is simple enough, you can invest more energy in active management rather than passively maintaining the system.
 
-简洁性还与 X03（效率由瓶颈决定）有关。在一个复杂的系统中，瓶颈往往不在工作本身，而在系统的维护。通过简化系统，你消除了这个瓶颈，让真正的工作成为限制因素。
+Simplicity also relates to X03 (Efficiency Is Determined by Bottlenecks). In a complex system, the bottleneck is often not the work itself, but system maintenance. By simplifying the system, you eliminate this bottleneck, letting the real work become the limiting factor.
 
-## 3. 应用判定
+## 3. Application Judgment
 
-### 何时使用
+### When to Use
 
-个人效率系统、重复性工作流、团队流程、知识沉淀，或任何你发现自己花在"组织"上的时间多于执行的时候。特别是在以下场景中，简洁性是必须的：
+Personal productivity systems, repetitive workflows, team processes, knowledge capture, or any situation where you find yourself spending more time "organizing" than executing. Simplicity is essential especially in the following scenarios:
 
-- **个人任务管理**：如果你的待办清单系统需要超过 30 秒来添加一个新任务，那就太复杂了。
-- **团队流程**：当一个流程需要超过三个步骤来完成一个常见任务时，它就太复杂了。团队成员会开始绕过它，导致混乱。
-- **知识管理**：当你的笔记系统需要你花时间来"组织"笔记而不是"写"笔记时，它就失败了。
-- **AI 协作**：当你给 AI 的指令需要超过一页来解释时，你的系统可能太复杂了。简洁的指令往往能产生更好的结果。
+- **Personal task management**: If your to-do list system takes more than 30 seconds to add a new task, it's too complex.
+- **Team processes**: When a process requires more than three steps to complete a common task, it's too complex. Team members will start bypassing it, leading to chaos.
+- **Knowledge management**: When your note-taking system requires you to spend time "organizing" notes rather than "writing" notes, it has failed.
+- **AI collaboration**: When your instructions to AI require more than a page to explain, your system may be too complex. Simple instructions often produce better results.
 
-### 如何练习
+### How to Practice
 
-1. **不断移除步骤**：从你的系统开始，然后问自己：这一步真的必要吗？如果我删除它会发生什么？不断重复这个过程，直到流程变成"写下来 -> 去做"。
+1. **Continuously remove steps**: Start from your system, then ask: is this step truly necessary? What happens if I delete it? Repeat this process until the workflow becomes "write it down → do it."
 
-2. **保持一份单一的下一步清单**：不要有多个清单、多个优先级系统、多个视图。一份清单，每天最多 10 项。如果超过 10 项，说明你的优先级有问题，而不是你需要一个更复杂的系统。
+2. **Maintain a single next-actions list**: Don't have multiple lists, multiple priority systems, multiple views. One list, at most 10 items per day. If it exceeds 10, your prioritization is the problem, not the need for a more complex system.
 
-3. **变乱时重写而不是过度编辑**：当你的系统变得混乱时，不要试图修复它。直接重写。拿出一张新纸，重新开始。这个过程会自动过滤掉那些不重要的东西。
+3. **Rewrite rather than over-edit when messy**: When your system becomes chaotic, don't try to fix it. Rewrite it directly. Take out a fresh sheet of paper and start over. This process automatically filters out what's unimportant.
 
-4. **用偶尔的宏观复盘来替代把宏观思考塞进日常执行**：不要试图在每天的执行中进行战略思考。相反，安排一个固定的时间（比如每周末）来进行宏观复盘。在这个时间里，你可以思考大局、调整方向、重新优先级排序。但在其他时间，你只关注执行。
+4. **Use occasional macro reviews instead of cramming macro thinking into daily execution**: Don't try to do strategic thinking during daily execution. Instead, schedule a fixed time (e.g., every weekend) for macro review. During this time, you can think about the big picture, adjust direction, and re-prioritize. But at all other times, focus only on execution.
 
-5. **选择零摩擦的工具**：对于那些你需要经常使用的功能，选择那些不需要启动仪式的工具。纸笔、简单的文本文件、自动备份的云存储——这些都是零摩擦的。避免那些需要登录、导航、配置的工具。
+5. **Choose zero-friction tools**: For functions you use frequently, choose tools that require no startup ritual. Pen and paper, simple text files, auto-backing cloud storage — these are all zero-friction. Avoid tools that require login, navigation, and configuration.
 
-6. **定期审视你的系统**：每个月，问自己：我的系统是否在帮助我，还是在拖累我？如果是后者，就简化它。不要对一个不工作的系统有感情。
+6. **Regularly audit your system**: Every month, ask yourself: is my system helping me, or dragging me down? If the latter, simplify it. Don't get emotionally attached to a system that doesn't work.
 
-### 常见陷阱
+### Common Pitfalls
 
-- **过度设计**：花太多时间在设计"完美"的系统上，而不是实际使用它。记住，一个你实际使用的不完美系统，永远胜过一个完美但你不使用的系统。
-- **功能蠕变**：不断添加新的功能和规则，直到系统变得无法管理。每次添加新功能时，问自己：这真的值得增加的复杂度吗？
-- **多工具综合症**：使用多个工具来管理同一件事。这会导致信息分散和同步问题。坚持一个工具，除非有非常好的理由。
-- **忽视摩擦成本**：低估了启动仪式的成本。一个需要 2 分钟启动的系统，看起来不多，但如果你一天使用 10 次，那就是 20 分钟的浪费。
-- **把系统当作目标**：有时候，人们会开始优化系统本身，而忘记了系统的目的是帮助他们完成工作。如果你发现自己在花更多时间优化系统而不是做实际工作，那就是一个信号，说明系统太复杂了。
+- **Over-engineering**: Spending too much time designing the "perfect" system rather than actually using it. Remember, an imperfect system you actually use will always beat a perfect system you don't use.
+- **Feature creep**: Continuously adding new features and rules until the system becomes unmanageable. Every time you add a new feature, ask: is this truly worth the added complexity?
+- **Multi-tool syndrome**: Using multiple tools to manage the same thing. This leads to information fragmentation and sync problems. Stick to one tool unless there is a very good reason.
+- **Ignoring friction cost**: Underestimating the cost of startup rituals. A system that takes 2 minutes to start up doesn't seem like much, but if you use it 10 times a day, that's 20 minutes wasted.
+- **Treating the system as the goal**: Sometimes people start optimizing the system itself, forgetting that the system's purpose is to help them get work done. If you find yourself spending more time optimizing the system than doing actual work, that's a signal the system is too complex.
 
-## 4. 实战案例
+## 4. Real-World Cases
 
-### 案例 1：从 Org-Mode 到纸笔
+### Case 1: From Org-Mode to Pen and Paper
 
-2013 年，我使用 Emacs org-mode 进行时间管理。系统包括：
-- 多层次的项目结构
-- 自动生成的日程表
-- 复杂的标签和优先级系统
-- 每小时的时间追踪
+In 2013, I used Emacs org-mode for time management. The system included:
+- Multi-level project structures
+- Auto-generated agendas
+- Complex tag and priority systems
+- Hourly time tracking
 
-这个系统看起来很强大，但实际上：
-- 添加一个新任务需要 3-5 分钟（找到正确的项目、设置优先级、添加标签）
-- 我花在维护系统上的时间超过了系统为我节省的时间
-- 我经常被系统的复杂性所困扰，而不是被任务本身所困扰
+This system looked powerful, but in reality:
+- Adding a new task took 3-5 minutes (finding the right project, setting priority, adding tags)
+- I spent more time maintaining the system than the system saved me
+- I was often burdened by the system's complexity rather than by the tasks themselves
 
-改用纸笔后：
-- 添加一个新任务需要 10 秒钟
-- 我的大脑可以完全专注于任务本身
-- 当系统变得混乱时，我只需要重写一份新的清单
+After switching to pen and paper:
+- Adding a new task takes 10 seconds
+- My brain can fully focus on the task itself
+- When the system becomes messy, I just rewrite a fresh list
 
-结果：生产力提高，压力降低，专注力增强。
+Result: increased productivity, reduced stress, enhanced focus.
 
-### 案例 2：团队流程简化
+### Case 2: Simplifying Team Processes
 
-一个团队的代码审查流程原本包括：
-1. 创建 PR
-2. 添加标签和里程碑
-3. 分配审查者
-4. 等待自动检查
-5. 进行代码审查
-6. 解决评论
-7. 获得批准
-8. 合并
+A team's code review process originally included:
+1. Create PR
+2. Add labels and milestones
+3. Assign reviewers
+4. Wait for automated checks
+5. Conduct code review
+6. Resolve comments
+7. Get approval
+8. Merge
 
-这个流程有 8 个步骤，而且每个步骤都有自己的规则和例外。结果是，开发者经常跳过某些步骤，导致混乱。
+This process had 8 steps, each with its own rules and exceptions. The result: developers often skipped certain steps, leading to chaos.
 
-简化后的流程：
-1. 创建 PR
-2. 等待自动检查和代码审查
-3. 合并
+Simplified process:
+1. Create PR
+2. Wait for automated checks and code review
+3. Merge
 
-只有 3 个步骤。标签、里程碑、分配都是自动化的，或者根本不需要。结果是，流程被更多地遵循，而且更快。
+Only 3 steps. Labels, milestones, assignments are all automated or simply unnecessary. The result: the process is followed more consistently, and faster.
 
-### 案例 3：知识管理的简洁性
+### Case 3: Simplicity in Knowledge Management
 
-一个常见的陷阱是创建一个复杂的笔记系统，有多个分类、标签、链接等。然后你花时间在"组织"笔记上，而不是"写"笔记。
+A common trap is creating a complex note-taking system with multiple categories, tags, links, etc. Then you spend time "organizing" notes rather than "writing" notes.
 
-一个更简洁的方法是：
-- 一个文件夹，所有笔记都在里面
-- 按日期命名（YYYY-MM-DD）
-- 使用全文搜索来找笔记
-- 不要试图预先组织
+A simpler approach:
+- One folder, all notes inside
+- Named by date (YYYY-MM-DD)
+- Use full-text search to find notes
+- Don't try to pre-organize
 
-这个系统看起来很原始，但它的好处是：
-- 添加笔记需要 5 秒钟
-- 搜索笔记需要 2 秒钟
-- 没有维护成本
-- 随着时间的推移，笔记会自然地形成模式
+This system looks primitive, but its benefits are:
+- Adding a note takes 5 seconds
+- Searching a note takes 2 seconds
+- Zero maintenance cost
+- Over time, notes naturally form patterns
 
-## 5. 深层洞察
+## 5. Deeper Insight
 
-简洁性的真正价值不在于节省时间（虽然它确实节省时间），而在于保护认知资源。在一个信息爆炸、选择过多、干扰无处不在的世界里，你的注意力是最宝贵的资源。一个简洁的系统让你能够把这个资源集中在真正重要的事情上。
+The true value of simplicity is not in saving time (though it does save time), but in protecting cognitive resources. In a world of information explosion, choice overload, and ubiquitous distractions, your attention is your most precious resource. A simple system lets you concentrate that resource on what truly matters.
 
-这也是为什么简洁性与多线程生活特别相关。当你同时在处理多个项目、多个角色、多个兴趣时，你的认知资源已经被分散了。在这种情况下，你的系统必须是极其简洁的，否则它会成为另一个需要管理的线程。简洁性不是一种奢侈，而是一种必需。
+This is also why simplicity is especially relevant to a multi-threaded life. When you are simultaneously handling multiple projects, multiple roles, multiple interests, your cognitive resources are already dispersed. In this situation, your system must be extremely simple, or it becomes yet another thread to manage. Simplicity is not a luxury, but a necessity.
 
-最后，简洁性也是一种哲学立场。它反映了对"足够好"的接受，而不是对"完美"的追求。一个足够好的、你实际使用的系统，永远胜过一个完美但你不使用的系统。这个原则适用于生活的许多方面，而不仅仅是任务管理。
+Finally, simplicity is also a philosophical stance. It reflects an acceptance of "good enough" rather than a pursuit of "perfect." A good-enough system you actually use will always beat a perfect system you don't use. This principle applies to many aspects of life, not just task management.
 
-## 6. 相关公理
+## 6. Related Axioms
 
-- **M01: 闭环校准** — 简洁的系统能让反馈循环更快
-- **M04: 主动管理优于工具心智** — 简洁的系统让你能够专注于管理，而不是维护
-- **X03: 效率由瓶颈决定** — 系统复杂度往往是真正的瓶颈
-- **X04: 为真实用例设计** — 设计简洁的系统意味着为你实际使用的场景设计，而不是理想场景
-
+- **M01: Closed-Loop Calibration** — Simple systems enable faster feedback loops
+- **M04: Active Management Over Tool Mentality** — Simple systems let you focus on managing, not maintaining
+- **X03: Efficiency Is Determined by Bottlenecks** — System complexity is often the real bottleneck
+- **X04: Design for Real Use Cases** — Designing simple systems means designing for the scenarios you actually encounter, not ideal ones

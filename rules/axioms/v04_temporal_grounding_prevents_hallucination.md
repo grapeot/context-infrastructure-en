@@ -5,125 +5,124 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# V4. 时间锚定防止幻觉
+# V4. Temporal Grounding Prevents Hallucination
 
-## 1. 核心公理
+## 1. Core Axiom
 
-任何时间敏感的结论在被锚定到带时间戳的来源或一次实时验证之前，都不值得信任。幻觉的本质不是"错误"，而是**过期知识被当作当前事实**——这种错误特别致命，因为它往往在很后面才暴露，此时错误的假设已经深入工作流。
+No time-sensitive claim is trustworthy until it is anchored to a timestamped source or a real-time verification. The essence of hallucination is not "error" — it is **outdated knowledge being presented as current fact**. This type of error is especially lethal because it often surfaces only much later, by which point the false assumption has already penetrated deep into the workflow.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 2.1 知识截断与自信的错误
+### 2.1 Knowledge Cutoff and Confident Errors
 
-AI 模型有固定的知识截断日期，这个日期之后发生的任何变化——新模型发布、API 参数更新、产品功能变更、定价调整——都可能被模型以高度自信的方式错误陈述。这不是模型"不诚实"，而是一个根本性的认知问题：模型无法区分"我的训练数据中不存在这个信息"和"这个信息不存在"。
+AI models have a fixed knowledge cutoff date. Any change that occurred after that date — new model releases, API parameter updates, product feature changes, pricing adjustments — may be stated by the model with high confidence and be completely wrong. This is not the model being "dishonest"; it is a fundamental cognitive problem: the model cannot distinguish between "this information does not exist in my training data" and "this information does not exist."
 
-**为什么这很危险**：用户会把模型的自信度误读为准确度。当模型说"Gemini 3.0 Flash 是最新的 Gemini 模型"时，这听起来和"Claude 3.5 Sonnet 是 Claude 的最新版本"一样可信。但前者可能已经过时，而后者可能仍然准确。用户无法从语言表面判断哪个是幻觉。
+**Why this is dangerous**: users mistake the model's confidence for accuracy. When the model says "Gemini 3.0 Flash is the latest Gemini model," it sounds just as credible as "Claude 3.5 Sonnet is the latest version of Claude." But the former may already be outdated while the latter may still be accurate. Users cannot tell from the surface of the language which one is hallucination.
 
-### 2.2 时间错误的级联成本
+### 2.2 The Cascading Cost of Temporal Errors
 
-时间错误之所以昂贵，是因为它往往在很后面才暴露——当你已经把错误的模型名、API 参数或假设接入工作流之后。这时修复成本不仅是"纠正一个事实"，而是"回溯并重新验证所有依赖这个事实的决策"。
+Temporal errors are expensive because they often surface only much later — after you have already wired the wrong model name, API parameter, or assumption into the workflow. At that point, the cost of fixing is not just "correcting a fact" but "tracing back and re-verifying all decisions that depended on that fact."
 
-**具体案例**：我在一个项目中使用了 `gemini-3.0-flash` 作为模型名。表面上看起来合理——Gemini 3.0 确实已发布。但真正的 bug 是缺了 `-preview` 后缀，正确应为 `gemini-3.0-flash-preview`。这个错误在代码审查时没被发现（因为模型名看起来"合理"），直到部署到生产环境、API 调用开始失败时才暴露。此时已经浪费了部署时间、测试时间，以及用户的信任。
+**Concrete case**: I used `gemini-3.0-flash` as a model name in a project. On the surface it looked reasonable — Gemini 3.0 had indeed been released. But the real bug was the missing `-preview` suffix; the correct name was `gemini-3.0-flash-preview`. This error went undetected during code review (because the model name looked "plausible") and only surfaced when the deployment hit production and API calls started failing. By then, deployment time, testing time, and user trust had all been wasted.
 
-**级联效应**：
-- 第一层：错误的模型名导致 API 调用失败
-- 第二层：失败被误诊为"网络问题"或"API 限流"，而非模型名错误
-- 第三层：团队花时间调查错误的方向，延迟了真正的修复
-- 第四层：用户对系统的信心下降，即使问题已修复
+**Cascade effect**:
+- Layer 1: wrong model name causes API call failure
+- Layer 2: failure is misdiagnosed as "network issue" or "API rate limiting" rather than a model name error
+- Layer 3: team spends time investigating the wrong direction, delaying the real fix
+- Layer 4: user confidence in the system drops, even after the issue is fixed
 
-### 2.3 时间锚定作为防御机制
+### 2.3 Temporal Grounding as a Defense Mechanism
 
-时间锚定的核心是：**明确说出你检查了什么、何时检查、以及哪些仍可能变化**。这不仅是为了准确性，更是为了建立可追踪的信任链。
+The core of temporal grounding is: **explicitly state what you checked, when you checked it, and what may still change**. This is not just about accuracy — it is about building a traceable chain of trust.
 
-当你说"根据 2026-02-23 的官方文档，Gemini 3.0 Flash 的正确模型名是 `gemini-3.0-flash-preview`"时，你做了三件事：
-1. **建立了时间基准**：如果信息在未来变化，这个时间戳会让人知道何时需要重新验证
-2. **指向了来源**：可以追踪信息的出处，而不是盲目相信
-3. **承认了局限性**：隐含地说"这是我当时能找到的最好信息，但可能会过时"
+When you say "according to the official documentation as of 2026-02-23, the correct model name for Gemini 3.0 Flash is `gemini-3.0-flash-preview`," you accomplish three things:
+1. **Establish a time baseline**: if the information changes in the future, this timestamp tells people when re-verification is needed
+2. **Point to a source**: the provenance of the information can be traced, rather than blindly trusted
+3. **Acknowledge limitations**: implicitly saying "this was the best information I could find at the time, but it may become outdated"
 
-### 2.4 时间敏感信息的分类
+### 2.4 Classifying Time-Sensitive Information
 
-不是所有信息都同样时间敏感。理解这个差异很关键：
+Not all information is equally time-sensitive. Understanding this distinction is critical:
 
-**高时间敏感性**（需要定期重新验证）：
-- 模型名称和版本号（新版本频繁发布）
-- API 端点和参数（可能随时变更）
-- 定价和配额（商业决策可能改变）
-- 功能可用性（新功能不断推出，旧功能可能弃用）
-- 产品规格（硬件、性能指标可能更新）
+**High time sensitivity** (requires periodic re-verification):
+- Model names and version numbers (new versions released frequently)
+- API endpoints and parameters (may change at any time)
+- Pricing and quotas (business decisions may change)
+- Feature availability (new features constantly launched, old ones may be deprecated)
+- Product specifications (hardware, performance metrics may be updated)
 
-**中等时间敏感性**（需要定期检查，但变化较慢）：
-- 框架和库的主要版本（通常有 6-12 个月的稳定期）
-- 标准和规范（通常有年度或多年的更新周期）
-- 最佳实践（可能随着生态演进而改变）
+**Medium time sensitivity** (requires periodic checks, but changes slowly):
+- Major versions of frameworks and libraries (typically 6-12 month stability windows)
+- Standards and specifications (typically annual or multi-year update cycles)
+- Best practices (may change as the ecosystem evolves)
 
-**低时间敏感性**（基本不需要重新验证）：
-- 基础算法和数学原理
-- 历史事实（已发生的事件）
-- 物理定律和科学原理
+**Low time sensitivity** (essentially no re-verification needed):
+- Fundamental algorithms and mathematical principles
+- Historical facts (events that have already occurred)
+- Physical laws and scientific principles
 
-### 2.5 时间锚定与沟通习惯
+### 2.5 Temporal Grounding as a Communication Habit
 
-时间锚定也是一种沟通习惯，它改变了信息接收者对信息的理解方式。当你说"我在 2026-02-23 检查了官方文档，发现..."时，接收者会自动理解这个信息有一个时间边界。这种理解会让信任更有韧性——即使信息在未来变化，接收者也不会感到被欺骗，因为他们知道信息的时间限制。
+Temporal grounding is also a communication habit that changes how recipients understand information. When you say "I checked the official documentation on 2026-02-23 and found that...," the recipient automatically understands that this information has a time boundary. This understanding makes trust more resilient — even if the information changes in the future, the recipient will not feel deceived, because they know the information's time limit.
 
-相比之下，如果你只说"根据官方文档，..."而不提时间，接收者会假设这个信息是"永远正确的"。当信息在未来变化时，他们会感到被误导，信任会受到更大的伤害。
+By contrast, if you only say "according to the official documentation..." without mentioning the date, the recipient will assume the information is "always correct." When the information changes in the future, they will feel misled, and trust will suffer greater damage.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 3.1 适用场景
+### 3.1 When It Applies
 
-- **模型/版本名**：任何涉及特定模型名称、版本号的陈述
-- **定价和配额**：API 成本、速率限制、免费额度
-- **功能可用性**：某个功能是否可用、何时推出、何时弃用
-- **API 端点和参数**：端点 URL、参数名称、返回格式
-- **产品规格**：硬件规格、性能指标、兼容性
-- **任何可能在模型训练后发生变化的问题**
+- **Model/version names**: any statement involving specific model names or version numbers
+- **Pricing and quotas**: API costs, rate limits, free tiers
+- **Feature availability**: whether a feature is available, when it launched, when it will be deprecated
+- **API endpoints and parameters**: endpoint URLs, parameter names, return formats
+- **Product specifications**: hardware specs, performance metrics, compatibility
+- **Any question where the answer may have changed after the model's training cutoff**
 
-### 3.2 实践方式
+### 3.2 How to Practice
 
-**第一步：识别时间敏感信息**
-在给出任何可能过时的信息前，先问自己："这个信息在 6 个月后还会是真的吗？"如果答案是"可能不会"，就需要时间锚定。
+**Step 1: Identify time-sensitive information**
+Before giving any potentially outdated information, ask yourself: "Will this still be true in 6 months?" If the answer is "probably not," temporal grounding is needed.
 
-**第二步：进行有针对性的外部核查**
-- 查询官方文档或公告（而不是依赖训练数据）
-- 使用搜索引擎验证最新信息
-- 检查发布日期，确保信息足够新
-- 如果有多个来源，优先选择官方来源
+**Step 2: Conduct targeted external verification**
+- Query official documentation or announcements (rather than relying on training data)
+- Use search engines to verify the latest information
+- Check publication dates to ensure the information is sufficiently recent
+- If multiple sources exist, prioritize official sources
 
-**第三步：记录时间和来源**
+**Step 3: Record the time and source**
 ```
-根据 [日期] 的 [来源]，[陈述]。
-示例：根据 2026-02-23 的 Google 官方文档，Gemini 3.0 Flash 的模型名是 `gemini-3.0-flash-preview`。
-```
-
-**第四步：明确标注假设的时间边界**
-```
-截至 [日期]，[陈述]。如果你在 [日期] 之后阅读这个信息，请重新验证。
-示例：截至 2026-02-23，Claude 3.5 Sonnet 是 Claude 的最新版本。如果你在 2026-06-23 之后阅读这个信息，请检查是否有更新的版本。
+According to [source] as of [date], [statement].
+Example: According to Google's official documentation as of 2026-02-23, the model name for Gemini 3.0 Flash is `gemini-3.0-flash-preview`.
 ```
 
-**第五步：建立重新验证的触发条件**
-- 定期检查（如每月一次）
-- 事件触发（如用户报告功能不可用）
-- 版本更新（如新的模型版本发布）
+**Step 4: Explicitly mark the time boundary of assumptions**
+```
+As of [date], [statement]. If you are reading this after [date], please re-verify.
+Example: As of 2026-02-23, Claude 3.5 Sonnet is the latest version of Claude. If you are reading this after 2026-06-23, please check for newer versions.
+```
 
-### 3.3 与其他公理的关系
+**Step 5: Establish re-verification triggers**
+- Periodic checks (e.g., monthly)
+- Event-triggered (e.g., user reports a feature as unavailable)
+- Version updates (e.g., new model version released)
 
-这个公理与以下公理相互支持：
-- **V02_可验证性是信任的地基**：时间锚定使信息变得可验证
-- **V03_归因塑造感知**：明确的时间信息让用户理解信息的可靠性来自验证，而非权威
-- **T04_数据优于观点**：时间戳和来源就是数据，而非观点
+### 3.3 Relationship to Other Axioms
 
-## 4. 边界条件与限制
+This axiom is mutually supportive with:
+- **V02 Verifiability Is the Foundation of Trust**: temporal grounding makes information verifiable
+- **V03 Attribution Shapes Perception**: explicit time information lets users understand that reliability comes from verification, not authority
+- **T04 Data Over Opinion**: timestamps and sources are data, not opinion
 
-### 4.1 何时不需要严格的时间锚定
+## 4. Boundary Conditions and Limitations
 
-- **基础知识**：算法、数学、物理原理通常不需要时间戳
-- **历史事实**：已发生的事件（如"2020 年 COVID-19 爆发"）不需要时间戳
-- **明显的常识**："地球是圆的"不需要时间戳
+### 4.1 When Strict Temporal Grounding Is Not Needed
 
-### 4.2 常见的陷阱
+- **Foundational knowledge**: algorithms, mathematics, physical principles typically do not need timestamps
+- **Historical facts**: events that have already occurred (e.g., "COVID-19 broke out in 2020") do not need timestamps
+- **Obvious common knowledge**: "the Earth is round" does not need a timestamp
 
-1. **虚假的精确性**：给出一个时间戳，但信息本身仍然是错的
-2. **过度锚定**：为所有信息都加时间戳，导致文本变得冗长和难读
-3. **时间戳过期**：记录了时间戳，但从未重新验证，导致信息变得更加不可信
+### 4.2 Common Pitfalls
 
+1. **False precision**: providing a timestamp, but the information itself is still wrong
+2. **Over-anchoring**: adding timestamps to all information, making the text verbose and hard to read
+3. **Stale timestamps**: recording a timestamp but never re-verifying, making the information even less trustworthy

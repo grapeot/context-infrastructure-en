@@ -3,73 +3,79 @@ id: axiom_tool_composition_as_capability_expansion_2026
 category: ai_agentic
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/manus-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/agentic-ai-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/mcp-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/wide-research-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/devin-agent-cursor-en.md"
 ---
 
-# A11. 工具组合即能力扩展
+# A11. Tool Composition as Capability Expansion
 
-## 1. 核心公理
+## 1. Core Axiom
 
-当工具被组合为编排的端到端闭环时，AI 能力会以非线性方式扩展，因为工具会相互放大彼此的效用。单个工具的增量收益递减，但在闭环中，新工具会解锁之前不可能的组合，从而产生指数级的能力跃迁。
+When tools are composed into orchestrated end-to-end closed loops, AI capability expands non-linearly because tools mutually amplify each other's utility. Individual tools have diminishing incremental returns, but in a closed loop, new tools unlock previously impossible combinations, producing exponential capability leaps.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 工具组合的非线性效应
+### 2.1 The Non-Linear Effect of Tool Composition
 
-Manus 的成功不是因为它"多了一个工具"，而是因为它把研究、分析、可视化、交付物串联成了一个完整的闭环。这个闭环的关键在于工具之间的相互放大。当 AI 已经能生成幻灯片和报告时，新增的图像搜索功能突然变得极其重要——它不仅是一个新能力，而是把之前的输出从"纯文本"升级到"多媒体"。这种升级不是线性的加法，而是质的跃迁。从工具数量的角度看，从六个工具增加到八个似乎只是 33% 的增长，但在闭环中，这 33% 的增长可能会带来 300% 的用户体验提升。这是因为工具之间存在隐藏的组合空间：只有当你同时拥有代码生成、依赖管理、执行、调试、可视化这些工具时，"一句话生成股票对比图"这样的端到端任务才变得可能。
+Manus's success is not because it "added one more tool" but because it chained research, analysis, visualization, and deliverables into a complete closed loop. The key to this loop is mutual amplification between tools. When AI can already generate slides and reports, the newly added image search capability suddenly becomes extremely important — it's not just a new capability but an upgrade of previous output from "plain text" to "multimedia." This upgrade is not linear addition but a qualitative leap. From a tool count perspective, going from six tools to eight seems like only 33% growth, but in a closed loop, this 33% growth may bring 300% user experience improvement. This is because hidden composition spaces exist between tools: only when you simultaneously have code generation, dependency management, execution, debugging, and visualization tools does an end-to-end task like "generate a stock comparison chart in one sentence" become possible.
 
-### 2.2 闭环编排的威力
+### 2.2 The Power of Closed-Loop Orchestration
 
-Agentic 的"ask and do"之所以有效，本质上是因为 agent 把代码生成、依赖安装、执行、调试、结果交付组合进同一个回合，并以产物结束。这不同于传统的"ask and answer"或"ask and write"——后者只完成了中间步骤，用户还需要自己运行代码、调试错误、整理结果。而闭环编排消除了这些中间摩擦。当 Cursor 的 agent 模式能够自动修复代码错误、重新执行、验证输出时，它不仅仅是在"做更多事"，而是在改变任务的本质：从"帮我写代码"变成了"帮我完成这个任务"。这个转变看似微妙，但它重新定义了 AI 的价值主张。Wide Research 在架构层面体现了同样的原理：通过并行子任务加聚合，它规避了长输出的失败模式；而引入 Tavily 作为专用的 Web 访问层会成为杠杆点，因为它在每个子 agent 上都降低了 Web 摩擦，使得整个系统的吞吐量从"受限于最慢的 Web 查询"变成了"受限于聚合与推理"。
+Agentic "ask and do" is effective essentially because the agent composes code generation, dependency installation, execution, debugging, and result delivery into the same round, ending with an artifact. This differs from traditional "ask and answer" or "ask and write" — the latter only complete intermediate steps, and the user still needs to run code, debug errors, and organize results themselves. Closed-loop orchestration eliminates these intermediate frictions. When Cursor's agent mode can automatically fix code errors, re-execute, and verify output, it's not just "doing more things" — it's changing the nature of the task: from "help me write code" to "help me complete this task." This shift seems subtle but redefines AI's value proposition. Wide Research embodies the same principle at the architecture level: through parallel subtasks plus aggregation, it avoids the failure mode of long outputs; and introducing Tavily as a dedicated web access layer becomes a leverage point because it reduces web friction for every sub-agent, shifting the entire system's throughput from "limited by the slowest web query" to "limited by aggregation and reasoning."
 
-### 2.3 协议与接口的关键性
+### 2.3 The Criticality of Protocols and Interfaces
 
-当组合开始变得真实时，MCP 这类协议才显得关键。这不是因为 MCP 本身有多聪明，而是因为没有稳定、可调试的工具接口，你的编排努力会坍缩成适配器胶水与供应商特定的重写。每次换一个 LLM（从 GPT 到 Claude 再到 Gemini），你都要重新适配工具调用的格式、错误处理、重试逻辑。这种适配成本会随着工具数量的增加而指数增长。MCP 的价值在于它提供了一个足够轻量、足够通用的协议，使得工具开发者可以一次性实现，然后在任何支持 MCP 的 LLM 上运行。这样，工具组合的成本从"O(工具数 × LLM 数)"降低到了"O(工具数 + LLM 数)"。
+When composition starts becoming real, protocols like MCP become critical. This is not because MCP itself is clever, but because without stable, debuggable tool interfaces, your orchestration effort collapses into adapter glue and vendor-specific rewrites. Every time you switch an LLM (from GPT to Claude to Gemini), you have to re-adapt tool call formats, error handling, and retry logic. This adaptation cost grows exponentially with tool count. MCP's value lies in providing a sufficiently lightweight, sufficiently universal protocol so tool developers can implement once and run on any MCP-supporting LLM. This reduces the cost of tool composition from "O(tool count × LLM count)" to "O(tool count + LLM count)."
 
-### 2.4 策略空间的扩展
+### 2.4 Strategy Space Expansion
 
-更多工具也会改变策略空间。当问题没有可批处理的模式时，Devin 的"打开文件并手动修"往往胜过纯编程方案，但前提是它能把浏览器、视觉识别、文件操作、终端执行组合起来。单独的浏览器自动化或单独的代码生成都不足以解决复杂的集成问题，但当这些工具被编排在一个能够感知视觉反馈、做出决策、调整策略的闭环中时，它们就能处理人类工程师也需要花时间调试的问题。这种策略空间的扩展意味着 AI 不再被限制在"我能做什么"，而是"我能尝试什么"——它可以探索多条路径，根据反馈调整，最终找到可行方案。
+More tools also change the strategy space. When a problem has no batchable pattern, Devin's "open the file and manually fix" often beats pure programming approaches, but only if it can combine browser, visual recognition, file operations, and terminal execution. Standalone browser automation or standalone code generation is insufficient to solve complex integration problems, but when these tools are orchestrated in a closed loop capable of perceiving visual feedback, making decisions, and adjusting strategy, they can handle problems that human engineers also need time to debug. This strategy space expansion means AI is no longer limited to "what can I do" but "what can I try" — it can explore multiple paths, adjust based on feedback, and eventually find a viable solution.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 何时应用
+### When to Apply
 
-工具组合的价值在以下场景最明显：
+The value of tool composition is most evident in these scenarios:
 
-- **跨多个模态或阶段的任务**：研究→构建→发布、数据采集→分析→可视化→报告。单个工具无法完成端到端流程，但组合可以。
-- **AI 反复卡在能力缺口上的工作流**：Web 访问、文件操作、部署、视觉反馈。这些缺口往往不是单个工具能解决的，而是需要在闭环中协同。
-- **产品目标是端到端交付而非局部辅助**：如果你的目标是"AI 完成整个任务"而不是"AI 帮助人类完成任务的某一步"，那么工具组合就是必需的。
-- **用户期望从"ask and answer"升级到"ask and do"**：这种升级需要闭环，而闭环需要多个工具的协同。
+- **Tasks spanning multiple modalities or stages**: Research → Build → Publish, Data Collection → Analysis → Visualization → Report. Individual tools can't complete the end-to-end flow, but composition can.
+- **Workflows where AI repeatedly gets stuck on capability gaps**: Web access, file operations, deployment, visual feedback. These gaps often can't be solved by individual tools but need coordination in a closed loop.
+- **Product goals are end-to-end delivery rather than partial assistance**: If your goal is "AI completes the entire task" rather than "AI helps humans complete one step of the task," tool composition is necessary.
+- **User expectations upgrading from "ask and answer" to "ask and do"**: This upgrade requires a closed loop, and a closed loop requires coordination of multiple tools.
 
-### 如何实践
+### How to Practice
 
-1. **围绕少量可组合原语设计清晰的 I/O**：不要试图一次性集成所有工具。从核心闭环开始（例如：代码生成→执行→反馈），确保这个闭环的输入输出清晰、可验证。
+1. **Design clear I/O around a small set of composable primitives**: Don't try to integrate all tools at once. Start from the core closed loop (e.g., code generation → execution → feedback), ensuring this loop's inputs and outputs are clear and verifiable.
 
-2. **加上带成功判据与重试机制的编排**：定义什么是"成功"（例如：输出文件有 5000 行且无空值），让 agent 能够自检和迭代。这比工具数量更重要。
+2. **Add orchestration with success criteria and retry mechanisms**: Define what "success" means (e.g., output file has 5000 rows and no null values), letting the agent self-check and iterate. This matters more than tool count.
 
-3. **通过添加下一个"最高杠杆"的工具来增长能力**：不是追求工具数量，而是找到当前闭环的最大瓶颈（参见 X3），然后添加能够移除这个瓶颈的工具。例如，如果 Web 访问是瓶颈，加入 Tavily；如果视觉反馈是瓶颈，加入视觉模型。
+3. **Grow capability by adding the next "highest-leverage" tool**: Don't pursue tool count — find the current closed loop's biggest bottleneck (see X3), then add the tool that removes this bottleneck. For example, if web access is the bottleneck, add Tavily; if visual feedback is the bottleneck, add a vision model.
 
-4. **投资于工具接口的标准化**：使用 MCP 或类似协议，而不是每次都手写适配器。这样的投资在工具数量增加时会指数级地回报。
+4. **Invest in tool interface standardization**: Use MCP or similar protocols rather than hand-writing adapters each time. This investment pays off exponentially as tool count increases.
 
-5. **建立反馈循环来验证组合的有效性**：不是所有的工具组合都有效。通过实际任务的成功率、用户反馈、成本效率来验证哪些组合真正产生了非线性效应。
+5. **Establish feedback loops to verify composition effectiveness**: Not all tool compositions are effective. Use actual task success rates, user feedback, and cost efficiency to verify which compositions genuinely produce non-linear effects.
 
-## 4. 陷阱
+## 4. Pitfalls
 
-- **工具堆砌陷阱**：添加更多工具而不改进编排逻辑，结果是 agent 在工具选择上浪费时间，反而降低效率。工具数量的增加必须伴随编排智能的提升。
+- **Tool stacking trap**: Adding more tools without improving orchestration logic results in agents wasting time on tool selection, actually reducing efficiency. Tool count increases must be accompanied by orchestration intelligence improvements.
 
-- **接口碎片化**：每个工具有不同的接口、错误处理、重试策略，导致编排逻辑变得极其复杂。这会抵消工具组合的收益。
+- **Interface fragmentation**: Each tool has different interfaces, error handling, and retry strategies, causing orchestration logic to become extremely complex. This offsets the benefits of tool composition.
 
-- **忽视瓶颈转移**：添加一个工具后，瓶颈会从这个工具转移到其他地方。如果不重新测量和识别新的瓶颈，后续的优化会变得无效。
+- **Ignoring bottleneck shifts**: After adding a tool, the bottleneck shifts from that tool to somewhere else. Without re-measuring and identifying the new bottleneck, subsequent optimization becomes ineffective.
 
-- **过度设计闭环**：试图一次性设计完美的闭环，导致上市时间延长。更好的做法是从最小闭环开始，逐步迭代。
+- **Over-designing the closed loop**: Trying to design the perfect closed loop in one shot, causing time-to-market delays. Better to start from a minimal closed loop and iterate gradually.
 
-- **忽视工具之间的冲突**：某些工具的输出格式可能与另一个工具的输入不兼容，或者两个工具的决策逻辑可能相互冲突。这需要在设计阶段就考虑。
+- **Ignoring tool conflicts**: Certain tools' output formats may be incompatible with another tool's input, or two tools' decision logic may conflict. This needs to be considered at the design stage.
 
-## 5. 相关公理
+## 5. Related Axioms
 
-- **A12 AI 原生开发范式**：工具组合的有效性取决于工具是否"AI 友好"。如果工具的接口、错误信息、文档都是为人类设计的，那么 AI 在使用它们时会产生大量摩擦。A12 强调的是，工具应该为 AI 消费而优化。
+- **A12 AI-Native Development Paradigm**: The effectiveness of tool composition depends on whether tools are "AI-friendly." If tools' interfaces, error messages, and documentation are all designed for humans, AI will experience substantial friction using them. A12 emphasizes that tools should be optimized for AI consumption.
 
-- **T1 基础设施优于组件**：工具组合的成功不仅取决于单个工具的质量，更取决于编排基础设施（上下文管理、记忆、可观测性、错误处理）。一个设计良好的编排框架可以让平庸的工具组合产生优秀的结果。
+- **T1 Infrastructure Over Components**: The success of tool composition depends not only on individual tool quality but also on orchestration infrastructure (context management, memory, observability, error handling). A well-designed orchestration framework can make mediocre tools produce excellent results.
 
-- **X3 效率由瓶颈决定**：在工具组合中，整体效率由最紧的瓶颈决定。添加工具的优先级应该由当前的瓶颈决定，而不是由工具的"酷度"决定。
+- **X3 Efficiency Determined by Bottlenecks**: In tool composition, overall efficiency is determined by the tightest bottleneck. The priority of adding tools should be determined by the current bottleneck, not by a tool's "coolness."
 
-- **M04 主动管理优于工具心态**：工具组合不是"配置好就能用"的东西。它需要持续的监测、调整、优化。被动地使用工具组合会导致效率下降；主动地管理工具组合才能释放其潜力。
+- **M04 Active Management Over Tool Mentality**: Tool composition is not something that "works once configured." It needs continuous monitoring, adjustment, and optimization. Passively using tool compositions leads to efficiency decline; actively managing tool compositions unleashes their potential.

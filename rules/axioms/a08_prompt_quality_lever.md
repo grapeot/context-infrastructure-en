@@ -3,94 +3,99 @@ id: axiom_a08_prompt_quality_lever_2026
 category: ai_agentic
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/ai-comment-oriented-programming-en.md"
+  - "/Users/grapeot/co/knowledge_working/rules/axioms/a05_docs_long_term_memory.md"
+  - "/Users/grapeot/co/knowledge_working/rules/axioms/a02_multiplier_not_replacement.md"
+  - "/Users/grapeot/co/knowledge_working/rules/axioms/t03_context_isolation.md"
 ---
 
-# A8. 提示质量是主要杠杆
+# A8. Prompt Quality is the Primary Lever
 
-## 1. 核心公理
+## 1. Core Axiom
 
-在 AI 辅助编程中，代码质量取决于文档质量（注释、DocString、类型提示），而非程序员专业水平。提示质量是 AI 能否正确理解意图、自主迭代、避免幻觉的决定性因素。当提示足够清晰、上下文足够丰富时，即使是初级程序员也能通过 AI 生成高质量代码；反之，即使是资深工程师，如果提示模糊，AI 也会陷入反复失败的循环。
+In AI-assisted programming, code quality depends on documentation quality (comments, DocStrings, type hints), not programmer expertise. Prompt quality is the decisive factor in whether AI can correctly understand intent, iterate autonomously, and avoid hallucination. When prompts are clear enough and context is rich enough, even junior programmers can generate high-quality code through AI; conversely, even senior engineers will see AI trapped in repeated failure cycles if prompts are vague.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 从算法竞争力到提示工程竞争力的转变
+### 2.1 The Shift from Algorithm Competitiveness to Prompt Engineering Competitiveness
 
-传统编程教育的核心是数据结构和算法。在大学里，我们花一整年学习各种数据结构和算法，参加 Leetcode 竞赛，为的是在工作中能够快速识别最优的数据结构、分析时间复杂度、写出高效的代码。这个范式在人类编程时代是合理的，因为算法选择直接影响代码性能，而性能往往是竞争优势。但在 AI 辅助时代，这个竞争力的来源发生了根本转变。
+The core of traditional programming education is data structures and algorithms. In university, we spend a full year learning various data structures and algorithms, competing in Leetcode, aiming to quickly identify optimal data structures, analyze time complexity, and write efficient code at work. This paradigm was reasonable in the human programming era because algorithm choice directly affects code performance, and performance is often competitive advantage. But in the AI-assisted era, the source of this competitiveness has fundamentally shifted.
 
-即使你对数据结构一无所知，AI 也可以建议多个选项、分析各自的优劣、甚至直接写出代码。你不需要记住红黑树的旋转规则，AI 可以在秒内生成正确的实现。你不需要手工计算时间复杂度，AI 可以告诉你每个库函数的性能特征。这不是说算法知识变得无用，而是说它不再是竞争优势的主要来源。真正决定 AI 编码效率的是提示的质量——一个带有完整类型提示和详细 DocString 的函数签名，AI 可以一次写对；没有注释的函数签名，AI 几乎不可能猜对你的意图。
+Even if you know nothing about data structures, AI can suggest multiple options, analyze their pros and cons, and even directly write the code. You don't need to remember red-black tree rotation rules — AI can generate the correct implementation in seconds. You don't need to manually calculate time complexity — AI can tell you the performance characteristics of each library function. This is not to say algorithm knowledge becomes useless, but that it is no longer the primary source of competitive advantage. What truly determines AI coding efficiency is prompt quality — a function signature with complete type hints and detailed DocStrings, AI can get right in one shot; a function signature without comments, AI can hardly guess your intent.
 
-这个转变的深层原因在于 AI 的工作方式。AI 不是通过"理解"你的代码来工作，而是通过"匹配模式"。当你提供清晰的类型提示时，你实际上是在给 AI 一个精确的模式——"这个参数是什么类型，返回值是什么类型"。当你提供详细的 DocString 时，你是在给 AI 一个语义框架——"这个函数做什么，边界情况是什么，为什么这样设计"。这些信息越丰富，AI 匹配到正确实现的概率就越高。反过来说，当你的提示模糊时，AI 面对的是一个巨大的搜索空间，它必须在数百万种可能的实现中猜测你的意图，失败的概率自然很高。
+The deeper reason for this shift lies in how AI works. AI doesn't work by "understanding" your code — it works by "pattern matching." When you provide clear type hints, you're essentially giving AI a precise pattern — "this parameter is what type, the return value is what type." When you provide detailed DocStrings, you're giving AI a semantic framework — "what this function does, what the edge cases are, why it's designed this way." The richer this information, the higher the probability AI matches the correct implementation. Conversely, when your prompt is vague, AI faces an enormous search space and must guess your intent among millions of possible implementations — the failure probability is naturally high.
 
-### 2.2 面向注释编程：从代码到意图的转移
+### 2.2 Comment-Oriented Programming: The Shift from Code to Intent
 
-这个认识导出了一个激进的结论：在 AI 时代，编程的产出重心从"代码"转向"注释"。这不是说代码不重要，而是说代码的质量现在由注释的质量决定。面向对象编程通过封装数据结构和算法来管理复杂性；面向注释编程则通过清晰的意图表达来管理 AI 的理解。
+This understanding leads to a radical conclusion: in the AI era, the output focus of programming shifts from "code" to "comments." This is not to say code is unimportant, but that code quality is now determined by comment quality. Object-oriented programming manages complexity by encapsulating data structures and algorithms; comment-oriented programming manages AI's understanding through clear intent expression.
 
-具体来说，面向注释编程包括三个层次。第一层是类型提示：用 Python 的 typing 模块或其他语言的类型系统，明确每个参数和返回值的类型。这不仅帮助 AI 理解数据流，也帮助人类读者快速理解接口。第二层是 DocString：用自然语言描述函数的目的、参数的含义、返回值的格式、可能的异常、以及使用示例。一个好的 DocString 应该让一个完全陌生的人（或 AI）能够在不读代码的情况下理解这个函数做什么。第三层是内联注释：在复杂的逻辑中添加注释，解释"为什么"而不是"做什么"。代码本身已经说明了"做什么"，注释应该解释"为什么这样做"和"有什么陷阱"。
+Specifically, comment-oriented programming includes three layers. The first layer is type hints: use Python's typing module or other languages' type systems to explicitly specify the type of each parameter and return value. This not only helps AI understand data flow but also helps human readers quickly understand interfaces. The second layer is DocStrings: use natural language to describe the function's purpose, parameter meanings, return value format, possible exceptions, and usage examples. A good DocString should let a complete stranger (or AI) understand what this function does without reading the code. The third layer is inline comments: add comments in complex logic explaining "why" rather than "what." The code itself already says "what" — comments should explain "why it's done this way" and "what pitfalls exist."
 
-当这三层都做好时，AI 就有了足够的上下文来生成正确的代码。更重要的是，这个过程强制你清晰地思考问题。写 DocString 的过程中，你往往会发现自己对问题的理解还不够清晰——也许参数的含义有歧义，也许边界情况没有考虑周全。这个发现本身就是价值，因为它让你在写代码之前就发现问题，而不是在调试时才发现。
+When all three layers are done well, AI has enough context to generate correct code. More importantly, this process forces you to think clearly about the problem. In the process of writing DocStrings, you often discover that your understanding of the problem isn't clear enough — perhaps parameter meanings are ambiguous, perhaps edge cases weren't fully considered. This discovery itself is value, because it lets you find problems before writing code rather than during debugging.
 
-### 2.3 提示质量与管理能力的同构性
+### 2.3 The Isomorphism Between Prompt Quality and Management Ability
 
-从更高层次看，提示质量与软件开发经理的日常思考高度重合。一个优秀的开发经理需要：了解下属的能力边界（知道谁擅长什么，谁的可靠性如何），决定何时委派（什么任务应该自己做，什么任务可以委派），如何分解问题（把大任务分解成下属能完成的小任务），如何做质量检查（如何验证下属的输出），从下属那里学习（如何吸收新知识）。
+From a higher level, prompt quality is highly isomorphic with a software development manager's daily thinking. A good dev manager needs to: understand subordinates' capability boundaries (know who's good at what, whose reliability is what), decide when to delegate (what tasks to do yourself, what tasks to delegate), how to decompose problems (break large tasks into small tasks subordinates can complete), how to do quality checks (how to verify subordinates' output), learn from subordinates (how to absorb new knowledge).
 
-这些管理技能与写好提示的技能完全相同。了解 AI 的能力边界意味着知道 AI 的上下文窗口限制、幻觉倾向、以及在哪些领域可靠。决定何时委派意味着判断哪些任务 AI 可以独立完成，哪些需要人类指导。分解问题意味着把复杂的编程任务分解成 AI 上下文窗口能容纳的块，逐步引导 AI 完成。质量检查意味着定义清晰的验收标准，让 AI 知道什么时候算"完成"。从 AI 那里学习意味着观察 AI 的输出，理解它的思维方式，调整你的提示策略。
+These management skills are identical to the skills of writing good prompts. Understanding AI's capability boundaries means knowing AI's context window limits, hallucination tendencies, and which domains it's reliable in. Deciding when to delegate means judging which tasks AI can complete independently and which need human guidance. Decomposing problems means breaking complex programming tasks into chunks that fit within AI's context window, guiding AI step by step. Quality checking means defining clear acceptance criteria so AI knows when something counts as "done." Learning from AI means observing AI's output, understanding its thinking patterns, and adjusting your prompt strategy.
 
-这个同构性揭示了一个深层的真理：AI 时代的编程不再是一个技术问题，而是一个管理问题。你不需要成为最好的程序员，但你需要成为一个好的"AI 经理"。这对于有技术背景的人来说是一个心理转变——我们习惯了用技术能力来竞争，现在需要用管理能力来竞争。但这也是一个解放，因为它意味着编程的门槛降低了，而编程的天花板提高了。门槛降低是因为你不需要掌握所有的算法和数据结构；天花板提高是因为你可以通过更好的管理和分解，完成比单个人类程序员更复杂的项目。
+This isomorphism reveals a deeper truth: programming in the AI era is no longer a technical problem but a management problem. You don't need to be the best programmer, but you need to be a good "AI manager." This is a psychological shift for people with technical backgrounds — we're used to competing with technical ability, now we need to compete with management ability. But it's also a liberation, because it means the floor of programming has lowered while the ceiling has risen. The floor lowered because you don't need to master all algorithms and data structures; the ceiling rose because through better management and decomposition, you can complete projects more complex than any single human programmer could.
 
-### 2.4 上下文质量与迭代效率的反馈循环
+### 2.4 The Feedback Loop Between Context Quality and Iteration Efficiency
 
-提示质量的另一个维度是上下文的丰富度。一个孤立的提示，即使写得再清楚，也可能不足以让 AI 做出最优决策。但当提示被放在一个丰富的上下文中时——包括项目的历史、设计决策、已知的陷阱、代码风格指南、甚至是你的工作偏好——AI 就能做出更符合你意图的决策。这个上下文可以来自多个来源：项目的 README 和设计文档、之前的代码审查评论、Git 历史中的提交信息、甚至是你和 AI 之前的对话记录。
+Another dimension of prompt quality is context richness. An isolated prompt, no matter how clearly written, may be insufficient for AI to make optimal decisions. But when the prompt is placed in a rich context — including project history, design decisions, known pitfalls, code style guides, even your work preferences — AI can make decisions more aligned with your intent. This context can come from multiple sources: the project's README and design documents, previous code review comments, commit messages in Git history, even your previous conversation records with AI.
 
-当上下文足够丰富时，AI 的自迭代能力会显著提高。AI 不仅能理解"做什么"，还能理解"为什么这样做"和"什么样的做法符合这个项目的风格"。这导致一个正反馈循环：更好的上下文 → 更好的代码 → 更少的修改 → 更快的反馈循环 → 更多的学习 → 更好的下一次迭代。反过来，当上下文不足时，就会陷入负反馈循环：模糊的提示 → 不符合预期的代码 → 需要多次修改 → 修改过程中上下文丢失 → AI 自我推翻 → 更多的修改。
+When context is rich enough, AI's self-iteration ability significantly improves. AI can understand not just "what to do" but also "why to do it this way" and "what approach fits this project's style." This creates a positive feedback loop: better context → better code → fewer revisions → faster feedback loops → more learning → better next iteration. Conversely, when context is insufficient, a negative feedback loop sets in: vague prompts → code that doesn't match expectations → need for multiple revisions → context lost during revisions → AI self-contradicts → more revisions.
 
-这个循环的关键在于上下文的持久性。AI 的上下文窗口是有限的，当对话变长时，早期的信息会被遗忘。这就是为什么文档驱动开发（A05）与提示质量（A08）是互补的：文档提供长期的、持久的上下文，而提示提供当前任务的、具体的指导。当两者结合时，AI 就能在短期和长期的两个时间尺度上都保持一致性。
+The key to this loop is context persistence. AI's context window is limited; when conversations grow long, early information gets forgotten. This is why doc-driven development (A05) and prompt quality (A08) are complementary: documentation provides long-term, persistent context, while prompts provide current-task, specific guidance. When both are combined, AI can maintain consistency across both short-term and long-term time scales.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-**何时应用**：任何需要 AI 生成代码的场景，尤其是涉及复杂接口、多参数函数、或需要多轮迭代的任务。特别是当你发现自己在重复修改 AI 的输出、或 AI 在多轮迭代中自我推翻时，这是一个信号，说明你需要提高提示质量。
+**When to apply**: Any scenario requiring AI to generate code, especially involving complex interfaces, multi-parameter functions, or tasks needing multiple rounds of iteration. Particularly when you find yourself repeatedly modifying AI's output, or AI self-contradicts across multiple iterations — this is a signal that you need to improve prompt quality.
 
-**如何实践**：在请求 AI 之前，先完善类型提示和 DocString。对于 Python，使用 typing 模块明确参数和返回值类型；对于其他语言，使用相应的类型系统。写详细的 DocString，包括函数的目的、参数的含义和格式、返回值的格式、可能的异常、以及至少一个使用示例。对于复杂的逻辑，添加内联注释解释"为什么"。把问题分解成 AI 上下文窗口能容纳的块，逐步引导。在给 AI 布置任务时，先让它读相关的文档和代码，建立足够的上下文，然后再开始具体的编码任务。定期审视 AI 的输出，看看是否需要调整提示策略。
+**How to practice**: Before requesting AI, first complete type hints and DocStrings. For Python, use the typing module to explicitly specify parameter and return value types; for other languages, use their respective type systems. Write detailed DocStrings including the function's purpose, parameter meanings and formats, return value format, possible exceptions, and at least one usage example. For complex logic, add inline comments explaining "why." Decompose problems into chunks that fit within AI's context window, guiding step by step. When assigning tasks to AI, first have it read relevant docs and code to establish enough context, then start the specific coding task. Periodically review AI's output to see if prompt strategy needs adjustment.
 
-## 4. 陷阱与洞察
+## 4. Pitfalls and Insights
 
-### 4.1 "足够清晰"的陷阱
+### 4.1 The "Clear Enough" Trap
 
-一个常见的误解是，只要你觉得提示足够清晰，AI 就能理解。但这忽视了"诅咒知识"（Curse of Knowledge）的影响。你觉得"显而易见"的东西，对 AI 来说可能完全不明显。比如，你告诉 AI"生成一个处理用户输入的函数"，但没有说明用户输入的格式、可能的边界情况、或错误处理的方式，AI 就可能生成一个过于简单或过于复杂的实现。
+A common misunderstanding is that as long as you feel the prompt is clear enough, AI will understand. But this ignores the impact of the Curse of Knowledge. What feels "obvious" to you may be completely non-obvious to AI. For example, you tell AI "generate a function to process user input" without specifying the input format, possible edge cases, or error handling approach — AI may generate an implementation that's too simple or too complex.
 
-解决这个陷阱的方法是采用"新员工视角"：假设你要给一个完全陌生的人（或 AI）解释这个任务，你会怎么说？这个练习很痛苦，但它是成为优秀 AI 管理者的必经之路。一个实用的技巧是使用视觉辅助——让 AI 先生成一个简单的图表或示例，然后用这个输出作为下一步的输入，这样可以消除大量的歧义。
+The fix for this trap is adopting the "new employee perspective": suppose you had to explain this task to a complete stranger (or AI) — how would you say it? This exercise is painful but is the necessary path to becoming a good AI manager. A practical technique is using visual aids — have AI first generate a simple diagram or example, then use this output as input for the next step. This eliminates a lot of ambiguity.
 
-### 4.2 过度工程化的陷阱
+### 4.2 The Over-Engineering Trap
 
-另一个陷阱是过度工程化：写了太多的注释和文档，以至于代码本身变得冗长和难以维护。注释应该是精炼的、有针对性的，而不是冗长的。一个好的注释应该回答"为什么"，而不是重复"做什么"。如果代码本身已经很清晰，就不需要注释。如果需要注释来解释代码，那可能是代码本身不够清晰，应该重构代码而不是添加注释。
+Another trap is over-engineering: writing too many comments and docs to the point where the code itself becomes verbose and hard to maintain. Comments should be refined and targeted, not lengthy. A good comment should answer "why," not repeat "what." If the code itself is already clear, no comment is needed. If a comment is needed to explain the code, the code itself may not be clear enough — refactor the code rather than adding comments.
 
-同样，DocString 应该简洁但完整。不需要写成小说，但要包含所有必要的信息。一个好的 DocString 应该让读者在 30 秒内理解这个函数做什么，而不需要读代码。
+Similarly, DocStrings should be concise but complete. No need to write a novel, but include all necessary information. A good DocString should let a reader understand what the function does in 30 seconds without reading the code.
 
-### 4.3 静态提示 vs 动态上下文
+### 4.3 Static Prompts vs Dynamic Context
 
-第三个陷阱是把提示当作一个静态的、一次性的东西。但实际上，提示应该随着项目的演进而演进。当你发现 AI 在某个方面反复出错时，这是一个信号，说明你的提示在这个方面不够清晰。你应该更新提示，添加更多的细节或示例，然后再试一次。这个过程本身就是一个学习过程——你在学习如何更有效地与 AI 沟通。
+The third trap is treating prompts as static, one-time things. But in reality, prompts should evolve as the project evolves. When you find AI repeatedly making errors in a certain area, this is a signal that your prompt isn't clear enough in that area. You should update the prompt, add more detail or examples, then try again. This process itself is a learning process — you're learning how to communicate more effectively with AI.
 
-## 5. 相关公理
+## 5. Related Axioms
 
-- **A01: 从咨询到执行的范式转移** — 清晰的提示定义了"完成"是什么，使得 AI 能够自主迭代。提示质量直接影响 AI 能否进入 ask-do 模式。
-- **A02: AI 是放大器，不是替代品** — 提示质量是放大器的关键。好的提示能放大你的意图，坏的提示会放大你的混乱。
-- **A03: 从 IC 到管理者的心智转变** — 写好提示是一个管理技能，而不是编程技能。它要求你能够清晰地定义问题、分解任务、提供足够的上下文。
-- **A05: 文档即长期记忆** — 提示是短期的、具体的指导，文档是长期的、抽象的记忆。两者结合才能形成完整的上下文。
-- **T03: 上下文隔离是多 Agent 价值** — 在多 Agent 系统中，每个 Agent 的提示应该针对其特定的角色和职责，而不是试图在一个提示中包含所有信息。
+- **A01: Ask-Do Paradigm Shift** — Clear prompts define what "done" means, enabling AI to iterate autonomously. Prompt quality directly affects whether AI can enter ask-do mode.
+- **A02: AI is a Multiplier, Not a Replacement** — Prompt quality is the key to the amplifier. Good prompts amplify your intent; bad prompts amplify your confusion.
+- **A03: IC to Manager Mindset Shift** — Writing good prompts is a management skill, not a programming skill. It requires you to clearly define problems, decompose tasks, and provide enough context.
+- **A05: Docs as Long-Term Memory** — Prompts are short-term, specific guidance; docs are long-term, abstract memory. Both must combine to form complete context.
+- **T03: Context Isolation is Multi-Agent Value** — In multi-agent systems, each agent's prompt should target its specific role and responsibilities, rather than trying to include all information in one prompt.
 
-## 6. 实践建议
+## 6. Practice Advice
 
-**立即可做的事**：
+**Things you can do immediately**:
 
-1. 为你正在进行的项目中的关键函数添加完整的类型提示和 DocString。观察这如何改变 AI 的理解和输出质量。
-2. 在给 AI 布置任务时，先让它读相关的文档和代码，建立上下文，然后再开始具体的编码任务。
-3. 当 AI 的输出不符合预期时，不要立即修改代码，而是先审视你的提示。是否有歧义？是否遗漏了重要信息？
-4. 建立一个"提示模板"库，记录对不同类型任务有效的提示模式。随着时间推移，这个库会变成你与 AI 沟通的"方言"。
+1. Add complete type hints and DocStrings to key functions in your ongoing project. Observe how this changes AI's understanding and output quality.
+2. When assigning tasks to AI, first have it read relevant docs and code to establish context, then start the specific coding task.
+3. When AI's output doesn't match expectations, don't immediately modify the code — first examine your prompt. Is there ambiguity? Did you miss important information?
+4. Build a "prompt template" library, recording effective prompt patterns for different types of tasks. Over time, this library becomes your "dialect" for communicating with AI.
 
-**长期的心态转变**：
+**Long-term mindset shifts**:
 
-- 停止把提示当作一个"指令"，开始把它当作一个"对话的开始"。好的提示应该邀请 AI 提问、澄清歧义、提出替代方案。
-- 停止期望一次完美的提示，开始期望一个迭代的过程。每次 AI 的输出都是一个学习机会，让你改进下一次的提示。
-- 停止只关注代码的质量，开始关注提示的质量。代码是 AI 生成的，但提示是你的。你的竞争优势在于能否写出更好的提示。
-- 停止把注释当作事后的补充，开始把它当作代码的一等公民。注释不是为了解释代码给人类，而是为了指导 AI 理解你的意图。
+- Stop treating prompts as "instructions" — start treating them as "the beginning of a conversation." Good prompts should invite AI to ask questions, clarify ambiguity, and propose alternatives.
+- Stop expecting a perfect prompt in one shot — start expecting an iterative process. Each AI output is a learning opportunity to improve the next prompt.
+- Stop focusing only on code quality — start focusing on prompt quality. Code is AI-generated, but prompts are yours. Your competitive advantage lies in whether you can write better prompts.
+- Stop treating comments as after-the-fact supplements — start treating them as first-class citizens of code. Comments are not to explain code to humans but to guide AI in understanding your intent.
 
-当你看到 AI 因为有了清晰的提示而减少了修改次数，或者因为有了丰富的上下文而做出了更符合项目风格的决策时，你就会明白，提示质量不仅仅是一个技术实践，更是一个根本的思维转变。它把 AI 从一个"代码生成器"转变成了一个真正的"编程伙伴"。
+When you see AI reducing revision cycles because of clear prompts, or making decisions more aligned with project style because of rich context, you'll understand that prompt quality is not just a technical practice but a fundamental mindset shift. It transforms AI from a "code generator" into a genuine "programming partner."

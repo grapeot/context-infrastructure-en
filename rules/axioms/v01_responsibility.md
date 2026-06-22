@@ -5,124 +5,124 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# V1. 责任无法被委派
+# V1. Responsibility Cannot Be Delegated
 
-## 1. 核心公理
+## 1. Core Axiom
 
-执行可以委派给 AI，但责任不能：最终结果仍由人类承担。这不是法律上的免责声明，而是一个关于系统设计和信任的深层原则。当你把任务交给 AI 时，你没有把问责权转移出去——你只是改变了执行的方式。失败时，问题不在于"AI 做错了"，而在于"我的委派、指导或验证出了问题"。
+Execution can be delegated to AI, but responsibility cannot: the ultimate outcome still rests with the human. This is not a legal disclaimer — it is a deep principle about system design and trust. When you hand a task to AI, you have not transferred accountability; you have merely changed the mode of execution. When something fails, the question is not "the AI got it wrong," but "my delegation, guidance, or verification fell short."
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 2.1 工具心智 vs 团队成员心智
+### 2.1 Tool Mindset vs. Team Member Mindset
 
-把 AI 当工具会诱发甩锅；把它当实习生则能恢复正确的契约：你交付了未检查的成果，失败就算在你头上。这个区别看似微妙，但在实践中产生了根本性的差异。
+Treating AI as a tool invites blame-shifting; treating it as an intern restores the correct contract: you delivered unchecked work, and the failure is on you. The distinction may seem subtle, but in practice it produces a fundamental difference.
 
-当你把 AI 当工具时，你的心理模型是"我给它输入，它给我输出，如果输出不对那是工具的问题"。这种心态会导致一系列危险的行为：你可能不会花时间清晰地表达需求，因为"工具应该理解我的意思"；你可能不会验证输出，因为"工具应该是对的"；你可能会在失败时责怪工具，而不是反思自己的使用方式。
+When you treat AI as a tool, your mental model is "I give it input, it gives me output — if the output is wrong, that's the tool's problem." This mindset leads to a cascade of dangerous behaviors: you may not invest time in articulating requirements clearly, because "the tool should understand what I mean"; you may not verify the output, because "the tool should be right"; you may blame the tool when things go wrong, rather than reflecting on how you used it.
 
-相比之下，当你把 AI 当实习生时，你的心理模型是"我需要清晰地指导这个人，确保他理解任务，验证他的工作，如果出错我需要反思我的指导是否足够清晰"。这种心态会导致完全不同的行为：你会花时间写清晰的指导，包括背景、方法论和验收标准；你会主动验证输出，而不是被动接受；你会在失败时反思自己的管理质量，而不是责怪工具。
+By contrast, when you treat AI as an intern, your mental model is "I need to guide this person clearly, make sure they understand the task, verify their work, and if something goes wrong I need to reflect on whether my guidance was clear enough." This mindset produces entirely different behaviors: you invest time in writing clear instructions that include context, methodology, and acceptance criteria; you actively verify output rather than passively accepting it; you reflect on your own management quality when things fail, rather than blaming the tool.
 
-在我自己的"AI 摸鱼"经历里，转折点正是这个心态的转变。当我开始把 Claude 当作一个需要管理的团队成员，而不是一个应该自动理解我的工具时，输出质量立刻跃升。这不是因为模型变了，而是因为我的委派质量变了。
+In my own experience with "AI slacking off," the turning point was precisely this mindset shift. The moment I began treating Claude as a team member who needs management, rather than a tool that should automatically understand me, output quality jumped immediately. Not because the model changed, but because the quality of my delegation changed.
 
-### 2.2 委派失败的根本原因
+### 2.2 The Root Cause of Delegation Failure
 
-多数"AI 失败"其实是委派失败，而委派失败的根本原因是知识的诅咒：你对问题太熟悉了，以至于无法想象别人（或 AI）不知道的东西。这导致约束缺失、偏好未说明、默认值未说出口。
+Most "AI failures" are actually delegation failures, and the root cause of delegation failure is the curse of knowledge: you are so familiar with the problem that you cannot imagine what someone else (or AI) does not know. This leads to missing constraints, unstated preferences, and unspoken defaults.
 
-一个经典的例子是告诉 AI"帮我拼接这些图片"，然后期望它理解你对接缝位置、色彩匹配、边界处理的所有隐含期望。或者说"翻译这个文档"，而没有说明术语表、风格指南、目标受众。或者"优化这个代码"，而没有说明优化的目标是速度、内存、可读性还是可维护性。
+A classic example is telling AI "help me stitch these images together" and expecting it to understand all your implicit expectations about seam placement, color matching, and edge handling. Or saying "translate this document" without specifying a glossary, style guide, or target audience. Or "optimize this code" without specifying whether the goal is speed, memory, readability, or maintainability.
 
-这些看似"显而易见"的细节，对于一个没有背景知识的 AI 来说，完全是盲点。AI 会做出合理的假设，但这些假设往往与你的隐含期望不符。当结果不满足期望时，你可能会责怪 AI"不够聪明"，但实际上问题在于你没有把期望显式化。
+These seemingly "obvious" details are complete blind spots for an AI with no background knowledge. The AI will make reasonable assumptions, but those assumptions often conflict with your implicit expectations. When the result falls short, you may blame the AI for "not being smart enough," when the real problem is that you failed to make your expectations explicit.
 
-正确的做法是把隐含的知识显式化。这不仅仅是为了 AI，也是为了你自己——这个过程会强制你把模糊的想法变成清晰的指导。一个有效的委派应该包括：任务的背景和为什么重要、具体的约束条件、验收标准（什么样的输出才算成功）、已知的陷阱和边界情况。
+The correct approach is to externalize implicit knowledge. This is not just for the AI's benefit — it is also for yours. The process forces you to turn vague ideas into clear instructions. An effective delegation should include: the context of the task and why it matters, specific constraints, acceptance criteria (what output counts as success), and known pitfalls and edge cases.
 
-### 2.3 承担责任的实际含义
+### 2.3 What Taking Responsibility Actually Means
 
-承担责任会迫使你做风险分层：有些任务可以放手，但任何高风险事项都必须显式验证并由人类签字。这是可靠性管理的核心。
+Taking responsibility forces you to do risk stratification: some tasks can be hands-off, but any high-stakes item must be explicitly verified and signed off by a human. This is the core of reliability management.
 
-当你承认"这是我的责任"时，你就被迫问自己一系列关键问题：这个任务的失败代价是什么？我能承受这个代价吗？我需要多高的信心才能发布这个结果？我如何验证 AI 的输出？我需要什么样的备份方案？
+When you acknowledge "this is my responsibility," you are forced to ask yourself a series of critical questions: What is the cost of failure for this task? Can I afford that cost? How much confidence do I need before releasing this result? How do I verify the AI's output? What backup plan do I need?
 
-这些问题会自然地导向一个分层的验证策略。低风险任务（如格式化、文档生成）可能只需要基本的质量检查。中风险任务（如业务逻辑、API 集成）需要更仔细的审查。高风险任务（如安全关键代码、财务逻辑、医学建议）需要深度的人工验证，甚至可能需要多个独立的验证路径。
+These questions naturally lead to a tiered verification strategy. Low-risk tasks (formatting, documentation generation) may only need basic quality checks. Medium-risk tasks (business logic, API integration) require more careful review. High-risk tasks (safety-critical code, financial logic, medical advice) demand deep human verification, possibly even multiple independent verification paths.
 
-这个分层不是为了"保护自己"，而是为了确保系统的可靠性。当你明确了每个任务的风险等级，你就能设计相应的验证流程，而不是盲目地对所有输出应用相同的标准。
+This tiering is not about "protecting yourself" — it is about ensuring system reliability. When you are clear about the risk level of each task, you can design the corresponding verification process, rather than blindly applying the same standard to all outputs.
 
-### 2.4 可逆性与风险管理
+### 2.4 Reversibility and Risk Management
 
-对结果负责也意味着对可逆性负责：在让 agent 动任何昂贵的东西之前，你得先有回滚方案。这是一个经常被忽视但至关重要的原则。
+Being responsible for outcomes also means being responsible for reversibility: before letting an agent touch anything expensive, you must have a rollback plan. This is a frequently overlooked but critical principle.
 
-"昂贵"可以有多种含义：金钱（如发送客户邮件、提交交易）、时间（如长时间运行的任务）、数据（如删除或修改重要数据）、声誉（如发布公开声明）。对于任何这样的操作，你都应该在执行前问自己：如果出错了，我能恢复吗？恢复的成本是多少？
+"Expensive" can mean many things: money (sending customer emails, submitting transactions), time (long-running tasks), data (deleting or modifying important data), reputation (publishing public statements). For any such operation, you should ask yourself before execution: if this goes wrong, can I recover? What is the cost of recovery?
 
-这导向一个实用的原则：对于不可逆的操作，总是先在沙箱环境中测试，或者建立一个"人在回路"的工作流，其中 AI 生成建议但人类做最终决策。例如，不要让 AI 直接发送客户邮件，而是让 AI 生成邮件草稿，由人类审查后再发送。不要让 AI 直接删除数据，而是让 AI 生成删除计划，由人类验证后再执行。
+This leads to a practical principle: for irreversible operations, always test in a sandbox environment first, or establish a "human-in-the-loop" workflow where AI generates suggestions but the human makes the final decision. For example, don't let AI send customer emails directly — let AI generate a draft, reviewed by a human before sending. Don't let AI delete data directly — let AI generate a deletion plan, verified by a human before execution.
 
-这不是对 AI 的不信任，而是对系统设计的理性考虑。即使 AI 的成功率是 99%，当你有 1000 个操作时，1% 的失败率仍然会导致 10 个失败。在这种规模下，可逆性变成了一个关键的安全机制。
+This is not distrust of AI, but rational consideration of system design. Even if AI has a 99% success rate, when you have 1000 operations, a 1% failure rate still means 10 failures. At that scale, reversibility becomes a critical safety mechanism.
 
-### 2.5 责任与杠杆的悖论
+### 2.5 The Responsibility-Leverage Paradox
 
-这里有一个看似矛盾的地方：承担责任似乎会限制你的杠杆，因为你需要花时间验证和管理。但实际上，正是这种责任感才能释放真正的杠杆。
+There is an apparent contradiction here: taking responsibility seems to limit your leverage, because you need to spend time verifying and managing. But in reality, it is precisely this sense of responsibility that unlocks true leverage.
 
-当你把 AI 当工具时，你的杠杆受限于你能多快地审查和批准输出。当你把 AI 当团队成员并承担管理责任时，你的杠杆来自于你能多好地赋能 AI 自主工作。一个经验丰富的管理者能够设计清晰的指导、建立有效的验证流程、教授方法论，这样 AI 就能在更少的人工干预下完成更多工作。
+When you treat AI as a tool, your leverage is limited by how quickly you can review and approve output. When you treat AI as a team member and take on management responsibility, your leverage comes from how well you can empower AI to work autonomously. An experienced manager can design clear guidance, establish effective verification processes, and teach methodology, so that AI can accomplish more with less human intervention.
 
-这个转变的关键在于从"我需要检查每个输出"转向"我需要设计一个系统，使得错误难以通过"。前者是被动的、耗时的；后者是主动的、可扩展的。当你有 10 个 AI 助手时，这个差异就变成了 10 倍的生产力差异。
+The key to this shift is moving from "I need to check every output" to "I need to design a system where errors are hard to get through." The former is reactive and time-consuming; the latter is proactive and scalable. When you have 10 AI assistants, this difference becomes a 10x productivity difference.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 3.1 何时适用
+### 3.1 When It Applies
 
-任何 AI 输出可能影响用户、金钱、声誉，或长期代码/数据的时候。更精确地说：
+Any time AI output could affect users, money, reputation, or long-term code/data. More precisely:
 
-- **高风险决策**：失败会导致财务损失、安全问题或法律后果
-- **长时间运行任务**：单次运行涉及大量数据或长时间执行，失败代价高
-- **不可逆操作**：失败的后果难以撤销（发送邮件、提交代码、删除数据）
-- **复杂系统**：任务涉及多个步骤或需要跨域知识，容易出现隐藏的失效模式
-- **规模化部署**：当同一个流程会被重复执行多次时，即使单次失败率很低，累积失败也会很高
+- **High-stakes decisions**: failure would cause financial loss, safety issues, or legal consequences
+- **Long-running tasks**: a single run involves large amounts of data or long execution time, making failure costly
+- **Irreversible operations**: consequences of failure are hard to undo (sending emails, committing code, deleting data)
+- **Complex systems**: tasks involving multiple steps or cross-domain knowledge, prone to hidden failure modes
+- **Scaled deployment**: when the same process is executed repeatedly, even a low single-run failure rate accumulates to a high total
 
-### 3.2 实践方式
+### 3.2 How to Practice
 
-1. **委派前先写验收标准**：不要说"生成高质量的代码"，要说"代码必须通过所有单元测试，覆盖率 > 80%，没有安全警告"。把隐含期望变成显式的、可测量的标准。
+1. **Write acceptance criteria before delegating**: don't say "generate high-quality code" — say "code must pass all unit tests, coverage > 80%, no security warnings." Turn implicit expectations into explicit, measurable standards.
 
-2. **每次交接都要求提供可核验的证据**：diff（改动了什么）、tests（通过了什么）、logs（过程中发生了什么）、links（依赖了什么）。这些不仅帮助你验证，也给了 AI 自我纠错的机会。
+2. **Require verifiable evidence at every handoff**: diffs (what changed), tests (what passed), logs (what happened during the process), links (what was depended on). These not only help you verify, but also give AI an opportunity to self-correct.
 
-3. **保留一个最终的人类关卡**：对于任何高风险操作，建立一个"人在回路"的工作流。AI 可以生成建议、草稿或计划，但最终决策和执行权掌握在人类手中。
+3. **Keep a final human gate**: for any high-risk operation, establish a human-in-the-loop workflow. AI can generate suggestions, drafts, or plans, but the final decision and execution authority rests with the human.
 
-4. **明确对发布负责**：在发布任何 AI 生成的内容前，问自己：我是否理解了这个输出？我是否验证了关键假设？如果出错了，我能承受后果吗？如果答案是否，就不要发布。
+4. **Explicitly own the release**: before releasing any AI-generated content, ask yourself: do I understand this output? Have I verified the key assumptions? If it goes wrong, can I bear the consequences? If the answer is no, don't release.
 
-5. **建立反馈循环**：每次 AI 的输出失败时，不要只是修复问题，而是反思：我的指导是否足够清晰？我的验收标准是否足够具体？我是否遗漏了什么关键信息？这个反思会改进下一次的委派。
+5. **Build feedback loops**: every time an AI output fails, don't just fix the problem — reflect: was my guidance clear enough? Were my acceptance criteria specific enough? Did I miss any critical information? This reflection will improve the next delegation.
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **A03 从 IC 到管理者的心智转变**：责任感是有效管理的前提。当你承认"这是我的责任"时，你就自然地采取了管理者的思维方式。
-- **A04 可靠性是管理问题**：可靠性的基础就是承担责任。当你承担责任时，你会自然地投入时间在验证、流程设计和风险管理上。
-- **V02 可验证性是信任的地基**：责任感会驱动你设计可验证的系统。当你知道失败会算在你头上时，你就会确保有办法检测错误。
-- **T02 结果确定性优于过程确定性**：承担责任意味着你需要定义清晰的成功标准，而不是试图控制每一步。
+- **A03 The IC-to-Manager Mindset Shift**: responsibility is the prerequisite for effective management. When you acknowledge "this is my responsibility," you naturally adopt a manager's mindset.
+- **A04 Reliability Is a Management Problem**: the foundation of reliability is taking responsibility. When you take responsibility, you naturally invest time in verification, process design, and risk management.
+- **V02 Verifiability Is the Foundation of Trust**: responsibility drives you to design verifiable systems. When you know failure will be on you, you ensure there is a way to detect errors.
+- **T02 Outcome Determinism Over Process Determinism**: taking responsibility means you need to define clear success criteria, rather than trying to control every step.
 
-## 5. 陷阱与洞察
+## 5. Pitfalls and Insights
 
-### 5.1 责任与权力的不匹配
+### 5.1 The Responsibility-Authority Mismatch
 
-一个常见的陷阱是承担责任但没有足够的权力来管理风险。例如，你可能被要求对 AI 的输出负责，但没有权力决定是否发布、没有权力要求更多的验证时间、没有权力拒绝不合理的期望。
+A common pitfall is taking responsibility without sufficient authority to manage risk. For example, you may be held responsible for AI output but lack the authority to decide whether to release, to demand more verification time, or to reject unreasonable expectations.
 
-在这种情况下，你需要明确地沟通这个不匹配。你可以说："我可以对这个输出的质量负责，但前提是我有权进行 X 级别的验证，并且有权在验证失败时拒绝发布。"这不是推卸责任，而是明确责任的边界。
+In such cases, you need to communicate this mismatch explicitly. You can say: "I can take responsibility for the quality of this output, but only if I have the authority to perform X level of verification and the authority to refuse release when verification fails." This is not shirking responsibility — it is clarifying the boundaries of responsibility.
 
-### 5.2 过度验证的陷阱
+### 5.2 The Over-Verification Trap
 
-另一个陷阱是对所有输出应用相同级别的验证，导致效率下降。并非所有任务都需要相同的验证强度。低风险任务（如格式化）可能只需要基本检查，而高风险任务（如安全关键代码）需要深度验证。
+Another pitfall is applying the same level of verification to all outputs, leading to efficiency loss. Not all tasks require the same verification intensity. Low-risk tasks (formatting) may only need basic checks, while high-risk tasks (safety-critical code) need deep verification.
 
-关键是根据风险等级来调整验证强度，而不是盲目地对所有输出应用最高标准。这样既能确保可靠性，也能保持效率。
+The key is to adjust verification intensity based on risk level, rather than blindly applying the highest standard to all outputs. This ensures both reliability and efficiency.
 
-### 5.3 责任感与自动化的平衡
+### 5.3 Balancing Responsibility and Automation
 
-最后一个洞察是，承担责任不意味着你需要手动检查每个输出。相反，你应该投入时间设计自动化的验证流程（测试、检查脚本、监控告警），这样你就可以在规模上维持责任感。
+A final insight: taking responsibility does not mean you need to manually check every output. Instead, you should invest time in designing automated verification processes (tests, check scripts, monitoring alerts), so that you can maintain responsibility at scale.
 
-当你有 1000 个 AI 生成的输出时，手动检查是不可能的。但如果你设计了清晰的验收标准并将其编码成自动化检查，那么你就可以在规模上维持可靠性。这是从"我需要检查每个输出"转向"我需要设计一个系统，使得错误难以通过"的转变。
+When you have 1000 AI-generated outputs, manual checking is impossible. But if you have designed clear acceptance criteria and encoded them into automated checks, you can maintain reliability at scale. This is the shift from "I need to check every output" to "I need to design a system where errors are hard to get through."
 
-## 6. 实践建议
+## 6. Practical Advice
 
-**立即可做的事**：
-1. 下次委派任务给 AI 时，花 5 分钟写下验收标准。不要说"做得好"，要说"完成的标志是什么"。
-2. 对于任何高风险输出，在发布前问自己三个问题：我理解这个输出吗？我验证了关键假设吗？我能承受失败的后果吗？
-3. 建立一个简单的反馈循环：AI 完成任务 → 你验证 → 你记录学到的东西 → 下次更好的指导。
+**Things you can do immediately**:
+1. Next time you delegate a task to AI, spend 5 minutes writing acceptance criteria. Don't say "do a good job" — say "what does done look like."
+2. For any high-risk output, ask yourself three questions before releasing: do I understand this output? Have I verified the key assumptions? Can I bear the consequences of failure?
+3. Establish a simple feedback loop: AI completes task → you verify → you record what you learned → better guidance next time.
 
-**长期的心态转变**：
-- 停止问"AI 能做什么"，开始问"我如何负责任地赋能 AI"。
-- 停止责怪 AI，开始反思自己的委派质量。
-- 停止期望 AI 自动理解，开始投入时间在清晰的指导上。
-- 停止被动验证，开始主动设计可验证的系统。
+**Long-term mindset shifts**:
+- Stop asking "what can AI do" and start asking "how can I responsibly empower AI."
+- Stop blaming AI and start reflecting on your own delegation quality.
+- Stop expecting AI to automatically understand and start investing time in clear guidance.
+- Stop passive verification and start proactively designing verifiable systems.
 
-这个转变的本质是从"使用工具"到"管理团队成员"的心态升级。当你真正承担起责任时，你会发现自己自然地采取了更好的管理实践，而这些实践反过来又会提高 AI 的可靠性和你的杠杆效应。
+The essence of this shift is a mindset upgrade from "using a tool" to "managing a team member." When you truly take responsibility, you will find yourself naturally adopting better management practices, which in turn improve AI reliability and your leverage.

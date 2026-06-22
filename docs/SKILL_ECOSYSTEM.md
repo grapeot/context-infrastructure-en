@@ -1,12 +1,12 @@
 # Public Skill Ecosystem
 
-`context-infrastructure` 自带的 `rules/skills/` 是 starter set：它展示 skill 应该如何被组织、索引和调用。更完整的能力不应该全部复制进这个仓库，而是通过独立 public skill repo 安装。这样做有两个好处：第一，每个 skill repo 可以保留自己的 README、CLI、测试和发布节奏；第二，用户 workspace 里的私有 alias、路径、token 和业务上下文可以留在本地 overlay，不会混进 public repo。
+The `rules/skills/` directory shipped with `context-infrastructure-en` is a starter set: it demonstrates how skills should be organized, indexed, and invoked. More complete capabilities should not be copied into this repo. Instead, install them through independent public skill repos. Two benefits: each skill repo keeps its own README, CLI, tests, and release cadence; and private aliases, paths, tokens, and business context in your workspace stay in a local overlay, never mixed into a public repo.
 
-这个页面同时给人和 AI 看。人可以用它发现还可以安装哪些能力；AI 可以按这里的安装协议，把某个 public skill repo 接入目标 workspace。
+This page is for both humans and AI. Humans can use it to discover what else is installable. AI can use the install protocol below to wire a public skill repo into a target workspace.
 
-## 安装协议
+## Install Protocol
 
-把下面这段话连同目标 repo URL 交给你的 coding agent：
+Give this paragraph, along with the target repo URL, to your coding agent:
 
 ```text
 Install this public skill repo into my workspace:
@@ -15,36 +15,36 @@ Install this public skill repo into my workspace:
 Start from my workspace AGENTS.md or CLAUDE.md. Follow any WORKSPACE.md or skills/INDEX.md routing rules. Clone or vendor the repo under an appropriate project directory. Expose exactly one root skill to my global skill index or agent instructions. Keep private aliases, local paths, credentials, endpoint defaults, and business context in a local overlay, not in the public repo.
 ```
 
-安装完成后，workspace 通常会形成两层：public repo 负责通用技术 contract，本地 `rules/skills/` 或 `.env` 负责私有配置。例如 iMessage public repo 只提供 send-only CLI，本地 overlay 才保存联系人 alias；Stripe public repo 只提供只读分析 contract，本地 overlay 才保存具体业务归因。
+After installation, the workspace typically forms two layers: the public repo handles generic technical contracts, and the local `rules/skills/` or `.env` handles private configuration. For example, the iMessage public repo only provides a send-only CLI — the local overlay stores contact aliases. The Stripe public repo only provides read-only analysis contracts — the local overlay stores business attribution.
 
-## 推荐安装的 public skill repos
+## Recommended Public Skill Repos
 
-| 方向 | Repo | 能力 |
+| Domain | Repo | Capability |
 |---|---|---|
-| Web search | [tavily-skill](https://github.com/grapeot/tavily-skill) | Tavily search/extract CLI，给 agent 稳定 JSON 输出 |
-| Documents | [gdocs-skill](https://github.com/grapeot/gdocs-skill) | Google Docs 创建、搜索、修改、分享，支持 Markdown 和 tab |
-| Maps / travel | [google-maps-routing-skill](https://github.com/grapeot/google-maps-routing-skill) | Google Maps Routes + Geocoding CLI，支持地址解析、实时 drive time 和 leave-by 规划 |
-| Email | [outlook_skill](https://github.com/grapeot/outlook_skill) | Outlook.com 邮件下载、归档、Markdown 渲染、发送和日历邀请 |
-| Email | [resend_email_skill](https://github.com/grapeot/resend_email_skill) | Resend 自定义域名发信、收件读取、Markdown 导出和附件检查 |
-| Messaging | [imessage_skill](https://github.com/grapeot/imessage_skill) | macOS iMessage send-only CLI；联系人 alias 放本地 overlay |
-| Agent operations | [opencode_skill](https://github.com/grapeot/opencode_skill) | OpenCode `submit` / `submit --dry-run` / batch submission、recurring cron workflow、SQLite 数据维护和 archive |
-| Agent operations | [process-launcher](https://github.com/grapeot/process-launcher) | 本地 HTTP process launcher，适合 TCC / GUI 权限桥接、durable one-shot delayed jobs、进程日志和取消 |
-| Usage analytics | [ai_usage_dashboard](https://github.com/grapeot/ai_usage_dashboard) | 多平台 AI token usage、成本估算、本地 dashboard 和 E1002 JSON |
-| Social / growth | [typefully-twitter-skill](https://github.com/grapeot/typefully-twitter-skill) | Typefully 发帖、账号指标和 X/Twitter 单帖 analytics |
-| Community publishing | [circle-post-skill](https://github.com/grapeot/circle-post-skill) | Circle community Markdown conversion, dry-run preflight, publish/update/delete CLI；社区默认值放本地 overlay |
-| Payments / growth | [stripe-skill](https://github.com/grapeot/stripe-skill) | Stripe 只读 finance / sales analytics，live tests 默认 opt-in |
-| Media | [online-media-skill](https://github.com/grapeot/online-media-skill) | 在线媒体下载、ASR artifact、query pack 和 source identification 工作流 |
-| Slides | [pptx.skill](https://github.com/grapeot/pptx.skill) | AI-first PPTX 读取、编辑和渲染 |
-| Images | [image-generation-skill](https://github.com/grapeot/image-generation-skill) | Gemini Flash / Gemini Pro / GPT-Image-2 文生图、图片编辑、分辨率放大 |
-| Images | [tiff-icc-profile](https://github.com/grapeot/tiff-icc-profile) | 给未标记 TIFF 嵌入 ICC profile，常用于 DaVinci still workflow |
-| Health | [health-quantification](https://github.com/grapeot/health-quantification) | Apple Health / 手动记录 → SQLite → CLI → AI 分析 |
-| Coffee | [roest-analysis](https://github.com/grapeot/roest-analysis) | Roest roast log 抓取与分析 |
-| Intake | [intake-skill](https://github.com/grapeot/intake-skill) | Voice memos / intake workflow 的 public-ready skill |
+| Web search | [tavily-skill](https://github.com/grapeot/tavily-skill) | Tavily search/extract CLI, stable JSON output for agents |
+| Documents | [gdocs-skill](https://github.com/grapeot/gdocs-skill) | Google Docs create, search, modify, share; Markdown and tab support |
+| Maps / travel | [google-maps-routing-skill](https://github.com/grapeot/google-maps-routing-skill) | Google Maps Routes + Geocoding CLI; address resolution, real-time drive time, leave-by planning |
+| Email | [outlook_skill](https://github.com/grapeot/outlook_skill) | Outlook.com mail download, archive, Markdown rendering, send, calendar invites |
+| Email | [resend_email_skill](https://github.com/grapeot/resend_email_skill) | Resend custom-domain sending, inbox reading, Markdown export, attachment inspection |
+| Messaging | [imessage_skill](https://github.com/grapeot/imessage_skill) | macOS iMessage send-only CLI; contact aliases in local overlay |
+| Agent operations | [opencode_skill](https://github.com/grapeot/opencode_skill) | OpenCode `submit` / `submit --dry-run` / batch submission, recurring cron workflow, SQLite data maintenance and archive |
+| Agent operations | [process-launcher](https://github.com/grapeot/process-launcher) | Local HTTP process launcher for TCC / GUI permission bridging, durable one-shot delayed jobs, process logs and cancellation |
+| Usage analytics | [ai_usage_dashboard](https://github.com/grapeot/ai_usage_dashboard) | Multi-platform AI token usage, cost estimation, local dashboard, E1002 JSON |
+| Social / growth | [typefully-twitter-skill](https://github.com/grapeot/typefully-twitter-skill) | Typefully posting, account metrics, X/Twitter single-post analytics |
+| Community publishing | [circle-post-skill](https://github.com/grapeot/circle-post-skill) | Circle community Markdown conversion, dry-run preflight, publish/update/delete CLI; community defaults in local overlay |
+| Payments / growth | [stripe-skill](https://github.com/grapeot/stripe-skill) | Stripe read-only finance / sales analytics, live tests default opt-in |
+| Media | [online-media-skill](https://github.com/grapeot/online-media-skill) | Online media download, ASR artifact, query pack, source identification workflow |
+| Slides | [pptx.skill](https://github.com/grapeot/pptx.skill) | AI-first PPTX read, edit, and render |
+| Images | [image-generation-skill](https://github.com/grapeot/image-generation-skill) | Gemini Flash / Gemini Pro / GPT-Image-2 text-to-image, image editing, resolution upscaling |
+| Images | [tiff-icc-profile](https://github.com/grapeot/tiff-icc-profile) | Embed ICC profiles into untagged TIFFs, commonly used in DaVinci still workflows |
+| Health | [health-quantification](https://github.com/grapeot/health-quantification) | Apple Health / manual records → SQLite → CLI → AI analysis |
+| Coffee | [roest-analysis](https://github.com/grapeot/roest-analysis) | Roest roast log capture and analysis |
+| Intake | [intake-skill](https://github.com/grapeot/intake-skill) | Voice memos / intake workflow public-ready skill |
 
-## 选择原则
+## Selection Principles
 
-如果一个能力需要完整 CLI、测试、fixtures 或长期维护，把它做成独立 repo。`context-infrastructure` 只链接它，不复制它。这样用户可以按需安装，不会让 starter workspace 变成巨大的工具合集。
+If a capability needs a full CLI, tests, fixtures, or long-term maintenance, make it an independent repo. `context-infrastructure-en` only links to it, never copies it. This lets users install on demand without turning the starter workspace into a giant tool collection.
 
-如果一个能力只是通用工作方法，例如深度调研、并行 subagent、分析写作、skill 写作、项目脚手架，可以留在本仓库的 `rules/skills/`。这些文件是 reference implementation 的核心，clone 后就能阅读和改造。
+If a capability is a general working method — deep research, parallel subagents, analytical writing, skill authoring, project scaffolding — it can stay in this repo's `rules/skills/`. These files are core to the reference implementation; they are readable and modifiable right after cloning.
 
-如果一个能力依赖私人数据、私人账号或业务上下文，把通用部分放 public repo，把私人部分留在用户自己的 workspace overlay。不要把真实联系人、服务器、路径、API key、客户名、交易数据或使用记录写进 public repo。
+If a capability depends on private data, private accounts, or business context, put the generic part in a public repo and the private part in the user's own workspace overlay. Never write real contacts, servers, paths, API keys, customer names, transaction data, or usage records into a public repo.

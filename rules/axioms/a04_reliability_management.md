@@ -3,210 +3,218 @@ id: axiom_reliability_management_2026
 category: trust
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "contexts/blog/content/ai-management-2-en.md"
+  - "contexts/blog/content/result-certainty-en.md"
+  - "contexts/blog/content/wide-research-en.md"
+  - "Anthropic Research: Measuring AI agent autonomy in practice (2026)"
+  - "Anthropic Research: Constitutional Classifiers (2025)"
+  - "arXiv: Representation Engineering (2310.01405)"
+  - "arXiv: The False Promise of Imitating Proprietary LLMs (2305.15717)"
 ---
 
-# 可靠性是管理问题
+# Reliability is a Management Problem
 
-## 1. 核心公理
+## 1. Core Axiom
 
-AI 的可靠性来自对不确定性的管理（信任校准、验证与流程设计），而不是要求一个非确定性系统表现出确定性。
+AI reliability comes from managing uncertainty (trust calibration, verification, and process design), not from demanding deterministic behavior from a non-deterministic system.
 
-**深层含义**：可靠性不是一个技术属性，而是一个系统属性。它由三个维度共同构成：
-- **模型的自我认知**：模型能否识别自己的不确定性并主动停下来请求澄清
-- **人的信任校准**：使用者是否能准确评估模型在何时可信、何时需要验证
-- **流程的容错设计**：系统是否能在模型出错时自动检测并恢复
+**Deeper meaning**: Reliability is not a technical attribute but a system attribute. It is composed of three dimensions:
+- **Model self-awareness**: whether the model can recognize its own uncertainty and proactively pause to request clarification
+- **Human trust calibration**: whether the user can accurately assess when the model is trustworthy and when verification is needed
+- **Process fault-tolerance design**: whether the system can automatically detect and recover when the model errs
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 预期错配的本质
+### 2.1 The Nature of Expectation Mismatch
 
-汽车之所以让人感觉可靠，是因为驾驶员吸收了道路的不确定性；一旦移除驾驶员（自动驾驶），系统就突然显得不可靠——AI 也会发生同样的预期错配。
+Cars feel reliable because the driver absorbs the road's uncertainty; remove the driver (autonomous driving) and the system suddenly seems unreliable — the same expectation mismatch happens with AI.
 
-**扩展**：这个现象在 AI 部署中普遍存在。Anthropic 的研究表明，当用户在 Claude Code 中从"逐个批准每个动作"转变为"让 AI 自主运行，只在需要时干预"时，他们的中断率反而上升（从 5% 增至 9%）。这不是因为 AI 变得更不可靠，而是因为用户的监督策略从被动审批转变为主动监控。经验丰富的用户能够识别何时需要干预，这种能力本身就是可靠性的一部分。
+**Extension**: This phenomenon is pervasive in AI deployment. Anthropic's research shows that when users in Claude Code shift from "approving every action individually" to "letting AI run autonomously, intervening only when needed," their interruption rate actually rises (from 5% to 9%). This is not because AI became less reliable, but because the user's supervision strategy shifted from passive approval to active monitoring. Experienced users can recognize when intervention is needed — this ability itself is part of reliability.
 
-**跨域应用**：
-- **医疗诊断**：AI 诊断工具的可靠性不在于准确率本身，而在于医生是否能识别 AI 何时可信（常见病）、何时需要二次确认（罕见病、边界情况）
-- **金融决策**：自动交易系统的可靠性取决于是否有人类监督者能在异常市场条件下及时干预
-- **代码审查**：AI 代码生成的可靠性不在于代码质量，而在于开发者是否有能力验证关键逻辑
+**Cross-domain applications**:
+- **Medical diagnosis**: The reliability of AI diagnostic tools lies not in accuracy rate itself, but in whether doctors can recognize when AI is trustworthy (common diseases) and when a second confirmation is needed (rare diseases, edge cases)
+- **Financial decisions**: The reliability of automated trading systems depends on whether human supervisors can intervene promptly under abnormal market conditions
+- **Code review**: The reliability of AI code generation lies not in code quality, but in whether developers have the ability to verify critical logic
 
-### 2.2 信任的光谱性
+### 2.2 The Spectral Nature of Trust
 
-幻觉之所以致命，是因为我们把对工具的信任迁移到了 AI 上；把 AI 当成实习生会恢复正确姿态：信任是光谱，必须靠验证来赢得。
+Hallucinations are fatal because we migrated our trust in tools onto AI; treating AI as an intern restores the correct posture: trust is a spectrum, earned through verification.
 
-**扩展**：信任不是二元的（信任/不信任），而是连续的。一个 AI 系统可能在某些任务上值得信任（如代码格式化），在其他任务上则需要完全验证（如医学事实陈述）。
+**Extension**: Trust is not binary (trust/distrust) but continuous. An AI system may be trustworthy on certain tasks (like code formatting) while requiring full verification on others (like medical fact statements).
 
-Anthropic 的 Constitutional Classifiers 研究揭示了一个关键洞察：即使在 3000+ 小时的红队测试中，仍然有人能找到越狱方法。这不是说防御失败了，而是说**完全的信任是不可能的**。可靠的系统必须假设防御会被突破，因此需要多层防御和持续监控。
+Anthropic's Constitutional Classifiers research reveals a key insight: even after 3000+ hours of red-teaming, someone still found jailbreak methods. This doesn't mean the defense failed — it means **complete trust is impossible**. Reliable systems must assume defenses will be breached, hence the need for multi-layer defense and continuous monitoring.
 
-**信任校准的四个层级**：
-1. **完全验证**：每个输出都需要独立检查（如医学诊断、法律建议）
-2. **抽样验证**：随机抽查一定比例的输出（如客服回复、数据标注）
-3. **异常检测**：只在输出偏离预期时触发验证（如代码审查中的复杂逻辑）
-4. **信任运行**：基于历史表现和任务特性，允许无验证执行（如日常文本生成）
+**Four levels of trust calibration**:
+1. **Full verification**: Every output needs independent checking (e.g., medical diagnosis, legal advice)
+2. **Sampling verification**: Randomly spot-check a certain percentage of outputs (e.g., customer service replies, data labeling)
+3. **Anomaly detection**: Trigger verification only when output deviates from expectations (e.g., complex logic in code review)
+4. **Trusted execution**: Based on historical performance and task characteristics, allow execution without verification (e.g., routine text generation)
 
-### 2.3 结果确定性 vs 过程确定性
+### 2.3 Results Certainty vs Process Certainty
 
-当你能定义"完成"并把检查编码出来时，结果确定性胜过过程确定性；否则你会写出无穷无尽的规则，却仍然漏掉失效模式。
+When you can define "done" and encode the checks, results certainty beats process certainty; otherwise you'll write endless rules and still miss failure modes.
 
-**扩展**：这是可靠性设计中最容易被忽视的原则。许多团队试图通过规范 AI 的"思考过程"来确保可靠性——要求 AI 逐步推理、显示工作、遵循特定格式。但这种方法有根本性的缺陷：
+**Extension**: This is the most easily overlooked principle in reliability design. Many teams try to ensure reliability by standardizing AI's "thinking process" — requiring AI to reason step by step, show its work, follow specific formats. But this approach has fundamental flaws:
 
-- **规则爆炸**：你永远无法预见所有可能的失效模式。每添加一条规则来修复一个问题，都可能在其他情况下引入新问题
-- **虚假的确定性**：一个遵循所有规则的输出看起来可靠，但可能在实际应用中失败
-- **成本递增**：维护过程规则的成本随着系统复杂度指数增长
+- **Rule explosion**: You can never foresee all possible failure modes. Every rule added to fix one problem may introduce new problems in other situations
+- **False certainty**: An output that follows all rules looks reliable but may fail in actual use
+- **Escalating cost**: The cost of maintaining process rules grows exponentially with system complexity
 
-**正确的方法**：定义清晰的成功标准，然后用自动化检查来验证结果是否满足这些标准。
+**The right approach**: Define clear success criteria, then use automated checks to verify whether results meet those criteria.
 
-**具体例子**：
-- **错误做法**：要求 AI 在生成代码时"显示所有思考步骤，解释每个变量的用途"
-- **正确做法**：定义代码必须通过的测试用例，然后自动运行这些测试。如果代码通过测试，就是可靠的；如果不通过，就重新生成
+**Concrete examples**:
+- **Wrong approach**: Require AI to "show all thinking steps, explain the purpose of every variable" when generating code
+- **Right approach**: Define test cases the code must pass, then automatically run those tests. If code passes tests, it's reliable; if not, regenerate
 
-这个原则在 Wide Research 等分治模式中得到了验证：与其要求单个 AI 调用完美执行复杂任务，不如将任务分解为多个小步骤，每步都有明确的验收标准和自动检查。
+This principle has been validated in divide-and-conquer patterns like Wide Research: rather than demanding a single AI call perfectly execute a complex task, decompose the task into multiple small steps, each with clear acceptance criteria and automated checks.
 
-### 2.4 质量控制的自动化扩展
+### 2.4 Automated Scaling of Quality Control
 
-在 AI 的速度下，劣质工作会迅速堆积成巨大的技术债；质量控制必须通过自动化（测试/CI）、分层把关和独立验证来扩展。
+At AI's speed, low-quality work rapidly accumulates into massive technical debt; quality control must scale through automation (testing/CI), tiered gating, and independent verification.
 
-**扩展**：这是 AI 时代的新挑战。传统软件开发中，代码审查可以是人工的，因为代码生成速度有限。但当 AI 能在秒级生成数千行代码时，人工审查变得不可能。
+**Extension**: This is a new challenge of the AI era. In traditional software development, code review could be manual because code generation speed was limited. But when AI can generate thousands of lines of code in seconds, manual review becomes impossible.
 
-**质量控制的三层架构**：
+**Three-layer architecture for quality control**:
 
-1. **第一层：自动化检查**（成本最低，覆盖最广）
-   - 单元测试、集成测试、类型检查
-   - 代码风格检查、安全扫描
-   - 性能基准测试
-   - 这一层应该拒绝 80-90% 的低质量输出
+1. **Layer 1: Automated checks** (lowest cost, widest coverage)
+   - Unit tests, integration tests, type checks
+   - Code style checks, security scans
+   - Performance benchmarks
+   - This layer should reject 80-90% of low-quality output
 
-2. **第二层：分层把关**（成本中等，覆盖中等）
-   - 不同风险等级的任务需要不同级别的人工审查
-   - 低风险（格式化、文档生成）：可能无需人工审查
-   - 中风险（业务逻辑、API 集成）：需要快速审查
-   - 高风险（安全关键、财务逻辑）：需要深度审查
+2. **Layer 2: Tiered gating** (medium cost, medium coverage)
+   - Different risk-level tasks need different levels of human review
+   - Low risk (formatting, doc generation): may need no human review
+   - Medium risk (business logic, API integration): needs quick review
+   - High risk (safety-critical, financial logic): needs deep review
 
-3. **第三层：独立验证**（成本最高，覆盖最小）
-   - 对关键决策进行 A/B 验证（两个独立的 AI 系统或人工验证）
-   - 对高风险输出进行交叉校验
-   - 对异常情况进行人工复审
+3. **Layer 3: Independent verification** (highest cost, smallest coverage)
+   - A/B verification for critical decisions (two independent AI systems or human verification)
+   - Cross-validation for high-risk outputs
+   - Human re-review for anomalies
 
-**Anthropic 的实证数据**：在 Claude Code 中，用户在复杂任务上的人工干预率（9%）低于简单任务（17%）。这看似矛盾，但实际上反映了一个重要现实：复杂任务往往来自经验丰富的用户，他们已经建立了有效的监督策略。系统设计应该支持这种自适应的监督，而不是强制统一的审查流程。
+**Anthropic's empirical data**: In Claude Code, users' human intervention rate on complex tasks (9%) is lower than on simple tasks (17%). This seems contradictory but actually reflects an important reality: complex tasks often come from experienced users who have already established effective supervision strategies. System design should support this adaptive supervision rather than enforcing uniform review processes.
 
-### 2.5 架构问题 vs 模型问题
+### 2.5 Architecture Problems vs Model Problems
 
-所谓"摸鱼"常常是架构问题（长输出会降低指令遵循）；像 Wide Research 这样的分治模式是管理修复，而不是模型魔法。
+So-called "slacking off" is often an architecture problem (long outputs degrade instruction following); divide-and-conquer patterns like Wide Research are management fixes, not model magic.
 
-**扩展**：当 AI 系统表现不佳时，我们的第一反应往往是"模型不够好"。但研究表明，许多失败实际上源于架构设计的不当。
+**Extension**: When AI systems underperform, our first reaction is often "the model isn't good enough." But research shows many failures actually stem from improper architecture design.
 
-**常见的架构问题**：
+**Common architecture problems**:
 
-1. **上下文长度问题**
-   - 当输出变得很长时，模型的指令遵循能力下降
-   - 解决方案：不是要求模型"更聪明"，而是将长任务分解为多个短任务，每个任务都有明确的输入和输出
+1. **Context length problem**
+   - When output becomes very long, the model's instruction-following ability degrades
+   - Solution: not demanding a "smarter" model, but decomposing long tasks into multiple short tasks, each with clear input and output
 
-2. **信息丢失问题**
-   - 在长对话中，早期的关键信息可能被遗忘
-   - 解决方案：使用显式的状态管理，而不是依赖模型的记忆
+2. **Information loss problem**
+   - In long conversations, early key information may be forgotten
+   - Solution: use explicit state management rather than relying on model memory
 
-3. **目标冲突问题**
-   - 模型被给予相互冲突的指令（如"要详细"和"要简洁"）
-   - 解决方案：明确定义优先级，使用分层的指令结构
+3. **Goal conflict problem**
+   - The model is given mutually conflicting instructions (e.g., "be detailed" and "be concise")
+   - Solution: clearly define priorities, use layered instruction structures
 
-4. **反馈循环缺失**
-   - 模型无法知道它的输出是否有用
-   - 解决方案：建立显式的反馈机制，让模型能够根据结果调整策略
+4. **Missing feedback loop**
+   - The model cannot know whether its output is useful
+   - Solution: establish explicit feedback mechanisms so the model can adjust strategy based on results
 
-**Wide Research 的启示**：这个模式通过将研究任务分解为多个维度的并行搜索，然后进行交叉验证，解决了单个 AI 调用容易出现的"摸鱼"问题。这不是因为模型变得更聪明，而是因为架构变得更聪明。
+**Wide Research's insight**: This pattern solves the "slacking off" problem common in single AI calls by decomposing research tasks into multi-dimensional parallel searches followed by cross-validation. This is not because the model became smarter, but because the architecture became smarter.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 3.1 何时适用
+### 3.1 When to Apply
 
-高风险决策、长时间运行任务、大规模代码改动，或任何失败代价高昂的工作流。
+High-risk decisions, long-running tasks, large-scale code changes, or any workflow where the cost of failure is high.
 
-**更精确的判定标准**：
+**More precise criteria**:
 
-| 维度 | 适用条件 | 示例 |
-|------|--------|------|
-| **风险等级** | 失败会导致财务损失、安全问题或法律后果 | 医学诊断、金融交易、安全关键代码 |
-| **规模** | 单次运行涉及大量数据或长时间执行 | 批量数据处理、长时间研究任务、大规模代码重构 |
-| **可验证性** | 能够定义清晰的成功标准并自动检查 | 代码（有测试）、数据处理（有验证规则）、文本生成（有质量指标） |
-| **不可逆性** | 失败的后果难以撤销 | 发送客户邮件、提交代码到生产、删除数据 |
-| **复杂性** | 任务涉及多个步骤或需要跨域知识 | 系统设计、跨学科研究、多步骤工程项目 |
+| Dimension | Applicable Conditions | Examples |
+|-----------|----------------------|----------|
+| **Risk level** | Failure would cause financial loss, safety issues, or legal consequences | Medical diagnosis, financial transactions, safety-critical code |
+| **Scale** | Single run involves large amounts of data or long execution time | Batch data processing, long research tasks, large-scale code refactoring |
+| **Verifiability** | Can define clear success criteria and automatically check | Code (has tests), data processing (has validation rules), text generation (has quality metrics) |
+| **Irreversibility** | Consequences of failure are hard to undo | Sending customer emails, committing code to production, deleting data |
+| **Complexity** | Task involves multiple steps or requires cross-domain knowledge | System design, interdisciplinary research, multi-step engineering projects |
 
-### 3.2 如何练习
+### 3.2 How to Practice
 
-按风险对任务分层，要求明确的验收标准与可执行检查，并在信任输出前使用并行/独立验证（A/B agents、交叉校验脚本）。
+Tier tasks by risk, demand clear acceptance criteria and executable checks, and use parallel/independent verification (A/B agents, cross-validation scripts) before trusting output.
 
-**具体实践步骤**：
+**Concrete practice steps**:
 
-**第一步：任务分层**
+**Step 1: Task tiering**
 ```
-高风险任务（需要完整的可靠性管理）
-├─ 明确定义成功标准
-├─ 设计自动化检查
-├─ 实施多层验证
-└─ 建立监控和告警
+High-risk tasks (need full reliability management)
+├─ Clearly define success criteria
+├─ Design automated checks
+├─ Implement multi-layer verification
+└─ Establish monitoring and alerting
 
-中风险任务（需要部分验证）
-├─ 定义关键检查点
-├─ 实施抽样验证
-└─ 建立异常检测
+Medium-risk tasks (need partial verification)
+├─ Define key checkpoints
+├─ Implement sampling verification
+└─ Establish anomaly detection
 
-低风险任务（可信任运行）
-├─ 定义基本质量标准
-└─ 实施事后监控
+Low-risk tasks (can trust execution)
+├─ Define basic quality standards
+└─ Implement post-hoc monitoring
 ```
 
-**第二步：验收标准设计**
-- 不要说"生成高质量的代码"，要说"代码必须通过所有单元测试，覆盖率 > 80%，没有安全警告"
-- 不要说"写一份好的报告"，要说"报告必须包含以下章节，每个数据点都有来源，所有引用都可验证"
-- 不要说"做出正确的决策"，要说"决策必须基于以下数据，符合以下约束条件，经过以下验证流程"
+**Step 2: Acceptance criteria design**
+- Don't say "generate high-quality code" — say "code must pass all unit tests, coverage > 80%, no security warnings"
+- Don't say "write a good report" — say "report must contain the following sections, every data point has a source, all citations are verifiable"
+- Don't say "make the right decision" — say "decision must be based on the following data, comply with the following constraints, go through the following verification process"
 
-**第三步：自动化检查实施**
+**Step 3: Automated check implementation**
 ```python
-# 示例：代码生成的自动化检查
+# Example: automated checks for code generation
 def verify_generated_code(code):
     checks = [
-        run_unit_tests(code),           # 功能正确性
-        check_type_hints(code),         # 类型安全
-        run_security_scan(code),        # 安全性
-        check_code_style(code),         # 代码质量
-        measure_complexity(code),       # 复杂度
+        run_unit_tests(code),           # functional correctness
+        check_type_hints(code),         # type safety
+        run_security_scan(code),        # security
+        check_code_style(code),         # code quality
+        measure_complexity(code),       # complexity
     ]
     return all(checks)
 ```
 
-**第四步：独立验证**
-- **A/B 验证**：用两个不同的 AI 系统独立完成任务，比较结果
-- **交叉校验**：用不同的方法验证同一个结果（如用不同的算法计算同一个值）
-- **人工抽查**：随机抽取一定比例的输出进行人工审查
+**Step 4: Independent verification**
+- **A/B verification**: Use two different AI systems to independently complete the task, compare results
+- **Cross-validation**: Verify the same result using different methods (e.g., compute the same value with different algorithms)
+- **Human spot-checking**: Randomly sample a certain percentage of outputs for human review
 
-**第五步：持续监控**
-- 跟踪验证失败率，识别模式
-- 当失败率上升时，自动升级验证级别
-- 定期审查验证规则，确保它们仍然有效
+**Step 5: Continuous monitoring**
+- Track verification failure rates, identify patterns
+- When failure rates rise, automatically escalate verification level
+- Periodically review verification rules to ensure they remain effective
 
-## 4. 边界条件与限制
+## 4. Boundary Conditions and Limitations
 
-### 4.1 何时不适用
+### 4.1 When Not to Apply
 
-- **实时性要求极高**：如果验证过程会导致不可接受的延迟，可能需要接受更高的风险
-- **验收标准无法定义**：如果成功标准本质上是主观的（如"创意写作"），自动化验证会很困难
-- **成本-收益不匹配**：如果验证成本远高于失败成本，可能不值得投入
+- **Extremely high real-time requirements**: If the verification process would cause unacceptable delays, may need to accept higher risk
+- **Acceptance criteria cannot be defined**: If success criteria are inherently subjective (e.g., "creative writing"), automated verification is difficult
+- **Cost-benefit mismatch**: If verification cost far exceeds failure cost, may not be worth the investment
 
-### 4.2 常见的陷阱
+### 4.2 Common Pitfalls
 
-1. **过度验证**：为低风险任务设计过于复杂的验证流程，导致效率下降
-2. **虚假的自动化**：设计看起来自动化但实际上需要大量人工干预的检查
-3. **验证盲目性**：验证规则本身有缺陷，导致通过验证的输出仍然失败
-4. **信任漂移**：随着时间推移，逐渐放松验证标准，直到系统变得不可靠
+1. **Over-verification**: Designing overly complex verification processes for low-risk tasks, causing efficiency decline
+2. **False automation**: Designing checks that look automated but actually require substantial human intervention
+3. **Verification blindness**: Verification rules themselves are flawed, causing outputs that pass verification to still fail
+4. **Trust drift**: Gradually relaxing verification standards over time until the system becomes unreliable
 
-## 5. 与其他公理的关系
+## 5. Relationships with Other Axioms
 
-这个公理与以下公理相互支持：
-- **a01_uncertainty_first**：可靠性管理的前提是承认不确定性的存在
-- **a02_verification_over_trust**：验证是可靠性的基础
-- **a03_decomposition_over_monolith**：分解任务是实现可靠性的关键方法
+This axiom is mutually supportive with:
+- **T02 - Results Certainty Over Process Certainty**: Reliability comes from acknowledging process uncertainty and instead obtaining results certainty through defining clear success criteria and executable acceptance checks (A04 §2.3)
+- **V02 - Verifiability is the Foundation of Trust**: Verification is the foundation of reliability — design architectures where errors can be automatically discovered, rather than assuming outputs are correct
+- **T07 - Isolate-Process-Verify Loop**: Decomposing tasks, isolating information domains, and verifying in sandboxes is the key method for turning non-determinism into bounded failure modes (A04 §2.5 Wide Research)
 
-## 6. 参考资源
+## 6. Reference Resources
 
-- Anthropic (2026): "Measuring AI agent autonomy in practice" - 展示了用户如何在实践中调整对 AI 的信任
-- Anthropic (2025): "Constitutional Classifiers" - 演示了多层防御的必要性
-- 内部案例：Wide Research 模式如何通过架构改进而非模型改进来提高可靠性
+- Anthropic (2026): "Measuring AI agent autonomy in practice" — shows how users adjust trust in AI in practice
+- Anthropic (2025): "Constitutional Classifiers" — demonstrates the necessity of multi-layer defense
+- Internal case: How the Wide Research pattern improves reliability through architecture improvement rather than model improvement

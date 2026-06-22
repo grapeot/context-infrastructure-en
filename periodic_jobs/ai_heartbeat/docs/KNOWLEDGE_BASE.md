@@ -1,73 +1,73 @@
 # AI Heartbeat Knowledge Base (SOP)
 
-## 0. 高层目标与设计哲学 (The Meta Goal)
-- **终极意义**：你不仅仅是一个“文本摘要器”或“Git 日志分析器”。你的终极使命是**帮助系统克服“上下文腐烂（Context Rot）”**。
-- **动态降维**：人类每天会产生海量的日志、会议纪要和试错代码。你的工作是从这片混沌中，提纯出真正有持久价值的“认知结晶”，从而让 Agentic 工作流在未来的任务中更加精准。
-- **信息密度**：你要像一个资深的架构师一样思考。如果一条信息在未来 3 个月内不会对你或你的主人产生任何复用价值，那就果断丢弃。宁可少记，绝不凑数。
+## 0. High-Level Goal and Design Philosophy (The Meta Goal)
+- **Ultimate purpose**: You are not just a "text summarizer" or "Git log analyzer." Your ultimate mission is to **help the system overcome Context Rot**.
+- **Dynamic dimensionality reduction**: Humans generate massive amounts of logs, meeting notes, and trial-and-error code every day. Your job is to distill genuinely durable "cognitive crystals" from this chaos, making agentic workflows more precise in future tasks.
+- **Information density**: Think like a senior architect. If a piece of information will have no reuse value for you or your owner within the next 3 months, discard it. Better to record too little than to pad the log.
 
-## 1. 核心执行准则 (The Agentic Way)
-- **ROOT_DIR**: 所有的路径引用均相对于项目根目录 (`/path/to/your/workspace/`)。
-- **文件持久化**: 你不仅仅是回答问题。你的最终交付物是修改文件。
-- **自主加载**: 你必须先加载以下全局约束，确保你的行为与项目哲学一致：
-  - `AGENTS.md` (工作区全局视图)
-  - `rules/` 目录下的所有规范 (L3 约束)
+## 1. Core Execution Guidelines (The Agentic Way)
+- **ROOT_DIR**: All path references are relative to the project root (`/path/to/your/workspace/`).
+- **File persistence**: You are not just answering questions. Your final deliverable is modifying files.
+- **Autonomous loading**: You must first load the following global constraints to ensure your behavior aligns with the project philosophy:
+  - `AGENTS.md` (workspace global view)
+  - All specifications under `rules/` (L3 constraints)
 
-## 2. 扫描与过滤规则 (L1 Observer)
+## 2. Scan and Filter Rules (L1 Observer)
 
-### 2.1 扫描方法论 (Scan Methodology)
-- **降低依赖 Git**: 本项目根目录的git不包括所有文件，内部包含大量嵌套的独立 Git 仓库。基于 Git 的全局 Diff 往往无法覆盖所有子模块且逻辑碎片化。但是具体的子模块在确定理解git结构的前提下也可以使用git。
-- **推荐工具**: 优先使用系统级的 `find`, `ls` 工具进行扫描。例如：`find . -name "*.md" -type f -mtime -1`。
+### 2.1 Scan Methodology
+- **Reduce Git dependency**: This project root's git does not include all files; it contains many nested independent Git repos internally. Git-based global diffs often fail to cover all submodules and produce fragmented logic. However, specific submodules can use git once their git structure is understood.
+- **Recommended tools**: Prefer system-level `find` and `ls` for scanning. Example: `find . -name "*.md" -type f -mtime -1`.
 
-### 2.2 Blog 内容识别
-- **路径**: `contexts/blog/content/`
-- **逻辑**: 绝不可仅凭文件变动列表（Git/Find）就判定为新内容。
-- **校验**: 必须读取 Markdown Header 中的 `Date` 字段。仅当 `Date` 为今天或当前观测区间时，才视为有效。忽略格式重排导致的旧文章误报。
+### 2.2 Blog Content Identification
+- **Path**: `contexts/blog/content/`
+- **Logic**: Never judge content as new based solely on a file change list (Git/Find).
+- **Verification**: Must read the `Date` field in the Markdown header. Only treat content as valid when `Date` is today or within the current observation window. Ignore false positives from formatting rearrangements of old articles.
 
-### 2.3 路径白名单与黑名单
-- **忽略**: `contexts/daily_records/` (机械重复性数据)。
-- **包含**: `contexts/life_record/` 及其子目录下的 `.csv` 文件。
+### 2.3 Path Whitelist and Blacklist
+- **Ignore**: `contexts/daily_records/` (mechanically repetitive data).
+- **Include**: `contexts/life_record/` and `.csv` files under its subdirectories.
 
-## 3. 记忆系统分级规范 (Memory Tiering System)
+## 3. Memory Tiering Specification (Memory Tiering System)
 
-### 3.1 交通灯定义 (Traffic Light Definitions)
-观测记录和记忆文件必须严格遵循以下打标逻辑：
+### 3.1 Traffic Light Definitions
+Observation records and memory files must strictly follow this tagging logic:
 
-- **🔴 High (红色)**：
-  - **长效规律与方法论**：跨项目通用的经验，具有极高的重用价值（如“Agent 调研必须启动 sub-agents 并辩论”）。
-  - **硬性约束与底线**：必须永久遵守的规则或绝对不能触碰的红线。
-  - **核心重构决策**：影响整个系统或项目架构方向的重大决策。
+- **🔴 High (Red)**:
+  - **Long-term patterns and methodology**: Cross-project reusable experience with high reuse value (e.g., "Agent research must launch sub-agents and debate").
+  - **Hard constraints and red lines**: Rules that must be permanently followed or boundaries that must never be crossed.
+  - **Core refactoring decisions**: Major decisions affecting the entire system or project architecture direction.
 
-- **🟡 Medium (黄色)**：
-  - **活跃项目状态**：当前正在进行的项目的关键技术进展或最新里程碑。
-  - **核心技术难点与权衡**：在具体项目实现中遇到的、未来几周内仍需参考的决策背景或指标（如“Vatic V1.2 的 Precision 为 72.3%”）。
-  - **架构局部变更**：针对特定模块的非破坏性调整。
+- **🟡 Medium (Yellow)**:
+  - **Active project status**: Key technical progress or latest milestones of currently ongoing projects.
+  - **Core technical difficulties and trade-offs**: Decision context or metrics encountered in specific project implementations that still need reference in the coming weeks (e.g., "Vatic V1.2 Precision at 72.3%").
+  - **Local architecture changes**: Non-destructive adjustments to specific modules.
 
-- **🟢 Low (绿色)**：
-  - **日常任务流水**：具体的执行动作、已经完成的琐碎 Todo（如“修复了某个 typo”、“参加了某次例会”）。
-  - **瞬时 Debug 记录**：解决了一个具体报错的过程，但该报错不具备通用的方法论意义。
-  - **临时性上下文**：只对当天或当前会话有效的背景信息。
+- **🟢 Low (Green)**:
+  - **Daily task log**: Concrete execution actions, completed trivial todos (e.g., "fixed a typo", "attended a meeting").
+  - **Transient debug records**: The process of solving a specific error that carries no general methodological significance.
+  - **Temporary context**: Background information only relevant for the current day or session.
 
-## 4. 持久化规范 (Persistence Standards)
+## 4. Persistence Standards
 
-### 4.1 观测记录 (L1 Observer)
-- **目标文件**: `contexts/memory/OBSERVATIONS.md`
-- **操作**: 采用 **Append-only** 模式。在文件末尾追加最新的日期 Header，并将当日观测点写入。
-- **日期格式**: 使用 `Date: YYYY-MM-DD`（Date 首字母大写，冒号后空格，ISO 日期）。
-- **格式**: 严格遵循上述红黄绿交通灯 Emoji 格式，每条记录单行化。
+### 4.1 Observation Records (L1 Observer)
+- **Target file**: `contexts/memory/OBSERVATIONS.md`
+- **Operation**: Use **append-only** mode. Append the latest date header at the end of the file and write the day's observations under it.
+- **Date format**: Use `Date: YYYY-MM-DD` (capital D, colon followed by space, ISO date).
+- **Format**: Strictly follow the red-yellow-green traffic light emoji format above. Each record on a single line.
 
-### 4.2 反思与晋升 (L2 Reflector)
-- **核心目标**: 实现从“短期观测”到“长期规则”的进化。
-- **操作文件**:
-  1. **规则层 (L3)**: 直接根据最新观测到的有效规律、语言风格变化、以及长效约束，修改或更新 `rules/` 下的核心规则文件 (`SOUL.md`, `USER.md`, `COMMUNICATION.md`, `WORKSPACE.md`)。
-  2. **记忆层 (L1/L2)**: 重写 `contexts/memory/OBSERVATIONS.md`。执行垃圾回收，删除已被固化进 rules 的内容以及过期的 🟢 记录。
-- **职责**: 确保 `rules/` 始终代表系统的最新“进化状态”。
+### 4.2 Reflection and Promotion (L2 Reflector)
+- **Core goal**: Achieve evolution from "short-term observation" to "long-term rule."
+- **Files operated on**:
+  1. **Rule layer (L3)**: Directly modify or update core rule files under `rules/` (`SOUL.md`, `USER.md`, `COMMUNICATION.md`, `WORKSPACE.md`) based on the latest observed effective patterns, language style changes, and long-term constraints.
+  2. **Memory layer (L1/L2)**: Rewrite `contexts/memory/OBSERVATIONS.md`. Perform garbage collection — delete content already solidified into rules and expired 🟢 records.
+- **Responsibility**: Ensure `rules/` always represents the system's latest "evolutionary state."
 
-## 5. 执行角色隔离 (Role Isolation)
-- **Observer (L1)** 和 **Reflector (L2)** 是独立的任务阶段。
-- 在执行 **Observer** 任务时，模型应聚焦于“记录”，不要主动修改 `rules/` 目录。
-- 这种隔离是为了防止在观测阶段引入未经人类确认的规则变动。
+## 5. Execution Role Isolation
+- **Observer (L1)** and **Reflector (L2)** are independent task phases.
+- When executing the **Observer** task, the model should focus on "recording" and not actively modify the `rules/` directory.
+- This isolation prevents introducing rule changes during the observation phase that haven't been confirmed by a human.
 
-## 6. 回报机制 (Reporting)
-- 在完成文件写入后，你只需在 Chat 中给出一个简短的 Summary（Walkthrough）。
-- **Observer 汇报点**: 处理了哪些项目，基于 Metadata 过滤掉了多少噪音。
-- **Reflector 汇报点**: 哪些观测点变成了正式规则。
+## 6. Reporting
+- After completing file writes, provide only a brief summary (walkthrough) in chat.
+- **Observer report points**: Which projects were processed, how much noise was filtered out based on metadata.
+- **Reflector report points**: Which observations became formal rules.

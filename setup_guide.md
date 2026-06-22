@@ -1,186 +1,186 @@
 # Setup Guide: Context Infrastructure
 
-这是 AI 引导的配置指南。按步骤操作，每步完成后立刻能感受到差异。
+This is an AI-guided setup guide. Follow the steps in order; you'll feel the difference after each one.
 
 ---
 
-## Step 1：填写身份文件（必填，5 分钟）
+## Step 1: Fill in identity files (required, 5 minutes)
 
-**价值**：完成这一步，AI 的行为立刻个性化。这是 ROI 最高的一步。
+**Value**: Once this step is done, AI behavior becomes personalized immediately. This is the highest-ROI step.
 
-### 1a. 填写 USER.md
+### 1a. Fill in USER.md
 
-打开 `rules/USER.md`，用自己的信息替换模板内容。
+Open `rules/USER.md` and replace the template content with your own information.
 
-至少填写这几项：
-- **称呼**：你希望 AI 怎么叫你
-- **时区**：避免时间混乱
-- **背景**：你是谁、你做什么
-- **技术兴趣**：越具体越好
-- **会让你烦的**：帮 AI 避开你讨厌的沟通方式
+At minimum, fill in these items:
+- **Name**: What you want the AI to call you
+- **Timezone**: Avoid time-related confusion
+- **Background**: Who you are, what you do
+- **Technical interests**: The more specific, the better
+- **What annoys you**: Help the AI avoid communication styles you dislike
 
-**验证**：填好后，在 AI 对话里问「介绍一下你对我的了解」，看 AI 是否能准确描述你。
+**Verify**: After filling it in, ask the AI "Tell me what you know about me" and check whether it describes you accurately.
 
-### 1b. 自定义 SOUL.md（可选但推荐）
+### 1b. Customize SOUL.md (optional but recommended)
 
-打开 `rules/SOUL.md`，调整 AI 的核心行为基调。
+Open `rules/SOUL.md` and adjust the AI's core behavioral baseline.
 
-默认内容已经是通用的良好基础（直接、有观点、不说废话）。如果你有特殊需求，在「氛围」和「核心真理」部分添加你的偏好。
+The default content is already a solid general foundation (direct, opinionated, no fluff). If you have specific needs, add your preferences in the "Vibe" and "Core Truths" sections.
 
 ---
 
-## Step 2：探索和扩展 Skills（推荐，15 分钟）
+## Step 2: Explore and extend skills (recommended, 15 minutes)
 
-**价值**：理解 skill 的格式，开始积累自己的可复用工作流。
+**Value**: Understand the skill format and start accumulating your own reusable workflows.
 
-### 2a. 浏览现有 Skills
+### 2a. Browse existing skills
 
-打开 `rules/skills/INDEX.md`，快速扫描已有的 skill 分类：
+Open `rules/skills/INDEX.md` and scan the existing skill categories:
 
-- **BestPractice 类**：立刻可用，与你的工具和项目无关
-- **Workflow 类**：调研、幻灯片制作、认知画像提取等，需要理解后适配
-- **API Guide 类**：⚙️ 标记的需要配置，✅ 标记的可直接用
+- **BestPractice**: Ready to use, independent of your tools and projects
+- **Workflow**: Research, slide creation, cognitive profile extraction. Understand first, then adapt.
+- **API Guide**: ⚙️ marked items need configuration, ✅ marked items are ready to use
 
-### 2b. 创建你的第一个 Skill
+### 2b. Create your first skill
 
-找一件你经常做的事（调用某个 API、处理某类数据、执行某个工作流），用以下格式创建 `rules/skills/<category>_<name>.md`：
+Pick something you do often (calling an API, processing a type of data, running a workflow) and create `rules/skills/<category>_<name>.md` using this format:
 
 ```markdown
-# Skill: 名称
+# Skill: Name
 
 ## When to Use
-什么情况下触发这个 skill
+What situation triggers this skill
 
-## Prerequisites  
-需要什么工具/配置
+## Prerequisites
+What tools/config are needed
 
-## 步骤
-1. 步骤一
-2. 步骤二
+## Steps
+1. Step one
+2. Step two
 
-## 示例
-具体的命令或代码
+## Example
+Concrete commands or code
 ```
 
-将新 skill 添加到 `rules/skills/INDEX.md` 对应分类。
+Add the new skill to the appropriate category in `rules/skills/INDEX.md`.
 
-### 2c. 安装外部 public skill repo
+### 2c. Install external public skill repos
 
-`rules/skills/` 里的内容是 starter set，不需要把所有能力都复制进来。需要更完整的能力时，先看 [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md)。那里列出了一组独立维护的 public skill repo，例如 Tavily、Google Docs、Google Maps、Outlook、Resend、OpenCode、Process Launcher、PPTX、Typefully 和 Stripe。
+The content in `rules/skills/` is a starter set — you don't need to copy every capability into it. When you need more complete capabilities, check [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md) first. It lists a set of independently maintained public skill repos: Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, and Stripe.
 
-安装时，把目标 repo URL 交给你的 AI agent，让它从当前 workspace 的 `AGENTS.md` / `WORKSPACE.md` 出发，只暴露一个 root skill。通用技术 contract 留在 public repo；联系人 alias、本地路径、endpoint、token 和业务上下文留在本地 overlay。
+To install, give the target repo URL to your AI agent and have it start from the current workspace's `AGENTS.md` / `WORKSPACE.md`, exposing only one root skill. Generic technical contracts stay in the public repo; contact aliases, local paths, endpoints, tokens, and business context stay in a local overlay.
 
-### 2d. 关于 Axioms（公理）
+### 2d. About axioms
 
-`rules/axioms/` 包含 43 条从真实经历中蒸馏的决策原则。这些代表原作者的视角和认知模式，对你有**参考价值**，但不能替代你自己的公理。
+`rules/axioms/` contains 43 decision principles distilled from real experience. These represent the original author's perspective and cognitive patterns. Use them as reference, but do not let them replace your own axioms.
 
-建议：
-- 先浏览 `rules/axioms/INDEX.md` 了解分类和核心含义
-- 遇到共鸣的公理，标注下来
-- 未来从你自己的项目经历中积累你的公理（参考同类格式）
+Suggestions:
+- Browse `rules/axioms/INDEX.md` first to understand the categories and core meanings
+- Mark axioms that resonate with you
+- Over time, accumulate your own axioms from your project experience (using the same format)
 
 ---
 
-## Step 3：配置记忆系统（可选，30 分钟）
+## Step 3: Set up the memory system (optional, 30 minutes)
 
-**价值**：让 AI 自动积累你的工作经验，越用越懂你。
+**Value**: Let the AI automatically accumulate your work experience. The more you use it, the better it understands you.
 
-### 3a. 理解三层架构
+### 3a. Understand the three-tier architecture
 
 ```
-L3（全局约束）: rules/ 下所有文件 → 每次 session 被动加载
-L1/L2（动态记忆）: contexts/memory/OBSERVATIONS.md → agent 主动检索
+L3 (global constraints): All files under rules/ → passively loaded every session
+L1/L2 (dynamic memory): contexts/memory/OBSERVATIONS.md → agent actively retrieves
 ```
 
-L3 你已经配置好了（Step 1）。L1/L2 需要设置 cron 自动运行。
+L3 is already configured (Step 1). L1/L2 requires cron setup for automatic execution.
 
-### 3b. 配置 OpenCode Server
+### 3b. Configure OpenCode Server
 
-`periodic_jobs/ai_heartbeat/` 的脚本依赖 OpenCode Server API。
+The scripts in `periodic_jobs/ai_heartbeat/` depend on the OpenCode Server API.
 
-1. 确认本地 OpenCode Server 运行（或配置连接）
-2. 在 `periodic_jobs/ai_heartbeat/src/v0/` 检查 `opencode_client.py`（需要你自行补充，源码参考 OpenCode 文档）
-3. 测试连通性：`python3 observer.py --help`
+1. Confirm your local OpenCode Server is running (or configure the connection)
+2. Check `opencode_client.py` in `periodic_jobs/ai_heartbeat/src/v0/` (you need to provide this yourself; see OpenCode docs for the source)
+3. Test connectivity: `python3 observer.py --help`
 
-### 3c. 配置 Cron
+### 3c. Configure cron
 
 ```bash
-# 每日 8:00 AM 运行 observer（扫描当日变化）
+# Daily 8:00 AM — run observer (scan today's changes)
 0 8 * * * cd /path/to/your/workspace && python3 periodic_jobs/ai_heartbeat/src/v0/observer.py >> /tmp/observer.log 2>&1
 
-# 每周一 9:00 AM 运行 reflector（蒸馏和晋升）
+# Weekly Monday 9:00 AM — run reflector (distill and promote)
 0 9 * * 1 cd /path/to/your/workspace && python3 periodic_jobs/ai_heartbeat/src/v0/reflector.py >> /tmp/reflector.log 2>&1
 ```
 
-调整路径和时间为你的实际情况。
+Adjust paths and times to your actual setup.
 
-### 3d. 验证
+### 3d. Verify
 
-运行一次 observer：
+Run the observer once:
 
 ```bash
 python3 periodic_jobs/ai_heartbeat/src/v0/observer.py 2024-01-15
 ```
 
-查看 `contexts/memory/OBSERVATIONS.md` 是否有新条目写入。
+Check whether `contexts/memory/OBSERVATIONS.md` has new entries.
 
 ---
 
-## Step 4：扩展 Tier 2 组件（按需，30-60 分钟）
+## Step 4: Extend Tier 2 components (on demand, 30–60 minutes)
 
-以下组件独立工作，按需配置，不配不影响核心功能。
+These components work independently. Configure them as needed; skipping them does not affect core functionality.
 
-### 语义搜索（⚙️）
+### Semantic search (⚙️)
 
-当你的 `contexts/` 目录积累了足够多内容后，语义搜索让你能按意思而非关键词检索历史记录。
+Once your `contexts/` directory has accumulated enough content, semantic search lets you retrieve historical records by meaning rather than keywords.
 
-**需要**：LLM Studio（本地）或 OpenAI API key  
-**配置**：参见 `rules/skills/semantic_search.md`
+**Requires**: LLM Studio (local) or OpenAI API key
+**Configuration**: See `rules/skills/semantic_search.md`
 
-### 分享报告到 Web（⚙️）
+### Share reports to the web (⚙️)
 
-将调研报告转为 HTML 并发布到你自己的服务器。
+Convert research reports to HTML and publish them to your own server.
 
-**需要**：一台有 SSH 访问权限的服务器  
-**配置**：参见 `rules/skills/share_report.md`，替换 `<your-domain>` 和 `<your-server>`
+**Requires**: A server with SSH access
+**Configuration**: See `rules/skills/share_report.md`, replace `<your-domain>` and `<your-server>`
 
-### 发送邮件通知（⚙️）
+### Send email notifications (⚙️)
 
-让 AI 完成任务后发邮件通知你。
+Have the AI send you an email when a task completes.
 
-**需要**：Gmail App Password  
-**配置**：参见 `rules/skills/send_email.md`
-
----
-
-## 何时你会感受到系统的价值
-
-**填好 USER.md 后（立刻）**：AI 的回答更有针对性，不再是泛化的通用答复。
-
-**使用 2-3 周后**：`contexts/` 目录里开始积累你的工作记录，AI 可以引用上下文。
-
-**运行 1-2 个月记忆系统后**：observer 开始识别你的工作模式，reflector 把高价值经验晋升为 skill 或 axiom。
-
-**积累 6+ 个月后**：系统开始真正了解你的判断逻辑和决策模式，你会发现 AI 给出的建议越来越接近你自己会做的决定。
+**Requires**: Gmail App Password
+**Configuration**: See `rules/skills/send_email.md`
 
 ---
 
-## 常见问题
+## When you'll feel the system's value
 
-**Q：axioms 能直接用吗？**  
-A：可以用来理解系统的结构，但核心内容代表原作者的视角。你的 axioms 需要从你自己的经历中提炼。参考 `rules/skills/workflow_cognitive_profile_extraction.md` 了解提炼方法。
+**After filling in USER.md (immediately)**: AI responses become targeted rather than generic.
 
-**Q：skills 能直接用吗？**  
-A：✅ 标记的可以直接用。⚙️ 标记的需要替换配置（endpoint、API key、域名等）。BestPractice 类基本都可以直接用。更完整的工具型能力放在独立 public repo 里，见 [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md)。
+**After 2–3 weeks of use**: Your `contexts/` directory starts accumulating work records. The AI can reference context.
 
-**Q：observer.py 需要什么依赖？**  
-A：依赖 `opencode_client.py`（OpenCode Server 的客户端封装）。这部分需要你根据自己使用的 AI agent 框架来实现或适配。
+**After 1–2 months of running the memory system**: The observer begins identifying your work patterns. The reflector promotes high-value experiences into skills or axioms.
 
-**Q：能用其他 AI agent（不用 OpenCode）吗？**  
-A：可以。`observer.py` 的核心逻辑是构造 prompt 并调用 AI；你可以替换 `opencode_client` 为 Claude API、OpenAI API 或任何支持长对话的 AI 接口。
+**After 6+ months of accumulation**: The system starts to genuinely understand your judgment logic and decision patterns. You'll notice the AI's suggestions getting closer to what you would decide yourself.
 
 ---
 
-## 下一步
+## FAQ
 
-系统搭好后，真正的积累才刚开始。关键是持续使用：把你的工作放在这个 workspace 里，让 AI 参与每天的工作。随着时间推移，系统会越来越懂你。
+**Q: Can I use the axioms directly?**
+A: You can use them to understand the system's structure, but the core content represents the original author's perspective. Your axioms need to be distilled from your own experience. See `rules/skills/workflow_cognitive_profile_extraction.md` for the extraction method.
+
+**Q: Can I use the skills directly?**
+A: ✅ marked ones are ready to use. ⚙️ marked ones need configuration replacement (endpoints, API keys, domains, etc.). BestPractice category items are mostly ready to use. More complete tool-type capabilities live in independent public repos; see [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md).
+
+**Q: What dependencies does observer.py need?**
+A: It depends on `opencode_client.py` (a client wrapper for OpenCode Server). You need to implement or adapt this based on the AI agent framework you use.
+
+**Q: Can I use a different AI agent (not OpenCode)?**
+A: Yes. The core logic of `observer.py` is constructing a prompt and calling an AI. You can replace `opencode_client` with the Claude API, OpenAI API, or any AI interface that supports long conversations.
+
+---
+
+## Next steps
+
+Once the system is set up, the real accumulation begins. The key is consistent use: put your work in this workspace, let the AI participate in your daily work. Over time, the system will understand you better and better.

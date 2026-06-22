@@ -5,34 +5,34 @@ created: 2026-03-01
 updated: 2026-03-01
 ---
 
-# M10. 教育流失阶梯模型
+# M10. Education Retention Ladder Model
 
-## 1. 核心公理
+## 1. Core Axiom
 
-在 2500+ 学生的观察中，AI 学习者的流失发生在四个明确的阶段。这些阶段的共同特征是**摩擦问题**，而非学习能力问题。传统的解决方案（更多教程、更详细的文档）实际上增加了摩擦。AI 时代的解决方案是工程化地消除摩擦：统一 API、一键部署、MCP 自动化。
+From observing 2500+ students, AI learner dropout occurs across four distinct stages. The common thread across these stages is **friction**, not learning ability. Traditional solutions (more tutorials, more detailed documentation) actually increase friction. The AI-era solution is to engineer friction away: unified APIs, one-click deployment, MCP automation.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 第一阶：脑子懂了手没懂
-知道 ≠ 做到。学生理解概念但无法在真实场景中实践。解决方案不是更多讲解，而是**立即可运行的代码示例**和**嵌入式沙箱环境**。
+### Stage 1: Brain Understands, Hands Don't
+Knowing ≠ doing. Students understand concepts but cannot apply them in real scenarios. The solution is not more explanation, but **immediately runnable code examples** and **embedded sandbox environments**.
 
-### 第二阶：玩具→真实应用
-从教学示例跳到真实项目时，学生遭遇注册、API 密钥、环境配置的摩擦。这不是学习问题，是**工程问题**。一键认证、预配置的开发环境、自动化的依赖管理能直接解决。
+### Stage 2: Toy → Real Application
+When jumping from teaching examples to real projects, students encounter friction from registration, API keys, and environment configuration. This is not a learning problem, but an **engineering problem**. One-click authentication, pre-configured development environments, and automated dependency management can directly solve it.
 
-### 第三阶：被动接收→形成判断力
-消费内容无法建立判断力。学生需要**可扩展的实验框架**，而非更多教程。MCP 工具链使得学生能快速迭代、对比、验证假设。
+### Stage 3: Passive Consumption → Forming Judgment
+Consuming content cannot build judgment. Students need **extensible experimentation frameworks**, not more tutorials. MCP toolchains enable students to rapidly iterate, compare, and verify hypotheses.
 
-### 第四阶：本地→部署交付
-localhost 的代码无法成为作品集。**一键部署到可分享的 URL** 将作业转化为可展示的成果，激发内在动力。
+### Stage 4: Local → Deployed Delivery
+Code on localhost cannot become a portfolio. **One-click deployment to a shareable URL** transforms assignments into demonstrable outcomes, igniting intrinsic motivation.
 
-## 3. 应用判定
+## 3. Application Judgment
 
-- AI 课程设计与教学大纲
-- 学习平台产品决策
-- 用户留存与转化率分析
-- 教育 GTM 策略
+- AI course design and syllabi
+- Learning platform product decisions
+- User retention and conversion rate analysis
+- Education GTM strategy
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **M01 闭环校准**：掌握来自反馈循环，而非单向输入
-- **A09 构建者思维**：消费 vs 构建的根本差异，教育中尤为关键
+- **M01 Closed-Loop Calibration**: Mastery comes from feedback loops, not one-way input
+- **A09 Builder's Mindset**: The fundamental difference between consumption and building, especially critical in education

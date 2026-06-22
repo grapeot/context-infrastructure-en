@@ -5,112 +5,112 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# T5. 认知是资产，代码是消耗品
+# T05. Cognition Is an Asset, Code Is a Commodity
 
-## 1. 核心公理
+## 1. Core Axiom
 
-把代码当作可丢弃的杠杆；把理解、验证与决策质量当作长期资产来投资。当代码生成成本趋近于零时，稳定价值会转移到领域理解与定义什么是"好"的能力。
+Treat code as disposable leverage; invest in understanding, verification, and decision quality as long-term assets. When the cost of code generation approaches zero, stable value shifts to domain understanding and the ability to define what "good" means.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 代码成本坍塌的经济学
+### 2.1 The Economics of Code Cost Collapse
 
-传统软件工程的最佳实践（DRY、复用、可维护性）都源于一个特定的成本结构：代码昂贵，人力昂贵，所以必须精心设计、反复复用、摊销成本。但当 AI 将代码生成成本推向零时，这个成本结构彻底改变。一次性工具（例如给 Labelbox 做一个 JSON diff 网站）从"浪费"变成了"理性选择"——因为购买高分辨率真相的成本已经低于传统的低分辨率决策（盲目采样、凭直觉猜测）。
+Traditional software engineering best practices (DRY, reuse, maintainability) all stem from a specific cost structure: code is expensive, human labor is expensive, so you must design carefully, reuse extensively, and amortize costs. But when AI pushes code generation cost toward zero, this cost structure fundamentally changes. One-off tools (e.g., building a JSON diff website for Labelbox) shift from "wasteful" to "rational choice" — because the cost of purchasing high-resolution truth has fallen below the cost of traditional low-resolution decision-making (blind sampling, intuition-based guessing).
 
-这不是说代码变得无价值，而是说代码的角色从"长期资产"转变为"临时脚手架"。脚手架的目的不是永久保留，而是让你爬上去看清楚真相。一旦看清了，就可以毫无负担地拆掉。
+This does not mean code becomes worthless; it means code's role shifts from "long-term asset" to "temporary scaffolding." The purpose of scaffolding is not to keep it forever — it is to let you climb up and see the truth clearly. Once you have seen it, you can tear it down without hesitation.
 
-### 2.2 认知才是复利资产
+### 2.2 Cognition Is the Compound-Interest Asset
 
-真正能复利的不是生成出来的代码成品本身，而是被捕获的认知。当你用便宜的代码做埋点与观察时，你同时在做两件事：第一，获得高分辨率的真相；第二，把这个过程中的推理、决策、验收标准记录下来。这些文档可能只被读一次，但它们形成了一个高分辨率的个人知识库。当未来的你、新队友或未来的 AI agent 需要回顾时，他们看到的不是干巴巴的结论，而是完整的上下文和推理过程。代码是消耗品，但认知会持续复利。
+What truly compounds is not the generated code artifact itself, but the captured cognition. When you use cheap code for instrumentation and observation, you are doing two things simultaneously: first, obtaining high-resolution truth; second, recording the reasoning, decisions, and acceptance criteria from that process. These documents may be read only once, but they form a high-resolution personal knowledge base. When your future self, a new teammate, or a future AI agent needs to look back, they see not dry conclusions but complete context and reasoning process. Code is a commodity, but cognition compounds continuously.
 
-### 2.3 结果确定性依赖认知，而非流程
+### 2.3 Results Certainty Depends on Cognition, Not Process
 
-在传统的流程确定性模式下，我们通过精心设计逻辑来保证结果。但在 AI 时代，流程本身变得不确定——AI 可能用这种方法也可能用那种方法，但我们无法预测。真正能保证结果的，是清晰的验收标准。只有当你写清可验证的标准（例如"翻译后不能有中文字符""术语必须一致"），agent 才能自我纠错；这本质上是思考问题，而不是打字问题。
+In the traditional process-certainty model, we guarantee results through carefully designed logic. But in the AI era, the process itself becomes uncertain — the AI might use this method or that method, and we cannot predict which. What truly guarantees results is clear acceptance criteria. Only when you write verifiable criteria (e.g., "no Chinese characters after translation," "terminology must be consistent") can the agent self-correct; this is fundamentally a thinking problem, not a typing problem.
 
-这意味着认知的形式改变了。不再是"我设计了这个流程，所以结果一定对"，而是"我定义了什么是对，所以 AI 会自动找到达到这个状态的方法"。这种转变要求你对问题有更深的理解——不是"怎么做"，而是"什么是好"。
+This means the form of cognition changes. It is no longer "I designed this process, so the result must be correct," but rather "I defined what correct means, so the AI will automatically find the way to reach that state." This shift demands deeper understanding of the problem — not "how to do it," but "what good looks like."
 
-### 2.4 观测能力是新的杠杆
+### 2.4 Observability Is the New Leverage
 
-在低分辨率时代，我们被迫用直觉和经验来弥补信息缺口。一个资深工程师的价值，就是能从稀疏的线索中推断出真相。但这本质上是在"跳舞时戴着镣铐"——我们完美化了盲目猜测，只是因为看不到全景。
+In the low-resolution era, we were forced to fill information gaps with intuition and experience. A senior engineer's value lay in being able to infer the truth from sparse clues. But this is essentially "dancing in shackles" — we glorified blind guessing only because we could not see the full picture.
 
-当代码成本趋近于零时，观测能力变成了新的杠杆。你可以快速写一个脚本来分析日志、构建可视化、验证假设。这不是为了最终产品，而是为了看清楚。调试从"凭直觉设置断点"变成"用脚本全量分析"；协作从"PM 和工程师隔着黑盒猜测"变成"快速生成仪表板让所有人看到实时状态"。
+When code cost approaches zero, observability becomes the new leverage. You can quickly write a script to analyze logs, build visualizations, validate hypotheses. This is not for the final product — it is for seeing clearly. Debugging shifts from "setting breakpoints by intuition" to "full-scale analysis with scripts"; collaboration shifts from "PM and engineer guessing across a black box" to "quickly generating dashboards so everyone sees real-time status."
 
-### 2.5 代码成本降低 ≠ 维护成本消失
+### 2.5 Code Cost Reduction ≠ Maintenance Cost Disappears
 
-这是一个常见的误解。Spec-Driven Development 的倡导者认为，既然代码是"编译产物"，那就不需要维护了。但这忽视了一个关键事实：维护和判断的工作不会消失，只是转移了。当你不再手写代码时，你需要维护规范、维护观测工具、维护验收标准。而且这些工作往往比维护代码更复杂，因为它们涉及对业务逻辑的深刻理解。
+This is a common misunderstanding. Advocates of Spec-Driven Development believe that since code is a "compilation artifact," it no longer needs maintenance. But this ignores a key fact: the work of maintenance and judgment does not disappear — it only shifts. When you stop hand-writing code, you need to maintain specifications, maintain observation tools, maintain acceptance criteria. And this work is often more complex than maintaining code, because it involves deep understanding of business logic.
 
-真正的转变是：从"维护代码"转向"维护认知"。代码可以随时重新生成，但认知一旦丢失就很难恢复。
+The real shift: from "maintaining code" to "maintaining cognition." Code can be regenerated at any time, but cognition, once lost, is hard to recover.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 3.1 何时使用
+### 3.1 When to Use
 
-- **决定该做/该维护什么**：用便宜的代码去做埋点与观察，而不是凭直觉猜测。
-- **调试黑盒**：写一个一次性脚本来全量分析，而不是设置几个断点盲目猜测。
-- **评估 AI 编码工作流**：关键不是代码本身，而是 AI 是否理解了你的验收标准。
-- **任何"看见"比"猜测"更便宜的场景**：这是判断的金标准。
+- **Deciding what to build/maintain**: Use cheap code for instrumentation and observation, rather than guessing by intuition.
+- **Debugging a black box**: Write a one-off script for full-scale analysis, rather than setting a few breakpoints and guessing blindly.
+- **Evaluating AI coding workflows**: The key is not the code itself, but whether the AI understood your acceptance criteria.
+- **Any scenario where "seeing" is cheaper than "guessing"**: This is the gold standard for judgment.
 
-### 3.2 如何实践
+### 3.2 How to Practice
 
-1. **定义清晰的验收标准**：不是"代码应该怎么写"，而是"最终产物应该满足什么条件"。最好能把这些条件写成可执行的检查（Python 脚本、正则表达式等）。
+1. **Define clear acceptance criteria**: Not "how the code should be written," but "what conditions the final artifact must satisfy." Ideally, encode these conditions as executable checks (Python scripts, regex, etc.).
 
-2. **建立观测工具**：用 AI 快速生成临时脚本来观测系统状态、验证假设、发现问题。这些脚本不需要优雅，只需要有效。
+2. **Build observation tools**: Use AI to quickly generate temporary scripts for observing system state, validating hypotheses, and discovering problems. These scripts do not need to be elegant — they only need to be effective.
 
-3. **记录推理过程**：当你用代码做观测时，同时记录你的推理、发现和决策。这些文档是真正的资产。
+3. **Record the reasoning process**: When you use code for observation, simultaneously record your reasoning, discoveries, and decisions. These documents are the real assets.
 
-4. **毫无负担地删除脚手架**：一旦决策完成，就删除临时代码。不要被"代码成本很低"诱惑得保留不必要的东西。
+4. **Tear down scaffolding without hesitation**: Once a decision is made, delete the temporary code. Do not be tempted by "code cost is low" to keep unnecessary things around.
 
-5. **投资 Context Engineering**：学习如何有效组织和筛选上下文信息，这样 AI 才能理解你的隐性期望。
+5. **Invest in Context Engineering**: Learn how to effectively organize and filter contextual information, so that AI can understand your implicit expectations.
 
-### 3.3 与其他范式的对比
+### 3.3 Comparison with Other Paradigms
 
-| 维度 | Spec-Driven Development | 更准确的视角（本公理） |
-|------|------------------------|----------------------|
-| 代码定位 | "编译产物"，不是资产 | "消耗品"，用完即焚 |
-| 什么才是资产 | 规范文件 | 业务逻辑理解、认知、决策能力 |
-| 人类角色 | 维护规范 | 维护认知、构建观测工具、定义验收标准 |
-| 风险 | 规范与实现脱节 | 认知丢失、标准不清 |
+| Dimension | Spec-Driven Development | More Accurate View (This Axiom) |
+|-----------|------------------------|--------------------------------|
+| Code positioning | "Compilation artifact," not an asset | "Commodity," use and discard |
+| What is the asset | Specification files | Business logic understanding, cognition, decision capability |
+| Human role | Maintain specifications | Maintain cognition, build observation tools, define acceptance criteria |
+| Risk | Spec-implementation gap | Cognition loss, unclear standards |
 
-## 4. 常见陷阱
+## 4. Common Pitfalls
 
-### 4.1 "代码成本低 = 不需要思考"
+### 4.1 "Code Cost Is Low = No Thinking Needed"
 
-错误。代码成本低反而要求更多思考。你需要清晰地定义什么是"好"，这比写代码难得多。如果你发现自己在不断修补 AI 的输出，问题通常不是 AI 不够聪明，而是你的验收标准不够清晰。
+Wrong. Low code cost actually demands more thinking. You need to clearly define what "good" means, which is far harder than writing code. If you find yourself constantly patching AI output, the problem is usually not that the AI is not smart enough — it is that your acceptance criteria are not clear enough.
 
-### 4.2 "一次性代码就不用考虑质量"
+### 4.2 "One-Off Code Doesn't Need Quality"
 
-错误。一次性代码的质量直接影响你获得的真相的质量。一个有 bug 的观测脚本会给你错误的信息，导致错误的决策。质量和复用性是两回事。
+Wrong. The quality of one-off code directly affects the quality of the truth you obtain. A buggy observation script will give you wrong information, leading to wrong decisions. Quality and reusability are two different things.
 
-### 4.3 "规范文件就是资产"
+### 4.3 "Specification Files Are Assets"
 
-部分错误。规范文件本身也会过时、脱节。真正的资产是对业务逻辑的深刻理解——这个无法被 AI 替代，也无法被完全文档化。规范文件只是这个理解的一个载体。
+Partially wrong. Specification files themselves also become outdated and disconnected. The real asset is deep understanding of business logic — this cannot be replaced by AI, nor can it be fully documented. Specification files are merely one carrier of this understanding.
 
-## 5. 实践案例
+## 5. Practical Cases
 
-### 5.1 Labelbox JSON Diff 工具
+### 5.1 Labelbox JSON Diff Tool
 
-问题：标注数据质量差，需要快速看清楚改了什么。
-传统方案：手工采样对比（低分辨率，容易遗漏）。
-AI Native 方案：用 AI 生成一个完整的 diff 网站（2 分钟）。
-结果：发现了特定场景的系统性错误，做出了精准的重新标注决策。
-代码最后被删除，但认知被保留。
+Problem: Labeling data quality was poor; needed to quickly see what had changed.
+Traditional approach: Manual sample comparison (low resolution, easy to miss).
+AI Native approach: Use AI to generate a complete diff website (2 minutes).
+Result: Discovered systematic errors in specific scenarios, made precise re-labeling decisions.
+The code was eventually deleted, but the cognition was preserved.
 
-### 5.2 翻译工作流的演进
+### 5.2 Translation Workflow Evolution
 
-问题：自动翻译长文本，需要处理懒惰输出、中文混入、术语不一致等问题。
-传统方案：在代码层面处理（分块、拼接、术语传递、重试逻辑）。
-AI Native 方案：把这些要求写成清晰的验收标准，让 Claude Code 自我纠错。
-结果：从 90% 时间花在流程编排，转变为 90% 时间花在定义什么是"好的翻译"。
+Problem: Auto-translating long texts; needed to handle lazy output, Chinese character mixing, terminology inconsistency, etc.
+Traditional approach: Handle at the code level (chunking, concatenation, glossary passing, retry logic).
+AI Native approach: Write these requirements as clear acceptance criteria, let Claude Code self-correct.
+Result: Shifted from spending 90% of time on process orchestration to spending 90% of time on defining what "good translation" means.
 
-## 6. 与其他公理的关联
+## 6. Relationships with Other Axioms
 
-- **T02 结果确定性**：本公理强调认知和验收标准，T02 强调如何验证结果。两者互补。
-- **A05 文档是长期记忆**：一次性代码的价值在于捕获认知，这些认知应该被文档化。
-- **A12 AI Native 开发范式**：本公理是 AI Native 的核心——从流程确定性转向结果确定性。
-- **M02 反向调试思维**：观测能力的提升，使得反向调试（从结果推导原因）变得可行。
+- **T02 Results Certainty**: This axiom emphasizes cognition and acceptance criteria; T02 emphasizes how to verify results. The two are complementary.
+- **A05 Documentation Is Long-Term Memory**: The value of one-off code lies in capturing cognition, which should be documented.
+- **A12 AI Native Development Paradigm**: This axiom is the core of AI Native — shifting from process certainty to results certainty.
+- **M02 Reverse Debugging Mindset**: Improved observability makes reverse debugging (inferring causes from results) feasible.
 
-## 7. 结论
+## 7. Conclusion
 
-当代码成本趋近于零时，我们对软件的看法要发生根本性转变。代码不再是需要精心维护的资产，而是用来购买高分辨率真相的消耗品。真正能复利的是被捕获的认知——对业务逻辑的深刻理解、对什么是"好"的清晰定义、以及通过观测和验证建立的信心。
+When code cost approaches zero, our view of software must undergo a fundamental shift. Code is no longer an asset requiring careful maintenance — it is a commodity used to purchase high-resolution truth. What truly compounds is captured cognition — deep understanding of business logic, clear definition of what "good" means, and confidence built through observation and verification.
 
-这要求我们改变工作方式：从"设计完美的流程"转向"定义清晰的标准"；从"凭直觉猜测"转向"快速观测"；从"维护代码"转向"维护认知"。这不是更轻松，而是更深层的思考。
+This demands a change in how we work: from "designing perfect processes" to "defining clear standards"; from "guessing by intuition" to "rapid observation"; from "maintaining code" to "maintaining cognition." This is not easier — it is deeper thinking.

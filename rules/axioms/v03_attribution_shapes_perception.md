@@ -5,157 +5,156 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# V3. 归因塑造感知
+# V3. Attribution Shapes Perception
 
-## 1. 核心公理
+## 1. Core Axiom
 
-人们会信任（并把功劳归给）看起来做了最难部分的人，所以要把不可见的工作变得可见，把信任引导回正确的位置。在 AI 产品中，这意味着：**结果的魔法感越强，用户越会把价值归因于模型、平台或"这个点子"，而非你的工程能力。**
+People trust (and credit) whoever appears to have done the hardest part, so make invisible work visible and redirect trust back to where it belongs. In AI products, this means: **the more magical the result feels, the more users will attribute value to the model, the platform, or "the idea," rather than to your engineering capability.**
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 2.1 错误归因的机制
+### 2.1 The Mechanism of Misattribution
 
-当产品输出看起来像魔法时，用户的信任会自动流向最"神秘"的部分。这不是用户的错，而是人类认知的自然规律：我们倾向于把成功归因于看起来最难、最不可理解的因素。
+When a product's output looks like magic, users' trust automatically flows to the most "mysterious" part. This is not the user's fault — it is a natural law of human cognition: we tend to attribute success to the factor that appears hardest and least comprehensible.
 
-**具体表现**：
-- 用户看到一个精准的面相分析结果，会想"AI 真厉害"，而不是"这个团队的工程能力真强"
-- 用户看到一个聪明的想法被执行得很好，会想"这个 idea 好聪明"，而不是"这个团队把想法变成现实的能力好强"
-- 用户看到一个复杂的系统运行流畅，会想"你们用的是 GPT 吧"，而不是"你们的架构设计能力好强"
+**Concrete manifestations**:
+- A user sees a precise physiognomy analysis result and thinks "AI is amazing," not "this team's engineering capability is impressive"
+- A user sees a clever idea executed well and thinks "this idea is brilliant," not "this team's ability to turn ideas into reality is impressive"
+- A user sees a complex system running smoothly and thinks "you must be using GPT," not "your architecture design capability is impressive"
 
-这种错误归因会制造脆弱的信任：当产品出问题时，用户会把责任推给"AI 不稳定"或"这个想法本身有问题"，而不是认为是团队的某个环节失效。同时，当产品正常工作时，团队也得不到可持续的竞争优势——因为用户认为任何有能力的团队都能做到。
+This misattribution creates fragile trust: when the product fails, users blame "AI instability" or "the idea itself was flawed," rather than recognizing that a specific link in the team's process broke down. Meanwhile, when the product works, the team gains no sustainable competitive advantage — because users assume any competent team could do it.
 
-### 2.2 可见性是信任的转移机制
+### 2.2 Visibility as a Trust Transfer Mechanism
 
-过程产物（测量、阶段性输出、评测轨迹）不是"杂乱"或"不必要的细节"，而是把黑箱变成可教学系统的机制。当你展示中间步骤时，用户的认知模式会从"这是魔法"转变为"这是工程"。
+Process artifacts (measurements, intermediate outputs, evaluation traces) are not "clutter" or "unnecessary detail" — they are the mechanism that turns a black box into a teachable system. When you show intermediate steps, the user's cognitive model shifts from "this is magic" to "this is engineering."
 
-**为什么这很关键**：
-- 黑箱结果 → 用户无法理解发生了什么 → 信任流向"最神秘的部分"（通常是 AI）
-- 白箱步骤 → 用户能看到每一步的逻辑 → 信任流向"能设计这个流程的人"（你的团队）
+**Why this matters**:
+- Black-box result → user cannot understand what happened → trust flows to "the most mysterious part" (usually AI)
+- White-box steps → user can see the logic at each step → trust flows to "the people who designed this process" (your team)
 
-**具体例子**（来自面相分析产品）：
-- **错误做法**：展示最终论断"这个人适合做销售"
-- **正确做法**：展示面部特征测量（眼距、颧骨高度、嘴角角度）→ 古籍记载的对应含义 → 综合论断 → 多个 AI 模型的对比结果
+**Concrete example** (from the physiognomy analysis product):
+- **Wrong approach**: show the final verdict "this person is suited for sales"
+- **Right approach**: show facial feature measurements (eye spacing, cheekbone height, mouth corner angle) → corresponding meanings from classical texts → comprehensive verdict → comparison results from multiple AI models
 
-第二种方式让用户看到：这不是一个 prompt 让 AI 瞎编，而是背后隐藏了很多可以用在工作里的东西——测量、知识库、验证、对比。
+The second approach lets the user see: this is not a single prompt making AI fabricate things — behind it lies a wealth of work that can be applied elsewhere: measurement, knowledge base, verification, comparison.
 
-### 2.3 信任主体的双维度矩阵
+### 2.3 The Dual-Dimension Matrix of Trust Subjects
 
-信任不是单一的，而是二维的：**信任谁**（AI vs 团队）和**信任什么**（娱乐能力 vs 生产力能力）。
+Trust is not one-dimensional but two-dimensional: **whom to trust** (AI vs. team) and **what to trust** (entertainment capability vs. productivity capability).
 
-| | **信任 AI** | **信任团队** |
+| | **Trust AI** | **Trust Team** |
 |---|---|---|
-| **娱乐能力** | AI 好玩、有趣 | 团队能用 AI 做出好玩的东西 |
-| **生产力能力** | AI 能干正事 | 团队能用 AI 解决真问题 |
+| **Entertainment capability** | AI is fun, interesting | The team can use AI to make fun things |
+| **Productivity capability** | AI can do real work | The team can use AI to solve real problems |
 
-大多数 AI 产品的失败在于：用户停留在左列（信任 AI），而团队想要的是右列（信任团队）。这个转移不会自动发生，需要通过**可见化工程能力**来驱动。
+Most AI products fail because users stay in the left column (trusting AI), while the team wants the right column (trusting the team). This transfer does not happen automatically — it must be driven by **making engineering capability visible**.
 
-### 2.4 从个人经历到系统设计
+### 2.4 From Personal Experience to System Design
 
-我学会不再只演示结果，而是演示流水线，是因为反复看到类似"不就是调个 prompt 吗"这样的反应。这个反应本身就是信号：用户没有看到工程的复杂性。
+I learned to stop demoing only results and start demoing the pipeline, after repeatedly encountering reactions like "isn't this just a prompt?" That reaction itself is a signal: the user did not see the engineering complexity.
 
-**转折点**：当我开始在 demo 中展示以下内容时，反应完全改变了：
-- 这个结果是如何从原始输入一步步推导出来的
-- 中间有哪些验证关卡（人工检查、自动化测试、多模型对比）
-- 如果某个环节失败，系统如何回退或重试
-- 为什么这个流程设计比"直接问 AI"更可靠
+**The turning point**: when I started showing the following in demos, reactions changed completely:
+- How the result was derived step by step from raw input
+- What verification gates exist along the way (manual checks, automated tests, multi-model comparison)
+- How the system falls back or retries if a certain link fails
+- Why this process design is more reliable than "just asking AI directly"
 
-用户从"哦，这就是 AI"转变为"哦，这是一个系统"。信任的质量也从"希望 AI 不出错"转变为"相信这个团队能处理错误"。
+Users shifted from "oh, it's just AI" to "oh, this is a system." The quality of trust also shifted from "I hope AI doesn't make mistakes" to "I trust this team can handle errors."
 
-### 2.5 可见性的三个层次
+### 2.5 Three Levels of Visibility
 
-**第一层：输入与来源**
-展示数据从哪里来、经过了什么清洗和验证。这让用户理解：结果的质量取决于输入的质量，而不是 AI 的"魔力"。
+**Level 1: Input and Sources**
+Show where data comes from, what cleaning and verification it went through. This lets users understand: result quality depends on input quality, not AI "magic."
 
-**第二层：中间信号与决策点**
-展示系统在关键节点做了什么选择、为什么做这个选择、有没有其他选项。这让用户看到工程师的思考过程。
+**Level 2: Intermediate Signals and Decision Points**
+Show what choices the system made at key junctures, why those choices were made, and what alternatives existed. This lets users see the engineer's thought process.
 
-**第三层：验证与对比**
-展示同一个问题的多个答案、不同方法的对比、失败案例的分析。这让用户理解：可靠性来自多层验证，而不是单次运行。
+**Level 3: Verification and Comparison**
+Show multiple answers to the same question, comparisons of different methods, and analysis of failure cases. This lets users understand: reliability comes from multi-layer verification, not a single run.
 
-### 2.6 可见性与规模化的悖论
+### 2.6 The Visibility-Scale Paradox
 
-有一个看似矛盾的地方：如果你要展示所有中间步骤，产品会变得很复杂，用户体验会下降。这是真的。但解决方案不是隐藏过程，而是**分层展示**：
+There is an apparent contradiction: if you show all intermediate steps, the product becomes complex and user experience degrades. This is true. But the solution is not to hide the process — it is **layered display**:
 
-- **默认视图**：展示最终结果和关键指标（给普通用户）
-- **深度视图**：展示完整的流水线和所有中间步骤（给想理解的用户）
-- **调试视图**：展示所有日志、失败案例、边界条件（给想优化的用户）
+- **Default view**: show the final result and key metrics (for ordinary users)
+- **Deep view**: show the full pipeline and all intermediate steps (for users who want to understand)
+- **Debug view**: show all logs, failure cases, and edge conditions (for users who want to optimize)
 
-这样既保持了产品的简洁性，又为想深入理解的用户提供了完整的透明度。
+This preserves product simplicity while providing full transparency for those who want to dig deeper.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 3.1 适用场景
+### 3.1 When It Applies
 
-- **AI 产品 demo**：向投资者、合作伙伴、用户展示产品时
-- **营销页面**：描述产品如何工作时
-- **内部发布**：向团队、管理层汇报工作成果时
-- **任何外部人员可能把编排与验证误以为是一次"幸运 prompt"的工作流**
+- **AI product demos**: when showing the product to investors, partners, or users
+- **Marketing pages**: when describing how the product works
+- **Internal presentations**: when reporting work results to the team or management
+- **Any workflow where outsiders might mistake orchestration and verification for a "lucky prompt"**
 
-特别是在以下情况下最关键：
-- 产品结果看起来"太好了"（容易被误认为是 AI 的功劳）
-- 团队的核心竞争力在于工程能力而非模型能力
-- 需要建立长期的、可持续的信任（而不是一次性的惊艳）
+It is especially critical when:
+- The product result looks "too good" (easily mistaken for AI's credit)
+- The team's core competitive advantage lies in engineering capability rather than model capability
+- You need to build long-term, sustainable trust (rather than one-time amazement)
 
-### 3.2 实践方式
+### 3.2 How to Practice
 
-为每个令人惊艳的输出打包以下信息：
+Package the following information with every impressive output:
 
-**1. 溯源信息**
-- 输入数据从哪里来
-- 经过了什么预处理和验证
-- 使用了哪些知识库或参考资料
+**1. Provenance information**
+- Where the input data came from
+- What preprocessing and verification it went through
+- What knowledge bases or reference materials were used
 
-**2. 关键中间信号**
-- 系统在哪些关键点做了决策
-- 每个决策的理由是什么
-- 有没有其他可选方案
+**2. Key intermediate signals**
+- What decisions the system made at key points
+- The rationale for each decision
+- What alternatives existed
 
-**3. 工作日志**
-- 人类做了什么（定义问题、设计流程、验证结果）
-- 自动化做了什么（数据处理、模型推理、质量检查）
-- 验证了什么（单个步骤的正确性、整体流程的有效性、边界条件的处理）
+**3. Work log**
+- What humans did (defining the problem, designing the process, verifying results)
+- What automation did (data processing, model inference, quality checks)
+- What was verified (correctness of individual steps, effectiveness of the overall process, handling of edge conditions)
 
-**4. 对比与验证**
-- 同一个问题的多个答案
-- 不同方法的对比结果
-- 失败案例和边界条件的分析
+**4. Comparison and verification**
+- Multiple answers to the same question
+- Comparison results of different methods
+- Analysis of failure cases and edge conditions
 
-**具体例子**（面相分析）：
+**Concrete example** (physiognomy analysis):
 ```
-输入：一张面部照片
+Input: a facial photo
 ↓
-[可见] 面部特征检测：眼距 68mm、颧骨高度 45mm、嘴角角度 12°
+[Visible] Facial feature detection: eye spacing 68mm, cheekbone height 45mm, mouth corner angle 12°
 ↓
-[可见] 知识库匹配：古籍记载"眼距宽者性格开朗，适合社交"
+[Visible] Knowledge base matching: classical text records "wide eye spacing indicates an outgoing personality, suited for social roles"
 ↓
-[可见] 多模型对比：GPT-4 建议"销售"，Claude 建议"市场"，Gemini 建议"客服"
+[Visible] Multi-model comparison: GPT-4 suggests "sales," Claude suggests "marketing," Gemini suggests "customer service"
 ↓
-[可见] 人工验证：团队成员确认这三个方向都合理，选择"销售"作为主建议
+[Visible] Human verification: team member confirms all three directions are reasonable, selects "sales" as primary recommendation
 ↓
-最终输出：这个人适合做销售（置信度 78%，基于 3 个独立模型的共识）
+Final output: this person is suited for sales (confidence 78%, based on consensus of 3 independent models)
 ```
 
-这样用户看到的不是"AI 说这个人适合做销售"，而是"这个系统通过测量、知识库、多模型对比和人工验证，得出这个人适合做销售"。信任的质量完全不同。
+This way, the user sees not "AI says this person is suited for sales," but "this system, through measurement, knowledge base, multi-model comparison, and human verification, concludes this person is suited for sales." The quality of trust is entirely different.
 
-## 4. 边界条件与限制
+## 4. Boundary Conditions and Limitations
 
-### 4.1 何时不适用
+### 4.1 When Not to Apply
 
-- **实时性要求极高**：如果展示完整流程会导致不可接受的延迟，可能需要在后台展示而非实时展示
-- **商业机密**：如果中间步骤涉及专有算法或敏感数据，可能无法完全公开
-- **用户不关心**：如果目标用户只关心结果，过度展示过程可能会降低体验
+- **Extreme real-time requirements**: if showing the full process causes unacceptable latency, consider showing it in the background rather than in real time
+- **Trade secrets**: if intermediate steps involve proprietary algorithms or sensitive data, full disclosure may not be possible
+- **User indifference**: if the target user only cares about results, excessive process display may degrade the experience
 
-### 4.2 常见的陷阱
+### 4.2 Common Pitfalls
 
-1. **过度展示**：展示太多细节，导致用户被淹没在信息中，反而降低了理解
-2. **虚假的透明度**：展示看起来很复杂的过程，但实际上是黑箱（如"AI 在思考"）
-3. **信任转移失败**：展示了过程，但用户仍然把信任归给 AI（因为过程本身看起来也很"AI"）
+1. **Over-display**: showing too much detail, drowning the user in information and actually reducing understanding
+2. **False transparency**: showing a process that looks complex but is actually a black box (e.g., "AI is thinking")
+3. **Trust transfer failure**: showing the process, but users still attribute trust to AI (because the process itself also looks "AI-like")
 
-## 5. 与其他公理的关系
+## 5. Relationship to Other Axioms
 
-这个公理与以下公理相互支持：
-- **V01_责任无法被委派**：可见性帮助明确谁对结果负责
-- **V02_可验证性是信任的地基**：可见的过程更容易被验证
-- **A04_可靠性是管理问题**：可见的流程使得可靠性管理成为可能
-- **T02_结果确定性优于过程确定性**：虽然强调结果，但可见的过程帮助用户理解为什么结果可信
-
+This axiom is mutually supportive with:
+- **V01 Responsibility Cannot Be Delegated**: visibility helps clarify who is responsible for the outcome
+- **V02 Verifiability Is the Foundation of Trust**: visible processes are easier to verify
+- **A04 Reliability Is a Management Problem**: visible processes make reliability management possible
+- **T02 Outcome Determinism Over Process Determinism**: while emphasizing outcomes, visible processes help users understand why the outcome is trustworthy

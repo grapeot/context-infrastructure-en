@@ -3,133 +3,139 @@ id: axiom_a06_framework_worldview_2026
 category: ai_agentic
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/agentic-ai-frameworks-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/survey_sessions/pi-mono-agent-toolkit-analysis.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/survey_sessions/agent_architecture_selection_survey_20260222.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/survey_sessions/ai_programming_paradigm_shifts_survey_20260219.md"
+  - "/Users/grapeot/co/knowledge_working/rules/axioms/a09_builders_mindset_moat.md"
 ---
 
-# A6. 框架选择即世界观锁定
+# A6. Framework Choice as Worldview Lock-In
 
-## 1. 核心公理
+## 1. Core Axiom
 
-在快速演进的领域选择 AI 框架不是技术决策，而是对未来适应性的哲学押注。每个框架都不仅仅是工具集合，而是一套完整的世界观——关于 Agent 应该如何思考、如何协作、如何执行。选择框架意味着用框架作者的视角看世界，这在领域基础尚未沉淀的时刻，会严重限制你的理解深度和适应能力。
-
----
-
-## 2. 深度推演
-
-### 2.1 每个框架都是一种世界观
-
-Agentic AI 领域的主流框架各自代表了对 Agent 本质的不同理解。AutoGen 相信多 Agent 异步协作是解决复杂问题的关键——它的整个架构围绕消息传递和 Agent 间的对话展开。LangGraph 则相信工作流本质上是一个有向图，状态在节点间流转，条件边决定了执行路径；这个视角导致了复杂的持久化、事件系统和异步机制。SmolAgents 采取了完全不同的哲学：代码才是最清晰的中间介质，Agent 应该直接生成和执行代码，而不是通过抽象的工具接口。这三个框架在技术上都能工作，但它们的设计哲学是互不兼容的。
-
-锁定一个框架意味着你的思维方式会被这个框架的设计者的假设所塑造。如果你后来发展出不同的思维方式——无论是通过自己的实践经验还是领域的突破性进展——切换框架可能比从头开始更复杂。从 SmolAgents 迁移到 LangGraph 不仅仅是代码的重写，而是整个思维模式的转变，因为两个框架的基础假设根本不兼容。
-
-### 2.2 过早锁定在快速演进领域的代价
-
-Agentic AI 仍在快速变化，任何突破性理解都可能随时发生。AutoGen 从 v0.3 到 v0.4 的转变本质上是一次完全重写，这说明即使是成熟的框架也可能面临根本性的重新思考。过早锁定不仅带来技术债务，还限制了你全面理解领域的能力。当你被框架的抽象所束缚时，你看不到底层的真实机制；当新的理解出现时，你已经投入太多而难以转向。
-
-这个问题在 iOS 开发中不存在，因为 GUI 编程的基础已经稳定了几十年。MVC 模式之所以有效，是因为它建立在已经被验证的、不太可能改变的基础之上。但 Agentic AI 的基础仍在流动。框架的高层抽象注定是脆弱的，因为它们建立在尚未沉淀的假设之上。
-
-### 2.3 框架的实际价值有限
-
-从短期收益的角度看，现有框架提供的价值远小于其宣传。构建一个完整的 Agent 系统（LLM + 工具协议 + 多轮编排）只需要五分钟。这个系统包含了 Agentic AI 的所有核心要素：一个能调用工具的语言模型，一个定义工具接口的协议，以及一个管理多轮对话的循环。框架并未节省太多 effort，反而在你需要定制化时增加了复杂性。
-
-更糟糕的是，许多框架存在过度抽象问题。当你需要连接现有接口或做定制工作时（这在企业环境中很常见），往往要追踪八层抽象接口才能找到需要修改的位置。LangChain 因此而臭名昭著：你想做一个简单的修改，却发现自己陷入了一个深层的类继承树，每一层都添加了新的抽象。这是快速演进领域的典型失败模式——框架的高层抽象替代了构建者的直觉，结果反而成了障碍。
-
-### 2.4 Framework vs Library 的根本区别
-
-这里需要做一个关键的区分。并非所有 Agentic AI 工具都是"框架"。pi-mono 提供了一个有启发性的对比：它是一个 library（库），而不是 framework（框架）。pi-mono 只提供四个基础工具（read、write、edit、bash），系统 prompt 不超过 1000 tokens。它的设计哲学是"缺失的东西比包含的东西更重要"——作者明确拒绝了 MCP 支持、sub-agents、plan mode 等"热门"功能，因为这些功能会增加上下文开销或引入黑盒。
-
-框架强加一种世界观，而库只提供工具。框架说"这是你应该思考问题的方式"，库说"这是你可以使用的工具，怎么用由你决定"。LangGraph 是框架，pi-mono 是库。这个区别至关重要，因为库给了你选择权，而框架限制了你的选择。
+Choosing an AI framework in a rapidly evolving domain is not a technical decision — it is a philosophical bet on future adaptability. Each framework is not merely a tool collection but a complete worldview — about how agents should think, collaborate, and execute. Choosing a framework means seeing the world through the framework author's lens, which, at a moment when the domain's foundations have yet to settle, severely limits your depth of understanding and adaptability.
 
 ---
 
-## 3. 应用判定
+## 2. Deep Reasoning
 
-### 3.1 何时应该使用框架 vs 库
+### 2.1 Every Framework is a Worldview
 
-| 场景 | 使用框架 | 使用库 |
-|------|---------|--------|
-| **领域成熟度** | 基础概念已稳定（如 iOS GUI） | 领域仍在快速演进（如 Agentic AI） |
-| **团队规模** | 大团队需要统一的思维方式 | 小团队或个人项目 |
-| **定制化需求** | 低（框架的默认方案足够） | 高（需要频繁修改底层逻辑） |
-| **学习曲线** | 愿意投入时间学习框架的概念 | 希望快速上手，逐步深化 |
-| **长期稳定性** | 框架的主要版本不会改变 | 能接受底层实现的变化 |
-| **集成复杂性** | 框架内的集成简单 | 需要连接多个外部系统 |
+The major frameworks in the agentic AI domain each represent different understandings of what an agent fundamentally is. AutoGen believes multi-agent asynchronous collaboration is the key to solving complex problems — its entire architecture revolves around message passing and inter-agent conversation. LangGraph believes workflows are essentially directed graphs, with state flowing between nodes and conditional edges determining execution paths; this perspective leads to complex persistence, event systems, and async mechanisms. SmolAgents takes a completely different philosophy: code is the clearest intermediate medium, and agents should directly generate and execute code rather than going through abstract tool interfaces. All three frameworks work technically, but their design philosophies are mutually incompatible.
 
-### 3.2 决策标准
+Locking into a framework means your thinking will be shaped by the framework designer's assumptions. If you later develop a different way of thinking — whether through your own practical experience or breakthrough advances in the domain — switching frameworks may be more complex than starting from scratch. Migrating from SmolAgents to LangGraph is not just a code rewrite but a complete mindset shift, because the two frameworks' foundational assumptions are fundamentally incompatible.
 
-在选择框架之前，问自己这些问题：
+### 2.2 The Cost of Premature Lock-In in a Rapidly Evolving Domain
 
-1. **这个领域的基础概念是否已经稳定？** 如果答案是否，那么框架的高层抽象会很快过时。
-2. **我是否理解框架的核心假设？** 如果你不能清楚地说出框架作者的世界观是什么，那么你还没有准备好被它锁定。
-3. **如果我需要改变思维方式，迁移成本是多少？** 如果迁移成本很高，那么选择框架的风险就很大。
-4. **框架是否提供了 AI-friendly 的文档？** 如果框架的文档不能被 AI 工具（如 Cursor）直接理解和使用，那么它在 AI 时代的价值就大打折扣。
-5. **我能否在不使用框架的情况下快速构建原型？** 如果能，那么框架的价值就有限。
+Agentic AI is still changing rapidly, and any breakthrough understanding could happen at any time. AutoGen's shift from v0.3 to v0.4 was essentially a complete rewrite, showing that even mature frameworks can face fundamental rethinking. Premature lock-in not only brings technical debt but also limits your ability to fully understand the domain. When you're bound by a framework's abstractions, you can't see the underlying real mechanisms; when new understanding emerges, you've already invested too much to pivot.
 
----
+This problem doesn't exist in iOS development because the foundations of GUI programming have been stable for decades. MVC works because it's built on verified foundations unlikely to change. But agentic AI's foundations are still in flux. Frameworks' high-level abstractions are destined to be fragile because they're built on assumptions that haven't yet settled.
 
-## 4. 陷阱与洞察
+### 2.3 The Actual Value of Frameworks is Limited
 
-### 4.1 "八层抽象"的噩梦
+From a short-term benefit perspective, existing frameworks provide far less value than advertised. Building a complete agent system (LLM + tool protocol + multi-turn orchestration) takes only five minutes. This system contains all the core elements of agentic AI: a language model that can call tools, a protocol defining tool interfaces, and a loop managing multi-turn conversation. Frameworks don't save much effort — instead, they add complexity when you need customization.
 
-当你使用过度抽象的框架时，一个简单的修改会变成一场噩梦。你想改变一个工具的行为，但这个工具被包装在一个类中，这个类继承自另一个类，这个类又依赖于第三个类……最终你发现自己需要理解八层抽象接口才能找到真正需要改变的地方。这不仅浪费时间，还会让你对框架的理解变得支离破碎。
+Worse, many frameworks suffer from over-abstraction. When you need to connect existing interfaces or do custom work (common in enterprise environments), you often have to trace through eight layers of abstract interfaces to find where to make changes. LangChain is notorious for this: you want to make a simple modification and find yourself trapped in a deep class inheritance tree, each layer adding new abstractions. This is the classic failure pattern of rapidly evolving domains — frameworks' high-level abstractions replace the builder's intuition and end up becoming obstacles instead.
 
-这个问题在快速演进的领域特别严重，因为框架的设计者无法预见所有的使用场景。他们的抽象假设会很快过时，而你却被困在这些过时的假设中。pi-mono 的作者明确批判了这一点，他说"over-abstraction 是高速发展领域的 failure pattern"。
+### 2.4 The Fundamental Difference Between Framework and Library
 
-### 4.2 "五分钟原型"的启示
+A critical distinction is needed here. Not all agentic AI tools are "frameworks." pi-mono provides an instructive contrast: it is a library, not a framework. pi-mono provides only four basic tools (read, write, edit, bash), with a system prompt under 1000 tokens. Its design philosophy is "what's missing matters more than what's included" — the author explicitly rejected MCP support, sub-agents, plan mode, and other "hot" features because these would increase context overhead or introduce black boxes.
 
-构建一个基础的 Agent 系统只需要五分钟。这个事实很重要，因为它说明框架的价值主要不在于节省初期的开发时间，而在于提供一个"最佳实践"的模板。但在 Agentic AI 这样的快速演进领域，"最佳实践"本身就是不确定的。框架作者的最佳实践可能在六个月后就过时了。
-
-这意味着，与其依赖框架的"最佳实践"，不如从第一性原理出发，自己构建系统。这样做的额外成本很小（因为基础系统很简单），但收益很大（因为你保持了完全的灵活性和理解深度）。
-
-### 4.3 "构建者思维"的转变
-
-框架鼓励被动的工具使用者心态：你学习框架的 API，按照框架的方式思考，接受框架的限制。但 Agentic AI 时代需要的是构建者思维：当现有工具不满足需求时，你应该能够快速构建自己的工具。这种思维的转变很关键。
-
-pi-mono 的设计体现了这一点：它提供了最小化的工具集，然后鼓励用户通过编写 Extensions（TypeScript 模块）或 Skills（markdown 文件）来扩展功能。当 Agent 需要新能力时，它可以读取现有扩展的代码，写一个新的扩展，然后立即生效。这是一个从"使用框架"到"构建自己的工具"的转变。
-
-### 4.4 "AI-friendly 文档"的缺失
-
-现有的 Agentic AI 框架都没有提供专门为 AI 设计的文档。LangGraph、AutoGen、SmolAgents 的文档都是为人类编写的，充满了自然语言的模糊性和隐含假设。当 AI 工具（如 Cursor）尝试使用这些框架时，它们必须进行大量的试错，因为文档中的信息不够精确。
-
-相比之下，pi-mono 的工具本身就是代码，文档就是代码的注释和 README。这使得 AI 可以直接读取和理解，无需额外的解释。这是一个重要的设计洞察：在 AI 时代，工具的可用性不仅取决于人类是否能理解，还取决于 AI 是否能理解。
+A framework imposes a worldview; a library merely provides tools. A framework says "this is how you should think about problems"; a library says "these are tools you can use, how you use them is up to you." LangGraph is a framework; pi-mono is a library. This distinction is critical because a library gives you choice, while a framework limits your choices.
 
 ---
 
-## 5. 相关公理
+## 3. Application Criteria
 
-**A9. 构建者思维是护城河** — 框架选择的决策应该基于你是否有能力和意愿成为一个构建者。如果你选择了一个框架，你就放弃了构建者的灵活性；如果你保持库的方式，你就保留了构建者的权力。
+### 3.1 When to Use Framework vs Library
 
----
+| Scenario | Use Framework | Use Library |
+|----------|--------------|-------------|
+| **Domain maturity** | Foundational concepts are stable (e.g., iOS GUI) | Domain is still rapidly evolving (e.g., agentic AI) |
+| **Team size** | Large team needs unified thinking | Small team or personal project |
+| **Customization needs** | Low (framework defaults suffice) | High (frequent need to modify underlying logic) |
+| **Learning curve** | Willing to invest time learning framework concepts | Want to get started quickly, deepen gradually |
+| **Long-term stability** | Framework's major versions won't change | Can accept changes in underlying implementation |
+| **Integration complexity** | Integration within framework is simple | Need to connect multiple external systems |
 
-## 6. 实践建议
+### 3.2 Decision Criteria
 
-### 6.1 如何在 Agentic AI 领域做出框架选择
+Before choosing a framework, ask yourself these questions:
 
-1. **从第一性原理开始**：不要直接跳到框架。先理解 Agent 的核心概念：LLM、工具、多轮编排。用 Cursor 等 Agentic 编程工具逐步构建自己的系统。这个过程本身就是学习。
-
-2. **保持框架中立**：在领域稳定之前，不要深度依赖任何框架。如果你必须使用框架，选择那些提供最少抽象的库（如 pi-mono），而不是那些强加世界观的框架（如 LangGraph）。
-
-3. **定期重新评估**：每三个月问自己一次：我现在的框架选择是否仍然合理？领域有什么新的理解吗？我是否被框架的限制所束缚？
-
-4. **投资可迁移的知识**：不要只学习框架的 API，而要学习 Agentic AI 的基础概念。这些知识在任何框架中都是有用的，而框架的 API 会不断变化。
-
-5. **拥抱构建者思维**：当框架不满足需求时，不要试图强行适应框架，而要构建自己的工具。这在 AI 时代变得特别简单，因为 AI 可以帮助你快速原型化。
-
-### 6.2 何时可以考虑使用框架
-
-只有当以下条件都满足时，才值得考虑使用框架：
-
-- 领域的基础概念已经稳定（至少 2-3 年没有根本性的改变）
-- 框架的主要版本保持稳定（不会频繁的大改动）
-- 你的团队足够大，需要统一的思维方式来协调
-- 框架提供的"最佳实践"确实能显著加快开发速度
-- 框架的文档足够清晰，AI 工具也能理解
-
-在 Agentic AI 领域，这些条件目前都不满足。所以，现在不是选择框架的时候。
+1. **Have the foundational concepts of this domain stabilized?** If no, the framework's high-level abstractions will quickly become obsolete.
+2. **Do I understand the framework's core assumptions?** If you can't clearly articulate what the framework author's worldview is, you're not ready to be locked into it.
+3. **If I need to change my thinking, what's the migration cost?** If migration cost is high, the risk of choosing a framework is high.
+4. **Does the framework provide AI-friendly documentation?** If the framework's docs can't be directly understood and used by AI tools (like Cursor), its value in the AI era is greatly diminished.
+5. **Can I quickly build a prototype without using the framework?** If yes, the framework's value is limited.
 
 ---
 
-## 7. 总结
+## 4. Pitfalls and Insights
 
-框架选择是一个长期的承诺，它会影响你的思维方式、学习路径和适应能力。在快速演进的领域，这个承诺的风险很高。Agentic AI 仍在快速演进，基础概念还在沉淀，任何框架的世界观都可能在不久的将来被证明是不完整的或错误的。
+### 4.1 The "Eight Layers of Abstraction" Nightmare
 
-最明智的做法是保持框架中立，从第一性原理出发，用库而不是框架，拥抱构建者思维。这样做的成本很低（因为基础系统很简单），但收益很高（因为你保持了完全的灵活性和理解深度）。当领域最终稳定下来，框架的价值才会真正显现。那时，你已经有了足够的知识和经验，可以做出明智的选择。
+When you use an over-abstracted framework, a simple modification becomes a nightmare. You want to change a tool's behavior, but this tool is wrapped in a class, which inherits from another class, which depends on a third class... eventually you find yourself needing to understand eight layers of abstract interfaces to find where the real change needs to happen. This not only wastes time but also fragments your understanding of the framework.
+
+This problem is especially severe in rapidly evolving domains because framework designers cannot foresee all usage scenarios. Their abstraction assumptions quickly become obsolete, and you're trapped in these obsolete assumptions. pi-mono's author explicitly criticized this, saying "over-abstraction is the failure pattern of high-speed development domains."
+
+### 4.2 The "Five-Minute Prototype" Insight
+
+Building a basic agent system takes only five minutes. This fact matters because it shows that frameworks' value lies not primarily in saving initial development time but in providing a "best practice" template. But in a rapidly evolving domain like agentic AI, "best practices" themselves are uncertain. A framework author's best practices may be obsolete in six months.
+
+This means, rather than relying on a framework's "best practices," it's better to build your own system from first principles. The additional cost of doing so is small (because the basic system is simple), but the benefit is large (because you maintain full flexibility and depth of understanding).
+
+### 4.3 The "Builder's Mindset" Shift
+
+Frameworks encourage a passive tool-user mentality: you learn the framework's API, think the framework's way, accept the framework's limitations. But the agentic AI era demands a builder's mindset: when existing tools don't meet your needs, you should be able to quickly build your own tools. This mindset shift is critical.
+
+pi-mono's design embodies this: it provides a minimal toolset, then encourages users to extend functionality by writing Extensions (TypeScript modules) or Skills (markdown files). When an agent needs a new capability, it can read existing extension code, write a new extension, and have it take effect immediately. This is a shift from "using a framework" to "building your own tools."
+
+### 4.4 The Absence of "AI-Friendly Documentation"
+
+None of the existing agentic AI frameworks provide documentation specifically designed for AI. LangGraph, AutoGen, and SmolAgents' documentation is all written for humans, full of natural language ambiguity and implicit assumptions. When AI tools (like Cursor) try to use these frameworks, they must do extensive trial and error because the information in the docs isn't precise enough.
+
+In contrast, pi-mono's tools are themselves code, and its documentation is code comments and README. This lets AI directly read and understand without additional explanation. This is an important design insight: in the AI era, a tool's usability depends not only on whether humans can understand it but also on whether AI can understand it.
+
+---
+
+## 5. Related Axioms
+
+**A9. Builder's Mindset is the Moat** — The decision of framework choice should be based on whether you have the ability and willingness to be a builder. If you choose a framework, you give up the builder's flexibility; if you stay with the library approach, you retain the builder's power.
+
+---
+
+## 6. Practice Advice
+
+### 6.1 How to Make Framework Choices in the Agentic AI Domain
+
+1. **Start from first principles**: Don't jump straight to a framework. First understand the core concepts of agents: LLM, tools, multi-turn orchestration. Use agentic programming tools like Cursor to gradually build your own system. This process itself is learning.
+
+2. **Stay framework-neutral**: Don't deeply depend on any framework before the domain stabilizes. If you must use a framework, choose libraries that provide minimal abstraction (like pi-mono) rather than frameworks that impose a worldview (like LangGraph).
+
+3. **Re-evaluate periodically**: Every three months, ask yourself: is my current framework choice still reasonable? Has the domain produced new understanding? Am I constrained by the framework's limitations?
+
+4. **Invest in transferable knowledge**: Don't just learn a framework's API — learn the foundational concepts of agentic AI. This knowledge is useful in any framework, while framework APIs will keep changing.
+
+5. **Embrace the builder's mindset**: When a framework doesn't meet your needs, don't try to force-fit the framework — build your own tools. This has become especially easy in the AI era because AI can help you prototype quickly.
+
+### 6.2 When to Consider Using a Framework
+
+Only consider using a framework when all of the following conditions are met:
+
+- The domain's foundational concepts have stabilized (at least 2-3 years without fundamental change)
+- The framework's major versions remain stable (no frequent large changes)
+- Your team is large enough to need unified thinking for coordination
+- The framework's "best practices" genuinely and significantly accelerate development
+- The framework's documentation is clear enough that AI tools can also understand it
+
+In the agentic AI domain, none of these conditions are currently met. So now is not the time to choose a framework.
+
+---
+
+## 7. Summary
+
+Framework choice is a long-term commitment that affects your thinking, learning path, and adaptability. In rapidly evolving domains, the risk of this commitment is high. Agentic AI is still rapidly evolving, foundational concepts are still settling, and any framework's worldview may be proven incomplete or wrong in the near future.
+
+The wisest approach is to stay framework-neutral, start from first principles, use libraries rather than frameworks, and embrace the builder's mindset. The cost of doing so is low (because the basic system is simple), but the benefit is high (because you maintain full flexibility and depth of understanding). When the domain finally stabilizes, frameworks' value will truly emerge. By then, you'll have enough knowledge and experience to make an informed choice.

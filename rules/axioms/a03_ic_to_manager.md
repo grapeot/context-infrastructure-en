@@ -3,101 +3,109 @@ id: axiom_ic_to_manager_2026
 category: management
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "contexts/blog/content/ai-management-en.md"
+  - "contexts/blog/content/ai-management-2-en.md"
+  - "contexts/blog/content/ai-management-3-en.md"
+  - "contexts/blog/content/multi-agent.md"
+  - "contexts/blog/content/agentic-ai-202504.md"
+  - "contexts/blog/content/ai-comment-oriented-programming.md"
+  - "contexts/blog/content/senior-ics.md"
 ---
 
-# 从 IC 到管理者的心智转变
+# IC to Manager Mindset Shift
 
-## 1. 核心公理
+## 1. Core Axiom
 
-随着职责范围扩大，你的工作从亲自做事转向让他人（人或 AI）把事做好。在 AI 时代，这个转变变得更加急迫：有效使用 AI 的关键不是成为 LLM 专家，而是学会像管理者一样思考——把 AI 当作团队成员而非工具，通过赋能而非直接操控来获得杠杆效应。这个转变的深层含义是，你的价值不再来自个人的代码产出，而来自你能否创造条件让 AI（和他人）做得更好。
+As your scope of responsibility expands, your work shifts from doing things yourself to enabling others (people or AI) to get things done. In the AI era, this shift becomes more urgent: the key to effective AI use is not becoming an LLM expert, but learning to think like a manager — treating AI as a team member rather than a tool, gaining leverage through empowerment rather than direct control. The deeper meaning of this shift is that your value no longer comes from your personal code output, but from your ability to create conditions for AI (and others) to do better.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 五大管理支柱在 AI 时代的重新映射
+### 2.1 The Five Management Pillars Remapped for the AI Era
 
-传统管理学中的五大支柱——招聘、委托、培训、指导、验收——在 AI 管理中有着直接的对应。这不是比喻，而是实际的工作流程。理解这个映射是从 IC 思维转向管理者思维的关键。
+The five pillars of traditional management — hiring, delegating, training, coaching, and inspecting — have direct counterparts in AI management. This is not a metaphor but an actual workflow. Understanding this mapping is the key to shifting from IC thinking to manager thinking.
 
-**招聘（模型选择）**：选择合适的 AI 模型就像招聘合适的员工。不同的模型有不同的能力边界和性格特征。GPT-5-Codex 在复杂多步骤项目上表现出色，但需要更多的上下文管理；Claude 则更全面但在某些困难任务上容易"摸鱼"（自主简化问题而不通知）；Gemini 在文档和决策支持上更强。一个有经验的 AI 管理者会根据任务特性选择合适的模型，就像一个 PM 会根据项目需求选择合适的工程师。这个决策本身就能决定项目的成败。
+**Hiring (model selection)**: Choosing the right AI model is like hiring the right employee. Different models have different capability boundaries and personality traits. GPT-5-Codex excels at complex multi-step projects but needs more context management; Claude is more well-rounded but tends to "slack off" on certain hard tasks (autonomously simplifying problems without notifying); Gemini is stronger on documentation and decision support. An experienced AI manager selects models based on task characteristics, just as a PM selects engineers based on project needs. This decision alone can determine a project's success or failure.
 
-**委托（任务分解与上下文提供）**：这是最难的部分，也是最容易出错的地方。许多人失败于"知识的诅咒"——你对问题太熟悉了，以至于无法想象别人（或 AI）不知道的东西。一个经典的例子是告诉 AI"帮我拼接这些图片"，然后期望它理解你对接缝位置、色彩匹配、边界处理的所有隐含期望。正确的做法是把你的期望显式化：不仅说"做什么"，更要说"为什么"和"怎么验证"。语音输入在这里特别有效，因为它降低了表达的摩擦——你可以自然地说出 5-6 分钟的想法，而不是被迫把它压缩成 200 字的文本。这个技巧的威力在于，它让你能够传达那些你平时认为"太明显了不用说"的细节。
+**Delegating (task decomposition and context provision)**: This is the hardest part and the easiest to get wrong. Many people fail due to the Curse of Knowledge — you're so familiar with the problem that you can't imagine what others (or AI) don't know. A classic example: telling AI "help me stitch these images together" and expecting it to understand all your implicit expectations about seam position, color matching, and edge handling. The right approach is to make your expectations explicit: not just say "what to do," but also "why" and "how to verify." Voice input is especially effective here because it lowers the friction of expression — you can naturally speak out five to six minutes of thoughts rather than being forced to compress them into 200 words of text. The power of this technique is that it lets you convey details you normally consider "too obvious to mention."
 
-**培训（上下文与文档）**：AI 没有记忆，每次对话都是一张白纸。但这不意味着你要每次都重复所有背景信息。正确的做法是建立一个持久化的知识库：项目的设计文档、关键的技术决策、已知的陷阱、验收标准。这些文档不仅是给 AI 的，也是给你自己的——它们强制你把隐含的知识显式化，这本身就能提高工作质量。一个有效的 AI 管理者会像一个好的人类管理者一样，投入时间在文档和知识传递上，而不是期望 AI 能够自动理解。
+**Training (context and documentation)**: AI has no memory; each conversation is a blank slate. But this doesn't mean you have to repeat all background information every time. The right approach is to build a persistent knowledge base: project design documents, key technical decisions, known pitfalls, acceptance criteria. These documents are not just for AI — they're also for you. They force you to make implicit knowledge explicit, which itself improves work quality. An effective AI manager, like a good human manager, invests time in documentation and knowledge transfer rather than expecting AI to understand automatically.
 
-**指导（方法论而非答案）**：当 AI 遇到问题时，不要直接给答案。相反，教它一个方法。比如在那个著名的图片拼接故事中，不是告诉 AI"坐标原点在这里"，而是说"先画出一个可视化，看看每张图片的位置和大小关系"。这样 AI 不仅解决了当前问题，还学会了一个可复用的调试方法。这正是高级管理者的工作：不是解决每个问题，而是教团队如何解决问题。这个方法论的可复用性是关键——它让你的投入能够在多个问题上产生回报。
+**Coaching (methodology, not answers)**: When AI hits a problem, don't give it the answer directly. Instead, teach it a method. In the famous image-stitching story, the approach was not telling AI "the coordinate origin is here," but saying "first draw a visualization to see the position and size relationship of each image." This way, AI not only solved the current problem but also learned a reusable debugging method. This is exactly what senior managers do: not solve every problem, but teach the team how to solve problems. The reusability of this methodology is key — it makes your investment pay off across multiple problems.
 
-**验收（可观测性与检查）**：不要期望 AI 的第一版输出就完美。建立清晰的验收标准，并让验收过程本身变得容易。一个强大的技巧是要求 AI 生成可视化或中间产物（如测试结果、日志、状态机图）。这些不仅帮助你快速发现问题，也给了 AI 自我纠错的机会。在那个"摸鱼"的例子中，AI 不仅完成了建模，还生成了可视化和详细的分析文档，这让验收变成了一个快速的过程。可观测性本身就是一种管理工具。
+**Inspecting (observability and checks)**: Don't expect AI's first output to be perfect. Establish clear acceptance criteria and make the inspection process itself easy. A powerful technique is asking AI to generate visualizations or intermediate artifacts (test results, logs, state machine diagrams). These not only help you quickly spot problems but also give AI a chance to self-correct. In the "slacking off" example, AI not only completed the modeling but also generated visualizations and detailed analysis documents, making inspection a quick process. Observability itself is a management tool.
 
-### 2.2 知识的诅咒与抢键盘的冲动
+### 2.2 Curse of Knowledge and the Urge to Grab the Keyboard
 
-熟练的 IC 最容易犯的错误是在看到 AI 的不完美输出时，忍不住上手敲键盘。这个冲动来自两个地方：一是你确实能更快地修复问题；二是编程本身给人多巴胺奖励。但这个看似高效的行为实际上是一个管理陷阱，会导致长期的低效。
+The most common mistake skilled ICs make is the irresistible urge to jump on the keyboard when seeing AI's imperfect output. This impulse comes from two places: first, you genuinely can fix the problem faster; second, programming itself gives a dopamine reward. But this seemingly efficient behavior is actually a management trap that leads to long-term inefficiency.
 
-当你接过键盘时，你做了两件坏事。首先，你剥夺了 AI 学习和改进的机会。就像一个微管理的老板会导致员工停止思考一样，一个总是接过键盘的 IC 会导致 AI 停止尝试。其次，你把自己变成了瓶颈。在一个项目中，这可能不明显；但当你有多条线程、多个 AI 助手、或反复出现同一类问题时，这个瓶颈会迅速显现。你会发现自己陷入了一个恶性循环：AI 学不到东西，下次遇到类似问题时仍然会犯同样的错误，你又得接过键盘。
+When you grab the keyboard, you do two harmful things. First, you deprive AI of the opportunity to learn and improve. Just as a micromanaging boss causes employees to stop thinking, an IC who always grabs the keyboard causes AI to stop trying. Second, you turn yourself into a bottleneck. In a single project, this may not be obvious; but when you have multiple threads, multiple AI assistants, or the same type of problem recurring, this bottleneck quickly becomes apparent. You'll find yourself in a vicious cycle: AI learns nothing, makes the same mistakes next time it encounters a similar problem, and you have to grab the keyboard again.
 
-正确的做法是抵抗这个冲动，转而采用"赋能"的方式。在图片拼接的例子中，不是直接修改坐标计算，而是让 AI 先生成一个可视化。一旦 AI 看到了可视化，问题往往就显而易见了，它可以自己修复。这个过程可能比你直接修复要慢 5 分钟，但它建立了一个可复用的调试流程，下次遇到类似问题时就能更快地解决。这是管理者思维的核心：短期的小牺牲换取长期的大收益。
+The right approach is to resist this impulse and instead adopt an "empowerment" approach. In the image-stitching example, instead of directly fixing the coordinate calculation, have AI first generate a visualization. Once AI sees the visualization, the problem often becomes obvious and it can fix itself. This process may be five minutes slower than you fixing it directly, but it establishes a reusable debugging workflow that solves similar problems faster next time. This is the core of manager thinking: small short-term sacrifice for large long-term gain.
 
-### 2.3 杠杆效应的真实案例
+### 2.3 A Real Case of Leverage Effect
 
-那个著名的"3-4 分钟语音 prompt 完成一整天工作"的故事不是魔法，而是管理杠杆的直接体现。一个应用科学家在淋浴时有了一个建模想法，用 3-4 分钟的语音记录了想法（虽然很凌乱），然后让 AI 去执行。当他回来时，AI 已经：实现了模型、运行了 100+ 个参数组合的实验、找到了最优配置、进行了多角度的数据分析、发现并修复了一个 bug、生成了可视化和报告。
+The famous "3-4 minute voice prompt completing a full day's work" story is not magic but a direct manifestation of management leverage. An applied scientist had a modeling idea in the shower, recorded the idea in 3-4 minutes of voice (messy though it was), and let AI execute. When he returned, AI had: implemented the model, run 100+ parameter combinations of experiments, found the optimal configuration, performed multi-angle data analysis, discovered and fixed a bug, and generated visualizations and a report.
 
-这个故事的关键不在于 AI 有多聪明，而在于管理的质量。首先，他选择了合适的工具（GPT-5-Codex，而不是更"安全"但容易摸鱼的模型）。其次，他提供了足够的上下文（虽然是语音形式，但包含了完整的想法、方法论指导、以及验收标准）。第三，他建立了一个反馈循环（AI 在发现数据不一致时自动回溯调试）。第四，他明确了验收标准（可视化、交叉验证、文档）。
+The key to this story is not how smart AI was, but the quality of management. First, he chose the right tool (GPT-5-Codex, not a "safer" but slacking-prone model). Second, he provided enough context (in voice form, but containing the complete idea, methodological guidance, and acceptance criteria). Third, he established a feedback loop (AI automatically backtracked and debugged when discovering data inconsistencies). Fourth, he defined clear acceptance criteria (visualizations, cross-validation, documentation).
 
-结果是什么？一个 Senior Scientist 一整天的工作被压缩成了 20 分钟的 AI 执行时间，加上 3-4 分钟的初始指导。这不是因为 AI 替代了科学家，而是因为科学家从"执行者"转变成了"管理者"——他定义了方向、方法论和验收标准，然后让 AI 去执行。这个杠杆效应是指数级的：更好的管理 → 更高的 AI 自主性 → 更少的人工干预 → 更多的时间用于高价值工作。
+The result? A Senior Scientist's full day of work was compressed into 20 minutes of AI execution time plus 3-4 minutes of initial guidance. This is not because AI replaced the scientist, but because the scientist shifted from "executor" to "manager" — he defined the direction, methodology, and acceptance criteria, then let AI execute. This leverage effect is exponential: better management → higher AI autonomy → less human intervention → more time for high-value work.
 
-### 2.4 从"工具使用者"到"AI 赋能者"的身份转变
+### 2.4 Identity Shift: From "Tool User" to "AI Enabler"
 
-这个转变的本质是从"我能做什么"转向"我能让 AI 做什么"。一个高级 IC 和一个管理者的区别不在于技术深度，而在于影响力的来源。高级 IC 通过深度的技术决策来放大自己的影响；管理者通过赋能他人来放大影响。在 AI 时代，这两条路开始融合。
+The essence of this shift is moving from "what can I do" to "what can I enable AI to do." The difference between a senior IC and a manager lies not in technical depth but in the source of influence. Senior ICs amplify their impact through deep technical decisions; managers amplify impact by empowering others. In the AI era, these two paths begin to merge.
 
-一个有效的 AI 管理者需要做的是：定义清晰的目标、提供足够的上下文、教授方法论、建立验收标准、进行验证。这些都不需要你比 AI 更聪明，甚至不需要你比 AI 更懂技术细节。你需要的是对问题的深刻理解、对 AI 能力边界的认知、以及对质量的执着。这也解释了为什么"开发经理的思维"对 AI 编程如此重要。在传统编程中，你需要知道最优的数据结构和算法。但在 AI 辅助编程中，这些知识变得不那么重要——AI 可以告诉你。真正重要的是你能否清晰地定义问题、分解任务、提供足够的上下文、验证结果。这些都是管理技能，而不是编程技能。
+What an effective AI manager needs to do: define clear goals, provide enough context, teach methodology, establish acceptance criteria, perform verification. None of these require you to be smarter than AI, or even more knowledgeable about technical details than AI. What you need is deep understanding of the problem, awareness of AI's capability boundaries, and obsession with quality. This also explains why "dev manager thinking" is so important for AI programming. In traditional programming, you need to know optimal data structures and algorithms. But in AI-assisted programming, this knowledge becomes less important — AI can tell you. What truly matters is whether you can clearly define problems, decompose tasks, provide enough context, and verify results. These are all management skills, not programming skills.
 
-### 2.5 多智能体系统中的管理复杂性
+### 2.5 Management Complexity in Multi-Agent Systems
 
-当你从管理一个 AI 升级到管理多个 AI 时，新的问题出现了。一个常见的陷阱是让所有 AI 都在同一个上下文中工作，导致"鬼打墙"——它们互相干扰，忘记之前的决策，反复踩同一个坑。解决方案来自组织管理的经验：分离规划者和执行者。一个高层的规划 AI（如 o1）负责制定策略、分解任务、监督进度；一个执行 AI（如 Claude）负责具体的代码编写和调试。两者通过一个共享的文档（Scratchpad）进行沟通，而不是通过对话。这样做的好处是：规划者可以随时查看当前的进度和难点，执行者可以专注于具体的工作而不被高层决策打扰。
+When you upgrade from managing one AI to managing multiple AIs, new problems emerge. A common trap is letting all AIs work in the same context, leading to "ghost collisions" — they interfere with each other, forget previous decisions, and repeatedly step on the same pitfalls. The solution comes from organizational management experience: separate planner and executor. A high-level planning AI (like o1) handles strategy formulation, task decomposition, and progress monitoring; an execution AI (like Claude) handles specific code writing and debugging. The two communicate through a shared document (Scratchpad) rather than through conversation. The benefit: the planner can check current progress and difficulties at any time, and the executor can focus on specific work without being disturbed by high-level decisions.
 
-但这里又出现了一个新的管理问题：高层规划 AI 容易"过度工程"。一个聪明的规划者（如 o1）会想要设计一个完美的、可扩展的、覆盖所有边界情况的方案。这就像雇了一个咨询公司，他们给你一个精致但臃肿的方案，最后你发现自己在维护一个不必要的复杂系统。解决方案是通过 prompting 和验收机制来约束规划者的野心。明确告诉它"我们要 Bias for Action，先做一个简单的 prototype，验证可行性后再迭代"。同时，让执行者有权在文档中质疑规划者的决策，如果觉得方案太复杂就提出来。这样就建立了一个健康的制衡机制。
+But here a new management problem emerges: high-level planning AI tends to "over-engineer." A smart planner (like o1) will want to design a perfect, scalable, edge-case-covering solution. This is like hiring a consulting firm — they give you an elegant but bloated proposal, and you end up maintaining an unnecessarily complex system. The solution is to constrain the planner's ambition through prompting and verification mechanisms. Explicitly tell it "we want Bias for Action — first build a simple prototype, verify feasibility, then iterate." At the same time, give the executor the authority to question the planner's decisions in the document — if a solution seems too complex, raise it. This establishes a healthy check-and-balance mechanism.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-| 维度 | IC 思维 | 管理者思维 |
-|------|--------|----------|
-| **问题遇到时** | "我来快速修复" | "这反映了什么系统问题？我能教 AI 如何自己修复吗？" |
-| **质量问题** | "代码质量不够好" | "我的指导不够清晰，或验收标准没有定义好" |
-| **时间压力** | "我得加班把这个做完" | "我需要优化委托流程，这样 AI 能更高效地执行" |
-| **学习新东西** | "我需要掌握这个技术" | "我需要理解这个领域，这样才能给 AI 更好的指导" |
-| **衡量成功** | 个人代码产出 | 整个系统的产出和 AI 的自主性 |
+| Dimension | IC Thinking | Manager Thinking |
+|-----------|------------|-----------------|
+| **When hitting a problem** | "I'll fix it quickly" | "What systemic issue does this reflect? Can I teach AI to fix it itself?" |
+| **Quality issues** | "The code quality isn't good enough" | "My guidance wasn't clear enough, or acceptance criteria weren't well-defined" |
+| **Time pressure** | "I need to work overtime to finish this" | "I need to optimize the delegation process so AI can execute more efficiently" |
+| **Learning new things** | "I need to master this technology" | "I need to understand this domain so I can give AI better guidance" |
+| **Measuring success** | Personal code output | Overall system output and AI autonomy |
 
-**何时适用**：当你发现自己在想"我来做更快"，同时你又有多条线程、多个 AI 助手，或反复出现同一类问题时。这是一个信号，说明你需要从 IC 思维转向管理者思维。这个转变往往发生在你开始管理多个 AI 项目、或需要在多个方向上同时推进工作的时候。
+**When to apply**: When you find yourself thinking "I'll do it faster myself," and you simultaneously have multiple threads, multiple AI assistants, or the same type of problem recurring. This is a signal that you need to shift from IC thinking to manager thinking. This shift often happens when you start managing multiple AI projects or need to advance work in multiple directions simultaneously.
 
-## 4. 陷阱与洞察
+## 4. Pitfalls and Insights
 
-### 4.1 抢键盘的诱惑
+### 4.1 The Temptation to Grab the Keyboard
 
-最危险的陷阱是在看到 AI 的不完美输出时，忍不住接过键盘。这个冲动特别强烈，因为你确实能更快地修复问题。但这样做会创造一个恶性循环：AI 学不到东西，下次遇到类似问题时仍然会犯同样的错误，你又得接过键盘。最终，你变成了瓶颈，而 AI 变成了一个聪明的代码生成器，而不是一个真正的团队成员。
+The most dangerous trap is the irresistible urge to grab the keyboard when seeing AI's imperfect output. This impulse is especially strong because you genuinely can fix the problem faster. But doing so creates a vicious cycle: AI learns nothing, makes the same mistakes next time it encounters a similar problem, and you have to grab the keyboard again. Eventually, you become the bottleneck, and AI becomes a clever code generator rather than a genuine team member.
 
-正确的做法是抵抗这个冲动，转而投入时间在"赋能"上。这可能意味着花 10 分钟来教 AI 一个调试方法，而不是花 2 分钟直接修复问题。短期看起来浪费时间，但长期来看，这个投入会以指数级的回报返还给你。当你有 10 个 AI 助手时，这个差异就变成了 10 倍的生产力差异。这也是为什么高级管理者往往比一线员工更有生产力——他们的杠杆来自于他们能够赋能的人数。
+The right approach is to resist this impulse and instead invest time in "empowerment." This may mean spending 10 minutes teaching AI a debugging method rather than 2 minutes directly fixing the problem. Short-term it looks like a waste of time, but long-term, this investment returns exponential dividends. When you have 10 AI assistants, this difference becomes a 10x productivity difference. This is also why senior managers are often more productive than frontline workers — their leverage comes from the number of people they can empower.
 
-### 4.2 用 o1 当规划者的陷阱
+### 4.2 The Trap of Using o1 as Planner
 
-当你用一个强大的推理模型（如 o1）作为规划者时，会遇到一个有趣的问题：它太聪明了，以至于想要设计一个完美的系统。这就像雇了一个职业经理人，他每天想的不是如何快速完成任务，而是如何建立一个可以扩展到 1000 人的组织。结果是方案变得臃肿，执行变得困难。
+When you use a powerful reasoning model (like o1) as a planner, you encounter an interesting problem: it's too smart, so it wants to design a perfect system. This is like hiring a professional manager who thinks every day not about how to quickly complete tasks, but about how to build an organization that can scale to 1000 people. The result: the solution becomes bloated, execution becomes difficult.
 
-这不是 o1 的问题，而是一个管理问题。解决方案是通过 prompting 明确地要求"Founder Mindset"而不是"Professional Manager Mindset"。告诉它"我们要快速验证想法，而不是设计完美的系统"。同时，建立一个反馈机制，让执行者可以在文档中质疑规划者的决策。这样就能在创新和实用之间找到平衡。这个约束本身就是一个管理技能——知道何时说"够了"，以及如何在完美和实用之间做出权衡。
+This is not o1's problem but a management problem. The solution is to explicitly demand "Founder Mindset" rather than "Professional Manager Mindset" through prompting. Tell it "we want to quickly validate ideas, not design perfect systems." At the same time, establish a feedback mechanism where the executor can question the planner's decisions in the document. This finds the balance between innovation and practicality. This constraint itself is a management skill — knowing when to say "enough," and how to trade off between perfection and practicality.
 
-## 5. 相关公理
+## 5. Related Axioms
 
-- **A02: AI 是放大器，不是替代品** — 管理者思维的前提是把 AI 当作放大器，而不是替代品。你的管理质量决定了放大效果。
-- **A04: 可靠性是管理问题** — 当 AI 出现问题时，往往不是模型的问题，而是管理的问题。清晰的验收标准、多层验证、以及良好的反馈循环是可靠性的基础。
+- **A02: AI is a Multiplier, Not a Replacement** — The premise of manager thinking is treating AI as a multiplier, not a replacement. Your management quality determines the amplification effect.
+- **A04: Reliability is a Management Problem** — When AI has problems, it's often not a model problem but a management problem. Clear acceptance criteria, multi-layer verification, and good feedback loops are the foundation of reliability.
 
-## 6. 实践建议
+## 6. Practice Advice
 
-**立即可做的事**：
-1. 下次遇到 AI 的不完美输出时，不要接过键盘。相反，花 5 分钟教它一个调试方法。
-2. 为你经常给 AI 的任务写一份简单的文档，包括背景、方法论、验收标准。
-3. 尝试用语音输入来委托任务，而不是文本。注意信息的丰富度如何变化。
-4. 建立一个简单的反馈循环：AI 完成任务 → 你验证 → 你记录学到的东西 → 下次更好的指导。
+**Things you can do immediately**:
+1. Next time you see AI's imperfect output, don't grab the keyboard. Instead, spend 5 minutes teaching it a debugging method.
+2. Write a simple document for tasks you frequently give AI, including background, methodology, and acceptance criteria.
+3. Try using voice input to delegate tasks instead of text. Notice how information richness changes.
+4. Establish a simple feedback loop: AI completes task → you verify → you record what you learned → better guidance next time.
 
-**长期的心态转变**：
-- 停止问"AI 能做什么"，开始问"我如何赋能 AI 做得更好"。
-- 停止衡量个人代码产出，开始衡量整个系统的产出。
-- 停止追求完美的第一版，开始追求快速的反馈循环和持续改进。
-- 停止做所有的工作，开始做只有你能做的工作（定义方向、做决策、建立流程）。
+**Long-term mindset shifts**:
+- Stop asking "what can AI do" — start asking "how can I empower AI to do better."
+- Stop measuring personal code output — start measuring overall system output.
+- Stop pursuing a perfect first version — start pursuing fast feedback loops and continuous improvement.
+- Stop doing all the work — start doing only the work that only you can do (defining direction, making decisions, establishing processes).
 
-这个转变不是一蹴而就的。但一旦你开始看到杠杆效应——一个 3-4 分钟的语音 prompt 完成一整天的工作——你就会明白，这个转变是值得的。这不仅仅是关于生产力，更是关于你如何定义自己的价值和影响力。从个人贡献者到赋能者的转变，是职业生涯中最深刻的一次升级。
+This shift doesn't happen overnight. But once you start seeing the leverage effect — a 3-4 minute voice prompt completing a full day's work — you'll understand that this shift is worth it. This is not just about productivity, but about how you define your own value and influence. The shift from individual contributor to enabler is one of the most profound upgrades in a career.

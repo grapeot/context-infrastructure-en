@@ -5,38 +5,38 @@ created: 2026-03-01
 updated: 2026-03-01
 ---
 
-# X6. 抓大放小系统分析
+# X6. Big-Picture System Analysis
 
-## 1. 核心公理
+## 1. Core Axiom
 
-面对复杂系统、文档缺失、逻辑散落的场景，先找最大决策点。在寻求答案前积累问题。与假设相悖的地方是最有价值的信号。
+When facing complex systems, missing documentation, and scattered logic, first find the biggest decision points. Accumulate questions before seeking answers. The places that contradict your assumptions are the most valuable signals.
 
-## 2. 深度推演
+## 2. Deep Deduction
 
-### 方法论步骤
+### Methodology Steps
 
-1. **先找最大决策点** — 不要试图理解一切，先抓住主干。系统中必有一个或几个核心决策，它们决定了整体架构和行为。找到它们比理解细节更重要。
+1. **First find the biggest decision points** — don't try to understand everything; first grasp the backbone. Every system has one or a few core decisions that determine its overall architecture and behavior. Finding them matters more than understanding the details.
 
-2. **持续提问并记录** — 问题本身就是线索，不要急着求解。每个问题都指向某个认知缺口。记录问题的过程就是梳理思路的过程。
+2. **Continuously ask questions and record them** — questions themselves are clues; don't rush to solve them. Each question points to a cognitive gap. The process of recording questions is the process of organizing your thinking.
 
-3. **问题聚合找认知困惑点** — 多个看似独立的问题往往指向同一个根本原因。通过聚合问题，可以快速定位系统的核心困惑点。
+3. **Aggregate questions to find cognitive confusion points** — multiple seemingly independent questions often point to the same root cause. By aggregating questions, you can quickly locate the system's core confusion points.
 
-4. **关注"与假设相悖的地方"** — 最不直观的部分往往隐藏着系统的核心或改进机会。这些地方值得深入探索。
+4. **Pay attention to "places that contradict assumptions"** — the least intuitive parts often hide the system's core or improvement opportunities. These places are worth deep exploration.
 
-### 与其他方法的关系
+### Relationship to Other Methods
 
-本方法与渐进式披露（从粗到细）和文档优先（理解优先，文档跟随）互补。本源文件中的 "Data vs Opinion 决策原则" 已由 T04（数据优于观点）覆盖。
+This method is complementary to progressive disclosure (from coarse to fine) and documentation-first (understanding first, documentation follows). The "Data vs Opinion decision principle" in the source file is already covered by T04 (Data Over Opinion).
 
-## 3. 应用判定
+## 3. Application Criteria
 
-适用场景：
-- 面对陌生系统或新领域
-- 处理遗留代码库或复杂架构
-- 文档缺失或不完整的项目
-- 需要快速建立系统全景认知
+Applicable scenarios:
+- Facing unfamiliar systems or new domains
+- Dealing with legacy codebases or complex architectures
+- Projects with missing or incomplete documentation
+- Needing to quickly understand how a system fits together
 
-## 4. 与其他公理的关系
+## 4. Relationship to Other Axioms
 
-- **T04 数据优于观点** — 本源文件中的决策原则已由 T04 覆盖，本公理专注方法论层面
-- **X02 假设驱动的系统化调试** — 两者都采用假设驱动的方法，但 X02 聚焦调试，本公理聚焦系统分析
-- **M02 逆向调试心智** — 两者都通过缩小可能性空间来加速认知
+- **T04 Data Over Opinion** — the decision principle in the source file is already covered by T04; this axiom focuses on the methodology level
+- **X02 Hypothesis-Driven Systematic Debugging** — both use a hypothesis-driven approach, but X02 focuses on debugging while this axiom focuses on system analysis
+- **M02 Reverse Debugging Mindset** — both accelerate cognition by shrinking the possibility space

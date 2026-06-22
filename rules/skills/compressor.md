@@ -3,25 +3,25 @@
 ## Metadata
 
 - Type: API Guide
-- Use when: submitting, monitoring, pausing, resuming, or cancelling local Apple Compressor transcoding jobs from the command line
+- Use when: submitting, monitoring, pausing, resuming, or cancelling video transcoding jobs via Apple Compressor CLI on this machine
 - Last updated: 2026-06-12
 
 ## Goal
 
-Use Apple Compressor's CLI to submit transcoding batches reliably, then verify that the batch entered Compressor, the expected targets exist, output files start writing, and the final outputs complete.
+Reliably submit transcoding batches through Apple Compressor's command-line entrypoint, and verify with confirmable checks that the job entered the Compressor queue, output files started writing, and the batch completed.
 
-This skill is useful for video workflows where another application, such as DaVinci Resolve, writes a source movie and Compressor should start only after that source file is complete.
+This skill primarily serves local video workflows, especially auto-submitting custom Dolby presets after DaVinci Resolve finishes exporting.
 
 ## Trigger Phrases
 
 - `Compressor`
 - `Apple Compressor`
 - `compressor preset`
-- `custom preset`
 - `Dolby preset`
+- `8k60pDolby`
+- `2k60pDolby`
 - `batch transcode`
-- `wait for Resolve export`
-- `transcode after file finishes writing`
+- `transcode after Resolve finishes exporting`
 
 ## Local Resources
 
@@ -37,142 +37,153 @@ CLI entrypoint:
 /Applications/Compressor.app/Contents/MacOS/Compressor
 ```
 
-Common user setting location on recent macOS / Compressor installs:
+Local custom settings directory:
 
 ```text
-$HOME/Library/Group Containers/<TEAM_ID>.com.apple.videoProApps/Library/Application Support/Compressor/Settings/
+/Users/grapeot/Library/Group Containers/PTN9T2S29T.com.apple.videoProApps/Library/Application Support/Compressor/Settings/
 ```
 
-Find custom settings by listing the settings directory or checking Compressor's group container. Do not assume older paths such as `$HOME/Library/Application Support/Compressor/Settings` exist.
+Confirmed custom presets:
+
+```text
+2k60pDolby.compressorsetting
+8k60pDolby.compressorsetting
+8kTV.compressorsetting
+h265_SDR.compressorsetting
+```
+
+`2k60pDolby` is also Compressor's current default custom setting, recorded in `.DefaultSettingInfo`.
 
 ## Boundaries
 
-Compressor may not expose a usable AppleScript dictionary. If `sdef /Applications/Compressor.app` fails, do not try to build an AppleScript object-model workflow.
+Compressor does not expose a stable AppleScript dictionary; `sdef /Applications/Compressor.app` will fail. Do not attempt AppleScript object-model control of Compressor by default.
 
-Prefer the CLI. GUI automation is a fallback because it depends on window state, permission prompts, and UI labels.
+Prefer the CLI. GUI automation is a last resort — it is more fragile than CLI, sensitive to window state, permission prompts, and UI label changes.
 
-Do not submit a file that is still being written by Resolve or another process. Confirm file stability first with `lsof` and file-size checks.
+Do not submit a source file while Resolve or another process is still writing it. Confirm completion with `lsof` and file size stability first.
 
-## Submit A Batch
+## Submitting Jobs
 
-`-locationpath` must be a complete output file path, including the output file name. It cannot be only an output directory.
+Basic command structure. `-locationpath` must be a complete output file path including filename, not just a directory.
 
 ```bash
 "/Applications/Compressor.app/Contents/MacOS/Compressor" \
-  -batchname "Example transcodes" \
+  -batchname "Example Dolby transcodes" \
   -priority medium \
-  -jobpath "file:///path/to/input.mov" \
-  -settingpath "$HOME/Library/Group Containers/<TEAM_ID>.com.apple.videoProApps/Library/Application Support/Compressor/Settings/high_res.compressorsetting" \
-  -locationpath "$HOME/Downloads/input-high_res.mov" \
-  -jobpath "file:///path/to/input.mov" \
-  -settingpath "$HOME/Library/Group Containers/<TEAM_ID>.com.apple.videoProApps/Library/Application Support/Compressor/Settings/proxy.compressorsetting" \
-  -locationpath "$HOME/Downloads/input-proxy.mov" \
+  -jobpath "file:///Users/grapeot/Downloads/input.mov" \
+  -settingpath "/Users/grapeot/Library/Group Containers/PTN9T2S29T.com.apple.videoProApps/Library/Application Support/Compressor/Settings/8k60pDolby.compressorsetting" \
+  -locationpath "/Users/grapeot/Downloads/input-8k60pDolby.mov" \
+  -jobpath "file:///Users/grapeot/Downloads/input.mov" \
+  -settingpath "/Users/grapeot/Library/Group Containers/PTN9T2S29T.com.apple.videoProApps/Library/Application Support/Compressor/Settings/2k60pDolby.compressorsetting" \
+  -locationpath "/Users/grapeot/Downloads/input-2k60pDolby.mov" \
   -outputformat json
 ```
 
-Successful submission returns a batch id and one or more job ids:
+On success, Compressor returns a batch id and job id(s):
 
 ```json
 {
   "batch": {
-    "batchID": "<batch_id>",
+    "batchID": "86F264AF-60C1-445C-B870-597CB6814AB2",
     "jobs": [
-      {"jobID": "<job_id>"}
+      {"jobID": "34EE03A7-7D31-4768-A50D-458495B4ABC4"}
     ]
   }
 }
 ```
 
-One `jobID` can contain multiple targets. Do not infer target count only from the number of jobs in the JSON response. Verify target names through Compressor storage, monitoring, or output files.
+One `jobID` can still contain multiple targets. Do not assume the second preset was not submitted just because the response shows only one job. Verify targets through job storage files or output files.
 
-## Monitor A Batch
+## Monitoring Jobs
+
+Monitor a batch:
 
 ```bash
 "/Applications/Compressor.app/Contents/MacOS/Compressor" \
   -monitor \
   -format json \
-  -batchid "<batch_id>" \
+  -batchid "BATCH_ID" \
   -once
 ```
 
-On at least some Compressor versions, `-format json` must be placed immediately after `-monitor`. Placing it at the end can fail with `Invalid parameter: -format`.
+`-format json` must come after `-monitor`. `-monitor -batchid ... -once -format json` fails with `Invalid parameter: -format` on this machine.
 
-Expected monitor fields include `status`, `percentComplete`, `timeRemaining`, `batchid`, and `jobid`. For continuous monitoring, omit `-once` and use `-query <seconds>` plus `-timeout <seconds>`.
+Typical response includes `status`, `percentComplete`, `timeRemaining`, `batchid`, and `jobid`. For continuous monitoring, remove `-once` and add `-query <seconds>` and `-timeout <seconds>`.
 
-Check whether output files are being written:
+Check whether output files are actually being written:
 
 ```bash
-lsof "$HOME/Downloads/input-high_res.mov"
-ls -lT "$HOME/Downloads/input-high_res.mov" "$HOME/Downloads/input-proxy.mov"
+lsof "/Users/grapeot/Downloads/input-8k60pDolby.mov"
+ls -lT "/Users/grapeot/Downloads/input-8k60pDolby.mov" "/Users/grapeot/Downloads/input-2k60pDolby.mov"
 ```
 
-Check Compressor storage for source and target names in a small scoped path:
+Check Compressor job storage for source file paths and target names:
 
 ```bash
-grep -R "input\|input-high_res\|input-proxy" \
-  "$HOME/Library/Group Containers/<TEAM_ID>.com.apple.videoProApps/Library/Application Support/Compressor/Storage"
+grep -R "input\|input-8k60pDolby\|input-2k60pDolby" \
+  "/Users/grapeot/Library/Group Containers/PTN9T2S29T.com.apple.videoProApps/Library/Application Support/Compressor/Storage"
 ```
 
-In an AI coding harness, prefer scoped grep/read tools over global home-directory searches.
+In OpenCode, prefer the `grep` tool for scoped directory searches; do not run global searches across the entire home or workspace.
 
-## Wait For The Source File
+## Waiting for Source File Completion
 
-Before submitting, confirm both conditions:
+While Resolve is exporting, the source `.mov` may already exist and keep growing. Before submitting, satisfy at least these two conditions:
 
-1. `lsof /path/to/source.mov` shows no writer process.
-2. File size remains stable for a short window, such as 60 seconds.
+1. `lsof /path/to/source.mov` shows no Resolve or other writer process.
+2. File size remains stable over a short window, e.g. 60 seconds.
 
-One-off check:
+One-shot check:
 
 ```bash
-lsof "$HOME/Downloads/input.mov"
-stat -f '%z %m %Sm' "$HOME/Downloads/input.mov"
+lsof "/Users/grapeot/Downloads/input.mov"
+stat -f '%z %m %Sm' "/Users/grapeot/Downloads/input.mov"
 sleep 60
-stat -f '%z %m %Sm' "$HOME/Downloads/input.mov"
+stat -f '%z %m %Sm' "/Users/grapeot/Downloads/input.mov"
 ```
 
-For long waits, use the workspace's durable process launcher or scheduler rather than bare `sleep` / `nohup`. Write watcher logs to a temporary workspace directory.
+If the user asks to check periodically and auto-submit when ready, do not use bare `sleep` / `nohup` as a long-running background task. Read `rules/skills/process_launcher.md` first and use Process Launcher to start a watcher, writing logs to `tmp/<session_slug>/` or `tmp/compressor_watch/`.
 
 ## Acceptance Criteria
 
-A Compressor task is complete only when these checks pass:
+A Compressor operation is successful only when all of the following hold:
 
-1. The source file is no longer being written and its size is stable.
-2. Compressor returns a `batchID`, or `-monitor` can read the target `batchid`.
-3. Compressor storage contains the source path and expected output names, or the output files exist and are being written by Compressor's transcoder.
-4. For multi-preset jobs, every expected target name is confirmed in storage or on disk.
-5. Final monitoring shows completion, or all expected output files stop changing and no writer process holds them open.
+1. Source file is confirmed no longer being written, and file size is stable.
+2. Compressor CLI returns a `batchID`, or `-monitor` can find the corresponding `batchid`.
+3. Compressor job storage shows the source file path and target output names, or output files exist on disk and are being written by the `Transcode` process.
+4. For multi-preset jobs, all target output names are confirmed in job storage or on the filesystem; do not rely solely on the job count in the batch response.
+5. Final `-monitor` shows batch completion, or both output files are no longer being written and their sizes are stable.
 
 ## Known Pitfalls
 
-`-locationpath` with only a directory fails with `Parameter error: Destination is a directory; Expected complete output file path with file name.` Provide a full output path like `$HOME/Downloads/input-high_res.mov`.
+`-locationpath` given as a directory only will fail. The error is `Parameter error: Destination is a directory; Expected complete output file path with file name.` Provide a full output file path, e.g. `/Users/grapeot/Downloads/input-8k60pDolby.mov`.
 
-Omitting `-locationpath` can appear to succeed with exit code 0 while leaving no easily verifiable output or storage entry. For production tasks, pass an explicit output path for every target.
+Omitting `-locationpath` can result in Compressor exiting with code 0 but producing no verifiable output or job cache entry containing the new source file. Always pass an explicit output path for every target in production jobs.
 
-`-monitor` argument order matters. Put `-format json` immediately after `-monitor`.
+`-monitor` argument order matters. `-format json` at the end fails with `Invalid parameter: -format`; place it immediately after `-monitor`.
 
-`fileURL is NOT a directory` may appear on stderr even for successful submissions. Judge success by `batchID`, `-monitor`, Compressor storage, and output files.
+`fileURL is NOT a directory` may appear on stderr even for successful submissions. Do not treat this log line alone as a failure indicator. Judge by `batchID`, `-monitor`, job storage, and output files.
 
-A single returned job id can still contain multiple targets. Verify all output target names explicitly.
+Compressor returning one job id does not mean only one target was submitted. Multiple `-jobpath/-settingpath/-locationpath` combinations can merge into a single job containing multiple targets internally.
 
-## Control Commands
+## Common Control Commands
 
 Pause a batch:
 
 ```bash
-"/Applications/Compressor.app/Contents/MacOS/Compressor" -pause -batchid "<batch_id>"
+"/Applications/Compressor.app/Contents/MacOS/Compressor" -pause -batchid "BATCH_ID"
 ```
 
 Resume a batch:
 
 ```bash
-"/Applications/Compressor.app/Contents/MacOS/Compressor" -resume -batchid "<batch_id>"
+"/Applications/Compressor.app/Contents/MacOS/Compressor" -resume -batchid "BATCH_ID"
 ```
 
 Cancel a batch:
 
 ```bash
-"/Applications/Compressor.app/Contents/MacOS/Compressor" -kill -batchid "<batch_id>"
+"/Applications/Compressor.app/Contents/MacOS/Compressor" -kill -batchid "BATCH_ID"
 ```
 
 Restart Compressor background processing:
@@ -181,7 +192,7 @@ Restart Compressor background processing:
 "/Applications/Compressor.app/Contents/MacOS/Compressor" -resetBackgroundProcessing
 ```
 
-Cancelling queued jobs while restarting background processing is destructive. Get explicit user approval first:
+Cancelling all queued jobs and restarting background processing is destructive — requires explicit user authorization:
 
 ```bash
 "/Applications/Compressor.app/Contents/MacOS/Compressor" -resetBackgroundProcessing cancelJobs

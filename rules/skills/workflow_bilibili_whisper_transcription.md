@@ -1,78 +1,78 @@
-# 视频下载与语音识别工作流
+# Video Download and Speech Recognition Workflow
 
-## 元数据
-- 类型: Workflow
-- 适用场景: Bilibili/YouTube 视频批量下载 + Whisper 语音识别
-- 创建日期: 2025-02-12
-- 最后更新: 2026-03-11
-- 原项目已归档（不再保留在 workspace 中）
+## Metadata
+- Type: Workflow
+- Applicable Scenarios: Bilibili/YouTube video batch download + Whisper speech recognition
+- Created: 2025-02-12
+- Last Updated: 2026-03-11
+- Original project archived (no longer retained in workspace)
 
-## 路径约定
+## Path Conventions
 
-- 临时下载与中间产物：`tmp/<task_name>/`
-- 最终可长期保留的 transcript：`adhoc_jobs/videos_transcribe/transcripts/`
-- 最终默认只保留**不带时间轴的纯文本脚本**，文件名建议：`YYYYMMDD_platform_videoid_short_slug.md`
-- 音频、`.srt`、`.vtt`、`.tsv`、`.json` 等中间产物在 transcript 落盘后清理到废纸篓
+- Temporary downloads and intermediate artifacts: `tmp/<task_name>/`
+- Final long-term-retained transcripts: `adhoc_jobs/videos_transcribe/transcripts/`
+- Final default retention: **plain text transcript without timestamps only**; recommended filename: `YYYYMMDD_platform_videoid_short_slug.md`
+- Audio, `.srt`, `.vtt`, `.tsv`, `.json` and other intermediate artifacts cleaned up to trash after transcript is persisted
 
-## 核心流程
+## Core Flow
 
-**三阶段工作流：**
+**Three-stage workflow:**
 
-1. **获取列表** → 使用 yt-dlp 提取视频ID（注意B站API限制，可能返回352错误）
-2. **单线程下载** → 逐个下载音频，每次间隔2-3秒，避免触发反爬
-3. **多进程转录** → 并行运行Whisper，4-8个进程，根据硬件选择模型大小
+1. **Get list** → Use yt-dlp to extract video IDs (note Bilibili API limits; may return 352 errors)
+2. **Single-threaded download** → Download audio one by one, 2-3 second interval between each, to avoid triggering anti-scraping
+3. **Multi-process transcription** → Run Whisper in parallel, 4-8 processes, choose model size based on hardware
 
-## 关键决策
+## Key Decisions
 
-| 决策点 | 选择 | 原因 |
-|--------|------|------|
-| 下载并发 | 单线程 | 避免触发B站反爬机制 |
-| 转录并发 | 多进程（4-8） | CPU密集，充分利用多核 |
-| 模型选择 | 根据需求 | 见下表 |
-| 输出格式 | 最终保留纯文本 transcript | 后续检索更稳定，中间产物可回收 |
+| Decision Point | Choice | Reason |
+|----------------|--------|--------|
+| Download concurrency | Single-threaded | Avoid triggering Bilibili anti-scraping mechanisms |
+| Transcription concurrency | Multi-process (4-8) | CPU-intensive; fully utilize multi-core |
+| Model selection | Based on needs | See table below |
+| Output format | Final retention: plain text transcript | More stable for subsequent retrieval; intermediate artifacts recyclable |
 
-## Whisper 模型选择
+## Whisper Model Selection
 
-| 模型 | 参数量 | 速度（CPU） | 准确度 | 推荐场景 |
-|------|--------|-------------|--------|----------|
-| tiny | 39M | 1-2分钟/10分钟 | 较低 | 快速预览 |
-| base | 74M | 2-5分钟/10分钟 | 中等 | 平衡选择 |
-| small | 244M | 5-10分钟/10分钟 | 较高 | 日常使用 |
-| medium | 769M | 10-20分钟/10分钟 | 高 | 高质量需求 |
-| large-v3 | 1550M | 20-60分钟/10分钟 | 最高 | 最高质量要求 |
+| Model | Parameters | Speed (CPU) | Accuracy | Recommended Scenario |
+|-------|-----------|-------------|----------|----------------------|
+| tiny | 39M | 1-2 min / 10 min | Lower | Quick preview |
+| base | 74M | 2-5 min / 10 min | Medium | Balanced choice |
+| small | 244M | 5-10 min / 10 min | Higher | Daily use |
+| medium | 769M | 10-20 min / 10 min | High | High-quality needs |
+| large-v3 | 1550M | 20-60 min / 10 min | Highest | Maximum quality requirements |
 
-**性能参考**：12个视频（3.5小时）+ large-v3 + 7进程 ≈ 20分钟
+**Performance reference**: 12 videos (3.5 hours) + large-v3 + 7 processes ≈ 20 minutes
 
-## LLM 后处理
+## LLM Post-Processing
 
-Whisper 原始输出通常需要后处理：
+Whisper raw output typically requires post-processing:
 
-1. **转换为简体中文** — 识别可能为繁体
-2. **添加标点符号** — 根据语义添加逗号、句号、问号
-3. **合理分段** — 按主题划分段落，添加小标题
-4. **纠正术语** — 专业名词识别错误（如"木质布"→"木质部"、"筛管细胞"）
-5. **优化可读性** — 调整语序、补充缺失内容
+1. **Convert to Simplified Chinese** — recognition may be Traditional Chinese
+2. **Add punctuation** — Add commas, periods, question marks based on semantics
+3. **Reasonable paragraphing** — Divide into paragraphs by topic; add subheadings
+4. **Correct terminology** — Domain-specific term recognition errors (e.g., "木质布"→"木质部", "筛管细胞")
+5. **Optimize readability** — Adjust word order; supplement missing content
 
-## 踩坑记录
+## Lessons Learned
 
-| 问题 | 现象 | 解决方案 |
-|------|------|----------|
-| **352错误** | 请求被B站拦截 | 添加User-Agent/Referer headers，增加延迟，或手动获取ID |
-| **404错误** | 视频已删除或ID错误 | 验证ID有效性，跳过无效视频，记录失败ID |
-| **内存不足** | 多进程转录时内存溢出 | 减少并行进程数（4-6个），使用较小模型，分批处理 |
-| **下载不完整** | .m4a文件无法播放 | 检查文件大小，重新下载，添加完整性验证 |
-| **转录太慢** | large-v3单个视频20-60分钟 | 选择合适模型大小，使用GPU加速，分块处理长视频 |
+| Problem | Symptom | Solution |
+|---------|---------|----------|
+| **352 Error** | Request blocked by Bilibili | Add User-Agent/Referer headers; increase delay; or manually obtain IDs |
+| **404 Error** | Video deleted or ID incorrect | Verify ID validity; skip invalid videos; record failed IDs |
+| **Out of Memory** | Memory overflow during multi-process transcription | Reduce parallel process count (4-6); use smaller model; process in batches |
+| **Incomplete Download** | .m4a file unplayable | Check file size; re-download; add integrity verification |
+| **Transcription Too Slow** | large-v3 single video 20-60 min | Choose appropriate model size; use GPU acceleration; chunk long videos |
 
-## 最佳实践
+## Best Practices
 
-**下载阶段：** 单线程 + 2-3秒延迟 + User-Agent headers + 只下载音频 + 记录失败ID
+**Download phase:** Single-threaded + 2-3 second delay + User-Agent headers + audio-only download + record failed IDs
 
-**转录阶段：** 多进程（4-8） + 指定language参数 + 跳过已处理文件 + 根据硬件选择模型
+**Transcription phase:** Multi-process (4-8) + specify language parameter + skip already-processed files + choose model based on hardware
 
-**落盘阶段：** 在 `tmp/` 完成下载和转录，整理出纯文本脚本后移入 `adhoc_jobs/videos_transcribe/transcripts/`
+**Persistence phase:** Complete download and transcription in `tmp/`; after organizing plain text transcript, move into `adhoc_jobs/videos_transcribe/transcripts/`
 
-**清理阶段：** transcript 落盘后删除或回收音频、时间轴字幕和 sidecar 文件，只保留最终脚本
+**Cleanup phase:** After transcript is persisted, delete or trash audio, timestamped subtitles, and sidecar files; retain only the final transcript
 
-**质量优化：** 关键内容用large-v3，快速预览用base/small，必要时人工校对
+**Quality optimization:** Use large-v3 for critical content; use base/small for quick preview; manual proofreading when necessary
 
-**错误处理：** 实现重试机制，验证文件完整性，处理异常避免脚本中断
+**Error handling:** Implement retry mechanism; verify file integrity; handle exceptions to avoid script interruption

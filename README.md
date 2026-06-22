@@ -1,81 +1,83 @@
-# Context Infrastructure — Reference Implementation
+# Context Infrastructure — Reference Implementation (English Version)
 
-> 背景阅读：[为什么AI只会说正确的废话，以及怎么把它逼出舒适区](https://yage.ai/context-infrastructure.html)
+> Chinese version: [https://github.com/grapeot/context-infrastructure](https://github.com/grapeot/context-infrastructure)
+>
+> Background reading: [Why AI Only Says Correct But Useless Things — and How to Push It Out of Its Comfort Zone](https://yage.ai/context-infrastructure.html)
 
-这是一个运行了一年的 context infrastructure 系统的完整结构。主要价值是作为 reference implementation，让你看到系统长什么样、数据如何流动、记忆如何积累。
+This is the complete structure of a context infrastructure system that has been running for a year. Its main value is as a reference implementation: you can see what the system looks like, how data flows, and how memory accumulates.
 
-**核心定位**：这不是开箱即用的工具，而是一个可以参考的蓝图。Clone 下来后，你可以立刻体验「有 context vs 没有 context」的差异。但要让 AI 真正变成你自己的，需要从头采集你的行为数据——没有捷径。
+**Core positioning**: This is not a plug-and-play tool. It is a blueprint you can study. After cloning, you can immediately experience the difference between "with context" and "without context." But to make AI truly your own, you need to collect your behavioral data from scratch. There is no shortcut.
 
 ---
 
-## Quick Start（5 分钟）
+## Quick Start (5 minutes)
 
 ```bash
-git clone https://github.com/grapeot/context-infrastructure
-cd context-infrastructure
-# 用 Claude Code / OpenCode / Cursor 打开这个目录
+git clone https://github.com/grapeot/context-infrastructure-en
+cd context-infrastructure-en
+# Open this directory with Claude Code / OpenCode / Cursor
 ```
 
-然后：打开 [`rules/USER.md`](rules/USER.md)，填写你的基本信息。这是 ROI 最高的一步，完成后 AI 的行为立刻个性化。
+Then open [`rules/USER.md`](rules/USER.md) and fill in your basic information. This is the highest-ROI step: AI behavior becomes personalized immediately.
 
-详细步骤见 [`setup_guide.md`](setup_guide.md)。
+Detailed steps in [`setup_guide.md`](setup_guide.md).
 
-如果你想把它扩展成更完整的工作系统，可以看 [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md)。那里列了一组可单独安装的 public skill repo，例如 Web 搜索、Google Docs、Google Maps、邮件、OpenCode、PPTX、社交媒体、支付分析和本地 process launcher。`context-infrastructure` 保持轻量；完整能力通过独立 repo 按需安装。
+If you want to extend this into a more complete working system, see [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md). It lists independently installable public skill repos: web search, Google Docs, Google Maps, email, OpenCode, PPTX, social media, payment analytics, and a local process launcher. `context-infrastructure-en` stays lightweight; full capabilities are installed on demand through separate repos.
 
 ---
 
-## 目录结构
+## Directory Structure
 
 ```
-context-infrastructure/
-├── AGENTS.md                    # 根路由表（AI 每次 session 的起点）
-├── setup_guide.md               # 配置指引
-├── .env.example                 # 环境变量模板
+context-infrastructure-en/
+├── AGENTS.md                    # Root routing table (AI's starting point for every session)
+├── setup_guide.md               # Setup instructions
+├── .env.example                 # Environment variable template
 │
 ├── docs/
-│   ├── CRONTAB.md               # 定时任务配置指南（时间线 + 示例 crontab）
-│   └── SKILL_ECOSYSTEM.md       # 可单独安装的 public skill repo 目录
+│   ├── CRONTAB.md               # Cron job configuration guide (timeline + example crontab)
+│   └── SKILL_ECOSYSTEM.md       # Directory of independently installable public skill repos
 │
 ├── rules/
-│   ├── SOUL.md                  # AI 的身份和行为基调（模板）
-│   ├── USER.md                  # 你的偏好和背景（模板）
-│   ├── COMMUNICATION.md         # 沟通风格指南（可直接用）
-│   ├── WORKSPACE.md             # 目录路由索引
-│   ├── axioms/                  # 43 条决策公理（展示层）
-│   └── skills/                  # 25+ 个可复用 skill（展示层）
+│   ├── SOUL.md                  # AI identity and behavioral baseline (template)
+│   ├── USER.md                  # Your preferences and background (template)
+│   ├── COMMUNICATION.md         # Communication style guide (ready to use)
+│   ├── WORKSPACE.md             # Directory routing index
+│   ├── axioms/                  # 43 decision axioms (demonstration layer)
+│   └── skills/                  # 25+ reusable skills (demonstration layer)
 │
 ├── contexts/
 │   ├── memory/
-│   │   └── OBSERVATIONS.md      # 三层记忆系统的 L1/L2 层
-│   ├── survey_sessions/         # 调研报告存放目录
-│   ├── daily_records/           # 日常记录存放目录
-│   └── thought_review/          # 思考复盘存放目录
+│   │   └── OBSERVATIONS.md      # L1/L2 layers of the three-tier memory system
+│   ├── survey_sessions/         # Research report storage
+│   ├── daily_records/           # Daily record storage
+│   └── thought_review/          # Thought review storage
 │
 ├── periodic_jobs/
 │   └── ai_heartbeat/
 │       ├── docs/
-│       │   ├── PRD.md           # 记忆系统设计文档
-│       │   └── KNOWLEDGE_BASE.md # 观察和反思的 SOP
+│       │   ├── PRD.md           # Memory system design document
+│       │   └── KNOWLEDGE_BASE.md # Observation and reflection SOP
 │       └── src/v0/
-│           ├── observer.py      # 每日观察脚本（需配置 cron）
-│           └── reflector.py     # 每周反思脚本（需配置 cron）
+│           ├── observer.py      # Daily observation script (requires cron setup)
+│           └── reflector.py     # Weekly reflection script (requires cron setup)
 │
 ├── tools/
-│   ├── semantic_search/         # 语义搜索（Tier 2）
-│   └── share_report/            # 报告发布（Tier 2）
+│   ├── semantic_search/         # Semantic search (Tier 2)
+│   └── share_report/            # Report publishing (Tier 2)
 │
-└── adhoc_jobs/                  # 按需任务存放目录
+└── adhoc_jobs/                  # On-demand task storage
 ```
 
 ---
 
-## 三层结构
+## Three-Layer Structure
 
-**展示层（可以参考，不能复制）**：[`rules/axioms/`](rules/axioms/) 和 [`rules/skills/`](rules/skills/) 包含了这个系统积累一年的内容。43 条公理是从具体经历中蒸馏出来的，skills 是从真实项目中总结的。这些代表原作者的视角，对你有参考价值，但不能替代你自己积累的认知。
+**Demonstration layer (study, don't copy)**: [`rules/axioms/`](rules/axioms/) and [`rules/skills/`](rules/skills/) contain what this system has accumulated over a year. The 43 axioms were distilled from concrete experiences; the skills were summarized from real projects. These represent the original author's perspective. They are useful as reference but cannot replace what you accumulate yourself.
 
-**可复用层（直接用）**：[`rules/SOUL.md`](rules/SOUL.md)、[`rules/USER.md`](rules/USER.md) 是模板，填写即可使用。[`rules/COMMUNICATION.md`](rules/COMMUNICATION.md) 是通用的沟通风格指南，大多数人可以直接采用。[`periodic_jobs/ai_heartbeat/`](periodic_jobs/ai_heartbeat/) 提供了记忆系统的实现代码。需要配置定时任务时，参考 [`docs/CRONTAB.md`](docs/CRONTAB.md)。
+**Reusable layer (use directly)**: [`rules/SOUL.md`](rules/SOUL.md) and [`rules/USER.md`](rules/USER.md) are templates. Fill them in and they work. [`rules/COMMUNICATION.md`](rules/COMMUNICATION.md) is a general communication style guide that most people can adopt as-is. [`periodic_jobs/ai_heartbeat/`](periodic_jobs/ai_heartbeat/) provides the memory system implementation. For cron job setup, see [`docs/CRONTAB.md`](docs/CRONTAB.md).
 
-**不可复用层**：公理的具体内容、skill 背后的具体经验。理解它们的结构和形成方式，然后从你自己的数据中积累。
+**Non-reusable layer**: The specific content of axioms and the concrete experiences behind skills. Understand their structure and how they were formed, then accumulate from your own data.
 
 ---
 

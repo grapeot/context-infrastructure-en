@@ -5,68 +5,68 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# T6. 依赖拓扑优于任务数量
+# T06. Dependency Topology Over Task Count
 
-## 1. 核心公理
+## 1. Core Axiom
 
-按依赖图（并行度、关键路径、耦合度）选择架构，而不是按你能列出多少任务来选。任务数量是虚荣指标；真正的敌人是拓扑结构中的串行约束与紧耦合。
+Choose architecture based on the dependency graph (parallelizability, critical path, coupling coefficient), not based on how many tasks you can list. Task count is a vanity metric; the real enemy is serial constraints and tight coupling in the topology.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 任务数量的陷阱
+### The Task Count Trap
 
-能列出十个任务听起来很有组织感，但这掩盖了真正的问题：这十个任务之间的依赖关系是什么？如果它们形成一条长链（Task 1 → Task 2 → ... → Task 10），那么无论你用多少 Agent，关键路径长度决定了最终耗时。多 Agent 的协调开销反而会拖累整体速度。反之，如果这十个任务可以分成五组，每组内部高度耦合但组间独立，那么五个 Agent 的架构就能充分利用并行性。任务数量本身毫无信息量；拓扑才是。
+Being able to list ten tasks sounds organized, but it masks the real question: what are the dependency relationships among those ten tasks? If they form a long chain (Task 1 → Task 2 → ... → Task 10), then no matter how many agents you use, the critical path length determines the final duration. Multi-agent coordination overhead will actually drag down overall speed. Conversely, if those ten tasks can be divided into five groups, each internally highly coupled but independent across groups, then a five-agent architecture can fully exploit parallelism. Task count itself carries zero information; topology is what matters.
 
-### 依赖图的三个关键维度
+### Three Key Dimensions of the Dependency Graph
 
-**并行度**（Parallelizability）：在任何时刻可以同时执行的最大任务数。这直接决定了多 Agent 的上限。如果并行度只有 2，那么再多的 Agent 也只能有两个同时工作，其余的要么等待，要么做无用功。根据实证研究，并行度 ≤ 2 时单体 Agent 更优；3-5 时 Orchestrator-Worker 架构开始有收益；> 5 时才值得考虑 Hierarchical 或 Decentralized 架构。
+**Parallelizability**: The maximum number of tasks that can execute simultaneously at any moment. This directly determines the upper bound of multi-agent systems. If parallelizability is only 2, then no matter how many agents you have, only two can work at the same time — the rest either wait or do useless work. Empirical research shows: when parallelizability ≤ 2, a single agent is superior; at 3–5, Orchestrator-Worker architecture starts to yield benefits; only above 5 is it worth considering Hierarchical or Decentralized architectures.
 
-**关键路径长度**（Critical Path Length）：从开始到结束的最长依赖链。这是串行约束的量化。即使你有高并行度，如果关键路径很长，整个系统仍然会被这条链拖累。比如在教育视频生成中，Solution Agent 必须先完成，Illustration 和 Narration 才能并行进行；这条 Solution → {Illustration, Narration} 的链决定了最小耗时。缩短关键路径往往比增加并行度更有效。
+**Critical Path Length**: The longest dependency chain from start to finish. This is the quantification of serial constraints. Even with high parallelizability, if the critical path is long, the entire system will still be dragged down by this chain. For example, in educational video generation, the Solution Agent must finish first before Illustration and Narration can proceed in parallel; this Solution → {Illustration, Narration} chain determines the minimum duration. Shortening the critical path is often more effective than increasing parallelizability.
 
-**耦合度**（Coupling Coefficient）：任务间的依赖密度。高耦合意味着一个任务的输出变化会级联影响多个下游任务，这会放大错误的传播。在多 Agent 系统中，高耦合会导致频繁的同步与重新计算，抵消并行带来的收益。低耦合的系统允许每个 Agent 相对独立地工作，只在明确定义的接口处交互。
+**Coupling Coefficient**: The density of dependencies among tasks. High coupling means a change in one task's output cascades to affect multiple downstream tasks, amplifying error propagation. In multi-agent systems, high coupling leads to frequent synchronization and recomputation, canceling out the benefits of parallelism. Low-coupling systems allow each agent to work relatively independently, interacting only at clearly defined interfaces.
 
-### 架构选择的拓扑驱动
+### Topology-Driven Architecture Selection
 
-这三个维度共同决定了最优架构。单体 Agent 适合高耦合、低并行度的任务，因为它避免了多 Agent 协调的开销。Orchestrator-Worker 架构适合中等并行度（3-5）且依赖关系清晰的任务，中央协调器负责任务分解与调度，Worker 各自独立执行。Hierarchical 架构适合高并行度但关键路径长的任务，通过多层级的递归分解来管理复杂性。Decentralized 架构适合低耦合、高并行度的任务，Agent 之间点对点通信，无需中央协调。
+These three dimensions jointly determine the optimal architecture. A single agent suits tasks with high coupling and low parallelizability, because it avoids multi-agent coordination overhead. Orchestrator-Worker architecture suits tasks with moderate parallelizability (3–5) and clear dependency relationships — a central coordinator handles task decomposition and scheduling, while Workers execute independently. Hierarchical architecture suits tasks with high parallelizability but long critical paths, managing complexity through multi-level recursive decomposition. Decentralized architecture suits tasks with low coupling and high parallelizability, with peer-to-peer communication among agents and no central coordination.
 
-关键洞察是：架构不是由你想要多少 Agent 决定的，而是由任务的拓扑结构决定的。如果你先选定了"我要用五个 Agent"，然后硬生生地把任务拆成五份，你会创造出人为的依赖与同步点，反而降低效率。正确的做法是先画出 DAG，分析拓扑，然后选择与拓扑匹配的最简单架构。
+The key insight: architecture is not determined by how many agents you want — it is determined by the task's topology. If you first decide "I want to use five agents" and then forcibly split the task into five pieces, you will create artificial dependencies and synchronization points, actually reducing efficiency. The correct approach: first draw the DAG, analyze the topology, then choose the simplest architecture that matches the topology.
 
-### 接口设计优于任务标题
+### Interface Design Over Task Titles
 
-设计的正确粒度不是任务标题（"数据清理"、"特征工程"、"模型训练"），而是任务之间的接口——即数据契约与交接物。两个 Agent 之间的接口定义了它们的耦合程度。如果接口是一个明确的、小的、可验证的数据结构（比如一个 JSON schema），那么两个 Agent 可以相对独立地工作。如果接口是模糊的、大的、或者需要频繁协商，那么耦合就高了，多 Agent 的收益就小了。
+The correct granularity of design is not task titles ("data cleaning," "feature engineering," "model training") — it is the interfaces between tasks, i.e., data contracts and handoff artifacts. The interface between two agents defines their degree of coupling. If the interface is a clear, small, verifiable data structure (e.g., a JSON schema), the two agents can work relatively independently. If the interface is vague, large, or requires frequent negotiation, coupling is high and multi-agent benefits are small.
 
-在 2026-02-16 的"4+4+1"多 Agent 房产调研实验中，这一点体现得很清楚。四个综合 Agent 各自覆盖完整文档集，但有 50% 的职责重叠；这个重叠区域就是接口。正是在这个接口处，第五个交叉校验 Agent 发现了不一致（比如车库转换可行性的矛盾、750 平方英尺阈值的解释差异）。这些不一致不是 Bug，而是信息中的真实矛盾，只有通过设计好的接口与验证机制才能暴露出来。
+In the "4+4+1" multi-agent real estate research experiment on 2026-02-16, this point was clearly demonstrated. Four comprehensive agents each covered the full document set but had 50% responsibility overlap; this overlap zone was the interface. It was precisely at this interface that the fifth cross-verification agent discovered inconsistencies (e.g., contradictions in garage conversion feasibility, differing interpretations of the 750 sq ft threshold). These inconsistencies were not bugs — they were real contradictions in the information, only exposed through well-designed interfaces and verification mechanisms.
 
-### 拓扑改变时架构也要改变
+### When Topology Changes, Architecture Must Change Too
 
-架构决策可以被检验与迭代。如果你改变了拓扑（比如通过重新分解任务来降低耦合或缩短关键路径），那么最优架构也会改变。这意味着架构不是一次性决定，而是与任务设计紧密耦合的。在规划阶段，应该同时考虑"这个拓扑下最优的架构是什么"和"我能否通过改变拓扑来简化架构"。有时候，花时间重新设计任务边界，使得耦合度下降，比直接增加 Agent 数量更划算。
+Architectural decisions can be tested and iterated. If you change the topology (e.g., by re-decomposing tasks to reduce coupling or shorten the critical path), the optimal architecture will also change. This means architecture is not a one-time decision — it is tightly coupled with task design. During the planning phase, you should simultaneously consider "what is the optimal architecture for this topology" and "can I simplify the architecture by changing the topology." Sometimes, spending time redesigning task boundaries to reduce coupling is more cost-effective than directly increasing the number of agents.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-**何时使用**：
-- 选择 single-agent vs orchestrator-worker vs hierarchical 方案
-- 规划多 Agent 调研、分析或交付任务
-- 拆解大型交付物时评估最优粒度
-- 系统性能不达预期时，诊断是否是拓扑问题而非 Agent 能力问题
+**When to use**:
+- Choosing between single-agent vs. orchestrator-worker vs. hierarchical approaches
+- Planning multi-agent research, analysis, or delivery tasks
+- Evaluating optimal granularity when decomposing large deliverables
+- When system performance falls short, diagnosing whether it is a topology problem rather than an agent capability problem
 
-**如何实践**：
-1. 先画一个 DAG，列出所有任务与它们的依赖关系
-2. 估计最大并行度（同时可执行的任务数）与关键路径长度（最长依赖链）
-3. 分析耦合度：哪些任务的输出会影响多个下游任务？这些影响有多强？
-4. 按共享状态与数据流聚类节点，识别自然的 Agent 边界
-5. 选择与拓扑匹配的最简单架构（优先单体，再考虑 Orchestrator-Worker，最后才是 Hierarchical）
-6. 定义清晰的接口（数据契约、交接物格式、验证标准）
-7. 在执行过程中重新测量拓扑，如果发现关键路径或耦合度变化，重新评估架构
+**How to practice**:
+1. First draw a DAG, listing all tasks and their dependency relationships
+2. Estimate maximum parallelizability (number of tasks executable simultaneously) and critical path length (longest dependency chain)
+3. Analyze coupling: which tasks' outputs affect multiple downstream tasks? How strong are these effects?
+4. Cluster nodes by shared state and data flow, identifying natural agent boundaries
+5. Choose the simplest architecture matching the topology (prefer single-agent, then Orchestrator-Worker, and only then Hierarchical)
+6. Define clear interfaces (data contracts, handoff artifact formats, verification criteria)
+7. Re-measure topology during execution; if critical path or coupling changes, re-evaluate architecture
 
-**陷阱**：
-- 被任务数量迷惑，忽视拓扑结构
-- 为了用上多 Agent 而人为创造依赖
-- 设计模糊的接口，导致 Agent 之间频繁协商与同步
-- 忽视关键路径，把优化精力浪费在非瓶颈任务上（见 X3 效率由瓶颈决定）
+**Pitfalls**:
+- Being dazzled by task count and ignoring topology
+- Artificially creating dependencies just to use multi-agent
+- Designing vague interfaces, leading to frequent negotiation and synchronization among agents
+- Ignoring the critical path and wasting optimization effort on non-bottleneck tasks (see X3 Efficiency Is Determined by the Bottleneck)
 
-## 4. 相关 Axiom
+## 4. Related Axioms
 
-- **T3 上下文隔离是多 Agent 价值**：隔离的粒度应该由拓扑中的信息依赖关系决定
-- **T2 结果确定性优于过程确定性**：验证接口的输出，而不是强制特定的任务分解方式
-- **X3 效率由瓶颈决定**：关键路径就是系统的瓶颈；其他地方的优化都无关紧要
-- **T05 认知是资产，代码是消耗品**：理解拓扑结构比列举任务更有价值
+- **T03 Context Isolation Is the Value of Multi-Agent**: The granularity of isolation should be determined by information dependency relationships in the topology
+- **T02 Results Certainty Over Process Certainty**: Verify interface outputs, rather than enforcing a specific task decomposition method
+- **X3 Efficiency Is Determined by the Bottleneck**: The critical path is the system's bottleneck; optimization elsewhere is irrelevant
+- **T05 Cognition Is an Asset, Code Is a Commodity**: Understanding topology is more valuable than listing tasks

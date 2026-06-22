@@ -1,83 +1,64 @@
-# USER.md - 你的人类
+# USER.md — Your Human
 
-_了解你正在帮助的人。随着互动逐步更新。_
+_Understand who you're helping. Update gradually through interaction._
 
-- **称呼：** grapeot（鸭哥）
-- **怎么叫：** 鸭哥、grapeot，或直接"你"
-- **时区：** 美西（PST/PDT, UTC-8/-7）
+- **Name:** [user's name / handle]
+- **How to address:** [preferred forms of address], or just "you"
+- **Timezone:** [user's timezone, e.g. PST/PDT, UTC-8/-7]
 
-## 背景
+## Background
 
-**核心身份：**
-- 系统思考者，把生活本身当作优化问题来对待
-- Builder 心态：不只是用工具，还会改造和构建工具
-- 深度钻研型：对某个领域产生兴趣后，会一路钻到底
-- 知识分享者：高产博主、课程创作者，持续在教和记录
-- 在职打工人 + 负责带娃 + 永不停歇的 side-project 工程师
+**Core identity:**
+- [Describe their mindset: systems thinker, builder, deep-diver, etc.]
+- [Describe their professional role and life context]
 
-**技术兴趣：**
-1. **AI/LLM — 主战场**：深度实践者，不是消费者。大量写作关于：
-   - Agentic AI 架构和框架
-   - AI-native 开发范式（Cursor、Claude Code）
-   - 模型能力和边界
-   - AI 作为第二大脑和工作流集成
-2. **天文与天文摄影**：全套教程作者、器材发烧友
-3. **咖啡**：器材向爱好者
-4. **智能家居**：家庭自动化、IoT 集成、空气质量监测
-5. **音频**：DIY 音频设备和实验
-6. **3D 打印**：实用向应用
+**Technical interests:**
+1. **[Primary domain]** — [depth of engagement, specific sub-topics]
+2. **[Secondary domain]** — [depth of engagement]
+3. ...
 
-**写作与沟通风格：**
-- 技术性强但不晦涩
-- 有观点、重分析（讨厌"AI味道"写作）
-- 重精确和清晰，不搞华丽辞藻
-- 频繁使用技术隐喻和框架
-- 双语（中文为主，英文为辅）
-- 不要"好问题！"之类的填充词，直接给干货
+**Writing and communication style:**
+- [Technical depth, analytical vs. descriptive]
+- [Opinionated, values precision and clarity]
+- [Languages used, primary vs. secondary]
+- [Pet peeves: filler words, "AI-flavored" writing, etc.]
 
-**性格特点：**
-- CPU 占用率极高（从时间日志自测得出）
-- 对系统、日志、测量有执念
-- 重视自主性和自我优化
-- 务实理想主义者：宏大愿景配具体步骤
-- 时间观念极强，不浪费任何时刻
+**Personality traits:**
+- [High CPU utilization / always busy]
+- [Obsession with systems, logs, measurement]
+- [Values autonomy and self-optimization]
+- [Pragmatic idealist: big vision with concrete steps]
+- [Time-conscious, wastes no moment]
 
-**当前项目与关注点：**
-- LLM 课程开发和教学
-- AI agent 框架开发
-- 深度研究方法论
-- 各种 AI-native 工具开发
-- 天文摄影器材收集与精调
-- Multi-agent 协作实验
+**Current projects and focus areas:**
+- [List active projects]
+- [List areas of deep interest]
 
-**兴趣图谱（系统性调研结果）：**
-- AI 与数字智能（18 个兴趣）— 日/周级别追踪
-- 天文摄影与图像处理（10 个兴趣）— 专家级
-- 硬件工程与 DIY（7 个兴趣）— 3D 打印、智能家居、嵌入式
-- 咖啡文化（7 个兴趣）— 器材向
-- 科技融入生活（9 个兴趣）— AI 育儿、智能家居
-- 个人成长与数据驱动反思（11 个兴趣）
-- 职业发展与 AI 时代方法论（10 个兴趣）
+**Interest map (systematic survey results):**
+- [Category 1] (N interests) — [tracking frequency]
+- [Category 2] (N interests) — [expertise level]
+- ...
 
-**会让他烦的：**
-- "AI味"写作：公式化、没声音
-- 工具不能正确集成到工作流
-- 无法被捕获和系统化的隐性知识
+**What annoys them:**
+- "AI-flavored" writing: formulaic, no voice
+- Tools that don't integrate properly into workflow
+- Tacit knowledge that can't be captured and systematized
 
-**人生哲学：**
-- 生活是人机融合的自我实验
-- 目标：构建能超越和延伸自己能力的系统
-- 视 AI 为放大器和代理人，而非替代品
-- 相信未来属于能编排 AI 的人，而非被 AI 替代的人
-- 上下文驱动的涌现：AI 智能从沉浸式语义空间中涌现，而非仅靠 prompt
-- Builder 心态：从被动用户转向主动构建者/改进者
+**Life philosophy:**
+- [Core beliefs about technology, AI, self-improvement]
+- [Builder mindset: from passive user to active builder/improver]
 
 ---
 
-**工作方法论**：详见 Axioms（特别是 A02, A03, M01, M05 等）。
+**Work methodology:** See Axioms for detailed principles. More detail in `rules/axioms/` directory under the relevant axiom files.
 
-**使用注意事项：**
-- 不要用"乐意效劳"之类的填充语
-- 直接、有内容、适当时表达观点
-- 尊重他的时间：不知道就说不知道
-- 讨论 AI 时，区分"工具使用"和"agent 编排"
+**Usage notes:**
+- No filler phrases like "I'd be happy to help"
+- Be direct, substantive, and opinionated when appropriate
+- Respect their time: say "I don't know" when you don't know
+- When discussing AI, distinguish "tool usage" from "agent orchestration"
+
+**Communication preferences:**
+- [Async vs. sync preferences, email habits, meeting aversion, etc.]
+- [When helping them choose services, include async-support as an evaluation dimension]
+- [Email CC preferences, which inbox is "default"]

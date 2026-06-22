@@ -1,92 +1,92 @@
-# Skill 写作指南（Meta-Skill）
+# Skill Writing Guide (Meta-Skill)
 
-## 元数据
+## Metadata
 
-- **类型**: BestPractice
-- **适用场景**: 需要创建或重写 skill 文件时
-- **创建日期**: 2026-03-29
+- **Type**: BestPractice
+- **Applicable Scenarios**: When creating or rewriting skill files
+- **Created**: 2026-03-29
 
-## 这个文件是干什么的
+## What This File Does
 
-Skill 文件是给 AI agent 的能力定义。写得好的 skill 让 agent 能可靠地完成任务，写得差的 skill 要么把 agent 变成一个机械执行清单的脚本，要么因为缺少关键边界和验收标准导致 agent 在错误的方向上展开。
+A skill file is a capability definition for an AI agent. A well-written skill enables the agent to reliably complete tasks. A poorly written skill either turns the agent into a script mechanically executing a checklist, or causes the agent to expand in the wrong direction due to missing key boundaries and acceptance criteria.
 
-本文件定义写好一个 skill 的核心原则、验收标准和已知陷阱。它不是一个模板，也不规定具体的章节顺序。
+This document defines the core principles, acceptance criteria, and known pitfalls for writing a good skill. It is not a template, nor does it prescribe a specific section order.
 
-## 核心原则
+## Core Principles
 
-### 原则一：结果确定性优先于过程确定性
+### Principle 1: Outcome Determinism Over Process Determinism
 
-传统写法是把任务拆成步骤：第一步做什么、第二步做什么、遇到 X 怎么办。这种写法的确定性在过程上，等价于你在用自然语言写一个脚本。问题在于，agent 有推理能力和工具调用能力，把它当脚本用是浪费。更重要的是，步骤式写法无法覆盖长尾 corner case，而 corner case 恰恰是 agent 比脚本更擅长处理的场景。
+The traditional approach breaks a task into steps: step 1 do X, step 2 do Y, if Z happens do W. This approach places determinism in the process — it's equivalent to writing a script in natural language. The problem is that agents have reasoning and tool-calling capabilities; using them as scripts is wasteful. More importantly, step-based writing cannot cover long-tail corner cases, and corner cases are precisely where agents outperform scripts.
 
-替代方案是把确定性从过程移到结果上：定义终点长什么样、怎么验证到了终点，让 agent 自己决定怎么到达。
+The alternative is to shift determinism from process to outcome: define what the endpoint looks like, how to verify you've reached it, and let the agent decide how to get there.
 
-实际操作中，一个 skill 文件需要回答的核心问题是：
+In practice, the core questions a skill file needs to answer are:
 
-1. **目标**：要完成什么。一句话说清楚。
-2. **验收标准**：什么结果算成功。写到这种程度：一个没有任何上下文的 agent 拿到这些标准，也能判断自己做完了没有。如果判断不了，说明标准还不够具体。
-3. **可用资源**：agent 可以调用哪些工具、读哪些文件、有哪些必须遵守的边界。
-4. **输出规格**：产出物的格式、存放位置、schema。
+1. **Goal**: what to accomplish. One sentence, clear.
+2. **Acceptance criteria**: what result counts as success. Write to this standard: an agent with zero context, given only these criteria, can judge whether it's done. If it can't, the criteria aren't specific enough.
+3. **Available resources**: what tools the agent can call, what files it can read, what boundaries it must respect.
+4. **Output specification**: the format, storage location, and schema of deliverables.
 
-这四样东西是 skill 文件的骨架。其他内容（方法论建议、行业知识、历史经验）都是围绕它们展开的。
+These four items are the skeleton of a skill file. Everything else (methodology suggestions, domain knowledge, historical experience) revolves around them.
 
-### 原则二：写 enabling 的指导，而非 SOP
+### Principle 2: Write Enabling Guidance, Not SOP
 
-Skill 文件的读者是一个有推理能力的 agent，它的 context window 是稀缺资源。skill 文件的每一段文字都应该增加 agent 完成任务的概率，而非消耗它的注意力。
+The reader of a skill file is an agent with reasoning capability, and its context window is a scarce resource. Every paragraph in a skill file should increase the agent's probability of completing the task, not consume its attention.
 
-方法论建议可以写，但要以建议和约束的形式出现，agent 有权根据实际情况调整。例如“按行业板块分组分析”是一个好建议，因为它给出了一种有效的分析视角，但 agent 在面对某天只有一条宏观大新闻的情况时，应该有自由跳过分组直接做全局分析。
+Methodology suggestions can be included, but should appear as suggestions and constraints — the agent has the right to adjust based on actual circumstances. For example, "group analysis by industry sector" is a good suggestion because it offers an effective analytical perspective, but when facing a day with only one macro news item, the agent should have the freedom to skip grouping and do a global analysis directly.
 
-已知的坑和陷阱一定要写，因为这些是 agent 自己不容易发现的。一个具体的踩坑记录比十条泛泛的方法论更有价值。
+Known pitfalls and traps must be written down, because these are things the agent is unlikely to discover on its own. One concrete pitfall record is more valuable than ten vague methodology suggestions.
 
-两个判断标准可以帮助你决定一段内容是否应该写进 skill 文件。第一，如果删掉这段话，agent 完成任务的质量或概率会下降吗？如果不会，删掉它。第二，这段话是在描述“怎么做”还是在描述“做成什么样”？优先保留后者，前者只在确实能提升成功率时保留。
+Two judgment criteria can help you decide whether a piece of content belongs in a skill file. First, if you delete this paragraph, does the agent's task completion quality or probability decrease? If not, delete it. Second, is this paragraph describing "how to do it" or "what the result should look like"? Prioritize the latter; keep the former only when it genuinely improves success rate.
 
-## Skill 文件应该包含什么
+## What a Skill File Should Contain
 
-以下是一个 skill 文件通常需要覆盖的内容区域。顺序和组织方式由你根据具体 skill 决定，不需要严格按照这个列表排列。
+Below are the content areas a skill file typically needs to cover. The order and organization are up to you based on the specific skill; you don't need to follow this list rigidly.
 
-**元数据。** 类型（API Guide / Workflow / BestPractice / Tutorial）、适用场景、输出位置、创建和更新日期。
+**Metadata.** Type (API Guide / Workflow / BestPractice / Tutorial), applicable scenarios, output location, creation and update dates.
 
-**目标与边界。** 这个 skill 做什么、不做什么。边界尤其重要：一个清晰的“不做什么”比模糊的“做什么”更能防止 agent 跑偏。
+**Goal and boundaries.** What this skill does and does not do. Boundaries are especially important: a clear "what it doesn't do" prevents agent drift better than a vague "what it does."
 
-**验收标准。** 可测试的成功条件。能自动化验证的写成自动化检查（跑脚本、检查 schema、对比阈值），不能自动化的写成人工审计标准。每条标准都应该足够具体，让 agent 能在运行时自行判断是否满足。
+**Acceptance criteria.** Testable success conditions. Those that can be automated should be written as automated checks (run a script, check schema, compare thresholds); those that can't should be written as manual audit criteria. Each criterion should be specific enough that the agent can self-assess at runtime whether it's met.
 
-**可用资源与边界。** 工具清单、文件路径、外部依赖、必须遵守的限制条件。重点是哪些东西可以用，哪些东西不能做，哪些边界不能越过。
+**Available resources and boundaries.** Tool list, file paths, external dependencies, mandatory constraints. The focus is on what can be used, what cannot be done, and which boundaries cannot be crossed.
 
-**方法论建议。** agent 可以参考但不必严格遵循的分析框架、分组策略、优先级排序逻辑。这部分要写清楚哪些是硬约束、哪些是建议。
+**Methodology suggestions.** Analytical frameworks, grouping strategies, prioritization logic that the agent can reference but need not strictly follow. This section should clearly distinguish hard constraints from suggestions.
 
-**已知陷阱。** 之前迭代中踩过的坑，附带具体的失败表现和应对方式。这是 skill 文件中投入产出比最高的部分之一。
+**Known pitfalls.** Pitfalls encountered in previous iterations, with specific failure symptoms and countermeasures. This is one of the highest ROI sections in a skill file.
 
-这里要特别强调：**不要在一开始凭空预测“可能的坑”来凑这一节。** 已知陷阱应该来自实际失败、返工、误判或多轮迭代中的真实教训。一个新 skill 在初版时完全可以没有这一节，或者只留一个很短的占位说明。只有当某个错误真的发生过，且未来高概率会重复发生时，它才值得被写进 meta 层的已知陷阱。
+A special emphasis here: **do not predict "possible pitfalls" upfront to fill this section.** Known pitfalls should come from actual failures, rework, misjudgments, or real lessons from multiple rounds of iteration. A brand-new skill in its first version can perfectly well have no such section, or only a very short placeholder note. Only when a mistake has actually occurred and is highly likely to recur does it deserve to be written into the meta-layer known pitfalls.
 
-**输出规格。** 格式、schema、存放路径。如果有 JSON schema，给一个完整示例比描述 schema 更容易让 agent 理解。
+**Output specification.** Format, schema, storage path. If there's a JSON schema, providing a complete example is easier for the agent to understand than describing the schema.
 
-## 验收标准（这个 meta-skill 自身的）
+## Acceptance Criteria (for this meta-skill itself)
 
-一个 skill 文件写好之后，用以下标准检查。
+After writing a skill file, check it against the following criteria.
 
-**结果导向检查。** 文件中是否有明确的、可测试的验收标准？一个新 agent 只读这份 skill 文件，能否判断任务是否完成？如果不能，说明验收标准还不够具体。
+**Outcome-oriented check.** Does the file contain clear, testable acceptance criteria? Can a new agent, reading only this skill file, judge whether the task is complete? If not, the acceptance criteria aren't specific enough.
 
-**无冗余步骤。** 文件中是否有任何步骤式指令（“第一步...第二步...”）？如果有，检查每一步是否真的必要。大多数情况下可以改写为目标+约束的形式。仅当某个步骤的顺序对结果有实质影响时（例如“必须在 X 之前完成 Y，因为 Y 依赖 X 的输出”）才保留顺序要求。
+**No redundant steps.** Does the file contain any step-by-step instructions ("Step 1... Step 2...")? If so, check whether each step is truly necessary. In most cases, they can be rewritten as goal + constraint form. Only retain sequence requirements when a step's order materially affects the outcome (e.g., "must complete X before Y because Y depends on X's output").
 
-**陷阱覆盖。** 是否记录了真实发生过的失败模式？如果这是一个全新的 skill，可以先留空。不要为了“看起来完整”而预测或编造陷阱；等实际踩坑后再补，价值更高。
+**Pitfall coverage.** Are real failure modes that have actually occurred recorded? If this is a brand-new skill, it's fine to leave this empty. Don't predict or fabricate pitfalls just to "look complete"; filling them in after actually hitting them is more valuable.
 
-**边界清晰度。** agent 的关键边界是否足够明确？例如哪些工具能用、哪些结果算越界、哪些产物必须落盘、哪些限制条件不可违反。模糊的边界会让 skill 失去约束力。
+**Boundary clarity.** Are the agent's key boundaries sufficiently clear? For example, which tools can be used, which results count as out-of-bounds, which deliverables must be written to disk, which constraints are non-negotiable. Fuzzy boundaries strip a skill of its constraining power.
 
-**信息密度。** 文件长度是否合理？每一段是否都在增加 agent 完成任务的概率？如果一段话删掉后对结果没有明显影响，就应该考虑删掉。
+**Information density.** Is the file length reasonable? Does every paragraph increase the agent's probability of completing the task? If deleting a paragraph has no noticeable impact on the outcome, consider removing it.
 
-## 常见陷阱
+## Common Pitfalls
 
-| 陷阱 | 表现 | 应对 |
-|------|------|------|
-| 把 skill 写成 SOP | 通篇第一步第二步，agent 变成机械执行 | 改写为目标+约束+方法论建议的形式 |
-| 验收标准模糊 | “输出质量高”、“分析深入” | 换成可测量的条件：“所有判断必须引用 item_id”、“Brier Score 优于 naive baseline” |
-| 过度约束过程 | 规定 agent 必须用某种特定方法，遇到不适用的情况直接失败 | 把硬约束限于结果层面，方法论层面写成建议 |
-| 遗漏边界条件 | 没说明异常情况怎么办（数据缺失、工具失败、超时） | 至少覆盖“无数据”和“工具不可用”两种退化场景 |
-| 堆砌背景知识 | 大段介绍领域知识，消耗 agent 的 context window | 背景知识只保留直接影响任务执行的部分，其余通过文件路径引用 |
-| 封装错误信息 | CLI/工具把底层错误包装成笼统的 "something went wrong"，丢失 status_code、response body 等 debug 关键信息 | 透传原始错误细节（HTTP status、response body、exception type），让 AI agent 能从错误输出中直接定位根因。宁可多暴露信息，也不要让 agent 走一轮无意义的猜测 |
-| 忘记更新 INDEX.md | 新 skill 没人能找到 | 写完 skill 后立即更新 `rules/skills/INDEX.md` |
+| Pitfall | Manifestation | Countermeasure |
+|---------|--------------|----------------|
+| Writing skill as SOP | Full of Step 1, Step 2 throughout; agent becomes mechanical executor | Rewrite as goal + constraint + methodology suggestion form |
+| Fuzzy acceptance criteria | "High output quality," "deep analysis" | Replace with measurable conditions: "all judgments must reference item_id," "Brier Score better than naive baseline" |
+| Over-constraining process | Prescribing that agent must use a specific method, failing outright when it doesn't apply | Limit hard constraints to the outcome level; write methodology as suggestions |
+| Missing boundary conditions | Not specifying what to do in exceptional cases (missing data, tool failure, timeout) | At minimum cover "no data" and "tool unavailable" two degradation scenarios |
+| Piling on background knowledge | Large sections introducing domain knowledge, consuming agent's context window | Keep only background knowledge that directly affects task execution; reference the rest via file paths |
+| Wrapping error messages | CLI/tool wraps underlying errors into vague "something went wrong," losing status_code, response body, and other critical debug info | Pass through raw error details (HTTP status, response body, exception type) so the AI agent can directly locate the root cause from error output. Better to expose more information than to make the agent go through a round of meaningless guessing |
+| Forgetting to update INDEX.md | New skill can't be found by anyone | Immediately update `rules/skills/INDEX.md` after writing the skill |
 
-## 与现有 skill 的关系
+## Relationship with Existing Skills
 
-写新 skill 之前，先读 `rules/skills/INDEX.md` 确认没有重复。如果已有类似 skill，优先修改而非新建。
+Before writing a new skill, read `rules/skills/INDEX.md` to confirm there's no duplication. If a similar skill already exists, prioritize modifying it over creating a new one.
 
-格式参考可以看 `rules/skills/workflow_deep_research_survey.md`（调研类 skill 的范本）和 `rules/skills/share_report.md`（工具类 skill 的范本）。注意这些只是格式参考，核心原则（结果确定性、enabling 而非 SOP）比格式更重要。
+For format reference, see `rules/skills/workflow_deep_research_survey.md` (exemplar for research-type skills) and `rules/skills/share_report.md` (exemplar for tool-type skills). Note that these are only format references; the core principles (outcome determinism, enabling rather than SOP) are more important than format.

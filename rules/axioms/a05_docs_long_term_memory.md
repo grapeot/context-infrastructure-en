@@ -3,93 +3,99 @@ id: axiom_docs_long_term_memory_2026
 category: tech_decisions
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "contexts/blog/content/agentic-memory.md"
+  - "contexts/blog/content/multi-agent.md"
+  - "contexts/blog/content/ai-eternity.md"
+  - "contexts/blog/content/life-api-part4.md"
+  - "periodic_jobs/ai_heartbeat/docs/KNOWLEDGE_BASE.md"
 ---
 
-# 文档即长期记忆
+# Docs as Long-Term Memory
 
-## 1. 核心公理
+## 1. Core Axiom
 
-当项目和 agent 团队扩张时，上下文窗口的限制成为最大的瓶颈。文档不仅是交付物，更是 AI 和人类共同的长期记忆系统。它让意图在多轮迭代中保持稳定，防止上下文失忆导致的重复踩坑、自我推翻和全局设计遗忘。在 AI 辅助开发中，文档驱动开发是突破规模限制的关键——它把短期的上下文窗口转化为可持久化、可版本化、可 diff 的长期资产。
+When projects and agent teams expand, context window limits become the biggest bottleneck. Documentation is not just a deliverable — it is the shared long-term memory system for both AI and humans. It keeps intent stable across multiple rounds of iteration, preventing context amnesia that leads to repeated pitfalls, self-contradiction, and forgetting global design. In AI-assisted development, doc-driven development is the key to breaking through scale limits — it transforms short-term context windows into persistent, versionable, diffable long-term assets.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 上下文窗口的短期记忆限制
+### 2.1 The Short-Term Memory Limit of Context Windows
 
-当代 AI 模型的上下文窗口，本质上就是一条"七秒记忆的鱼"。它在当前对话中可以记住代码、决策和历史，但一旦上下文被截断（无论是因为对话太长、新开会话，还是简单地切换了任务），那些信息就彻底消失了。这个限制在小规模项目（几百行代码）中不明显，但当代码库突破 5000 行时，问题就变得致命。
+Contemporary AI models' context windows are essentially a "seven-second-memory fish." It can remember code, decisions, and history within the current conversation, but once context is truncated (whether because the conversation is too long, a new session starts, or the task simply switches), that information is gone entirely. This limit is unnoticeable in small-scale projects (a few hundred lines of code), but becomes fatal when the codebase exceeds 5000 lines.
 
-在实际开发中，这表现为三种典型的失败模式。第一种是空间维度的遗忘：AI 在修改文件 A 时，完全看不到文件 B 中已经存在的相同功能，于是重新实现一遍，导致代码重复和逻辑冲突。这不是 AI 不够聪明，而是上下文窗口的自动构建规则没有把 B 文件纳入其中。第二种是时间维度的自我推翻：AI 在第一次迭代中修复了错误 A，但几轮调试后，当这个修复从上下文中消失时，AI 就忘了为什么要保留这个修复，反而把它改回去，把错误 A 又带回来了。第三种是全局视角的缺失：特别是在接手已有代码库时，AI 缺乏对整个系统的高层设计理解，导致它宁愿重新写一个功能，也不愿意去理解和复用已有的代码。
+In actual development, this manifests as three typical failure patterns. The first is spatial forgetting: when AI modifies file A, it completely fails to see the same functionality already existing in file B, so it re-implements it, causing code duplication and logic conflicts. This is not AI being insufficiently smart — it's that the context window's auto-construction rules didn't include file B. The second is temporal self-contradiction: AI fixes error A in the first iteration, but after several rounds of debugging, when this fix disappears from context, AI forgets why it kept the fix and changes it back, reintroducing error A. The third is missing global perspective: especially when inheriting an existing codebase, AI lacks high-level design understanding of the entire system, causing it to prefer rewriting a feature from scratch rather than understanding and reusing existing code.
 
-这些问题的根本原因都指向同一个事实：AI 依赖上下文窗口作为唯一的记忆机制。简单的重构（把代码切分得更细）只能缓解局部问题，但无法从根本上解决全局设计理解不足的挑战。即使代码再整洁，AI 仍然依赖短期上下文来思考，一旦上下文溢出，便忘却先前的逻辑。
+The root cause of all these problems points to the same fact: AI relies on the context window as its sole memory mechanism. Simple refactoring (splitting code into finer pieces) can only alleviate local problems but cannot fundamentally solve the challenge of insufficient global design understanding. Even with the cleanest code, AI still relies on short-term context to think — once context overflows, it forgets previous logic.
 
-### 2.2 文档驱动开发：为 AI 构建长期记忆
+### 2.2 Doc-Driven Development: Building Long-Term Memory for AI
 
-文档驱动开发的核心思想很简单：不仅让 AI 写代码，更让 AI 维护文档。这个文档不是事后的注释，而是项目的"大脑"——它记录了外部行为、产品决策、技术框架、高层设计，以及历史上的尝试和教训。当 AI 在写代码时，它可以先读文档，迅速获得全局视角，而不必把所有源文件都塞进上下文窗口。
+The core idea of doc-driven development is simple: don't just let AI write code — let AI maintain documentation. This documentation is not after-the-fact commentary but the project's "brain" — it records external behavior, product decisions, technical frameworks, high-level design, and historical attempts and lessons. When AI writes code, it can first read the docs and quickly gain a global perspective without stuffing all source files into the context window.
 
-更重要的是，这个文档成为了一个可被引用、版本化、可 diff 的资产。与黑盒式的 heartbeat 总结（可能被重写或"遗忘"）不同，文档是显式的、可控的、可追溯的。当你需要回顾为什么做了某个决策，或者为什么放弃了某个方案时，文档就在那里。这种显式性本身就能提高工作质量——它强制 AI 和人类把隐含的知识显式化，这个过程往往会发现之前没有想到的问题。
+More importantly, this documentation becomes a citable, versionable, diffable asset. Unlike black-box heartbeat summaries (which may be rewritten or "forgotten"), documentation is explicit, controllable, and traceable. When you need to review why a certain decision was made, or why a certain approach was abandoned, the documentation is there. This explicitness itself improves work quality — it forces both AI and humans to make implicit knowledge explicit, a process that often surfaces problems not previously considered.
 
-实践中，文档驱动开发的工作流是：更新文档 → 更新代码去对齐 → 跑检查 → Git 记录历史。这个流程的关键是把文档当作一等交付物，而不是事后的补充。当 AI 在做重大改动时，它应该先更新文档，然后根据文档去改代码，确保代码和文档始终保持一致。这样做的好处是，文档本身就成为了一个"设计评审"的过程——在代码写出来之前，设计就已经被审视过了。
+In practice, the doc-driven development workflow is: update docs → update code to align → run checks → Git records history. The key to this flow is treating documentation as a first-class deliverable, not an after-the-fact supplement. When AI makes major changes, it should first update the docs, then change the code according to the docs, ensuring code and docs stay aligned. The benefit is that documentation itself becomes a "design review" process — the design is scrutinized before the code is written.
 
-### 2.3 多 Agent 系统中的共享记忆
+### 2.3 Shared Memory in Multi-Agent Systems
 
-在多 agent 系统中，文档的作用变得更加关键。当你有一个规划 agent（如 o1）和一个执行 agent（如 Claude）时，它们各自有独立的上下文窗口。如果它们只通过对话沟通，那么规划者的指令很容易在执行者的多轮调试中丢失。解决方案是引入一个共享的 Scratchpad 文档，作为两者之间的通信总线。
+In multi-agent systems, documentation's role becomes even more critical. When you have a planning agent (like o1) and an execution agent (like Claude), each has its own independent context window. If they only communicate through conversation, the planner's instructions easily get lost across the executor's multiple rounds of debugging. The solution is introducing a shared Scratchpad document as the communication bus between them.
 
-规划者在这个文档中记录当前的任务、策略、已知的难点和进度。执行者在完成每个功能或踩到坑时，就把结果和反馈更新到文档。这样，规划者可以随时查看当前的状态，而不需要把执行者的所有细节都纳入自己的上下文。执行者也可以专注于具体的工作，而不被高层决策打扰。这个模式的威力在于，它在不把每个细节塞进每个 agent 上下文的前提下，保存了指令与进度，形成了一个横跨所有 agent 的 single source of truth。
+The planner records the current task, strategy, known difficulties, and progress in this document. The executor updates the document with results and feedback after completing each feature or hitting a pitfall. This way, the planner can check current status at any time without stuffing all the executor's details into its own context. The executor can focus on specific work without being disturbed by high-level decisions. The power of this pattern is that it preserves instructions and progress without cramming every detail into every agent's context, forming a single source of truth spanning all agents.
 
-但多 agent 系统也带来了新的挑战：如何维护多个 agent 之间的一致性。当两个 agent 同时读写同一个文档时，可能会产生冲突。解决方案来自多人协作软件的经验：引入锁机制、自动合并策略、以及差异分析。这些机制确保了即使在高并发的情况下，文档仍然是可靠的信息来源。
+But multi-agent systems also bring new challenges: how to maintain consistency across multiple agents. When two agents simultaneously read and write the same document, conflicts can arise. The solution comes from multi-person collaboration software experience: introduce locking mechanisms, auto-merge strategies, and diff analysis. These mechanisms ensure the document remains a reliable information source even under high concurrency.
 
-### 2.4 从静态文档到演进的记忆系统
+### 2.4 From Static Documents to an Evolving Memory System
 
-最初的文档驱动开发可能看起来很简单：写一份设计文档，然后按照它去实现。但在实际的 AI 协作中，文档本身也在不断演进。这个演进过程反映了一个更深层的转变：从把文档当作"需求规格"，转向把文档当作"活的记忆系统"。
+Initial doc-driven development may look simple: write a design document, then implement according to it. But in actual AI collaboration, the documentation itself continuously evolves. This evolution process reflects a deeper shift: from treating documentation as a "requirements spec" to treating it as a "living memory system."
 
-在这个演进的记忆系统中，有三个关键的角色。Observer 负责观察项目的日常进展，记录新的发现、踩到的坑、以及尝试过的方案。Reflector 定期审视这些观测，把有长期价值的规律提炼出来，更新到核心的设计文档中。Promoter 则负责把这些更新推送给所有相关的 agent，确保它们都能获得最新的知识。这个三层结构确保了记忆系统既能捕捉日常的细节，又能提炼出长期的规律。
+In this evolving memory system, there are three key roles. Observer watches the project's daily progress, recording new discoveries, pitfalls encountered, and approaches tried. Reflector periodically reviews these observations, distilling patterns with long-term value and updating the core design documents. Promoter pushes these updates to all relevant agents, ensuring they all get the latest knowledge. This three-layer structure ensures the memory system captures both daily details and long-term patterns.
 
-这种演进的记忆系统的价值在于，它不仅记录了"我们做了什么"，更记录了"我们为什么这样做"和"我们学到了什么"。当一个新的 agent 加入项目时，它不仅能看到当前的代码，还能看到这个代码是如何演进过来的，为什么做了某些决策，以及之前尝试过哪些方案为什么失败了。这种历史感让新 agent 能够更快地融入项目，避免重复踩坑。
+The value of this evolving memory system is that it records not just "what we did" but also "why we did it" and "what we learned." When a new agent joins the project, it can see not just the current code but also how this code evolved, why certain decisions were made, and which approaches were tried before and why they failed. This sense of history lets new agents integrate into the project faster and avoid repeating pitfalls.
 
-### 2.5 从 Prompt 工程到上下文架构
+### 2.5 From Prompt Engineering to Context Architecture
 
-过去，我们把 prompt 看作是一个"指令"——你写得越巧妙，AI 就执行得越好。但在文档驱动开发的框架下，prompt 的角色发生了根本的转变。它不再是一个独立的指令，而是一个"房门钥匙"，用来打开一个更大的、由文档构成的"世界"。
+In the past, we treated prompts as "instructions" — the more cleverly you wrote them, the better AI performed. But under the doc-driven development framework, the prompt's role undergoes a fundamental shift. It is no longer a standalone instruction but a "door key" that opens a larger "world" built from documentation.
 
-这个转变的深层含义是，我们从"精雕细琢 prompt"转向"构建沉浸式的上下文"。AI 不是从零开始推理，而是在你提供的历史、风格、节奏、语气、偏好、结构残片中，试图成为你能接受的合作者。当这个上下文足够丰富、足够真实时，AI 在其中就会自然而然地涌现出更聪明的能力。这就是"context-driven emergence"——一种通过构建复杂语境空间来唤起 AI 潜在能力的路径。
+The deeper meaning of this shift is that we move from "crafting prompts meticulously" to "building immersive context." AI doesn't reason from scratch — it tries to become an acceptable collaborator within the history, style, rhythm, tone, preferences, and structural fragments you provide. When this context is rich and authentic enough, AI naturally emerges with smarter capabilities within it. This is "context-driven emergence" — a path to evoking AI's latent capabilities by constructing complex contextual spaces.
 
-在这个新范式中，你不是在"给 AI 布置任务"，而是在"为 AI 搭一个能变聪明的世界"。你写的不是一句问话，而是构建了一个 AI 运行的环境。这个环境包括项目的设计文档、关键的技术决策、已知的陷阱、验收标准、甚至是你的工作风格和审美标准。一旦 AI 沉浸在这个环境中，它就能理解你的隐含期望，做出更符合你意图的决策。这种转变的实质是：从"指令执行"升级到"环境适应"。
+In this new paradigm, you are not "assigning tasks to AI" but "building a world where AI can become smarter." What you write is not a question but an environment for AI to operate in. This environment includes the project's design documents, key technical decisions, known pitfalls, acceptance criteria, and even your work style and aesthetic standards. Once AI is immersed in this environment, it can understand your implicit expectations and make decisions more aligned with your intent. The essence of this shift: from "instruction execution" to "environment adaptation."
 
-## 3. 应用判定
+## 3. Application Criteria
 
-**何时适用**：多日工作、多 agent 协作、反复回归同一个问题，或仓库大到靠聊天"记住"已经失效的场景。特别是当你发现自己在重复解释同一个设计决策、或者 AI 在多轮迭代中自我推翻时，这是一个信号，说明你需要文档驱动开发。
+**When to apply**: Multi-day work, multi-agent collaboration, repeatedly returning to the same problem, or scenarios where the repo is too large for chat-based "remembering" to work. Especially when you find yourself repeatedly explaining the same design decision, or AI self-contradicts across multiple iterations — this is a signal that you need doc-driven development.
 
-**如何练习**：维护持续演进的设计文档与 scratchpad，把文档当一等交付物。建立"更新文档 → 更新代码 → 跑检查"的工作流，由 Git 提供历史。对于多 agent 系统，强制使用共享文档作为通信渠道，而不是对话。定期审视文档，把有长期价值的观测提炼成规则。
+**How to practice**: Maintain continuously evolving design documents and scratchpads, treating docs as first-class deliverables. Establish the "update docs → update code → run checks" workflow, with Git providing history. For multi-agent systems, enforce shared documents as the communication channel rather than conversation. Periodically review docs, distilling observations with long-term value into rules.
 
-## 4. 陷阱与洞察
+## 4. Pitfalls and Insights
 
-### 4.1 "保存一切"的陷阱
+### 4.1 The "Save Everything" Trap
 
-一个常见的误解是，既然文档是长期记忆，那就应该把所有的信息都保存下来。这导致文档变成了一个无差别的信息堆，充满了过期的、低价值的、机械重复的内容。结果是，当 AI 需要从文档中提取有用信息时，它反而被噪音淹没了。信息密度的下降直接导致 AI 的理解能力下降——它需要花更多的上下文来筛选有用信息，反而加重了上下文的负担。
+A common misunderstanding is that since documentation is long-term memory, all information should be saved. This turns documentation into an undifferentiated information heap, full of expired, low-value, mechanically repetitive content. The result: when AI needs to extract useful information from docs, it gets drowned in noise instead. Declining information density directly causes declining AI comprehension — it needs to spend more context filtering useful information, actually increasing the context burden.
 
-正确的做法是有意识地进行"垃圾回收"。不是所有的观测都值得保存。一个有效的过滤标准是：如果这条信息在未来 3 个月内不会对项目产生任何复用价值，就果断丢弃。宁可少记，绝不凑数。这个原则来自 AI Heartbeat 的知识库设计：信息密度是关键，你要像一个资深的架构师一样思考，而不是像一个记录员。高质量的文档应该是精炼的、有针对性的、能够直接指导 AI 行动的。
+The right approach is conscious "garbage collection." Not all observations are worth saving. An effective filtering criterion: if this piece of information won't have any reuse value for the project within the next 3 months, discard it decisively. Better to record less than to pad. This principle comes from AI Heartbeat's knowledge base design: information density is key — you need to think like a senior architect, not like a recorder. High-quality documentation should be refined, targeted, and capable of directly guiding AI action.
 
-### 4.2 静态文档 vs 演进的记忆
+### 4.2 Static Docs vs Evolving Memory
 
-另一个陷阱是把文档当作一个"冻结的规格"。你在项目开始时写了一份设计文档，然后就再也不更新它。结果是，文档和代码逐渐偏离，最终文档变成了一个过时的、不可信的东西。当 AI 读到过时的文档时，它会被误导，做出与当前项目状态不符的决策。
+Another trap is treating documentation as a "frozen spec." You write a design document at project start and never update it again. The result: docs and code gradually diverge, and eventually the docs become outdated and untrustworthy. When AI reads outdated docs, it gets misled and makes decisions inconsistent with the current project state.
 
-真正有价值的文档是活的、演进的。它随着项目的进展而更新，反映了最新的设计决策和学到的教训。这个演进过程本身就是一个学习过程——每次更新文档时，你都在反思"为什么我们做了这个决策"，这往往会发现之前没有想到的问题。在多 agent 系统中，这个演进过程变得更加重要，因为新的 agent 需要能够快速地理解项目的当前状态，而不是被过时的文档误导。文档的更新频率应该与项目的变化速度相匹配——快速迭代的项目需要更频繁的文档更新。
+Truly valuable documentation is living and evolving. It updates as the project progresses, reflecting the latest design decisions and lessons learned. This evolution process is itself a learning process — each time you update docs, you're reflecting on "why we made this decision," which often surfaces problems not previously considered. In multi-agent systems, this evolution process becomes even more important because new agents need to quickly understand the project's current state rather than being misled by outdated docs. Documentation update frequency should match the project's rate of change — fast-iterating projects need more frequent doc updates.
 
-## 5. 相关公理
+## 5. Related Axioms
 
-- **A01: 从咨询到执行的范式转移** — 文档驱动开发是 ask-do 范式的基础。清晰的文档定义了"完成"是什么，使得 AI 能够自主迭代。
-- **A03: 从 IC 到管理者的心智转变** — 维护文档是一个管理技能，而不是编程技能。它要求你能够清晰地定义问题、分解任务、提供足够的上下文。
+- **A01: Ask-Do Paradigm Shift** — Doc-driven development is the foundation of the ask-do paradigm. Clear documentation defines what "done" means, enabling AI to iterate autonomously.
+- **A03: IC to Manager Mindset Shift** — Maintaining documentation is a management skill, not a programming skill. It requires you to clearly define problems, decompose tasks, and provide enough context.
 
-## 6. 实践建议
+## 6. Practice Advice
 
-**立即可做的事**：
-1. 为你正在进行的项目写一份简单的设计文档，包括背景、关键决策、已知的陷阱、验收标准。
-2. 建立一个 Scratchpad，用来记录当前的难点、尝试过的方案、以及测试结果。
-3. 在给 AI 布置任务时，先让它读文档，然后再开始工作。观察这如何改变它的理解和输出质量。
-4. 定期审视文档，删除过期的内容，提炼有长期价值的规律。
+**Things you can do immediately**:
+1. Write a simple design document for your ongoing project, including background, key decisions, known pitfalls, and acceptance criteria.
+2. Establish a Scratchpad to record current difficulties, approaches tried, and test results.
+3. When assigning tasks to AI, have it read the docs first, then start working. Observe how this changes its understanding and output quality.
+4. Periodically review docs, delete expired content, distill patterns with long-term value.
 
-**长期的心态转变**：
-- 停止把文档当作事后的注释，开始把它当作项目的"大脑"。
-- 停止期望 AI 能够自动理解你的隐含期望，开始显式化你的知识。
-- 停止用对话作为 agent 之间的唯一通信渠道，开始用文档作为 single source of truth。
-- 停止写一次就冻结的文档，开始维护活的、演进的记忆系统。
+**Long-term mindset shifts**:
+- Stop treating docs as after-the-fact commentary — start treating them as the project's "brain."
+- Stop expecting AI to automatically understand your implicit expectations — start making your knowledge explicit.
+- Stop using conversation as the sole communication channel between agents — start using docs as the single source of truth.
+- Stop writing docs that freeze after one write — start maintaining a living, evolving memory system.
 
-当你看到 AI 因为有了清晰的文档而减少了自我推翻，或者多个 agent 因为共享文档而协作得更顺畅时，你就会明白，文档驱动开发不仅仅是一个技术实践，更是一个根本的思维转变。它把 AI 从一个"聪明的代码生成器"转变成了一个真正的"长期合作者"。
+When you see AI reducing self-contradiction because of clear documentation, or multiple agents collaborating more smoothly because of shared docs, you'll understand that doc-driven development is not just a technical practice but a fundamental mindset shift. It transforms AI from a "clever code generator" into a genuine "long-term collaborator."

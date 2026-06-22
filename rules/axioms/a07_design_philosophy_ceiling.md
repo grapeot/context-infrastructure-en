@@ -3,88 +3,92 @@ id: axiom_a07_design_philosophy_ceiling_2026
 category: ai_agentic
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/devin-agent-cursor-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/cursor-to-devin-en.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/agentic-ai-frameworks.md"
+  - "/Users/grapeot/co/knowledge_working/contexts/blog/content/agentic-ai.md"
 ---
 
-# A7. 设计哲学决定能力上限
+# A7. Design Philosophy Determines Capability Ceiling
 
-## 1. 核心公理
+## 1. Core Axiom
 
-Agent 架构分为规划驱动和任务驱动两种设计哲学，各有最佳适用场景。一个系统的设计哲学不仅决定了它当下能做什么，更决定了它未来能做到什么。这不是工具选择问题，而是思维方式的选择——选择了一种架构哲学，就等于选择了一个世界观。
+Agent architectures divide into two design philosophies — plan-driven and task-driven — each with optimal application scenarios. A system's design philosophy determines not just what it can do now, but what it can do in the future. This is not a tool choice problem but a thinking-style choice — choosing an architectural philosophy is choosing a worldview.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 2.1 两种设计哲学的本质差异
+### 2.1 The Essential Difference Between the Two Design Philosophies
 
-Devin 代表规划驱动的设计哲学：它的工作方式像一位有条理的软件工程师。接到任务后，它首先制定高层计划，列出具体步骤，然后逐步执行并在每一步后验证结果。这种方式的迭代是项目管理式的——它会不断更新计划进度，调整策略，让使用者始终能看到整个项目的全貌。这种设计哲学的核心假设是：复杂任务需要前期规划，而规划本身就是价值的一部分。
+Devin represents the plan-driven design philosophy: it works like a methodical software engineer. Upon receiving a task, it first formulates a high-level plan, lists specific steps, then executes step by step and verifies results after each step. This iteration style is project-management-like — it continuously updates plan progress, adjusts strategy, letting the user always see the full project picture. The core assumption of this design philosophy: complex tasks need upfront planning, and the plan itself is part of the value.
 
-Cursor Agent 代表任务驱动的设计哲学：它的工作方式像一位技术执行者。给它明确指令，它快速执行并输出结果。它的迭代仅用于测试验证目标是否完成——如果第一次执行失败，它会根据错误信息调整，但这种调整是局部的、反应式的，而非全局规划的。这种设计哲学的核心假设是：清晰的任务定义比前期规划更重要，执行速度和反馈循环是关键。
+Cursor Agent represents the task-driven design philosophy: it works like a technical executor. Give it clear instructions, it executes quickly and outputs results. Its iteration is only for test-verifying whether the goal is met — if the first execution fails, it adjusts based on error information, but this adjustment is local, reactive, not globally planned. The core assumption of this design philosophy: clear task definition matters more than upfront planning; execution speed and feedback loops are key.
 
-这两种哲学的差异不在于能力本身，而在于对"什么是解决问题的正确方式"的根本理解不同。
+The difference between these two philosophies lies not in capability itself but in fundamentally different understandings of "what is the right way to solve problems."
 
-### 2.2 设计哲学如何决定能力上限
+### 2.2 How Design Philosophy Determines Capability Ceiling
 
-规划驱动的设计哲学使 Devin 能够处理高度复杂、多变的项目。以克隆网站为例，Devin 知道先下载网站、观察功能、规划结构、再开始执行。这个顺序不是偶然的，而是来自于它的设计哲学——它被设计成会思考"这个问题的正确分解方式是什么"。当面对一个陌生的、结构不清晰的问题时，这种能力就成为了关键。相比之下，Cursor 在复杂项目上容易产生幻觉，因为它缺乏高层规划能力。它会直接开始执行，然后在执行过程中发现问题，但这时候已经走了很多弯路。
+The plan-driven design philosophy enables Devin to handle highly complex, variable projects. Taking website cloning as an example, Devin knows to first download the site, observe functionality, plan structure, then start executing. This sequence is not accidental — it comes from its design philosophy, which is designed to think "what is the right way to decompose this problem." When facing an unfamiliar, structurally unclear problem, this capability becomes critical. In contrast, Cursor tends to hallucinate on complex projects because it lacks high-level planning ability. It starts executing directly, then discovers problems during execution, but by then it has already taken many detours.
 
-任务驱动的设计哲学使 Cursor 在清晰、相对简单的问题上效率极高。对于"生成一个股价对比图"这样定义明确的任务，Cursor 可以在一分钟内完成，而 Devin 可能需要半小时。这不是因为 Cursor 更聪明，而是因为它的设计哲学就是"快速反馈循环"——它不浪费时间在规划上，而是立即开始执行，通过错误信息来指导自己。
+The task-driven design philosophy makes Cursor extremely efficient on clear, relatively simple problems. For a well-defined task like "generate a stock price comparison chart," Cursor can complete it in one minute, while Devin might need half an hour. This is not because Cursor is smarter, but because its design philosophy is "fast feedback loops" — it doesn't waste time on planning, starts executing immediately, and uses error information to guide itself.
 
-这里的关键洞察是：设计哲学决定了系统在面对不同类型问题时的天花板。一个规划驱动的系统可以处理任务驱动系统无法处理的复杂性，但代价是速度和成本。一个任务驱动的系统可以在简单问题上达到规划驱动系统无法达到的效率，但代价是无法处理高复杂度。这不是可以通过简单的参数调整或提示工程来跨越的——这是架构层面的限制。
+The key insight here: design philosophy determines a system's ceiling when facing different types of problems. A plan-driven system can handle complexity that a task-driven system cannot, at the cost of speed and cost. A task-driven system can achieve efficiency on simple problems that a plan-driven system cannot, at the cost of being unable to handle high complexity. This is not something that can be crossed through simple parameter adjustments or prompt engineering — it is an architecture-level limitation.
 
-### 2.3 设计哲学的隐性成本
+### 2.3 The Hidden Costs of Design Philosophy
 
-选择一种设计哲学不仅仅是选择一种工作方式，更是选择了一个"世界观"。这个世界观会影响系统如何理解问题、如何积累知识、如何与用户互动。Devin 的设计哲学包含了"知识积累"这个维度——它会记录每次任务中学到的经验，下次遇到类似问题时就能更快地解决。这是因为规划驱动的哲学天然地包含了"反思"这个步骤。而 Cursor 的设计哲学中，这个维度是缺失的——它每次都是从零开始，除非用户手动更新 `.cursorrules` 文件。
+Choosing a design philosophy is not just choosing a working style — it's choosing a "worldview." This worldview affects how the system understands problems, accumulates knowledge, and interacts with users. Devin's design philosophy includes the dimension of "knowledge accumulation" — it records lessons learned from each task, enabling faster resolution next time it encounters a similar problem. This is because the plan-driven philosophy naturally includes a "reflection" step. In Cursor's design philosophy, this dimension is absent — it starts from scratch each time unless the user manually updates the `.cursorrules` file.
 
-这种差异看似是功能问题，实际上反映的是两种设计哲学对"什么是 Agent 应该做的事"的不同理解。规划驱动的哲学认为 Agent 应该像一个真正的员工一样成长；任务驱动的哲学认为 Agent 应该像一个工具一样可靠和快速。这两个目标在某些维度上是互相冲突的。
+This difference looks like a feature issue but actually reflects two design philosophies' different understandings of "what an agent should do." The plan-driven philosophy believes an agent should grow like a real employee; the task-driven philosophy believes an agent should be reliable and fast like a tool. These two goals are mutually conflicting in certain dimensions.
 
-### 2.4 框架选择即世界观锁定
+### 2.4 Framework Choice as Worldview Lock-In
 
-这个原理在 Agentic AI 框架的选择上体现得最明显。AutoGen、LangGraph、SmolAgents 等框架都不仅仅是工具库，而是都有非常鲜明的设计哲学。AutoGen 的基本思想是 LLM 包办所有事，通过多 agent 之间的异步协作完成复杂任务；LangGraph 的基本思想是 Agentic Workflow 可以用一个图来表述；SmolAgents 的基本思想是应该把代码当作中间媒介而不是工具调用。当你选择了一个框架，你就等于选择了这个框架作者的世界观。
+This principle is most evident in the choice of agentic AI frameworks. AutoGen, LangGraph, SmolAgents, and other frameworks are not just tool libraries — each has a very distinct design philosophy. AutoGen's basic idea is that LLMs handle everything, completing complex tasks through asynchronous collaboration among multiple agents; LangGraph's basic idea is that agentic workflows can be expressed as a graph; SmolAgents' basic idea is that code should be the intermediate medium rather than tool calls. When you choose a framework, you are choosing that framework author's worldview.
 
-在 Agentic AI 这样一个高速发展的领域，这个选择的成本是巨大的。因为领域本身还在快速演变，任何中高度的抽象都注定是脆弱的。一个框架的设计哲学可能在六个月后就被证明是错误的或不完整的。看看 AutoGen 从 v0.3 到 v0.4 做了多大的更改（基本重写了）就知道。这种情况下过早站队不仅会引入一个不定时催收的技术债，而且也会影响我们对领域的全面理解。
+In a high-speed development domain like agentic AI, the cost of this choice is enormous. Because the domain itself is still rapidly evolving, any medium-to-high-level abstraction is destined to be fragile. A framework's design philosophy may be proven wrong or incomplete in six months. Look at how much AutoGen changed from v0.3 to v0.4 (essentially a rewrite). Prematurely picking a side in this situation not only introduces a time-bomb of technical debt but also affects our comprehensive understanding of the domain.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-### 何时应用
+### When to Apply
 
-在以下场景中，需要明确认识到设计哲学的重要性：
+In the following scenarios, the importance of design philosophy needs to be explicitly recognized:
 
-1. **选择或设计 Agent 系统时**：评估任务的复杂度和可规划性。如果任务高度复杂、多变、需要前期分析，选择规划驱动架构。如果任务清晰、相对简单、需要快速反馈，选择任务驱动架构。
+1. **When choosing or designing an agent system**: Evaluate task complexity and planability. If tasks are highly complex, variable, and need upfront analysis, choose a plan-driven architecture. If tasks are clear, relatively simple, and need fast feedback, choose a task-driven architecture.
 
-2. **评估框架或工具时**：不要只看功能列表，而要理解其背后的设计哲学。问自己：这个框架的作者认为 Agent 应该如何工作？这个假设与我的需求是否一致？
+2. **When evaluating frameworks or tools**: Don't just look at feature lists — understand the design philosophy behind them. Ask yourself: how does this framework's author think agents should work? Does this assumption align with my needs?
 
-3. **长期系统设计时**：考虑这个选择对未来的影响。一个规划驱动的系统可能在初期投入更大，但长期来看能处理更复杂的问题。一个任务驱动的系统可能初期快速见效，但可能在复杂度增加时遇到天花板。
+3. **When designing long-term systems**: Consider the future impact of this choice. A plan-driven system may require larger initial investment but can handle more complex problems long-term. A task-driven system may show quick initial results but may hit a ceiling when complexity increases.
 
-### 如何实践
+### How to Practice
 
-对于复杂多步骤项目，选择规划驱动架构或用 Planner-Executor 模式增强任务驱动系统。具体做法包括：
+For complex multi-step projects, choose a plan-driven architecture or enhance a task-driven system with a Planner-Executor pattern. Specific approaches include:
 
-- 在系统提示中明确要求 Agent 先制定计划，然后执行，最后验证
-- 使用 `.cursorrules` 或类似机制来维护项目级别的知识和计划进度
-- 定期让 Agent 反思和总结学到的经验，更新知识库
+- Explicitly require the agent in the system prompt to first make a plan, then execute, then verify
+- Use `.cursorrules` or similar mechanisms to maintain project-level knowledge and plan progress
+- Periodically have the agent reflect on and summarize lessons learned, updating the knowledge base
 
-对于明确的小任务，任务驱动更高效。具体做法包括：
+For clearly defined small tasks, task-driven is more efficient. Specific approaches include:
 
-- 清晰定义成功标准，让 Agent 知道什么时候停止
-- 提供必要的工具和上下文，减少 Agent 的决策负担
-- 接受快速反馈循环，不要期待完美的第一次执行
+- Clearly define success criteria so the agent knows when to stop
+- Provide necessary tools and context, reducing the agent's decision burden
+- Accept fast feedback loops, don't expect perfect first execution
 
-## 4. 陷阱
+## 4. Pitfalls
 
-### 陷阱 1：混淆工具选择与哲学选择
+### Pitfall 1: Confusing Tool Choice with Philosophy Choice
 
-很多人会说"我用 Cursor 还是 Devin"，但实际上这不是工具选择，而是哲学选择。即使用同一个工具，通过不同的提示和架构设计，也可以实现不同的哲学。例如，通过修改 `.cursorrules` 文件，可以让 Cursor 表现出规划驱动的特性。反过来，通过简化提示，也可以让规划驱动的系统表现得像任务驱动的系统。
+Many people say "should I use Cursor or Devin," but this is actually not a tool choice — it's a philosophy choice. Even with the same tool, different philosophies can be realized through different prompts and architecture designs. For example, by modifying the `.cursorrules` file, Cursor can exhibit plan-driven characteristics. Conversely, by simplifying prompts, a plan-driven system can behave like a task-driven system.
 
-### 陷阱 2：过度抽象导致的灵活性丧失
+### Pitfall 2: Loss of Flexibility from Over-Abstraction
 
-当一个框架或系统的设计哲学过于强势时，它会通过抽象来强制执行这个哲学。这在领域成熟时是好事（比如 iOS 的 MVC 模式），但在领域快速发展时就成了枷锁。LangChain 和 LangGraph 都因为过度抽象而臭名昭著——要做任何自定义的东西，就要跳转八百层抽象类接口。这不是功能问题，而是哲学问题——框架的作者认为"正确的方式"是什么，但这个假设可能对你的具体需求不适用。
+When a framework or system's design philosophy is too forceful, it enforces this philosophy through abstraction. This is good when the domain is mature (like iOS's MVC pattern), but becomes a shackle when the domain is rapidly developing. LangChain and LangGraph are both notorious for over-abstraction — to do anything custom, you have to jump through eight hundred layers of abstract class interfaces. This is not a functionality problem but a philosophy problem — the framework author believes "the right way" is something, but this assumption may not apply to your specific needs.
 
-### 陷阱 3：忽视设计哲学的演变成本
+### Pitfall 3: Ignoring the Evolution Cost of Design Philosophy
 
-一旦你在一个设计哲学上投入了大量代码和知识，改变这个哲学的成本就会变得极高。从 SmolAgents 迁移到 LangGraph 的工作量会非常大，因为这两个框架的基本假设完全不兼容。这就是为什么在 Agentic AI 这样的快速发展领域，从第一性原理出发自己构建系统，往往比选择一个框架更明智。
+Once you've invested substantial code and knowledge in a design philosophy, the cost of changing that philosophy becomes extremely high. The workload of migrating from SmolAgents to LangGraph would be enormous because the two frameworks' foundational assumptions are completely incompatible. This is why, in a rapidly developing domain like agentic AI, building your own system from first principles is often wiser than choosing a framework.
 
-## 5. 相关 Axiom
+## 5. Related Axioms
 
-- **A01 - 第一性原理**：在快速发展的领域，从第一性原理出发比选择框架更重要
-- **A03 - 上下文决定能力**：设计哲学本质上是在定义系统的上下文边界
-- **A05 - 反馈循环**：任务驱动和规划驱动的本质区别在于反馈循环的粒度和频率
-- **A12 - Builder's Mindset**：理解设计哲学的目的是为了能够灵活地选择或创造适合自己的系统
-
+- **A01 - First Principles**: In rapidly developing domains, starting from first principles is more important than choosing a framework
+- **A03 - Context Determines Capability**: Design philosophy essentially defines the system's context boundaries
+- **A05 - Feedback Loops**: The essential difference between task-driven and plan-driven lies in the granularity and frequency of feedback loops
+- **A12 - Builder's Mindset**: The purpose of understanding design philosophy is to be able to flexibly choose or create systems suited to yourself

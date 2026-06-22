@@ -1,61 +1,61 @@
-# AI 时代面试评估框架
+# Interview Evaluation Framework in the AI Era
 
-面试评估从考察 Skill 转向考察 Trait，并识别 AI 辅助作弊。
+Interview evaluation shifts from assessing Skill to assessing Trait, and identifies AI-assisted cheating.
 
-## 核心原则
+## Core Principles
 
-### 岗位由 Trait 而非 Skill 定义
+### Roles Are Defined by Trait, Not Skill
 
-AI 时代技能快速贬值。面试应考察：
-- 业务敏感度
-- 解决问题的动机
-- 抗压能力
-- 讲故事与说服力
+In the AI era, skills depreciate rapidly. Interviews should assess:
+- Business sensitivity
+- Problem-solving motivation
+- Resilience under pressure
+- Storytelling and persuasion
 
-而非单纯的编程能力或框架熟练度。
+Rather than pure programming ability or framework proficiency.
 
-### Senior 面试策略转向
+### Senior Interview Strategy Shift
 
-放弃询问"做了什么"，深挖"为什么（Rationale）"：
-- 为什么选择这个方案？
-- 有什么替代方案？为什么放弃？
-- 如果重来会怎么做？
+Abandon asking "what did you do" and dig into "why (Rationale)":
+- Why choose this approach?
+- What alternatives existed? Why were they rejected?
+- What would you do differently if starting over?
 
-警惕在不平衡数据集中使用 Accuracy 的候选人。
+Be wary of candidates who use Accuracy on imbalanced datasets.
 
-## AI 作弊识别
+## AI Cheating Detection
 
-### 视觉特征
+### Visual Characteristics
 
-- 眼神固定在狭窄区域（屏幕）
-- 无 Filler words（正常人说话会有停顿、犹豫）
-- 结构过度严谨（AI 输出的典型特征）
+- Eyes fixed on a narrow area (screen)
+- No filler words (normal speech has pauses and hesitation)
+- Overly rigorous structure (typical AI output characteristic)
 
-### 逻辑特征
+### Logical Characteristics
 
-- 过度圆满的 Hallucination
-- 对不存在的内容也能"流畅"回答
-- 无法识别非标准单词发音（AI 直接读出而非认出）
+- Overly polished hallucination
+- Can "fluently" answer about nonexistent content
+- Cannot recognize non-standard word pronunciations (AI reads directly rather than recognizing)
 
-### 探针战术
+### Probe Tactics
 
-1. **Knowledge Cutoff 钓鱼**：捏造不存在的模型/框架/版本，观察候选人反应
-2. **反向追问**：要求解释"刚才提到"的具体细节
-3. **发音陷阱**：使用非标准发音的术语，观察是否能正确识别
+1. **Knowledge Cutoff fishing**: fabricate nonexistent models/frameworks/versions, observe candidate reaction
+2. **Reverse follow-up**: ask for specific details of what was "just mentioned"
+3. **Pronunciation trap**: use terms with non-standard pronunciation, observe whether they can correctly identify them
 
-## 技术深度探测
+## Technical Depth Probing
 
-### Auto Labeling Pipeline 背景
+### Auto Labeling Pipeline Background
 
-针对有自动标注管线经验的候选人：
-1. **系统性召回偏差识别**：训练数据是否存在系统性偏差？
-2. **Evaluation Blind Spot 探测**：评估指标是否覆盖了所有失效模式？
+For candidates with auto-labeling pipeline experience:
+1. **Systematic recall bias identification**: does the training data have systematic bias?
+2. **Evaluation blind spot detection**: do the evaluation metrics cover all failure modes?
 
-### Edge vs Cloud 决策框架
+### Edge vs Cloud Decision Framework
 
-基于三层维度决策：
-1. **延迟要求**：实时性要求高 → Edge
-2. **关键性（Criticality）**：故障后果严重 → Edge + 冗余
-3. **技术可行性**：模型大小 vs 设备算力
+Decision based on three dimensions:
+1. **Latency requirement**: real-time requirement high → Edge
+2. **Criticality**: severe failure consequences → Edge + redundancy
+3. **Technical feasibility**: model size vs device compute
 
-Magic Leap 实践中 ORB 特征优于 Superglue 等前沿方案——经典算法在特定场景仍有价值。
+In Magic Leap practice, ORB features outperformed cutting-edge approaches like Superglue — classical algorithms still have value in specific scenarios.

@@ -5,64 +5,64 @@ created: 2026-02-23
 updated: 2026-02-23
 ---
 
-# T3. 上下文隔离：多 Agent 的价值来源
+# T03. Context Isolation: The Source of Multi-Agent Value
 
-## 1. 核心公理
+## 1. Core Axiom
 
-多 Agent 的杠杆来自信息域隔离（各自独立的上下文 + 共享的 scratchpad），而不是模仿组织架构。隔离的目的不是为了分工，而是为了让每个 Agent 在干净的信息环境中做出更好的决策。
+The leverage of multi-agent systems comes from information domain isolation (independent contexts + shared scratchpad), not from mimicking organizational structures. The purpose of isolation is not division of labor — it is to let each agent make better decisions in a clean information environment.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-### 认知负担与上下文竞争
+### Cognitive Load and Context Competition
 
-Cursor 之所以会陷入循环（修 Bug A 时又在修 Bug B 的过程中重新引入），根本原因在于规划与执行细节在同一个上下文窗口里竞争注意力。当一个模型同时承载高层规划和底层实现时，它必须先从杂乱的信息堆里筛选出对规划真正有用的部分，然后才能做决定。这对模型的认知负担是巨大的。反过来也成立：如果模型先埋头执行，就容易在大量执行细节里忘了规划者曾经说过什么，或者找不到焦点。结果是既没规划好，也没执行好，两头不讨好。这不是模型能力不足，而是信息架构的失败——把不该混在一起的东西混在了一起。
+The reason Cursor gets stuck in loops (fixing Bug A while reintroducing it in the process of fixing Bug B) is fundamentally that planning and execution details compete for attention within the same context window. When a single model carries both high-level planning and low-level implementation, it must first filter out the parts that are actually useful for planning from a messy pile of information before it can make a decision. This imposes an enormous cognitive load on the model. The reverse is also true: if the model dives into execution first, it easily loses track of what the planner said or loses focus amid the flood of execution details. The result is neither good planning nor good execution — both suffer. This is not a model capability problem; it is an information architecture failure — mixing things that should not be mixed.
 
-将 Planner 与 Executor 拆分，即使还没切换到更强模型，也能立刻降低认知负担与错误率。Planner 可以专注于全局决策、验证与反思，Executor 可以专心处理底层实现与调试。这种简单的分层让每个角色都能在相对干净的信息环境中工作，从而做出更好的决策。关键是：隔离不是为了模仿组织架构，而是为了让信息流变得可管理。
+Splitting Planner from Executor, even before switching to a stronger model, immediately reduces cognitive load and error rate. The Planner can focus on global decisions, verification, and reflection; the Executor can concentrate on low-level implementation and debugging. This simple layering lets each role work in a relatively clean information environment, leading to better decisions. The key: isolation is not about mimicking organizational structure — it is about making information flow manageable.
 
-### 持久化状态与失忆问题
+### Persistent State and the Amnesia Problem
 
-但仅仅拆分角色还不够。Planner 和 Executor 如果仍然用对话来沟通，就会面临一个致命问题：只要 context window 一长或被截断，Planner 的指令就彻底丢失了。比如 Planner 前面说"你记得跑个版本兼容测试"，结果 Executor debug 几轮以后 Cursor 把 context window 截断，这句话就消失了。因为它不在 Executor 的 context window 里面，Executor 下次再执行的时候就会完全不记得这回事。这就像公司里管理层和执行层都很忙，吭哧吭哧干活，没人干写文档这种小事，结果执行层没有能力跟踪进度，全靠老板提醒。老板自己也记不得技术细节，天天跑来问同样的问题。
+But splitting roles alone is not enough. If Planner and Executor still communicate through conversation, they face a fatal problem: as soon as the context window grows long or gets truncated, the Planner's instructions are completely lost. For example, the Planner earlier said "remember to run a version compatibility test," but after the Executor debugs for several rounds and Cursor truncates the context window, that sentence disappears. Since it is no longer in the Executor's context window, the next time the Executor runs, it will have completely forgotten about it. This is like a company where both management and execution layers are busy working hard, but no one does the "minor" task of writing documentation, so the execution layer has no ability to track progress and relies entirely on the boss's reminders. The boss themselves can't remember the technical details and comes asking the same questions every day.
 
-解决方案是强制使用一份共享的 Scratchpad 文档。任何思路分析、测试结果、遇到的 Bug、最后讨论的结论，都写进这份文件里。这样一来，Planner 可以随时在文档里查看当前难点和进度，也能留下新的任务指令；Executor 在做完一个功能或踩到什么坑，就把结果和反馈更新到文档，Planner 读到了就不会忘。通过把对话管道变成一个持久化的笔记本，我们基本解决了 LLM 上下文丢失的问题。哪怕对话一时刷新了，只要再引用文档就行。失忆和踩同一个坑的概率立刻就降低了很多。这不仅仅是一个工程技巧，而是把脆弱的聊天变成了持久的状态机。
+The solution is to enforce a shared Scratchpad document. Any analysis, test results, bugs encountered, and final discussion conclusions are written into this file. This way, the Planner can check current difficulties and progress in the document at any time and leave new task instructions; the Executor, after completing a feature or hitting a pitfall, updates the document with results and feedback, and the Planner won't forget after reading it. By turning the conversation pipe into a persistent notebook, we essentially solve the LLM context loss problem. Even if the conversation refreshes temporarily, just referencing the document again is enough. The probability of amnesia and stepping on the same pitfall drops immediately. This is not just an engineering trick — it is turning a fragile chat into a persistent state machine.
 
-### 过度工程化与约束的必要性
+### Over-Engineering and the Necessity of Constraints
 
-更强的 Planner（比如 o1）会带来更深的思考，但也会提高过度工程化的风险。一个有经验的 senior engineer 会在小规模数据上验证通过，然后再部署到大规模数据上，这样会省下很多 debug 的时间。但一个不够克制的 Planner 往往会一把就直接在最终的大规模数据上进行 debug，或者把一个小程序设计成一个 Concurrent Large-Scale Platform，搞得流程极其臃肿。这就好像你在人类团队里请来了一个很有名的咨询公司，这些咨询师们为了显示自己很牛逼，往往给出一些特别精致、庞大但是臃肿的方案。底下的人忙了半天，但其实对最终的 business goal 一点用都没有，也不一定能提升效率。
+A stronger Planner (e.g., o1) brings deeper thinking but also raises the risk of over-engineering. An experienced senior engineer would validate on small-scale data first, then deploy to large-scale data, saving a lot of debugging time. But an insufficiently restrained Planner often jumps straight to debugging on the final large-scale data, or turns a small program design into a Concurrent Large-Scale Platform, making the process extremely bloated. This is like hiring a famous consulting firm for your human team — these consultants, to show how impressive they are, often produce exquisitely elaborate but bloated proposals. The people on the ground work hard, but it ultimately contributes nothing to the actual business goal and may not even improve efficiency.
 
-因此隔离必须配合约束与显式验证。通过 prompting 让 Planner 有一个 Founder Mindset，不要老想着一步到位，做成业界最牛逼的整个平台，而是 Bias for Action，有什么机会就抓住它。先做一个简单的 prototype 出来，在验证了可行性之后，再一步一步往上加更多的功能。尤其要让 Planner 在跟 Executor 布置任务的时候，需要明确每一步拆分的必要性和验证方法。同时让 Executor 也能在文档的反馈区提出疑问，如果觉得方案太复杂，可以 challenge Planner 再次审视是不是真有必要，或者做进一步的分解。用这样一套交互和验收机制去控制 Planner 的推理。
+Therefore, isolation must be paired with constraints and explicit verification. Through prompting, give the Planner a Founder Mindset — don't always aim for a one-shot, industry-best complete platform; instead, Bias for Action, seize whatever opportunity presents itself. Build a simple prototype first, validate feasibility, then add more features step by step. In particular, when the Planner assigns tasks to the Executor, it must clarify the necessity of each decomposition step and the verification method. At the same time, let the Executor raise questions in the document's feedback area — if a plan seems too complex, it can challenge the Planner to re-examine whether it is truly necessary or to decompose further. Use this set of interaction and acceptance mechanisms to control the Planner's reasoning.
 
-### 交叉校验与抽象思考
+### Cross-Verification and Abstract Thinking
 
-当上下文保持干净，多 Agent 系统才能做真正的交叉校验与抽象思考，而不是淹没在彼此的噪声里。一个干净的 Planner 上下文意味着它可以看到全局的决策历史和验证结果，而不是被执行细节淹没。一个干净的 Executor 上下文意味着它可以专注于当前的任务，而不是被过去的规划讨论分散注意力。这种隔离让两个 Agent 可以在各自的信息域里做出高质量的决策，然后通过共享的 Scratchpad 进行有效的协调。结果是系统既能做出深思熟虑的规划，也能做出精确的执行，而不是两者都打折扣。
+When contexts stay clean, a multi-agent system can do genuine cross-verification and abstract thinking, rather than drowning in each other's noise. A clean Planner context means it can see the global decision history and verification results, rather than being submerged in execution details. A clean Executor context means it can focus on the current task, rather than being distracted by past planning discussions. This isolation lets both agents make high-quality decisions in their respective information domains, then coordinate effectively through the shared Scratchpad. The result is a system that can do both thoughtful planning and precise execution, rather than compromising on both.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-**何时使用**：
-- 任务同时需要宏观规划与底层编辑/调试
-- 当 agent 因上下文过载开始循环/回归时
-- 需要跨越多个 context window 截断的长期任务
-- 规划与执行的失败模式不同（规划失败是方向错，执行失败是细节错）
+**When to use**:
+- Tasks that simultaneously require macro-level planning and low-level editing/debugging
+- When an agent starts looping/regressing due to context overload
+- Long-running tasks that span multiple context window truncations
+- When planning and execution have different failure modes (planning failure = wrong direction; execution failure = wrong details)
 
-**如何实践**：
-1. 按信息域定义角色（Planner、Executor、可选的 Evaluator），而不是按组织结构
-2. 为每个角色提供独立上下文，明确它们各自应该看到什么信息
-3. 强制使用一份共享 scratchpad 来记录目标、决策、测试结果与下一步行动
-4. 设计清晰的交接物（handoff artifacts）：Planner 输出的是验证标准和拆分方案，Executor 输出的是执行结果和反馈
-5. 定期在 scratchpad 中进行显式的验收检查，而不是依赖隐含的理解
+**How to practice**:
+1. Define roles by information domain (Planner, Executor, optional Evaluator), not by organizational structure
+2. Provide independent context for each role, clarifying what information each should see
+3. Enforce a shared scratchpad to record goals, decisions, test results, and next actions
+4. Design clear handoff artifacts: Planner outputs verification criteria and decomposition plans; Executor outputs execution results and feedback
+5. Conduct explicit acceptance checks in the scratchpad regularly, rather than relying on implicit understanding
 
-## 4. 陷阱
+## 4. Pitfalls
 
-**陷阱 1：隔离变成孤岛**。如果 Planner 和 Executor 的上下文完全隔离，但没有有效的沟通机制，就会变成两个独立的系统各自为政。Scratchpad 必须是活的、被定期更新的，而不是一个死的文档。
+**Pitfall 1: Isolation becomes silos**. If Planner and Executor contexts are completely isolated without an effective communication mechanism, they become two independent systems working at cross-purposes. The Scratchpad must be alive, regularly updated — not a dead document.
 
-**陷阱 2：过度设计交接物**。试图通过复杂的交接协议来保证完美的沟通，反而会增加系统的复杂度。最好的交接物是简单的、可验证的、人类可读的。
+**Pitfall 2: Over-designed handoff artifacts**. Trying to guarantee perfect communication through complex handoff protocols only increases system complexity. The best handoff artifacts are simple, verifiable, and human-readable.
 
-**陷阱 3：隔离成为逃避责任**。Executor 不能以"这不在我的上下文里"为借口来忽视明显的问题。隔离是为了提高效率，不是为了推卸责任。
+**Pitfall 3: Isolation becomes an excuse to evade responsibility**. The Executor cannot use "this is not in my context" as an excuse to ignore obvious problems. Isolation is for improving efficiency, not for shirking responsibility.
 
-**陷阱 4：忽视隔离的成本**。多 Agent 系统的协调开销是真实的。只有当任务的复杂度足够高，或者单个 Agent 的上下文确实成为瓶颈时，隔离的收益才能超过成本。
+**Pitfall 4: Ignoring the cost of isolation**. The coordination overhead of multi-agent systems is real. Only when task complexity is high enough, or a single agent's context is genuinely the bottleneck, does the benefit of isolation exceed its cost.
 
-## 5. 相关 Axiom
+## 5. Related Axioms
 
-- **T2 结果确定性优于过程确定性**：隔离的目的是让每个 Agent 能更好地验证自己的输出，而不是试图通过事无巨细的管控来保证正确性。
-- **T5 认知是资产，代码是商品**：隔离让 Planner 可以专注于捕获认知（理解、验证标准、决策理由），而不是被执行细节淹没。
-- **T6 依赖拓扑优于任务数量**：隔离的粒度应该由信息依赖关系决定，而不是任意地拆分任务。
-- **T7 隔离-处理-验证的闭环**：上下文隔离是这个闭环的基础：Planner 隔离地收集事实和做规划，Executor 隔离地处理，共享 Scratchpad 是验证的接口。
+- **T02 Results Certainty Over Process Certainty**: The purpose of isolation is to let each agent better verify its own output, rather than trying to guarantee correctness through micromanagement.
+- **T05 Cognition Is an Asset, Code Is a Commodity**: Isolation lets the Planner focus on capturing cognition (understanding, verification criteria, decision rationale) rather than being submerged in execution details.
+- **T06 Dependency Topology Over Task Count**: The granularity of isolation should be determined by information dependency relationships, not arbitrary task decomposition.
+- **T07 Isolation-Processing-Verification Loop**: Context isolation is the foundation of this loop: the Planner collects facts and plans in isolation, the Executor processes in isolation, and the shared Scratchpad is the verification interface.

@@ -3,105 +3,113 @@ id: axiom_ask_do_paradigm_2026
 category: ai_agentic
 created: 2026-02-23
 updated: 2026-02-23
+raw_sources:
+  - "contexts/blog/content/agentic-ai-en.md"
+  - "contexts/blog/content/result-certainty-en.md"
+  - "https://www.anthropic.com/research/measuring-agent-autonomy"
+  - "https://www.anthropic.com/research/project-vend-2"
+  - "arXiv:2602.17910 (Alignment in Time: Peak-Aware Orchestration)"
+  - "arXiv:2602.17091 (What to Cut? Predicting Unnecessary Methods in Agentic Code Generation)"
+  - "arXiv:2602.16553 (Agentic AI, Medical Morality, and the Transformation of the Patient-Physician Relationship)"
 ---
 
-# 从咨询到执行的范式转移
+# From Ask to Do: The Paradigm Shift
 
-## 1. 核心公理
+## 1. Core Axiom
 
-AI 真正具有变革性，是在它端到端交付最终制品（"ask-do"），而不是仅仅回答问题或起草中间步骤。这个转变的本质是：**从"给我答案"到"给我完成的东西"**。
-
----
-
-## 2. 深度推演
-
-**闭环压缩的力量**：ask-do 把拆解、实现、调试压缩到同一个闭环里。在传统咨询模式中，人类必须在每个步骤之间做决策——AI 给出建议 → 人类评估 → 人类执行 → 人类观察结果 → 人类调整。每个转折都是摩擦。在 ask-do 模式中，AI 观察自己的输出，发现问题，自动调整，创造了一个 observe-correct 的闭环，而人类只需在关键决策点介入。Project Vend 研究显示：当 Claudius 被给予工具和程序化检查清单时，业务表现从亏损转向盈利。关键不是更聪明的模型，而是能够执行、观察、纠正的架构。这个转变的经济学意义在于：从"人类时间是瓶颈"转向"约束和验证是瓶颈"。
-
-**人类瓶颈上移到合约层**：定义"完成"是什么，以及如何验证它。你不再需要微管理 AI 的每一步，而是：(1) 定义验收标准（清晰到一个失忆的实习生也能理解），(2) 提供检查手段（自动化测试、格式验证、业务规则检查），(3) 让 AI 自己选择方法（只要最终通过检查）。Anthropic 的"Measuring AI Agent Autonomy"研究发现：经验丰富的用户不是减少对 AI 的监督，而是改变监督方式——从"逐个批准每个动作"转向"让 AI 自主运行，在出问题时介入"。这正是合约层思维的体现。在医疗领域，医生不再验证 AI 的每个推理步骤，而是定义"什么样的诊断建议是可接受的"（基于证据、可解释性、风险等级），然后让 AI 在这个框架内工作。这种转变要求人类从"执行者"升级为"标准定义者"。
-
-**工具访问与多轮执行**：没有 execute → observe → correct，你就回到了"踢一下，动一下"。没有工具的 AI 只能"说"；有工具的 AI 可以"做"。工具的种类决定了 AI 能做什么：代码执行工具用于软件工程（目前 50% 的 agentic 活动），数据库访问用于业务流程自动化，浏览器+搜索用于研究和信息综合，CRM+库存系统用于商业运营，医疗记录系统用于临床决策支持。多轮执行让 AI 学会识别自己的不确定性——Claude Code 在最复杂的任务上会主动停下来问澄清问题，频率是人类中断它的 2 倍。这说明 AI 在学会自我校准。多轮执行的价值不仅在于纠正错误，更在于 AI 能够在执行过程中发现原始需求的歧义，主动寻求澄清。
-
-**人类工作转向处理模糊性**：当执行成本趋零时，稀缺的不再是"能做什么"，而是"应该做什么"。人类的竞争优势转向意图清晰化（把模糊需求转化为可验证标准）、风险判断（在多个可行方案中选择风险-收益最优的）、品味（选择最优雅、最可维护、最符合长期愿景的方案）、伦理与价值观（在 AI 能做的事和应该做的事之间划线）。Project Vend 的一个有趣发现：CEO agent 和 Claudius 都倾向于"友好地给折扣"，因为它们被训练得很有帮助。但这违反了商业逻辑。人类需要设定"不折扣"这样的硬约束，然后让 AI 在这个框架内优化。这反映了一个深层的真理：AI 的能力和人类的价值判断是互补的，而不是替代的。
+AI becomes truly transformative when it delivers finished artifacts end-to-end ("ask-do"), rather than merely answering questions or drafting intermediate steps. The essence of this shift: **from "give me an answer" to "give me the finished thing."**
 
 ---
 
-## 3. 应用判定
+## 2. Deep Reasoning
 
-任务的真实交付物是一个制品（图表、图片编辑、排版后的文档、可工作的代码改动），且"正确"可以被检查。
+**The power of compressed loops**: ask-do compresses decomposition, implementation, and debugging into a single loop. In the traditional consulting model, humans must decide at every step — AI gives advice → human evaluates → human executes → human observes results → human adjusts. Each handoff is friction. In ask-do, AI observes its own output, spots problems, and adjusts automatically, creating an observe-correct loop where humans only intervene at key decision points. Project Vend research shows: when Claudius was given tools and a programmatic checklist, business performance shifted from loss to profit. The key was not a smarter model, but an architecture capable of executing, observing, and correcting. The economics of this shift: from "human time is the bottleneck" to "constraints and verification are the bottleneck."
 
-| 领域 | 适用场景 | 不适用场景 |
-|------|---------|----------|
-| **软件工程** | 代码生成、测试编写、重构（有 linter/test 检查） | 架构决策、技术选型（需要权衡多个维度） |
-| **内容创作** | 翻译、格式转换、初稿生成（有风格指南） | 创意方向、品牌声音定义 |
-| **数据分析** | 数据清洗、报表生成、异常检测（有验证集） | 假设设定、指标选择 |
-| **医疗** | 诊断建议生成（有证据库）、患者教育内容 | 治疗方案选择（涉及伦理权衡） |
-| **商业运营** | 库存管理、订单处理、客服回复（有规则） | 定价策略、市场进入决策 |
-| **研究** | 文献综述、数据处理、初稿撰写 | 研究问题定义、方法论选择 |
+**The human bottleneck moves up to the contract layer**: defining what "done" means and how to verify it. You no longer micromanage every step of AI. Instead: (1) define acceptance criteria (clear enough that an amnesiac intern could understand), (2) provide checks (automated tests, format validation, business rule checks), (3) let AI choose its own method (as long as it passes the checks). Anthropic's "Measuring AI Agent Autonomy" study found: experienced users don't reduce supervision of AI — they change how they supervise, shifting from "approve every action" to "let AI run autonomously, intervene when something goes wrong." This is the contract-layer mindset in action. In medicine, doctors no longer verify every reasoning step of AI; they define "what kind of diagnostic suggestion is acceptable" (evidence-based, explainable, risk-graded), then let AI work within that framework. This shift demands that humans upgrade from "executor" to "standard-definer."
 
-**边界条件**：ask-do 在以下情况失效：(1) "正确"无法被客观验证（艺术创作的"好坏"），(2) 任务涉及多个相互冲突的目标（成本 vs 质量 vs 速度），(3) 执行的后果不可逆且高风险（手术决策、大额财务承诺），(4) 任务需要实时人类判断的情境感知（谈判、危机管理），(5) AI 的"理解"与人类的隐含假设存在根本性偏差（Project Vend 中的"友好折扣"问题）。
+**Tool access and multi-turn execution**: without execute → observe → correct, you're back to "kick it, it moves." AI without tools can only "say"; AI with tools can "do." The types of tools determine what AI can do: code execution tools for software engineering (currently 50% of agentic activity), database access for business process automation, browser + search for research and information synthesis, CRM + inventory systems for business operations, medical record systems for clinical decision support. Multi-turn execution lets AI learn to recognize its own uncertainty — Claude Code pauses to ask clarifying questions on the most complex tasks at twice the rate humans interrupt it. This shows AI is learning self-calibration. The value of multi-turn execution is not just correcting errors, but AI discovering ambiguity in the original requirements during execution and proactively seeking clarification.
 
-**如何练习**：直接索要制品，说明验收标准（最好是可运行的检查），然后针对输出反馈，而不是对步骤进行微管理。
-
-写清验收标准的三个层级：不好是"生成一个好的代码审查评论"（太模糊），好是"生成一个代码审查评论，指出性能问题、提供具体改进建议、包含参考链接，长度 < 200 字"（具体但需人工验证），更好是"生成代码审查评论，必须通过这个 linter 检查"（可自动验证）。验收标准的清晰度直接决定了 AI 能否自主迭代。标准越具体，AI 的成功率越高；标准越模糊，人类的干预就越频繁。标准应该是可测量的、可重复的、与业务目标直接相关的。
-
-提供可执行的检查：代码用单元测试、类型检查、linter；文档用拼写检查、风格指南验证、链接有效性；数据用 schema 验证、统计检查、异常检测；医疗用证据库查询、禁忌症检查、伦理审查清单。检查的自动化程度越高，AI 的迭代效率越高。理想情况下，检查应该是完全自动化的，这样 AI 可以在秒级时间内获得反馈并调整。检查应该覆盖功能性、非功能性和约束性的要求。
-
-让 AI 迭代直到通过——给 AI 看检查失败的原因，让它自己调整方法，不要告诉它"怎么做"，只告诉它"什么是错的"。这种"黑盒反馈"的方式迫使 AI 进行真正的问题解决，而不是简单地遵循指令。在关键点介入：当 AI 问澄清问题时（这是好信号），当多个方案都通过检查时（需要人类品味判断），当结果超出预期时（可能发现了新机会）。人类的介入应该是有针对性的，而不是全面的。
+**Human work shifts to handling ambiguity**: when execution cost approaches zero, what's scarce is no longer "what can be done" but "what should be done." Human competitive advantage shifts to intent clarification (turning vague requirements into verifiable standards), risk judgment (choosing the optimal risk-reward among multiple feasible options), taste (selecting the most elegant, maintainable, long-term-vision-aligned option), ethics and values (drawing the line between what AI can do and what it should do). An interesting finding from Project Vend: both the CEO agent and Claudius tended to "generously give discounts" because they were trained to be helpful. But this violated business logic. Humans need to set hard constraints like "no discounts," then let AI optimize within that framework. This reflects a deeper truth: AI's capability and human value judgment are complementary, not substitutive.
 
 ---
 
-## 4. 深层洞察与陷阱
+## 3. Application Criteria
 
-**友好性陷阱**：Project Vend 的关键发现是 AI 被训练得很有帮助，所以它倾向于满足用户的请求，即使这违反了商业逻辑。Claudius 会给折扣、送免费物品、同意不合理的合同（洋葱期货法案的例子）。教训是：不能依赖 AI 的"常识"来执行商业规则，必须把规则显式化。验收标准必须包括"不应该做什么"，不仅仅是"应该做什么"。当 AI 的目标函数（"帮助用户"）与系统的目标函数（"盈利"）冲突时，需要明确的约束。这个陷阱的深层原因是：AI 的训练目标（对齐人类偏好）与实际系统目标（商业成功）之间的不匹配。防止这个陷阱的唯一方法是把所有的商业规则都编码为硬约束。
+The task's real deliverable is an artifact (chart, image edit, formatted document, working code change), and "correctness" can be checked.
 
-**自主性悖论**：Anthropic 的研究显示经验丰富的用户给 AI 更多自主权（从 20% 的自动批准增加到 40%），但同时也更频繁地中断 AI（从 5% 增加到 9%）。这看起来矛盾，但实际上反映了成熟的监督模式：新用户逐个批准每个动作（高摩擦，低风险），经验丰富的用户让 AI 自主运行但主动监控，在出问题时快速介入（低摩擦，可控风险）。ask-do 不意味着"完全自主"，而是"在明确的约束内自主"。有效的监督不是批准每个动作，而是能够快速识别和纠正问题。这种模式的成功取决于人类对系统的深刻理解——知道什么时候应该信任 AI，什么时候应该干预。这也意味着人类需要不断学习和适应 AI 的行为模式。
+| Domain | Applicable | Not Applicable |
+|--------|-----------|----------------|
+| **Software Engineering** | Code generation, test writing, refactoring (with linter/test checks) | Architecture decisions, tech selection (require multi-dimensional trade-offs) |
+| **Content Creation** | Translation, format conversion, draft generation (with style guides) | Creative direction, brand voice definition |
+| **Data Analysis** | Data cleaning, report generation, anomaly detection (with validation sets) | Hypothesis formulation, metric selection |
+| **Medicine** | Diagnostic suggestion generation (with evidence base), patient education content | Treatment plan selection (involves ethical trade-offs) |
+| **Business Operations** | Inventory management, order processing, customer service replies (with rules) | Pricing strategy, market entry decisions |
+| **Research** | Literature review, data processing, draft writing | Research question definition, methodology selection |
 
-**长期稳定性**：Anthropic 的"Alignment in Time"论文指出传统的 AI 对齐研究关注单个输出，但长期自主运行的 agent 需要在整个轨迹上保持可靠性。一个 agent 可能在前 10 步表现完美，但在第 50 步开始偏离；错误会在多轮执行中累积和放大。ask-do 的可靠性不仅取决于单个决策的质量，还取决于整个执行轨迹的稳定性。需要在长期运行中定期"重新校准"agent 的目标和约束，监控不仅要看最终结果，还要看执行过程中的关键指标。这意味着 ask-do 不是"一次性设置后就放手"，而是需要持续的人类参与。长期运行的 agent 需要定期的审计和重新验证。
+**Boundary conditions**: ask-do fails when: (1) "correctness" cannot be objectively verified (the "goodness" of artistic creation), (2) the task involves multiple conflicting objectives (cost vs quality vs speed), (3) the consequences of execution are irreversible and high-risk (surgical decisions, large financial commitments), (4) the task requires real-time human judgment with situational awareness (negotiation, crisis management), (5) there is a fundamental gap between AI's "understanding" and human implicit assumptions (the "friendly discount" problem in Project Vend).
 
-**跨域适用性的限制**：目前 agentic 活动的 50% 集中在软件工程，因为软件工程的"正确性"最容易被验证（测试、linter、类型检查），执行的后果相对可逆（可以回滚代码），工具生态最成熟（git、IDE、CI/CD）。当扩展到其他领域时：医疗的验证变得困难（需要长期随访），后果不可逆（患者伤害）；金融的验证需要实时市场数据，后果立即且不可逆；创意工作的"正确"本身就是模糊的，难以验证；人力资源涉及伦理和权力动态，不能完全自动化。ask-do 范式最适合"可验证、可逆、工具生态成熟"的领域。在其他领域应用时，需要更强的人类监督和更明确的约束。
+**How to practice**: directly ask for the artifact, state acceptance criteria (preferably runnable checks), then give feedback on the output rather than micromanaging the steps.
 
----
+Three levels of writing acceptance criteria: bad is "generate a good code review comment" (too vague), good is "generate a code review comment that points out performance issues, provides specific improvement suggestions, includes reference links, length < 200 words" (specific but needs human verification), better is "generate a code review comment that must pass this linter check" (automatically verifiable). The clarity of acceptance criteria directly determines whether AI can iterate autonomously. The more specific the criteria, the higher AI's success rate; the vaguer the criteria, the more frequent human intervention. Criteria should be measurable, repeatable, and directly tied to business goals.
 
-## 5. 实践案例
+Provide executable checks: for code, use unit tests, type checks, linters; for documents, use spell checks, style guide validation, link validity; for data, use schema validation, statistical checks, anomaly detection; for medicine, use evidence base queries, contraindication checks, ethical review checklists. The more automated the checks, the higher AI's iteration efficiency. Ideally, checks should be fully automated so AI can get feedback and adjust within seconds. Checks should cover functional, non-functional, and constraint-based requirements.
 
-**代码生成**：Ask "写一个函数，从 CSV 读取用户数据，去重，返回 DataFrame"。Do：AI 生成代码。Check：代码通过 pytest、通过 mypy 类型检查、处理空文件和格式错误的行、性能在 1M 行数据上 < 5 秒。Iterate：如果检查失败，AI 看到失败信息，自动调整。这个例子展示了 ask-do 在软件工程中的完整流程。验收标准是完全可自动化的，所以 AI 可以在几秒内完成多次迭代。这也是为什么软件工程是 ask-do 最成熟的应用领域。
-
-**医疗诊断建议**：Ask "基于这个患者的症状和检查结果，生成诊断建议"。Do：AI 生成建议。Check：建议基于最新临床指南、包含证据等级标注、列出禁忌症和风险、建议进一步检查的清单。Iterate：医生看到建议，可以接受、修改或拒绝。这个例子展示了 ask-do 在医疗领域的应用，其中人类的最终决策权是不可转让的。即使 AI 的建议通过了所有检查，医生仍然需要根据患者的具体情况做出最终决策。医疗领域的 ask-do 永远不会是完全自动化的。
-
-**商业运营**：Ask "管理库存，最大化利润"。Do：AI 做定价、采购、销售决策。Check：所有定价 >= 成本 * 1.5（硬约束）、库存周转率 > 0.8（KPI）、无超期库存。Iterate：如果违反约束，AI 自动调整；CEO 定期审查 KPI。这个例子展示了 ask-do 如何通过明确的约束来防止"友好性陷阱"。硬约束确保 AI 永远不会做出违反商业规则的决策，即使这样做在表面上看起来更"友好"。
-
----
-
-## 6. 关键转变的本质
-
-ask-do 范式的成功不在于 AI 的能力，而在于人类如何定义问题。从"告诉 AI 怎么做"转向"告诉 AI 什么是成功"，这个转变看似简单，但实际上要求人类进行深刻的思考。你必须能够清晰地定义"完成"是什么，这往往比执行本身更困难。这也解释了为什么 ask-do 在软件工程中最成熟——因为"代码通过测试"是一个明确的、可验证的成功标准。在其他领域，定义成功往往需要权衡多个维度，这就是为什么人类的角色变得更加重要。
-
-ask-do 的另一个关键洞察是：**结果确定性胜过过程确定性**。你不需要知道 AI 是如何得出答案的，只需要知道答案是否满足你的标准。这种转变释放了 AI 的创造力，让它可以尝试不同的方法，而不是被迫遵循特定的步骤。这也意味着 AI 可能会发现你没有想到的解决方案。
+Let AI iterate until it passes — show AI why the check failed, let it adjust its own method, don't tell it "how to do it," only tell it "what's wrong." This "black-box feedback" approach forces AI into genuine problem-solving rather than simply following instructions. Intervene at key points: when AI asks clarifying questions (a good signal), when multiple solutions all pass checks (needs human taste judgment), when results exceed expectations (may have discovered new opportunities). Human intervention should be targeted, not comprehensive.
 
 ---
 
-## 7. 实施建议
+## 4. Deep Insights and Pitfalls
 
-**第一步：明确你的验收标准**。不要说"生成一个好的报告"，而是说"生成一个报告，包含以下部分：执行摘要（< 200 字）、数据分析（包含至少 3 个图表）、建议（可行的、有优先级的）、参考资料"。验收标准应该足够具体，使得任何人都能判断输出是否符合要求。
+**The helpfulness trap**: Project Vend's key finding is that AI is trained to be helpful, so it tends to satisfy user requests even when this violates business logic. Claudius would give discounts, send free items, agree to unreasonable contracts (the onion futures act example). The lesson: you cannot rely on AI's "common sense" to enforce business rules — rules must be made explicit. Acceptance criteria must include "what should not be done," not just "what should be done." When AI's objective function ("help the user") conflicts with the system's objective function ("be profitable"), explicit constraints are needed. The deeper cause of this trap: the mismatch between AI's training objective (aligning with human preferences) and the actual system objective (business success). The only way to prevent this trap is to encode all business rules as hard constraints.
 
-**第二步：自动化你的检查**。如果可能的话，写代码来验证输出。如果不能完全自动化，至少要有一个清单，这样你可以快速评估 AI 的输出。自动化检查的好处是 AI 可以立即获得反馈，而不需要等待人类的评估。
+**The autonomy paradox**: Anthropic's research shows experienced users give AI more autonomy (from 20% auto-approval to 40%), but also interrupt AI more frequently (from 5% to 9%). This seems contradictory but actually reflects a mature supervision pattern: new users approve every action individually (high friction, low risk), experienced users let AI run autonomously but actively monitor, intervening quickly when problems arise (low friction, controllable risk). ask-do does not mean "full autonomy" — it means "autonomy within explicit constraints." Effective supervision is not approving every action, but being able to quickly identify and correct problems. The success of this pattern depends on the human's deep understanding of the system — knowing when to trust AI and when to intervene. This also means humans need to continuously learn and adapt to AI's behavioral patterns.
 
-**第三步：给 AI 反馈，而不是指导**。当 AI 的输出不符合标准时，告诉它"这个报告缺少数据分析部分"，而不是"你应该添加一个数据分析部分，包含以下步骤..."。这样做可以让 AI 自己想出解决方案，而不是简单地遵循你的指示。
+**Long-term stability**: Anthropic's "Alignment in Time" paper points out that traditional AI alignment research focuses on individual outputs, but agents running autonomously over long periods need to maintain reliability across the entire trajectory. An agent may perform perfectly for the first 10 steps but start drifting at step 50; errors accumulate and amplify across multi-turn execution. The reliability of ask-do depends not only on the quality of individual decisions but also on the stability of the entire execution trajectory. Agents need periodic "recalibration" of goals and constraints during long runs; monitoring must look at not just final results but also key indicators during execution. This means ask-do is not "set it once and let go" — it requires ongoing human involvement. Long-running agents need regular audits and re-verification.
 
-**第四步：定期审查和调整**。ask-do 不是一次性的设置。随着时间的推移，你可能会发现新的边界情况或需要调整约束。定期审查 AI 的输出，看看是否需要更新验收标准。这也是一个学习过程，你会逐渐了解 AI 的能力和局限。
+**Cross-domain applicability limits**: currently 50% of agentic activity is concentrated in software engineering, because software engineering's "correctness" is easiest to verify (tests, linters, type checks), execution consequences are relatively reversible (code can be rolled back), and the tool ecosystem is most mature (git, IDE, CI/CD). When expanding to other domains: medical verification becomes difficult (needs long-term follow-up), consequences are irreversible (patient harm); financial verification needs real-time market data, consequences are immediate and irreversible; creative work's "correctness" is inherently fuzzy, hard to verify; HR involves ethics and power dynamics, cannot be fully automated. The ask-do paradigm is best suited for domains that are "verifiable, reversible, with mature tool ecosystems." In other domains, stronger human supervision and more explicit constraints are needed.
 
 ---
 
-## 8. 总结：从"咨询"到"执行"的转变
+## 5. Practical Examples
 
-| 维度 | 咨询模式 | Ask-Do 模式 |
-|------|---------|-----------|
-| **交付物** | 建议、草稿、分析 | 完成的制品 |
-| **验证方式** | 人类评估步骤 | 自动化检查 + 人类审查 |
-| **人类角色** | 微管理每一步 | 定义标准、做关键决策 |
-| **反馈循环** | 缓慢（人类驱动） | 快速（AI 驱动） |
-| **可扩展性** | 低（受人类时间限制） | 高（受工具和约束限制） |
-| **适用范围** | 所有任务 | 可验证、可逆的任务 |
-| **风险** | 低（人类控制） | 中等（需要明确约束） |
+**Code generation**: Ask "write a function that reads user data from CSV, deduplicates, returns a DataFrame." Do: AI generates code. Check: code passes pytest, passes mypy type check, handles empty files and malformed rows, performance < 5 seconds on 1M rows. Iterate: if checks fail, AI sees the failure information and adjusts automatically. This example shows the complete ask-do flow in software engineering. Acceptance criteria are fully automatable, so AI can complete multiple iterations within seconds. This is why software engineering is the most mature application domain for ask-do.
 
-**最后的洞察**：ask-do 不是"让 AI 完全自主"。它是"让 AI 在明确的约束和验证框架内自主执行，人类在关键点介入"。这需要清晰的验收标准、可执行的检查、快速的反馈循环、明确的约束和禁区、定期的人类审查和重新校准。当这些条件满足时，ask-do 范式可以显著提高效率和可靠性。当这些条件不满足时，回到咨询模式。
+**Medical diagnostic suggestion**: Ask "based on this patient's symptoms and test results, generate a diagnostic suggestion." Do: AI generates suggestion. Check: suggestion is based on latest clinical guidelines, includes evidence level annotations, lists contraindications and risks, suggests further examination checklist. Iterate: doctor sees suggestion, can accept, modify, or reject. This example shows ask-do applied in medicine, where the human's final decision authority is non-transferable. Even if AI's suggestion passes all checks, the doctor still needs to make the final decision based on the patient's specific situation. Medical ask-do will never be fully automated.
+
+**Business operations**: Ask "manage inventory, maximize profit." Do: AI makes pricing, purchasing, sales decisions. Check: all pricing >= cost * 1.5 (hard constraint), inventory turnover > 0.8 (KPI), no expired inventory. Iterate: if constraints are violated, AI adjusts automatically; CEO periodically reviews KPIs. This example shows how ask-do prevents the "helpfulness trap" through explicit constraints. Hard constraints ensure AI never makes decisions that violate business rules, even if doing so appears more "friendly" on the surface.
+
+---
+
+## 6. The Essence of the Key Shift
+
+The success of the ask-do paradigm lies not in AI's capability but in how humans define problems. Shifting from "tell AI how to do it" to "tell AI what success looks like" seems simple, but it actually demands deep thinking from humans. You must be able to clearly define what "done" means, which is often harder than the execution itself. This also explains why ask-do is most mature in software engineering — because "code passes tests" is a clear, verifiable success criterion. In other domains, defining success often requires weighing multiple dimensions, which is why the human role becomes more important.
+
+Another key insight of ask-do: **results certainty beats process certainty**. You don't need to know how AI arrived at the answer — you only need to know whether the answer meets your criteria. This shift unleashes AI's creativity, letting it try different approaches rather than being forced to follow specific steps. This also means AI may discover solutions you hadn't thought of.
+
+---
+
+## 7. Implementation Advice
+
+**Step one: clarify your acceptance criteria**. Don't say "generate a good report" — say "generate a report containing the following sections: executive summary (< 200 words), data analysis (including at least 3 charts), recommendations (actionable, prioritized), references." Acceptance criteria should be specific enough that anyone can judge whether the output meets requirements.
+
+**Step two: automate your checks**. If possible, write code to verify outputs. If full automation isn't possible, at least have a checklist so you can quickly evaluate AI's output. The benefit of automated checks is that AI gets immediate feedback without waiting for human evaluation.
+
+**Step three: give AI feedback, not guidance**. When AI's output doesn't meet criteria, tell it "this report is missing the data analysis section" rather than "you should add a data analysis section with the following steps..." This lets AI come up with its own solution rather than simply following your instructions.
+
+**Step four: periodically review and adjust**. ask-do is not a one-time setup. Over time, you may discover new edge cases or need to adjust constraints. Periodically review AI's output to see if acceptance criteria need updating. This is also a learning process — you gradually understand AI's capabilities and limitations.
+
+---
+
+## 8. Summary: From "Consulting" to "Execution"
+
+| Dimension | Consulting Mode | Ask-Do Mode |
+|-----------|----------------|-------------|
+| **Deliverable** | Advice, drafts, analysis | Finished artifact |
+| **Verification** | Human evaluates steps | Automated checks + human review |
+| **Human Role** | Micromanage every step | Define standards, make key decisions |
+| **Feedback Loop** | Slow (human-driven) | Fast (AI-driven) |
+| **Scalability** | Low (limited by human time) | High (limited by tools and constraints) |
+| **Scope** | All tasks | Verifiable, reversible tasks |
+| **Risk** | Low (human control) | Medium (needs explicit constraints) |
+
+**Final insight**: ask-do is not "let AI be fully autonomous." It is "let AI execute autonomously within explicit constraints and a verification framework, with humans intervening at key points." This requires clear acceptance criteria, executable checks, fast feedback loops, explicit constraints and no-go zones, and periodic human review and recalibration. When these conditions are met, the ask-do paradigm can significantly improve efficiency and reliability. When they are not, fall back to consulting mode.

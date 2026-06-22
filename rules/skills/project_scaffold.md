@@ -1,86 +1,86 @@
-# 项目脚手架与重整 Skill
+# Project Scaffold Skill
 
-把一个临时目录、散装脚本目录，或结构不完整的小项目，整理成可长期维护的标准项目形态。
+Upgrade a temporary directory, loose script directory, or structurally incomplete small project into a standard project form suitable for long-term maintenance.
 
-**触发词**: "bootstrap 一个 project"、"scaffold 一个 project"、"把这个目录整理成项目"、"补齐 PRD/RFC/working"、"给这个目录单独建 git repo"
+**Trigger words**: "bootstrap a project", "scaffold a project", "organize this directory into a project", "fill in PRD/RFC/working", "create a separate git repo for this directory"
 
 ---
 
-## 1. 适用场景
+## 1. Applicable Scenarios
 
-当一个目录已经不再是一次性脚本，而是会被反复修改、需要多轮 AI 接手、需要测试、需要频繁提交时，就应该升级成标准项目结构。
+When a directory is no longer a one-off script but will be repeatedly modified, needs multiple rounds of AI handoff, needs testing, and needs frequent commits, it should be upgraded to a standard project structure.
 
-典型信号：
+Typical signals:
 
-- 目录里已经有 2 个以上脚本/模块
-- 用户明确要求补文档、加 tests、频繁 commit
-- 未来会继续迭代，不只是一次性任务
-- 需要独立 git 历史，不能一直混在 workspace 大仓库里
+- The directory already has 2+ scripts/modules
+- The user explicitly requests supplementing docs, adding tests, frequent commits
+- It will continue to iterate in the future, not just a one-time task
+- It needs independent git history and can't stay mixed in the workspace monorepo
 
 ---
 
 ## 2. Public/Private Repo Intake Gate
 
-**在动目录结构之前，必须先确认一件事：这个 repo 将来会不会发布到公开 GitHub。**
+**Before touching the directory structure, one thing must be confirmed: will this repo be published to public GitHub in the future?**
 
-因为 privacy、skill 拆分、`.env.example` 处理、fake fixture 这些东西全部取决于这个答案。如果 scaffolding 已经完成才发现是 public repo，回头改的成本高得多。
+Because privacy, skill splitting, `.env.example` handling, and fake fixtures all depend on this answer. If scaffolding is already complete before discovering it's a public repo, the cost of going back to fix things is much higher.
 
-### 确认方式
+### Confirmation Method
 
-脚手架开始时，问用户：
+At the start of scaffolding, ask the user:
 
-> 这个 repo 以后会发到公开 GitHub 吗？还是只在自己的 workspace/私人 Git 里用？
+> Will this repo be published to public GitHub in the future, or only used in your own workspace/private Git?
 
-选项：`public（会开源/发 GitHub）` / `private（只在本地用）`。
+Options: `public (will open-source/publish to GitHub)` / `private (local use only)`.
 
-不要跳过这步。用户不说，就问。
+Don't skip this step. If the user doesn't say, ask.
 
-### Public repo 必须做的事
+### Mandatory for Public Repos
 
-如果确认是 public repo，以下内容是强制要求，不属于可选的优化：
+If confirmed as a public repo, the following are mandatory requirements, not optional optimizations:
 
-1. **`.gitignore` 必须阻塞私密文件**。至少覆盖 `.env`、`.env.*`（保留 `!.env.example`）、`__pycache__/`、`.pytest_cache/`、`*.pyc`、`dist/`、`build/`、`*.egg-info/`、本地数据目录、日志目录。对于 Python 项目，加 `py.typed` 标记。
+1. **`.gitignore` must block private files**. At minimum cover `.env`, `.env.*` (keep `!.env.example`), `__pycache__/`, `.pytest_cache/`, `*.pyc`, `dist/`, `build/`, `*.egg-info/`, local data directories, log directories. For Python projects, add `py.typed` marker.
 
-2. **必须创建 `.env.example`**。所有环境变量用 fake 占位符，不要留空。live test 所需的 env var 必须在 `.env.example` 里列出并写入 fake 值，形式上和真实 `.env` 一致，这样抄过去就能用。
+2. **Must create `.env.example`**. All environment variables use fake placeholders, never leave them empty. Env vars required for live tests must be listed in `.env.example` with fake values, matching the form of a real `.env` so it can be copied and used directly.
 
-3. **所有公开文件用 fake handles / domains / keys**。`README.md`、docs、tests、fixtures、scripts 里不能出现真实的邮箱、手机号、API key、内部路径、服务器地址、1Password vault 引用。常用 fake 占位符：
-   - 邮箱：`alice@example.com`、`bob@example.net`
-   - 手机号：`+15555550123`（北美测试号段）
-   - API key：`replace-with-your-real-key`
-   - 1Password：`op://your-vault/your-item/your-field`
-   - 域名：`example.com`、`example.org`
+3. **All public files use fake handles / domains / keys**. `README.md`, docs, tests, fixtures, scripts must not contain real email addresses, phone numbers, API keys, internal paths, server addresses, or 1Password vault references. Common fake placeholders:
+   - Email: `alice@example.com`, `bob@example.net`
+   - Phone: `+15555550123` (North American test number range)
+   - API key: `replace-with-your-real-key`
+   - 1Password: `op://your-vault/your-item/your-field`
+   - Domain: `example.com`, `example.org`
 
-4. **README 必须声明 publishable**。在 README 的 Privacy 节写清楚：`This repository is designed to be publishable with only fake examples.`
+4. **README must declare publishability**. In the README's Privacy section, write clearly: `This repository is designed to be publishable with only fake examples.`
 
-5. **如果项目包含 skill**，必须拆成两层。公开 repo 里放技术实现（CLI、测试、API contract、skill 的工作流文档），私有联系人、私有路由、私有 handle 放在 workspace 全局 skill 目录（如 `rules/skills/`）或私有 `.env` 中。公开 repo 的 skill 文档里要写清楚「私有 alias 在哪找」。参考 `adhoc_jobs/resend_email_skill/`（公开技术 skill）和 `rules/skills/imessage.md`（私有联系人路由）的拆分方式。
+5. **If the project contains skills**, they must be split into two layers. The public repo holds the technical implementation (CLI, tests, API contract, skill workflow docs); private contacts, private routes, and private handles go in the workspace global skill directory (e.g., `rules/skills/`) or private `.env`. The public repo's skill docs must state clearly "where to find private aliases." Reference the split approach of `adhoc_jobs/resend_email_skill/` (public technical skill) and `rules/skills/imessage.md` (private contact routing).
 
    Public skill repos should assume loose Markdown-based installation, not vendor-specific skill packaging. The README must explain how a human can hand the GitHub URL to Codex, Claude Code, Cursor, OpenCode, or another coding agent and ask it to install the skill. The AI installer should start from the target workspace's `AGENTS.md` or `CLAUDE.md`, follow any routing file such as `WORKSPACE.md`, and then add the public repo's root skill to the workspace discovery chain. If the workspace has `rules/skills/INDEX.md` or `skills/INDEX.md`, update that index; otherwise add a short pointer in `AGENTS.md` or `CLAUDE.md`.
 
    If the public repo contains multiple skills, expose exactly one root/router skill to the global workspace level. Use that root skill to link to focused local files inside the repo. Do not symlink every focused skill globally; that makes discovery noisy and makes private/public overlays harder to reason about.
 
-6. **完成后的隐私检查**。在最终验证阶段（Phase 4），必须跑一次隐私扫描：
+6. **Privacy scan after completion**. In the final verification phase (Phase 4), must run a privacy scan:
 
    ```bash
-   rg -n "真实邮箱模式|真实手机号段|内部路径|op://" .
+   rg -n "real email pattern|real phone number range|internal path|op://" .
    ```
 
-   零匹配才算通过。如果匹配到了，逐个修复后再扫。
+   Zero matches to pass. If matches are found, fix each one and scan again.
 
-### Private repo 的处理
+### Private Repo Handling
 
-如果确认是 private repo，不需要 fake fixtures 和隐私拆分。正常的 `.env.example` 和 `.gitignore` 仍然推荐，但不强制 fake 占位符。
+If confirmed as a private repo, fake fixtures and privacy splitting are not required. Normal `.env.example` and `.gitignore` are still recommended, but fake placeholders are not mandatory.
 
 ---
 
-## 3. 目标结构
+## 3. Target Structure
 
-最小推荐结构：
+Minimum recommended structure:
 
 ```text
 project_root/
 ├── AGENTS.md
 ├── .gitignore
-├── .env.example        # public repo 必须；private repo 推荐
+├── .env.example        # mandatory for public repo; recommended for private repo
 ├── docs/
 │   ├── prd.md
 │   ├── rfc.md
@@ -92,29 +92,29 @@ project_root/
 └── <compat wrappers / entrypoints if needed>
 ```
 
-### 每个目录/文件的职责
+### Responsibilities of Each Directory/File
 
-- `docs/prd.md`: 讲目标、用户、需求、成功标准
-- `docs/rfc.md`: 讲架构、边界、关键设计决策、迁移策略
-- `docs/working.md`: 两部分
-  - `## Changelog`: 每天一个小标题，下面用简单 bullet 记当天改了什么
-  - `## Lessons Learned`: 记录坑、约束、后续 agent 不该重复犯的错
-- `docs/test.md`: 测试策略，写清 unit / integration / e2e 覆盖目标
-- `src/`: 可复用源码，尽量放模块，不放面向用户的 shell 入口
-- `scripts/`: 面向用户直接跑的 CLI、shell entrypoints、运维脚本
-- `tests/`: 单测、集成测试、未来 e2e
-- `AGENTS.md`: 这个项目自己的局部规则，尤其提醒更新 `working.md`、频繁 commit、环境要求
+- `docs/prd.md`: covers goals, users, requirements, success criteria
+- `docs/rfc.md`: covers architecture, boundaries, key design decisions, migration strategy
+- `docs/working.md`: two sections
+  - `## Changelog`: one date heading per day, simple bullets below recording what was changed that day
+  - `## Lessons Learned`: record pitfalls, constraints, mistakes that subsequent agents should not repeat
+- `docs/test.md`: testing strategy, clearly state unit / integration / e2e coverage targets
+- `src/`: reusable source code, prefer modules, don't put user-facing shell entrypoints here
+- `scripts/`: CLI, shell entrypoints, ops scripts that users run directly
+- `tests/`: unit tests, integration tests, future e2e
+- `AGENTS.md`: local rules for this project, especially reminders to update `working.md`, commit frequently, and environment requirements
 
-### 当前 workspace 推荐的前后端脚手架
+### Recommended Frontend/Backend Scaffold for Current Workspace
 
-如果项目明确是一个小到中等规模的 Web 应用，而且目标是**先快速做出可运行产品，再逐步演进**，当前 workspace 的默认推荐是：
+If the project is clearly a small-to-medium web application and the goal is to **quickly produce a runnable product first, then evolve incrementally**, the current workspace default recommendation is:
 
-- **后端**：FastAPI
-- **前端**：React + Vite + TypeScript
-- **本地存储**：优先 SQLite（除非用户明确要求更重的数据库）
-- **生产部署**：先把前端 build 产物直接交给 FastAPI 统一 serve
+- **Backend**: FastAPI
+- **Frontend**: React + Vite + TypeScript
+- **Local storage**: prefer SQLite (unless the user explicitly requires a heavier database)
+- **Production deployment**: first have FastAPI serve the frontend build artifacts directly
 
-推荐目录：
+Recommended directory layout:
 
 ```text
 project_root/
@@ -135,179 +135,179 @@ project_root/
 └── pyproject.toml
 ```
 
-补充说明：
+Supplementary notes:
 
-1. `frontend/` 独立维护 React/Vite 工程
-2. `src/` 只放后端 Python 包，不把后端逻辑塞进根目录脚本
-3. `scripts/` 提供面向人和 agent 的稳定入口，避免每次都现场猜命令
-4. 生产模式优先走“FastAPI 同源托管前端 build”，这样 auth、prefix、部署路径都更容易保持一致
+1. `frontend/` independently maintains the React/Vite project
+2. `src/` only contains the backend Python package; don't stuff backend logic into root-level scripts
+3. `scripts/` provides stable entrypoints for humans and agents, avoiding guessing commands on the spot each time
+4. Production mode prefers "FastAPI same-origin hosting of frontend build," so auth, prefix, and deployment paths stay consistent more easily
 
-### 前后端项目至少要补齐的 3 个脚本
+### At Minimum 3 Scripts for Frontend/Backend Projects
 
-如果是 FastAPI + React 项目，默认应补齐：
+For FastAPI + React projects, the following should be provided by default:
 
 1. `scripts/start_backend.sh`
-   - 激活 `.venv`
-   - 设置后端环境变量
-   - 启动 `uvicorn`
+   - Activate `.venv`
+   - Set backend environment variables
+   - Start `uvicorn`
 2. `scripts/start_frontend.sh`
-   - 设置前端 dev 所需环境变量
-   - 启动 `npm run start_dev_server` 或等价命令
+   - Set frontend dev environment variables
+   - Start `npm run start_dev_server` or equivalent command
 3. `scripts/build_frontend.sh`
-   - 设置构建时 base path / token / api base 等变量
-   - 执行 `npm run build`
+   - Set build-time base path / token / api base variables
+   - Execute `npm run build`
 
-不要把这些命令只写在 README 里。脚本本身就是 contract。
+Don't just write these commands in the README. The scripts themselves are the contract.
 
-### URL prefix / root path 的默认建议
+### Default Recommendation for URL Prefix / Root Path
 
-如果项目将来可能挂在子路径（例如 `/foo/bar`）下，必须在脚手架阶段就统一配置来源。
+If the project may be mounted under a sub-path in the future (e.g., `/foo/bar`), the configuration source must be unified at the scaffolding stage.
 
-默认建议：
+Default recommendation:
 
-- 用**一个环境变量**统一驱动，比如 `APP_ROOT_PATH`
-- 后端读取它并映射到 FastAPI `root_path`
-- 前端读取它并映射到 Vite `base` 与 React Router `basename`
-- `scripts/start_backend.sh`、`scripts/start_frontend.sh`、`scripts/build_frontend.sh` 都从这个单一变量派生各自配置
+- Use **one environment variable** to drive everything uniformly, e.g., `APP_ROOT_PATH`
+- Backend reads it and maps to FastAPI `root_path`
+- Frontend reads it and maps to Vite `base` and React Router `basename`
+- `scripts/start_backend.sh`, `scripts/start_frontend.sh`, `scripts/build_frontend.sh` all derive their respective configs from this single variable
 
-不要让后端、前端、反向代理分别维护三套前缀字符串。那样几乎一定会在部署到子路径时坏掉。
+Don't let the backend, frontend, and reverse proxy each maintain three separate prefix strings. That will almost certainly break when deploying to a sub-path.
 
 ---
 
-## 4. 推荐执行顺序
+## 4. Recommended Execution Order
 
-### Phase 0：确认 public/private
+### Phase 0: Confirm Public/Private
 
-执行第 2 节的 intake gate：问用户这个 repo 将来会不会发公开 GitHub。
+Execute the Section 2 intake gate: ask the user whether this repo will be published to public GitHub in the future.
 
-如果用户回答 public，整个 scaffolding 过程都要带着 public repo 的约束做（`.env.example` fake 值、`.gitignore` 阻塞私密文件、所有公开文件用 fake handles、skill 拆两层）。不要做完再回头改。
+If the user answers public, the entire scaffolding process must carry public repo constraints (`.env.example` fake values, `.gitignore` blocking private files, all public files using fake handles, skills split into two layers). Don't finish and then go back to fix things.
 
-### Phase 1：确认项目边界
+### Phase 1: Confirm Project Boundaries
 
-先判断三件事：
+First determine three things:
 
-1. 这个目录是不是已经值得成为独立项目
-2. 用户是否允许重整目录结构
-3. 是否需要单独 nested git repo
+1. Whether this directory is already worth becoming an independent project
+2. Whether the user permits reorganizing the directory structure
+3. Whether a separate nested git repo is needed
 
-如果用户没有授权重整现有项目结构，不要擅自大搬家。
+If the user has not authorized reorganizing an existing project structure, don't unilaterally do a major relocation.
 
-### Phase 2：先立骨架，再迁代码
+### Phase 2: Build the Skeleton First, Then Migrate Code
 
-推荐顺序：
+Recommended order:
 
-1. 建 `docs/ / src/ / scripts/ / tests/`
-2. 写 `AGENTS.md`、`.gitignore`、`.env.example`
-3. 先写 `prd.md` / `rfc.md` / `test.md`
-4. 再把代码迁到 `src/`，把可执行入口放进 `scripts/`
-5. 最后补 `working.md`
+1. Create `docs/ / src/ / scripts/ / tests/`
+2. Write `AGENTS.md`, `.gitignore`, `.env.example`
+3. Write `prd.md` / `rfc.md` / `test.md` first
+4. Then migrate code into `src/`, put executable entrypoints into `scripts/`
+5. Finally supplement `working.md`
 
-不要一边大改代码一边临时想目录结构。先把骨架立起来，后面的改动才会更稳。
+Don't restructure code and improvise the directory layout at the same time. Build the skeleton first; subsequent changes will be more stable.
 
-### Phase 3：保兼容入口
+### Phase 3: Preserve Compatible Entrypoints
 
-如果外部已有 cron、脚本、用户习惯路径，不要第一刀就砍掉。优先保留兼容 wrapper：
+If external cron jobs, scripts, or user habit paths already exist, don't cut them on the first pass. Prioritize keeping compatible wrappers:
 
-- 老路径保留成 thin wrapper
-- 新逻辑进 `src/` / `scripts/`
+- Old paths kept as thin wrappers
+- New logic goes into `src/` / `scripts/`
 
-这样可以先完成重构，再逐步迁移调用方。
+This way you can complete the refactoring first, then gradually migrate callers.
 
-### Phase 4：验证与隐私检查
+### Phase 4: Verification and Privacy Check
 
-所有代码和测试完成后，必须跑一轮验证，顺序固定：
+After all code and tests are complete, must run a round of verification in fixed order:
 
-1. Lint（如果项目配置了 linter）。
-2. 测试：先跑默认 offline 测试，再跑 opt-in integration test（如果有）。
-3. Public repo 必须跑隐私扫描：
+1. Lint (if the project has a linter configured).
+2. Tests: run default offline tests first, then opt-in integration tests (if any).
+3. Public repos must run a privacy scan:
 
    ```bash
-   rg -n "真实邮箱|真实手机号|内部服务器|op://|private key pattern" .
+   rg -n "real email|real phone number|internal server|op://|private key pattern" .
    ```
 
-   零匹配才通过。如果匹配到了，逐个修复后再扫。
+   Zero matches to pass. If matches are found, fix each one and scan again.
 
-4. 把验证结果写进 `docs/working.md` 的当天 changelog，记录 xxx passed / xxx skipped / xxx found and fixed。
+4. Write verification results into `docs/working.md`'s daily changelog, recording xxx passed / xxx skipped / xxx found and fixed.
 
-只有 Phase 4 全部通过，scaffolding 才算是交付完成。
+Only when Phase 4 fully passes is scaffolding considered delivered.
 
 ---
 
-## 5. Git 策略
+## 5. Git Strategy
 
-如果目录需要长期维护，而且和 workspace 大仓库的历史无关，优先单独 `git init`。
+If the directory needs long-term maintenance and its history is unrelated to the workspace monorepo, prefer a separate `git init`.
 
-推荐提交切法：
+Recommended commit split:
 
 1. **scaffold commit**
-   - docs/AGENTS/.gitignore/基础目录
+   - docs/AGENTS/.gitignore/basic directories
 2. **implementation commit**
-   - 真正的代码迁移、模块化、测试
+   - actual code migration, modularization, tests
 3. **validation commit**
-   - `working.md` 记录、测试结果、回填或手工验证结果
+   - `working.md` records, test results, backfill or manual verification results
 
-不要把大重构、文档补齐、测试修复、历史 backfill 全塞进一个 commit。
-
----
-
-## 6. AGENTS.md 最少要写什么
-
-项目局部 `AGENTS.md` 至少要覆盖：
-
-1. 项目结构说明
-2. `working.md` 更新要求
-3. 频繁 commit 的要求
-4. 本项目 Python / Node / shell 环境约束
-5. 任何不能破坏的兼容约束
-
-如果这个文件不写，后续 agent 很容易把项目重新写回临时脚本堆。
+Don't stuff a major refactoring, doc supplementation, test fixes, and history backfill all into one commit.
 
 ---
 
-## 7. working.md 维护要求
+## 6. Minimum Content for AGENTS.md
+
+The project-local `AGENTS.md` must at minimum cover:
+
+1. Project structure description
+2. `working.md` update requirements
+3. Frequent commit requirements
+4. This project's Python / Node / shell environment constraints
+5. Any compatibility constraints that must not be broken
+
+If this file isn't written, subsequent agents can easily rewrite the project back into a pile of temporary scripts.
+
+---
+
+## 7. working.md Maintenance Requirements
 
 ### Changelog
 
-- 每天一个日期小标题
-- 每个 bullet 只写一个改动
-- 不用 nested bullet points
-- 不要写空话，比如“做了一些优化”
+- One date heading per day
+- Each bullet records only one change
+- No nested bullet points
+- No empty phrases like "did some optimizations"
 
 ### Lessons Learned
 
-只写真会帮助后续 agent 避坑的内容，例如：
+Only write content that genuinely helps subsequent agents avoid pitfalls, e.g.:
 
-- 哪些文件是兼容 wrapper，不能直接删
-- 哪些输出格式是外部依赖的 contract
-- 哪些本地数据源看起来像主数据源，其实只是辅助索引
-
----
-
-## 8. test.md 应该写什么
-
-至少要说明：
-
-- unit tests 覆盖哪些纯逻辑
-- integration tests 依赖哪些本地数据或服务
-- e2e 是否存在，如果暂时没有，也要写清楚为什么没有
-- 手工验证要看什么 artifact
-
-`test.md` 的价值不是重复 pytest 命令，而是让后续 agent 知道“什么算验证完成”。
+- Which files are compatibility wrappers and cannot be directly deleted
+- Which output formats are contracts that external dependencies rely on
+- Which local data sources look like primary data sources but are actually only auxiliary indexes
 
 ---
 
-## 9. 重整已有项目时的硬规则
+## 8. What test.md Should Cover
 
-1. 没有用户许可，不要擅自大规模迁目录
-2. 先建骨架，再搬代码
-3. 先保兼容，再删旧入口
-4. 每次阶段性完成后更新 `working.md`
-5. 每个阶段都要有可运行或可验证状态
+At minimum, explain:
+
+- Which pure logic unit tests cover
+- Which local data or services integration tests depend on
+- Whether e2e exists; if not yet, clearly state why not
+- What artifacts manual verification should inspect
+
+The value of `test.md` is not repeating pytest commands, but letting subsequent agents know "what counts as verification complete."
 
 ---
 
-## 10. 一句话判断标准
+## 9. Hard Rules When Reorganizing Existing Projects
 
-如果一个目录未来还会被继续改，而且希望不同 AI/人能低成本接手，那它就不该继续保持“散装脚本目录”状态，而应该尽快升级成上面这套项目骨架。
+1. Without user permission, don't unilaterally do large-scale directory relocation
+2. Build the skeleton first, then move code
+3. Preserve compatibility first, then remove old entrypoints
+4. Update `working.md` after each staged completion
+5. Each phase must have a runnable or verifiable state
 
-如果这个 repo 将来要发公开 GitHub，Phase 0 必须问过用户，Phase 4 的隐私扫描不能跳过。
+---
+
+## 10. One-Sentence Judgment Criterion
+
+If a directory will continue to be modified in the future, and you want different AIs/people to be able to take over at low cost, then it should not remain in "loose script directory" state — it should be upgraded to the project skeleton above as soon as possible.
+
+If this repo will be published to public GitHub in the future, Phase 0 must ask the user, and Phase 4's privacy scan cannot be skipped.

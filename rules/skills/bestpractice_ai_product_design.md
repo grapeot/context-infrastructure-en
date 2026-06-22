@@ -1,169 +1,169 @@
-# AI 产品设计原则
+# AI Product Design Principles
 
-## 元数据
+## Metadata
 
-- **类型**: BestPractice
-- **适用场景**: AI 产品设计、交互设计、系统架构
-- **创建日期**: 2026-02-22
-- **来源**: 多个 AI 产品实践总结
-
----
-
-## 线性聊天 vs 非线性知识工作的根本矛盾
-
-### 问题本质
-
-AI 产品的主流形态是"线性聊天入口"（ChatGPT、Claude Chat），但知识工作的本质是非线性的：
-- 思考跳跃、分支、回溯
-- 需要多文档并行参照
-- 需要可视化结构（脑图、大纲）
-
-### 矛盾表现
-
-- 用户被迫在单一线程中处理复杂问题
-- 上下文线性堆积，难以定位关键信息
-- 无法并行探索多个思路
-
-### 设计启示
-
-- 线性聊天适合简单问答，不适合深度知识工作
-- 知识工具需要支持非线性结构（分支、链接、可视化）
-- 考虑"对话+文档"混合形态
+- **Type**: BestPractice
+- **Applicable Scenarios**: AI product design, interaction design, system architecture
+- **Created**: 2026-02-22
+- **Source**: Summarized from multiple AI product practices
 
 ---
 
-## 感知与规则解耦原则
+## The Fundamental Conflict: Linear Chat vs Nonlinear Knowledge Work
 
-### 架构决策
+### Problem Essence
 
-将"感知层"（Perception）与"规则层"（Rules）严格分离。
+The dominant form of AI products is the "linear chat entry point" (ChatGPT, Claude Chat), but the nature of knowledge work is nonlinear:
+- Thinking jumps, branches, and backtracks
+- Requires parallel reference across multiple documents
+- Needs visual structures (mind maps, outlines)
 
-### 感知层职责
+### Conflict Manifestations
 
-输出原始感知信号：
-- 车道位置、线型
-- 车辆朝向角
-- 道路上下文
+- Users are forced to handle complex problems in a single thread
+- Context piles up linearly, making it hard to locate key information
+- Cannot explore multiple lines of thought in parallel
 
-### 规则层职责
+### Design Implications
 
-基于感知信号进行业务判断：
-- 什么是"偏离"
-- 何时告警
-- 告警级别
-
-### 解耦收益
-
-1. **快速迭代**：产品规则可独立修改，无需重新训练模型
-2. **个性化**：不同客户/地区可有不同规则
-3. **可审计**：规则变更可追溯，模型输出稳定
-4. **LLM 集成**：未来可用 LLM 灵活组合信号
-
-### 适用场景
-
-- 安全关键系统（需要确定性规则）
-- 多市场/多客户产品（需要个性化）
-- 需要快速迭代的业务逻辑
+- Linear chat suits simple Q&A, not deep knowledge work
+- Knowledge tools need to support nonlinear structures (branching, linking, visualization)
+- Consider a hybrid "conversation + document" form
 
 ---
 
-## 一刀切产品定义的陷阱
+## Perception-Rule Decoupling Principle
 
-### 问题
+### Architectural Decision
 
-"一个产品满足所有客户"在多样化需求面前必然失败。
+Strictly separate the "Perception" layer from the "Rules" layer.
 
-### 根因
+### Perception Layer Responsibilities
 
-- 不同客户的使用场景差异巨大
-- 风险承受度不同
-- 业务流程不同
+Output raw perception signals:
+- Lane position, line type
+- Vehicle heading angle
+- Road context
 
-### 解决方案
+### Rules Layer Responsibilities
 
-- 提供可配置的参数和规则
-- 让 PM 或未来 LLM 灵活组合信号
-- 将"什么是好"的定义权交给用户
+Make business judgments based on perception signals:
+- What constitutes "deviation"
+- When to alert
+- Alert severity level
 
-### 案例启示
+### Benefits of Decoupling
 
-LDW 车道偏离预警：不同客户对"偏离"的定义、告警时机、容忍度完全不同。
+1. **Fast iteration**: product rules can be modified independently without retraining models
+2. **Personalization**: different customers/regions can have different rules
+3. **Auditability**: rule changes are traceable, model output remains stable
+4. **LLM integration**: future LLMs can flexibly combine signals
 
----
+### Applicable Scenarios
 
-## Guideline 过载问题
-
-### 现象
-
-10 页 Guideline 直接作为 Prompt 会 Confuse LLM，无法进行精细的 Trade-off 处理。
-
-### 这是通用大模型的硬伤
-
-- LLM 不擅长同时处理大量约束
-- 约束之间可能存在隐含冲突
-- 缺乏业务上下文理解
-
-### 解决方案
-
-1. **结构化约束**：将 Guideline 拆分为独立规则，逐步应用
-2. **Few-shot 示例**：用案例替代长文档
-3. **混合架构**：LLM 处理感知，确定性程序处理规则
+- Safety-critical systems (requiring deterministic rules)
+- Multi-market/multi-customer products (requiring personalization)
+- Business logic requiring rapid iteration
 
 ---
 
-## Multi-Agent 设计原则
+## The One-Size-Fits-All Product Definition Trap
 
-### 核心洞察
+### Problem
 
-LLM 存在固有的"个性"（Personality）：
-- O3：擅长搜索、探索，但分析较浅
-- Gemini：搜索弱，但分析深入、综合能力强
+"A single product for all customers" inevitably fails in the face of diverse needs.
 
-这种个性难以通过 Prompt 改变。
+### Root Cause
 
-### 设计启示
+- Different customers have vastly different usage scenarios
+- Different risk tolerance levels
+- Different business processes
 
-1. **利用互补优势**：让不同模型做自己擅长的事
-2. **不要模仿人类角色划分**：PM/QA/Dev 是人类组织模式，不适用于 Agent
-3. **上下文窗口分离**：不同 Agent 负责不同上下文子集
-4. **必要时强制交接**：当模型抗拒指令时，通过代码强制切换
+### Solution
 
-### 当前阶段建议
+- Provide configurable parameters and rules
+- Let PMs or future LLMs flexibly combine signals
+- Give users the authority to define "what good means"
 
-结合硬性规则和 AI 能力的混合系统，比纯粹的 Agentic 系统更可靠。
+### Case Insight
 
----
-
-## 产品定义先于工程实现
-
-### 核心瓶颈
-
-闯红灯检测等项目的核心瓶颈是缺乏 PRD，而非技术能力。
-
-### 策略
-
-- 将 RFC 会议转为 PRD 讨论
-- 先明确产品需求，再讨论工程细节
-- "什么是我们想要的"比"怎么实现"更重要
-
-### 因果链
-
-产品形式 → 评估方式 → 模型开发策略
-
-起点是清晰的产品定义。
+LDW lane departure warning: different customers have completely different definitions of "deviation," alert timing, and tolerance levels.
 
 ---
 
-## 注意事项
+## Guideline Overload Problem
 
-- 考虑多市场/多地区的法规差异
-- 安全关键系统需要确定性兜底
-- 用户信任建立难、破坏易
+### Phenomenon
+
+A 10-page Guideline used directly as a Prompt will confuse the LLM, making fine-grained trade-off handling impossible.
+
+### This Is a Hard Limitation of General-Purpose LLMs
+
+- LLMs are not good at handling many constraints simultaneously
+- Constraints may have implicit conflicts with each other
+- Lack of business context understanding
+
+### Solution
+
+1. **Structured constraints**: break the Guideline into independent rules, apply progressively
+2. **Few-shot examples**: use cases instead of long documents
+3. **Hybrid architecture**: LLM handles perception, deterministic programs handle rules
 
 ---
 
-## 变更日志
+## Multi-Agent Design Principles
 
-| 日期 | 变更 |
-|------|------|
-| 2026-02-22 | 初始版本，整合多个产品设计观察点 |
+### Core Insight
+
+LLMs have inherent "personalities":
+- O3: good at search and exploration, but shallow analysis
+- Gemini: weak at search, but deep analysis and strong synthesis
+
+These personalities are difficult to change through prompts.
+
+### Design Implications
+
+1. **Leverage complementary strengths**: let different models do what they're good at
+2. **Don't mimic human role divisions**: PM/QA/Dev are human organizational patterns, not applicable to Agents
+3. **Context window separation**: different Agents handle different context subsets
+4. **Force handoff when necessary**: when a model resists instructions, force a switch through code
+
+### Current-Stage Recommendation
+
+Hybrid systems combining hard rules and AI capabilities are more reliable than purely Agentic systems.
+
+---
+
+## Product Definition Precedes Engineering Implementation
+
+### Core Bottleneck
+
+The core bottleneck in projects like red-light detection is the lack of a PRD, not technical capability.
+
+### Strategy
+
+- Turn RFC meetings into PRD discussions
+- Clarify product requirements first, then discuss engineering details
+- "What we want" is more important than "how to implement it"
+
+### Causal Chain
+
+Product form → evaluation method → model development strategy
+
+The starting point is a clear product definition.
+
+---
+
+## Cautions
+
+- Consider regulatory differences across markets/regions
+- Safety-critical systems need deterministic fallbacks
+- User trust is hard to build, easy to break
+
+---
+
+## Changelog
+
+| Date | Change |
+|------|--------|
+| 2026-02-22 | Initial version, consolidating multiple product design observations |

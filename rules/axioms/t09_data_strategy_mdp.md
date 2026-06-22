@@ -5,40 +5,40 @@ created: 2026-03-01
 updated: 2026-03-01
 ---
 
-# T9. 数据策略与MDP
+# T09. Data Strategy and MDP
 
-## 1. 核心公理
+## 1. Core Axiom
 
-在AI产品中，数据捕获本身就是第一阶段产品（MDP = Minimum Data Product）。数据主权和本地积累创造持久的竞争优势。
+In AI products, data capture is itself the first-stage product (MDP = Minimum Data Product). Data sovereignty and local accumulation create lasting competitive advantage.
 
-## 2. 深度推演
+## 2. Deep Reasoning
 
-**MDP概念的范式转变**
+**The Paradigm Shift of the MDP Concept**
 
-传统产品思路：产品优先，数据作为副产品。MDP思路：数据捕获本身就是产品。这意味着在功能完整之前，先建立数据收集的闭环——即使只是简单的用户交互记录，也构成了可迭代的基础。
+Traditional product thinking: product first, data as a byproduct. MDP thinking: data capture is itself the product. This means establishing a data collection closed loop before feature completeness — even simple user interaction logging forms an iterable foundation.
 
-**数据飞轮的静止点突破**
+**Breaking Through the Data Flywheel's Standstill Point**
 
-初期数据稀缺时，VLM（视觉语言模型）可作为初始收割工具，快速生成标注或特征。随后引入人工反馈形成闭环，逐步改进模型质量。这个过程不是一次性的，而是持续的迭代——每一轮反馈都强化下一轮的数据质量。
+When initial data is scarce, VLMs (Vision Language Models) can serve as the initial harvesting tool, rapidly generating annotations or features. Then introduce human feedback to form a closed loop, progressively improving model quality. This process is not one-shot — it is continuous iteration, where each round of feedback strengthens the next round's data quality.
 
-**数据主权的架构选择**
+**The Architectural Choice of Data Sovereignty**
 
-本地Agent保留数据控制权，云端方案则意味着数据流出。这不仅是技术选择，更是战略选择。本地积累的数据成为不可复制的资产，而云端依赖则面临供应商锁定和数据泄露风险。
+Local agents retain data control; cloud solutions mean data outflow. This is not merely a technical choice — it is a strategic choice. Locally accumulated data becomes an irreplicable asset, while cloud dependency faces vendor lock-in and data leakage risks.
 
-**数据标注的熵增现象**
+**The Entropy Increase Phenomenon in Data Labeling**
 
-随着标注规模扩大，质量往往下降——这是标注过程中的熵增。需要通过采样审计和持续的质量监控来对抗这一趋势，确保数据集的可用性。
+As labeling scale expands, quality often declines — this is entropy increase in the labeling process. Sampling audits and continuous quality monitoring are needed to counter this trend and ensure dataset usability.
 
-## 3. 应用判定
+## 3. Application Criteria
 
-在以下场景中应用此公理：
-- 构建AI特性或ML模型时，优先考虑数据收集机制
-- 选择云端vs本地架构时，评估数据主权成本
-- 设计个性化系统时，建立本地数据积累的闭环
+Apply this axiom in the following scenarios:
+- When building AI features or ML models, prioritize data collection mechanisms
+- When choosing between cloud vs. local architecture, evaluate data sovereignty costs
+- When designing personalization systems, establish a closed loop for local data accumulation
 
-## 4. 与其他公理的关系
+## 4. Relationships with Other Axioms
 
-- **T04 数据优于观点**：在更高层面确立数据优先的思维方式
-- **M01 闭环校准**：数据飞轮本质上是一个校准循环，通过反馈不断逼近真实
+- **T04 Data Over Opinion**: Establishes the data-first mindset at a higher level
+- **M01 Closed-Loop Calibration**: The data flywheel is essentially a calibration loop, continuously approaching truth through feedback
 
-**参见**: [知识飞轮设计模式](../skills/workflow_knowledge_flywheel.md) — 知识工程中的笨方法迭代
+**See also**: [Knowledge Flywheel Design Pattern](../skills/workflow_knowledge_flywheel.md) — Iterating with simple methods in knowledge engineering
