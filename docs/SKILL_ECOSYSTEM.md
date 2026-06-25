@@ -26,6 +26,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Maps / travel | [google-maps-routing-skill](https://github.com/grapeot/google-maps-routing-skill) | Google Maps Routes + Geocoding CLI; address resolution, real-time drive time, leave-by planning |
 | Email | [outlook_skill](https://github.com/grapeot/outlook_skill) | Outlook.com mail download, archive, Markdown rendering, send, calendar invites |
 | Email | [resend_email_skill](https://github.com/grapeot/resend_email_skill) | Resend custom-domain sending, inbox reading, Markdown export, attachment inspection |
+| Email / newsletter | [kit-skill](https://github.com/grapeot/kit-skill) | Kit Broadcast CLI for Markdown newsletters, with dry-run, draft-only, web-only, and tag/segment targeting; account defaults stay in local overlays |
 | Messaging | [imessage_skill](https://github.com/grapeot/imessage_skill) | macOS iMessage send-only CLI; contact aliases in local overlay |
 | Agent operations | [opencode_skill](https://github.com/grapeot/opencode_skill) | OpenCode `submit` / `submit --dry-run` / batch submission, recurring cron workflow, SQLite data maintenance and archive |
 | Agent operations | [process-launcher](https://github.com/grapeot/process-launcher) | Local HTTP process launcher for TCC / GUI permission bridging, durable one-shot delayed jobs, process logs and cancellation |
@@ -38,6 +39,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Images | [image-generation-skill](https://github.com/grapeot/image-generation-skill) | Gemini Flash / Gemini Pro / GPT-Image-2 text-to-image, image editing, resolution upscaling |
 | Images | [tiff-icc-profile](https://github.com/grapeot/tiff-icc-profile) | Embed ICC profiles into untagged TIFFs, commonly used in DaVinci still workflows |
 | Health | [health-quantification](https://github.com/grapeot/health-quantification) | Apple Health / manual records → SQLite → CLI → AI analysis |
+| Home network | [firewalla-local-skill](https://github.com/grapeot/firewalla-local-skill) | Firewalla local export analysis, device/flow reports, and redacted artifact workflow; home network details stay in local overlays |
 | Coffee | [roest-analysis](https://github.com/grapeot/roest-analysis) | Roest roast log capture and analysis |
 | Intake | [intake-skill](https://github.com/grapeot/intake-skill) | Voice memos / intake workflow public-ready skill |
 
