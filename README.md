@@ -22,7 +22,7 @@ Then open [`rules/USER.md`](rules/USER.md) and fill in your basic information. T
 
 Detailed steps in [`setup_guide.md`](setup_guide.md).
 
-If you want to extend this into a more complete working system, see [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md). It lists independently installable public skill repos: web search, Google Docs, Google Maps, email, OpenCode, PPTX, social media, payment analytics, and a local process launcher. `context-infrastructure-en` stays lightweight; full capabilities are installed on demand through separate repos.
+If you want to extend this into a more complete working system, see [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md). It lists independently installable public skill repos: web search, Google Docs, Google Maps, email/newsletter, OpenCode, PPTX, social media, payment analytics, home network analysis, and a local process launcher. `context-infrastructure-en` stays lightweight; full capabilities are installed on demand through separate repos.
 
 ---
 
