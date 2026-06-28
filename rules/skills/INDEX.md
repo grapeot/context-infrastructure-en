@@ -29,7 +29,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 - ⚙️ Delayed Execution — starter fallback; for durable/AI delayed tasks, install Process Launcher + OpenCode Skill
 
 ### Tier 3: Standalone public skill repos (install as needed)
-- 🔧 Image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
+- 🔧 Image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
 
 ### Legend
 ✅ = Ready to use in 15 minutes or less
@@ -93,6 +93,7 @@ General best practices and lessons learned.
 - [AI-Assisted Debugging Diagnosis](./bestpractice_ai_debugging_diagnosis.md) ✅ — Root cause diagnosis decision tree for "code won't fix"
 - [AI Product Design Principles](./bestpractice_ai_product_design.md) ✅ — Linear chat vs knowledge work, perception-rule decoupling
 - [Product/Technical Decision Reverse Engineering](./bestpractice_product_decision_analysis.md) ✅ — Analyze product or technical decisions from design space, constraints, and trade-offs
+- [Playwright E2E Testing Methodology](./playwright_e2e.md) ✅ — Manual-first CDP debugging approach for reliable E2E tests; covers SSO flows, JWT pitfalls, and multi-step registration
 
 ---
 
