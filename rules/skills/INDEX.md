@@ -93,7 +93,7 @@ General best practices and lessons learned.
 - [AI-Assisted Debugging Diagnosis](./bestpractice_ai_debugging_diagnosis.md) ✅ — Root cause diagnosis decision tree for "code won't fix"
 - [AI Product Design Principles](./bestpractice_ai_product_design.md) ✅ — Linear chat vs knowledge work, perception-rule decoupling
 - [Product/Technical Decision Reverse Engineering](./bestpractice_product_decision_analysis.md) ✅ — Analyze product or technical decisions from design space, constraints, and trade-offs
-- [Playwright E2E Testing Methodology](./playwright_e2e.md) ✅ — Manual-first CDP debugging approach for reliable E2E tests; covers SSO flows, JWT pitfalls, and multi-step registration
+- [Playwright E2E Testing Methodology](https://github.com/grapeot/playwright-test-skill) 🔗 — CDP step-by-step debugging CLI + E2E methodology. Independent public repo, CLI: `pw-test`. Trigger words: "Playwright E2E", "CDP debugging", "SSO login test", "browser step debugging"
 
 ---
 
