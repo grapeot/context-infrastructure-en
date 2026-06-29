@@ -42,6 +42,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Home network | [firewalla-local-skill](https://github.com/grapeot/firewalla-local-skill) | Firewalla local export analysis, device/flow reports, and redacted artifact workflow; home network details stay in local overlays |
 | Coffee | [roest-analysis](https://github.com/grapeot/roest-analysis) | Roest roast log capture and analysis |
 | Intake | [intake-skill](https://github.com/grapeot/intake-skill) | Voice memos / intake workflow public-ready skill |
+| Testing | [playwright-test-skill](https://github.com/grapeot/playwright-test-skill) | CDP step-by-step debugging CLI for AI agents writing Playwright E2E tests |
 
 ## Selection Principles
 
