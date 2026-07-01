@@ -84,7 +84,7 @@ Every axiom should have counterexamples and boundary conditions. An axiom withou
 | 2000-5000 messages | 8-12 axioms | Standard+ | Can do simplified predictive backtest (3 topics) |
 | 5000+ messages | 10-15 axioms | Full | All three layers of verification, including predictive power backtest (5+ topics) |
 
-**Semantic Search Preparation** (recommended): If data volume ≥ 1000 messages, it is recommended to build an embedding cache at this stage (see [Semantic Search Skill](./semantic_search.md)). Split messages into individual text files or chunks, run one embedding pass to build cache. Subsequent Phase 1/2 sub-agents can use semantic search instead of pure keyword grep — semantic search can find messages with "different keywords but similar meaning," especially valuable for discovering implicit viewpoints and boundary cases.
+**Semantic Search Preparation** (recommended): If data volume ≥ 1000 messages, it is recommended to build an embedding cache at this stage (install [semantic-search-skill](https://github.com/grapeot/semantic-search-skill)). Split messages into individual text files or chunks, run one embedding pass to build cache. Subsequent Phase 1/2 sub-agents can use semantic search instead of pure keyword grep — semantic search can find messages with "different keywords but similar meaning," especially valuable for discovering implicit viewpoints and boundary cases.
 
 **Phase 0 Output**: Data overview report, verification tier decision, preliminary dimension hypotheses, embedding cache (if applicable).
 
@@ -368,7 +368,7 @@ Don't preset "do N rounds"; monitor convergence signals. Over-iteration has two 
 
 ## See Also
 
-- [Semantic Search Skill](./semantic_search.md) — Beyond keyword matching; use embedding similarity to discover semantically related messages
+- Semantic Search Skill — see ecosystem [semantic-search-skill](https://github.com/grapeot/semantic-search-skill); use embedding similarity to discover semantically related messages
 - [Parallel Subagent Workflow](./workflow_parallel_subagents.md) — Sub-agent scheduling, overlap, cross-validation, and applicability criteria
 - [Deep Research Survey Workflow](./workflow_deep_research_survey.md) — Multi-agent parallel + cross-validation base architecture
 - Example observation project (original source of this skill) — `contexts/people/magong/`

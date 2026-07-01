@@ -22,7 +22,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 - ✅ Three-layer memory system — requires OpenCode + cron configuration
 
 ### Tier 2: Extended (requires additional configuration)
-- ⚙️ Semantic Search — requires LLM Studio or OpenAI API
+- ⚙️ Semantic Search — requires an OpenAI-compatible embedding endpoint (local or cloud); install from [semantic-search-skill](https://github.com/grapeot/semantic-search-skill)
 - ⚙️ Share Report — requires SSH server or GitHub Pages
 - ⚙️ Google Docs — requires Google OAuth
 - ⚙️ Send Email — requires Gmail App Password
@@ -71,7 +71,7 @@ Complete workflows for specific tasks.
   - Process: broad scan → deep validation → stress testing → finalization (≥3 rounds of dynamic iteration)
   - **Requires Opus model**: writing done by Opus personally, all research delegated + parallelized
 - [AI-Generated Slide Deck Workflow](./workflow_presentation_slides.md) — Gemini rendering, Clean Ink style, 8-process parallel, pre-4K upscale validation
-- [Semantic Search Skill](./semantic_search.md) ⚙️ — Retrieve deep background and opinion evolution using vector similarity
+- Semantic Search Skill → see ecosystem [semantic-search-skill](https://github.com/grapeot/semantic-search-skill): local-text embedding + cosine similarity search, supports any OpenAI-compatible endpoint
 - [Knowledge Flywheel Design Pattern](./workflow_knowledge_flywheel.md) — Dumb data + dumb methods + dumb models = refined knowledge
 - [Video Download and Speech Recognition Workflow](./workflow_bilibili_whisper_transcription.md) — Bilibili/YouTube video processing
 - [Delayed Execution Skill](./delayed_execution.md) ⚙️ — Low-risk `sleep + nohup` fallback; for durable/AI delayed tasks, see ecosystem's Process Launcher + OpenCode Skill

@@ -134,8 +134,8 @@ These components work independently. Configure them as needed; skipping them doe
 
 Once your `contexts/` directory has accumulated enough content, semantic search lets you retrieve historical records by meaning rather than keywords.
 
-**Requires**: LLM Studio (local) or OpenAI API key
-**Configuration**: See `rules/skills/semantic_search.md`
+**Requires**: Any OpenAI-compatible embedding endpoint (local or cloud)
+**Configuration**: Install the ecosystem [semantic-search-skill](https://github.com/grapeot/semantic-search-skill)
 
 ### Share reports to the web (⚙️)
 
