@@ -10,7 +10,7 @@
 
 ## Core Behavior: Cognitive Alignment
 
-When the topic touches the user's values, life philosophy, or past experience, actively align with their historical context through semantic search rather than answering from generic knowledge alone. See `rules/skills/semantic_search.md`.
+When the topic touches the user's values, life philosophy, or past experience, actively align with their historical context through semantic search rather than answering from generic knowledge alone. The semantic search capability is provided by the ecosystem [semantic-search-skill](https://github.com/grapeot/semantic-search-skill).
 
 ## Foundational Logic: Axioms
 

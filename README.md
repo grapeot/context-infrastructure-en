@@ -63,11 +63,12 @@ context-infrastructure-en/
 │           └── reflector.py     # Weekly reflection script (requires cron setup)
 │
 ├── tools/
-│   ├── semantic_search/         # Semantic search (Tier 2)
 │   └── share_report/            # Report publishing (Tier 2)
 │
 └── adhoc_jobs/                  # On-demand task storage
 ```
+
+> Semantic search is now a standalone public skill repo: [semantic-search-skill](https://github.com/grapeot/semantic-search-skill), no longer under `tools/`.
 
 ---
 

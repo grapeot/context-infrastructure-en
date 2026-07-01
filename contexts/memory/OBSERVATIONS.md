@@ -32,7 +32,7 @@ grep -n "keyword" contexts/memory/OBSERVATIONS.md
 grep -A 20 "Date: $(date -v-7d +%Y-%m-%d)" contexts/memory/OBSERVATIONS.md
 ```
 
-Or use semantic search (`rules/skills/semantic_search.md`) for cross-date semantic retrieval.
+Or use semantic search for cross-date semantic retrieval (install [semantic-search-skill](https://github.com/grapeot/semantic-search-skill)).
 
 ---
 
