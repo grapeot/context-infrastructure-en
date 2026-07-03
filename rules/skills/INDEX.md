@@ -91,6 +91,7 @@ General best practices and lessons learned.
 - [Staged Approach](./bestpractice_staged_approach.md) ✅ — Isolate-process-verify closed loop; Dry Run before destructive operations
 - [GUI Automation Methodology](./bestpractice_gui_automation.md) ✅ — Turn interfaces without APIs into programmable interfaces
 - [AI-Assisted Debugging Diagnosis](./bestpractice_ai_debugging_diagnosis.md) ✅ — Root cause diagnosis decision tree for "code won't fix"
+- [Mac Universal Clipboard Reset](./mac_universal_clipboard.md) ✅ — Reset `useractivityd` / `sharingd` / `pboard` when Mac and iPhone/iPad clipboard syncing breaks
 - [AI Product Design Principles](./bestpractice_ai_product_design.md) ✅ — Linear chat vs knowledge work, perception-rule decoupling
 - [Product/Technical Decision Reverse Engineering](./bestpractice_product_decision_analysis.md) ✅ — Analyze product or technical decisions from design space, constraints, and trade-offs
 - [Playwright E2E Testing Methodology](https://github.com/grapeot/playwright-test-skill) 🔗 — CDP step-by-step debugging CLI + E2E methodology. Independent public repo, CLI: `pw-test`. Trigger words: "Playwright E2E", "CDP debugging", "SSO login test", "browser step debugging"
