@@ -228,24 +228,26 @@ The following items are where AI repeatedly makes mistakes in long-form writing,
 
 ## Model Division of Labor Protocol
 
-The final prose of external-facing articles is completed through two writing passes using different model families. The main thread is responsible for research, judgment, material organization, fact-checking, style review, and final acceptance; writing sub-agents are responsible for turning finalized judgment into prose.
+The final prose of external-facing articles is completed through two writing passes. The main thread is responsible for research, judgment, material organization, fact-checking, style review, and final acceptance; writing sub-agents are responsible for turning finalized judgment into prose.
 
 **Standard delivery must include two writing passes:**
 
 | Pass | Sub-agent | `subagent_type` | Output file | Responsibility |
 |------|-----------|-----------------|-------------|----------------|
-| Pass 1: Draft | DeepSeek Pro | `writer_deepseek` | `tmp/<session_slug>/draft.md` | Read `writing_brief.md` and organize thesis, evidence, structure, and style constraints into a complete article |
-| Pass 2: Language rewrite | Gemini 3.5 Flash | `gemini_3.5_flash` | `tmp/<session_slug>/rewrite.md` | Keep structure, facts, and URLs unchanged; rewrite the prose from scratch in Gemini's own language |
+| Pass 1: Structural draft | DeepSeek Pro or Gemini 3.5 Flash | `writer_deepseek` or `gemini_3.5_flash` | `tmp/<session_slug>/draft.md` | Read `writing_brief.md` and organize thesis, evidence, structure, and style constraints into a complete article. This pass solves “what to say.” |
+| Pass 2: Low-cognitive-burden rewrite | Gemini 3.5 Flash | `gemini_3.5_flash` | `tmp/<session_slug>/rewrite.md` | Preserve thesis, evidence, URLs, image references, and structural intent; rewrite the whole piece so the reader can follow it with less effort. This pass solves “how to make it easy to read.” |
 
 Unless the user explicitly requests only a draft, only an outline, or only an internal temporary memo, do not deliver the first-pass draft as the final piece.
 
-**Why the second pass uses a different model family.** The biggest failure mode in language-layer rewriting is synonym substitution: when the same model or same model family rewrites its own draft, it tends to preserve the original sentence skeleton and swap words. Having Gemini rewrite a DeepSeek draft structurally breaks that inertia. The two model families have different language registers, sentence preferences, and rhythms, forcing Gemini to reorganize sentences instead of locally editing them. In testing, Gemini 3.5 Flash produced more natural rhythm and prose for this language-only pass; Flash is fast and cheap, which matches the job because it does not carry the reasoning burden.
+**Why two passes by default.** A single-pass article often ends up correct but hard to read: the structure is complete and the evidence is present, but the sentences are stiff, noun phrases are overloaded, transitions are weak, and the reader has to hold too many concepts at once. Two passes separate the jobs: the first pass solves what to say; the second pass solves how to make it easy to read.
+
+**Why the second pass prefers Gemini.** The biggest failure mode in low-cognitive-burden rewriting is synonym substitution: the model preserves the original sentence skeleton and only swaps words. Gemini 3.5 Flash's job in this pass is not to reason from scratch, but to understand what each paragraph needs to say and rebuild it in more natural prose. It must break long noun phrases, abstract subjects, and report-like phrasing; paraphrase is not enough.
 
 **Both handoffs are file-based, not chat-based.** The main thread must not directly draft the final prose. It first writes research materials, thesis, evidence table, style requirements, prohibitions, target output path, and overwrite strategy to `tmp/<session_slug>/writing_brief.md`, then invokes `writer_deepseek` to read that file and write the first-pass Markdown. The second pass receives the first-pass draft path and must write a new file, not overwrite the original. Agents must not rely on chat to pass body materials; files are the handoff interface.
 
-**Structural judgment for cognitive burden reduction is done by the main thread; writing sub-agents do not change structure.** The main thread first determines article structure, information selection, and reader cognitive path, then lets writing sub-agents handle language inside those constraints. If the reader says "I don't understand," the main thread should first reorganize structure and cut information, then rerun writing. Do not outsource structural judgment to writing sub-agents.
+**Structural judgment for cognitive burden reduction is done by the main thread; the second pass may reorganize paragraph-level expression.** The main thread first determines article structure, information selection, and reader cognitive path, then lets writing sub-agents handle language inside those constraints. The second pass may merge short sentences, split long sentences, adjust sentence order inside a paragraph, and add light transitions, but it must not remove the thesis, evidence, URLs, image references, or change the argument order. If the reader says "I don't understand" because the macro information architecture is overloaded, the main thread must reorganize structure and cut information before rerunning writing. Do not outsource macro judgment to writing sub-agents.
 
-**Main-thread acceptance is the quality gate.** If the Gemini rewrite has more than 30% paragraph-level sentence similarity with the draft, treat it as synonym substitution rather than a true rewrite. Give `gemini_3.5_flash` clearer rhythm and sentence-level instructions and rerun; if it still fails, fall back to `writer_deepseek` for the second pass. Only after acceptance should the rewrite enter post-writing scans. Do not deliver unchecked sub-agent drafts or rewrites directly. Delegate execution; keep accountability with yourself.
+**Main-thread acceptance is the quality gate.** If Gemini's rewrite has more than 30% paragraph-level overlap with the draft (meaning synonym substitution rather than rewrite), or still has dense noun phrases, broken transitions, evidence dumps, or frequent stiff phrasing, write those issues into the rewrite brief and rerun `gemini_3.5_flash`. Only after acceptance should the rewrite proceed to post-writing scans. Do not deliver unchecked sub-agent drafts or rewrites directly. Delegate execution; keep accountability with yourself.
 
 When the user requests rewriting or overwriting the final file, the deliverable under `contexts/survey_sessions/` can be overwritten; but raw materials under `tmp/<session_slug>/` (source index, scratchpad, handoff brief, etc.) must be preserved as the audit chain.
 
@@ -263,24 +265,34 @@ After receiving feedback, first diagnose the feedback type before acting.
 
 ---
 
-## Second-Pass Writing: Language-Layer Rewrite
+## Second-Pass Writing: Low-Cognitive-Burden Rewrite
 
-After content and structure are finalized, and before post-writing self-check, must execute the second-pass writing: **language-layer rewrite**. This pass does not change structure, content, information volume, URLs, or facts. It only rewrites the entire article's prose from scratch using the rewriter's own language habits.
+After content and structure are finalized, and before post-writing self-check, must execute the second-pass writing: **low-cognitive-burden rewrite**. This pass preserves thesis, judgments, cases, numbers, URLs, image references, and structural intent, but rewrites the whole prose. The goal is not to make the piece shorter or softer; the goal is to reduce what the reader has to hold in each sentence.
 
-This is not optional polishing, nor is it a fix done only when style issues are discovered. The standard workflow for external-facing articles is: complete the first-pass draft, then complete the second-pass language rewrite, then enter post-writing scans. The first-pass draft is a draft; the second-pass rewrite is the final candidate.
+This is not optional polishing, nor is it a fix done only when style issues are discovered. The standard workflow for external-facing articles is: complete the first-pass structural draft, then complete the second-pass low-cognitive-burden rewrite, then enter post-writing scans. The first pass is a draft; the second pass is the final candidate.
 
-Why this pass is needed: by this point the article's structure, thesis, and evidence are all settled, but the prose layer often retains the sentence-pattern inertia of the original author (main thread or first-pass sub-agent), including translationese, flat rhythm, missing transitions, conceptual terms wrapped in quotation marks, "very + adjective" judgment summaries, and em-dash emotional pauses. Post-writing scans only catch explicit violations, not rhythm and language feel. A fresh writing brain, without the inertia of the first draft, can rewrite in more natural language.
+Why this pass is needed: by this point the article's structure, thesis, and evidence are all settled, but the prose layer often retains the sentence-pattern inertia of the original author (main thread or first-pass sub-agent), including long noun phrases, abstract subjects, translationese, flat rhythm, missing transitions, evidence without plain-language framing, "very + adjective" judgment summaries, and em-dash emotional pauses. Post-writing scans only catch explicit violations, not whether the reader has to work too hard. A fresh writing brain, without the inertia of the first draft, can rewrite in more natural language.
 
-**Execution method**: Invoke a `gemini_3.5_flash` sub-agent, give it the first-pass draft MD path, and require it to output a completely new file: `tmp/<session_slug>/rewrite.md`. Do not overwrite the original. After the main thread accepts, copy or apply the rewrite to the final delivery path.
+**Execution method**: Invoke a `gemini_3.5_flash` sub-agent, give it the first-pass draft MD path and rewrite brief, and require it to output a completely new file: `tmp/<session_slug>/rewrite.md`. Do not overwrite the original. After the main thread accepts, copy or apply the rewrite to the final delivery path.
 
 **Hard constraints for the rewriter**:
 
-1. **Do not change structure**: section order, subheadings, paragraph count, and paragraph correspondence remain consistent.
-2. **Do not change content**: thesis, judgments, cases, numbers, URLs, and quotes are all preserved.
-3. **Do not change information volume**: the information density conveyed per paragraph does not change; do not add or remove arguments.
-4. **Build from scratch, not sentence-by-sentence editing**: You are not editing words on the original; you are reading it, closing the original, and writing the same content from scratch in your own language. The original's role is to tell you "what information this paragraph needs to convey, which URLs to cite," not to give you a template for synonym replacement. You may change subjects, transitions, merge short sentences, split long sentences, reorder clauses, and reorganize the argumentation order within a paragraph. Judgment criterion: comparing the rewrite and the original paragraph by paragraph, no paragraph should have more than 30% sentence similarity. If it exceeds that, it means you're copying original sentences rather than rewriting, and you need to start over.
+1. **Preserve structural intent**: section order, subheadings, core judgments, and evidence placement remain consistent. You may merge short sentences, split long sentences, adjust sentence order inside a paragraph, and add light transitions, but do not change the argument order.
+2. **Preserve content**: thesis, judgments, cases, numbers, URLs, quotes, and image references are all preserved.
+3. **Allow noise reduction**: repeated explanations, redundant setup, and stiff transitions may be cut if the argument still stands.
+4. **Build from scratch, not sentence-by-sentence editing**: The original's role is to tell you "what information this paragraph needs to convey, which URLs to cite," not to give you a template for synonym replacement. You may change subjects, transitions, merge short sentences, split long sentences, reorder clauses, and reorganize the argumentation order within a paragraph. Judgment criterion: comparing the rewrite and the original paragraph by paragraph, no paragraph should have more than 30% sentence similarity. If it exceeds that, it means you're copying original sentences rather than rewriting, and you need to start over.
 5. **Follow COMMUNICATION.md for style**: the rewriter must read COMMUNICATION.md before writing, loading the rules in before starting.
 6. **Low cognitive burden; do not sound stiff**. This is where Gemini rewrites fail most often. Treat it as a tone-guiding principle, not a banned-word list.
+
+**Hard requirements for low-cognitive-burden rewrite:**
+- Split overloaded noun phrases. Do not pack five qualifiers before one noun. Bad: "those migration, cleanup, and boilerplate tasks that look inefficient on a time-efficiency ledger." Good: "These tasks look low-value on a schedule. A manager may see them as inefficiency. But for the brain, they matter."
+- Replace abstract subjects with people and actions. Avoid paragraphs where "mechanism, trend, dilemma, value, recovery band" all act as subjects.
+- Make transitions carry the previous paragraph. If the previous paragraph asks "why are people more tired," the next paragraph should not drop a definition cold; use "because," "the issue is," or an equivalent light bridge.
+- Use evidence only to anchor key turns. Research links and data should support a transition, not turn the article into a literature review.
+- Downgrade stiff phrasing. Expressions like "brought stronger fatigue," "significant correlation," "the underlying mechanism," "extremely important," "unprecedented," or "core asset" should default to everyday language.
+- Downgrade hard "not X but Y" contrasts. Follow `rules/COMMUNICATION.md`: state Y directly, or use lighter contrast such as "not more X; just more Y" or "on the surface X, but the constraint is Y."
+
+The second-pass brief must include 3-5 bad-to-good sentence pairs covering at least: overloaded noun phrases, stiff phrasing, paragraph transitions, evidence anchoring, and not-X-but-Y contrasts.
 
 **Target tone**: The article should read like someone who knows the field sitting across from you, telling you about a thing in the way they normally talk, not reading aloud from a written report.
 
@@ -297,7 +309,7 @@ Why not a banned-word list: Gemini's stiffness is not a problem of individual wo
 
 The target register is a technical blog, not an industry white paper.
 
-**Main thread acceptance**: After the rewrite is complete, the main thread compares it with the original paragraph by paragraph, checking three things: (a) structural integrity — section order, subheadings, paragraph count are consistent; (b) content integrity — all thesis, judgments, numbers, URLs are preserved; (c) language rewrite degree — check sentence similarity paragraph by paragraph; any paragraph exceeding 30% sentence similarity is judged as incomplete rewriting and must be redone. Only after acceptance does the rewrite enter the post-writing self-check phase. The original is preserved as the audit chain. When replying to the user, if the second-pass rewrite has not been completed, you must explicitly state that the deliverable is still the first-pass draft and cannot be called the final piece.
+**Main thread acceptance**: After the rewrite is complete, the main thread compares it with the original paragraph by paragraph, checking four things: (a) structural intent — section order, subheadings, and core judgments match; (b) content integrity — all thesis, judgments, numbers, URLs, and image references are preserved; (c) language rewrite degree — check sentence similarity paragraph by paragraph; any paragraph exceeding 30% sentence similarity is judged as incomplete rewriting and must be redone; (d) cognitive burden — spot-check for overloaded noun phrases, stiff phrasing, broken transitions, and evidence dumps. Only after acceptance does the rewrite enter the post-writing self-check phase. The original is preserved as the audit chain. When replying to the user, if the second-pass rewrite has not been completed, you must explicitly state that the deliverable is still the first-pass draft and cannot be called the final piece.
 
 ---
 
