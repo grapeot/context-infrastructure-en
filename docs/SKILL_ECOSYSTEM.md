@@ -45,6 +45,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Testing | [playwright-test-skill](https://github.com/grapeot/playwright-test-skill) | CDP step-by-step debugging CLI for AI agents writing Playwright E2E tests |
 | Semantic search | [semantic-search-skill](https://github.com/grapeot/semantic-search-skill) | Local-text embedding + cosine similarity search CLI, supports any OpenAI-compatible endpoint, with atomic cache |
 | LLM market data | [open_router_data_scraper](https://github.com/grapeot/open_router_data_scraper) | Periodically scrape OpenRouter model activity data (token usage, request counts, rankings) into local SQLite, breaking the 31-day trailing window limit |
+| Innovation | [innovation-assistant-skill](https://github.com/grapeot/innovation-assistant-skill) | Encodes SIT and Think Bigger as executable pipelines with hard validators, turning an agent into a structured innovation engine that produces buildable candidates with derivation chains |
 
 ## Selection Principles
 
