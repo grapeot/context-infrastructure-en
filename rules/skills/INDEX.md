@@ -64,7 +64,7 @@ Complete workflows for specific tasks.
   - Judgment criteria: the task hits at least 2 of: broad information surface, independent read tasks, independent judgment, high-value uncertainty, main thread needs to retain integration capability
   - Core parameters: parallelism ≤5, research overlap 30-50%, code overlap 0-20%
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
-- [External Writing Workflow](./workflow_external_writing.md) ✅ — Transform research materials into judgment-driven external-facing analysis articles. Includes Thesis Catalog (core analytical perspectives L1-L6) and judgment synthesis steps. **When doing deep research and writing external articles, read both skills**
+- [External Writing Workflow](./workflow_external_writing.md) ✅ — Transform research materials into judgment-driven external-facing analysis articles. Includes Thesis Catalog (the author's core analytical perspectives L1-L8) and judgment synthesis steps. **When doing deep research and writing external articles, read both skills**
 - [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Core principle is low decision friction: conclusions first, skimmable, inline evidence, easy navigation and verification, use diagrams when helpful to reduce cognitive load.
 - [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data
   - Applicable to: group chats, Slack, Discord, email, podcast transcripts, and any conversation data
@@ -81,6 +81,9 @@ Complete workflows for specific tasks.
 
 General best practices and lessons learned.
 
+- [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md) ✅ — Word-choice correction, metaphor restrictions, and long-form prose guidance for external articles and blog posts
+- [Analytical Perspectives for External Articles (Thesis Catalog)](./reference_writing_thesis_catalog.md) ✅ — L1-L8 analytical perspectives and related axiom mappings
+- [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md) ✅ — Adaptive HTML cards, theme variables, dark-mode compatibility, and visual component rules for internal memos, RFCs, and weekly reports
 - [Core AI Programming Methodology](./bestpractice_ai_programming_mindset.md) ✅ — 70% problem, success criteria, verifiability
 - [Skill Writing Guide (Meta-Skill)](./bestpractice_skill_writing.md) ✅ — Use when creating or rewriting skills; emphasizes outcome determinism, acceptance criteria, and boundary conditions
 - [API Key Management](./bestpractice_api_key_management_1password_cli.md) ✅ — Securely manage keys using 1Password CLI
