@@ -44,6 +44,7 @@ graph TD
     A -->|Thick context: user/collaborators/AI agents/workflows| C[Internal-facing]
 
     B -->|1. Load external writing workflow| D(rules/skills/workflow_external_writing.md)
+    B -->|2. Load external prose guide| E(rules/skills/bestpractice_external_prose.md)
 
     C -->|1. Load internal writing workflow| F(rules/skills/workflow_internal_writing.md)
     C -->|2. Load internal visual component guide| G(rules/skills/bestpractice_internal_visuals.md)
