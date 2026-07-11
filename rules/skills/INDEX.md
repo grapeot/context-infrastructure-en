@@ -81,6 +81,7 @@ Complete workflows for specific tasks.
 
 General best practices and lessons learned.
 
+- [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md) ✅ — Adaptive HTML cards, theme variables, dark-mode compatibility, and visual component rules for internal memos, RFCs, and weekly reports
 - [Core AI Programming Methodology](./bestpractice_ai_programming_mindset.md) ✅ — 70% problem, success criteria, verifiability
 - [Skill Writing Guide (Meta-Skill)](./bestpractice_skill_writing.md) ✅ — Use when creating or rewriting skills; emphasizes outcome determinism, acceptance criteria, and boundary conditions
 - [API Key Management](./bestpractice_api_key_management_1password_cli.md) ✅ — Securely manage keys using 1Password CLI
