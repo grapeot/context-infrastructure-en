@@ -135,8 +135,8 @@ rg -n 'L[0-6]|axiom|Phase [A-Z]|narrative reconstruction|technology lineage|bott
 # 4. Long blockquote audit (Gemini main threads only)
 rg -n '^> ' <file> | awk '{ if (length($0) > 100) print }'
 
-# 5. Meta-commentary and evaluative lead audit (Gemini main threads only)
-rg -n 'specifically|next we|it is important to note|worth noting|clearly shows' <file>
+# 5. Meta-commentary, evaluative leads, and article-wide prohibited-expression audit (Gemini main threads only)
+rg -ni 'specifically|next we|it is important to note|clearly shows|\bworth\b|\b(grow|grows|grew|grown|growing) (out of|into)\b' <file>
 
 # 6. Passive-voice audit (Gemini main threads only; review each hit)
 rg -n '\b(is|are|was|were|be|been|being)\s+\w+(ed|en)\b' <file>

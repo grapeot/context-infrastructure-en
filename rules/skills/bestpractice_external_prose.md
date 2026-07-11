@@ -16,7 +16,7 @@ The first principle of external writing is to **reduce decision and cognitive fr
 
 For systems, abstract concepts, and analytical judgments, describe the mechanism and difference directly. Avoid colloquial action metaphors, literary language, and labels without concrete referents:
 
-*   **Colloquial action metaphors**: Avoid "grow out of," "unpack," "break through," "pierce," "lock in," "rock solid," "sharp," and similar action metaphors used in place of explanation.
+*   **Colloquial action metaphors (prohibited throughout the article)**: This prohibition applies to the entire article. Do not use "grow out of," "grow into," "unpack," "break through," "pierce," "lock in," "rock solid," "sharp," or similar action metaphors anywhere in place of explanation.
     *   *Rewrite*: Replace the metaphor with a mechanism. "Breaks through the assumption" becomes "invalidates the assumption" or "the boundary no longer holds." "Unpack" becomes "analyze," "separate into layers," or "check item by item."
 *   **Structural as an explanation**: Do not use vague labels such as "structural reason" or "structural contradiction."
     *   *Rewrite*: State the underlying mechanism, source of the constraint, or location of the conflict.
@@ -42,7 +42,7 @@ Do not mechanically transfer the semantic range of a word from another language.
 
 ---
 
-## 3. Article Openings and Presumptive Patterns to Avoid
+## 3. Article Openings, Presumptive Patterns, and Article-Wide Prohibitions
 
 Do not pull the reader in through false consensus or a superior tone:
 
@@ -50,7 +50,7 @@ Do not pull the reader in through false consensus or a superior tone:
     *   *Rewrite*: State the fact directly or open with a concrete event.
 *   **"If you X, you probably know Y" reader assumptions**: This excludes readers who do not know Y and wastes the time of readers who do.
     *   *Rewrite*: State Y directly with the objective subject as the grammatical subject.
-*   **"Worth noting/considering/remembering" recommendations**: Do not tell readers which facts deserve their attention.
+*   **"Worth noting/considering/remembering" recommendations (prohibited throughout the article)**: This prohibition applies to the entire article, not only its opening. Do not use "worth noting," "worth considering," "worth remembering," or other "worth + X" expressions anywhere in the article. Do not tell readers which facts deserve their attention.
     *   *Rewrite*: Remove the label and present the fact or mechanism directly.
 
 ---
