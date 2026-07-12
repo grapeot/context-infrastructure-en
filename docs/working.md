@@ -1,5 +1,9 @@
 # Working Log
 
+## 2026-07-12
+
+- Added `genai_portrait_skill` to the public skill ecosystem for identity-preserving portrait, headshot, and ID-photo editing with photographic coherence.
+
 ## 2026-07-10
 
 - Added `innovation-assistant-skill` to the public skill ecosystem as the Innovation capability for structured innovation pipelines (SIT + Think Bigger).
