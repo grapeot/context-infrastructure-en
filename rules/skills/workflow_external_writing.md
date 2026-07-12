@@ -6,7 +6,7 @@
 - **Use cases**: Transforming research materials into judgment-driven external-facing analysis articles, public survey reports, or course/client content for external readers.
 - **Prerequisites**: Phase 1-3 output from the Deep Research Workflow (`workflow_deep_research_survey.md`), or equivalent verified material.
 - **Created**: 2026-04-28
-- **Last updated**: 2026-07-06
+- **Last updated**: 2026-07-11
 
 ---
 
@@ -30,6 +30,7 @@ Validate the result against these criteria after writing:
 5.  **Consistent with the existing viewpoint system**: Stay consistent with the author's established core views, axioms in `rules/axioms/`, and existing articles on the same subject. If the judgment changes, naturally explain the new evidence and why it changed the earlier view.
 6.  **Visuals reduce cognitive burden (hard constraint)**: Visuals compress a mechanism or show a trend or comparison. They are never decoration. The body must reference each visual with a relative link and descriptive alt text.
 7.  **The analytical framework remains invisible**: Thesis Catalog labels L1-L8, axiom numbers, Phase labels, and other writing-scaffold terms must never appear in the final draft.
+8.  **Five-second continue-reading gate**: After scanning the title and first few sentences, the reader can immediately confirm the subject or event, the author's core judgment, and what mechanisms, boundaries, counterexamples, or consequences the full article adds beyond the public summary.
 
 ---
 
@@ -57,6 +58,25 @@ During drafting, rewriting, and review, load and strictly follow the [External A
 *   Split overloaded modifiers and replace abstract subjects with people and actions.
 *   Do not use category-name headings or numbered announcements with no information gain at paragraph openings or in headings.
 *   Do not use the hard "not X but Y" AI template. State the point directly or use a light contrast.
+*   Do not add redundant bilingual parentheticals when the primary language already expresses the concept. Preserve official product names, APIs, protocols, code identifiers, and standard abbreviations.
+
+### 4.1 Title Design: The Shortest Reading Contract
+
+In the fewest words possible, the title should identify the subject, establish why it matters, and expose the article's analytical increment over public information. The title makes a promise, the opening confirms it, and the body fulfills it.
+
+Pair an unfamiliar company, paper, or protocol with its category, action, or change. Event-driven pieces should normally name the news subject. Analytical titles should signal that the body adds mechanism, evolution, competitive context, boundaries, or decision impact. Accuracy comes first: no clickbait, false suspense, hidden answers, or inflated causality.
+
+Do not standardize titles around formulas such as "not A but B," "why X is becoming Y," "is X a trend or hype," or "stop doing X." Apply the substitution test: if replacing the company, paper, or event name leaves a title reusable for ten other pieces, it does not express this article's identity.
+
+In `writing_brief.md`, draft three to five candidates from genuinely different judgment angles rather than synonymous variants of one template. Compare the last five to ten titles from the same channel to avoid repeated questions, contrasts, imperatives, or "from A to B" constructions. Recheck title-body fit after IC-2 finishes.
+
+### 4.2 Opening Design: Let the Evidence Choose the Entry Point
+
+Do not treat a concrete scenario, second-person simulation, incident, or "phenomenon first" as the default algorithm. Ask which evidence is most distinctive and best carries the thesis. A real log may begin with its first anomaly; a paper with its key result; product archaeology with a pivot or deprecation; a market analysis with its classification or strongest substitute. If no distinctive evidence exists, state the judgment directly rather than inventing a scene.
+
+Specificity must come from evidence. Do not invent step counts, user reactions, character actions, or incident details for atmosphere. In event-driven writing, the title or first screen must name the event and immediately expose the analytical increment. Avoid an archaeological detour that spends paragraphs on distant history before mentioning the current event, and avoid a news-summary ceiling where the body adds no new judgment. By the end of the first two or three paragraphs, the reader should be able to retell what happened, what the article says it changes, and why continuing is useful.
+
+Apply the substitution test to the opening as well. Before writing the brief, compare the first 150-300 words of the last five to ten articles from the same channel. If two of the last five already use the same entry pattern, do not repeat it without a reason grounded in this article's strongest evidence.
 
 ---
 
@@ -74,7 +94,7 @@ An external article is delivered through close coordination between the main thr
 
 IC-2 turns academic or stiff prose into language addressed to a smart reader outside the field. "Low cognitive burden" alone is not specific enough: Gemini can easily produce a translation-like summary. During the rewrite, do all four of the following and compare each against the negative examples in Section 5 of `bestpractice_external_prose.md`:
 
-1. **Show the phenomenon before naming it**. Do not open with a definition such as "reasoning models made thought an independently schedulable layer, creating new failure surfaces benchmarks cannot cover." Start with a concrete scene the reader immediately recognizes: "Run the same problem ten times. Four runs stop after 516 thinking tokens and answer incorrectly. Six think for six thousand tokens and answer correctly." Let the reader see the problem, then name it. Definitions close the point for readers who are already convinced; they are not the entry point.
+1. **Do not default to a definition; let the evidence choose the entry point**. Follow Section 4.2 and select the article's distinctive fact, anomalous result, product decision, historical turn, lived experience, or direct judgment. Put the most informative material first, then name it when a label helps.
 2. **Turn abstract subjects into people and actions**. Replace "the discovery of this phenomenon produced a new judgment" with "maille reviewed 390,000 records and found..." Replace "failure occurs at the reasoning layer" with "the part that fails is the model's thinking layer." When the subject is a category word such as phenomenon, mechanism, failure surface, or paradigm, ask whether a concrete person and action can replace it.
 3. **Advance in short sentences, one action per sentence**. Default to no more than 30 words. Split overloaded modifiers into separate sentences. Avoid stacking multiple dependent clauses.
 4. **Replace specialized phrasing with everyday words**. "Benchmarks cannot cover it" becomes "benchmarks do not reveal it." "A new failure surface" becomes "a new way to fail." "Monotonic degradation" becomes "it gets worse every month." Keep necessary technical terms such as reasoning, doom loop, benchmark, token, and adaptive thinking, but describe them with ordinary verbs and adjectives rather than elevated vocabulary.
@@ -117,8 +137,8 @@ Visuals are a **hard constraint** for external-facing articles. An external arti
 
 The scan scope depends on the main thread's base model, following the authority split in Section 5:
 
-- **Gemini main thread**: Run all eight scans below. For prose-related hits, use the three-question gate in Section 5.2 to decide between a narrow fix and a rerun.
-- **Non-Gemini main thread**: Run only scans 1 (em-dash Markdown defect), 7 (image-reference syntax), and 8 (mixed-language defects), plus one numerical and link verification against the brief. Do not run prose scans 2, 3, 5, or 6. A non-Gemini main thread changing Gemini's prose would violate Section 5.0. Record prose problems in the brief for the next run.
+- **Gemini main thread**: Run all nine scans below. For prose-related hits, use the three-question gate in Section 5.2 to decide between a narrow fix and a rerun.
+- **Non-Gemini main thread**: Run only scans 1 (em-dash Markdown defect), 7 (image-reference syntax), 8 (mixed-language defects), and 9 (redundant bilingual parentheticals), plus one numerical and link verification against the brief. Do not run prose scans 2, 3, 5, or 6. Return scan 9 hits to the writing model instead of rewriting them with a different model family.
 
 After drafting and image generation, the main thread **must run the applicable scans** rather than relying on visual review:
 
@@ -146,6 +166,9 @@ rg -n '!\[[^\]]+\]\([^\)]+\)' <file>
 
 # 8. Mixed-language residue audit (required for every main thread; adapt to target language)
 rg -n '<target-language residue pattern>' <file>
+
+# 9. Redundant bilingual parentheticals in Chinese output, e.g. “执行状态（execution state）”
+rg -n '[\p{Han}”’」』][（(][A-Za-z][A-Za-z0-9 _./+:-]{1,50}[）)]' <file> | rg -v 'https?://|!\['
 ```
 
 ---
