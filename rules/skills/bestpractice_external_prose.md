@@ -40,6 +40,12 @@ Do not mechanically transfer the semantic range of a word from another language.
     *   Remove "an uncomfortable fact" preambles. State the fact directly or say that it contradicts the prevailing narrative.
     *   Replace "blast radius" outside a necessary technical context with "scope of impact."
 
+### No Redundant Bilingual Parentheticals
+
+When the article's primary language already expresses a concept clearly, do not immediately repeat an English translation in parentheses. This pattern adds visual noise without information gain.
+
+Keep ordinary concepts in the article's primary language. Preserve official product names, APIs, protocols, code identifiers, and standard abbreviations. If the English term is itself the common form, use it directly and explain it naturally once. Use bilingual forms only when the article discusses translation differences, terminology ambiguity, or searchability of the original source.
+
 ---
 
 ## 3. Article Openings, Presumptive Patterns, and Article-Wide Prohibitions
