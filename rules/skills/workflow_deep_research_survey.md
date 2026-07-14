@@ -6,7 +6,7 @@
 - **Applicable Scenarios**: When deep, comprehensive, verifiable third-party research on a topic is needed
 - **Output Location**: `contexts/survey_sessions/`
 - **Created**: 2026-02-19
-- **Last Updated**: 2026-06-07
+- **Last Updated**: 2026-07-14
 
 ## Core Principles
 
@@ -129,7 +129,7 @@ Divide into 3-5 dimensions, each serving two functions: covering a topic and ver
 
 **Launching Sub-agents**:
 
-Launch 3-5 sub-agents simultaneously, each responsible for one dimension. Use `multi_tool_use.parallel` wrapping multiple `functions.task` calls; see `workflow_parallel_subagents.md` for specific invocation. Default to `general`; use `cheap_glm` for low-cost initial screening; use `private_ds4` for high-privacy materials; use `ollama_kimi` or `ollama_deepseek_pro` for zero-data-retention cloud models based on task intensity; use `reasoning_gpt` for complex judgment or final QA.
+Launch 3-5 sub-agents simultaneously, each responsible for one dimension. Use `multi_tool_use.parallel` wrapping multiple `functions.task` calls; see `workflow_parallel_subagents.md` for specific invocation. Default to `general`; use a low-cost screening agent for initial triage, a locally configured privacy-preserving agent for sensitive material, and a high-reliability reasoning agent for complex judgment or final QA. Use only agent names registered in the current harness.
 
 ```json
 {
@@ -172,29 +172,51 @@ The main thread organizes key conclusions, source indices, and judgment processe
    - Tier 3-4 sources show evidence contradicting Tier 1-2 → prioritize Tier 3-4, record contradiction points
 3. If major contradictions are found, launch additional sub-agents for targeted verification.
 
+### Phase 3.3: Source-Level Fact-Check
+
+**Goal**: Before thesis brainstorming, return to the primary sources behind the central claims and eliminate subagent misreading, hallucination, or selective quotation. Run this phase by default except for purely factual compilations.
+
+1. Select five to ten critical references: sources that directly support or challenge the likely thesis, sources that appear to conflict, sources containing key numbers, and sources of uncertain credibility.
+2. Use Tavily extract to reread the original material. Verify the paraphrase, qualifications, URL, and numerical precision. One subagent summary cannot validate another subagent summary.
+3. Write `tmp/<session_slug>/fact_check.md`. For every item, record the source, current paraphrase, verdict (`consistent`, `partial deviation`, or `hallucination`), and original excerpt.
+4. Mark corrections in the scratchpad. Brainstorm only from corrected facts; if a central source fails verification, return to research first.
+
+### Phase 3.5: Brainstorm and Targeted Research Decision
+
+**Goal**: After fact-checking, use independent perspectives to expose thesis weaknesses, counterarguments, and missing information. Run this phase by default for external-facing articles, judgment-driven research, and any task that needs a thesis. A purely factual compilation may skip it.
+
+1. The main thread writes `tmp/<session_slug>/brainstorm_brief.md` with the initial thesis, verified facts, uncertain claims, counterexamples, target reader, and writing constraints.
+2. In parallel, assign agents distinct roles such as evidence skeptic, target reader, and product decision-maker. Each answers: What is the strongest version of the thesis? What is its weakest premise? Which three to five questions need more research? What evidence would change the conclusion?
+3. Integrate the results into `tmp/<session_slug>/brainstorm_synthesis.md`, listing thesis candidates, mandatory follow-up questions, and verification routes.
+4. Run one focused research round narrower than Phase 2, limited to the weakest premises and counterexamples. Append new sources to `source_index.md`.
+
+Brainstorming is not title polishing or generic multi-agent restatement. It must produce targeted research or a clearer judgment.
+
 ### Phase 4: Writing
 
 After Phase 1-3 research is complete, enter the writing phase. Choose the path based on target output type:
 
-**If it is an external-facing analysis article** → Load `workflow_external_writing.md` and start from Phase A. This skill includes the author's analytical perspective catalog (Thesis Catalog), judgment synthesis steps (perspective matching → lineage tracing → narrative reconstruction → thesis formation), and writing conventions.
+**External-facing analysis article** → First run [External-Facing Thesis Mining](./workflow_external_thesis_mining.md). Only a `PROCEED` verdict may enter the [External Writing Workflow](./workflow_external_writing.md). That workflow uses the [Antigravity CLI](./antigravity_cli.md) for AGY IC-1 structural drafting, a fresh AGY IC-2 low-cognitive-burden rewrite, and a fresh AGY IC-3 independent prose QA. The main thread must not bypass the writing agent or manually edit prose after IC-3.
 
-**If it is an internal memo** (for yourself or collaborators sharing context) → Load `workflow_internal_writing.md`. First surface the conclusions and basis that most affect decisions, and clearly note unresolved points and next steps. Read `rules/COMMUNICATION.md` before writing.
+**Internal memo** (for yourself or collaborators sharing context) → Load the [Internal Writing Workflow](./workflow_internal_writing.md). First surface the conclusions and basis that most affect decisions, and clearly note unresolved points and next steps. Read [`COMMUNICATION.md`](../COMMUNICATION.md) before writing.
 
 **Shared Format Requirements** (common to both modes):
-- Chinese Markdown
-- All citations must have URLs (Markdown link format) and must use **absolute links** (starting with `https://`). Relative links work on yage.ai but point to wrong addresses when published to third-party platforms like Circle
+- Use the requested output language consistently in Markdown
+- All external citations must use absolute `https://` URLs so they remain valid across publication environments
 - Key citations retain original excerpts, not just summaries
 - If the final deliverable is an external article, important sources go directly into inline Markdown links in the body, not just piled at the end
 
-**Difference between survey report and blog post**: The output of this workflow is a survey report, stored in `contexts/survey_sessions/`. It is not a blog post. Do not add blog frontmatter or Kit subscription script tags. If the user requests publishing to a blog, separately copy to `contexts/blog/content/` and add frontmatter — this is a separate step.
+**Difference between survey report and blog post**: This workflow produces a survey report in `contexts/survey_sessions/`. Do not add blog frontmatter, subscription components, or channel-specific metadata by default. When the user explicitly requests a blog post, follow the target project's blog format and location as a separate step.
 
-**Delivery Endpoint**: Writing the final MD file under `contexts/survey_sessions/` is the delivery endpoint. Do not automatically proceed to publishing workflows (yage share, blog, Twitter, Circle, etc.). Only execute subsequent steps per the corresponding skill workflow when the user explicitly requests publishing.
+**Delivery Endpoint**: Writing the final MD file under `contexts/survey_sessions/` is the delivery endpoint. Do not automatically publish to a blog, social platform, community, or another external channel. Publication requires explicit authorization for that action.
 
 **Storage Location**: `contexts/survey_sessions/<topic>_survey_YYYYMMDD.md`
 
 **Recommended artifact directory** `tmp/<session_slug>/`, at minimum containing:
 - `scratchpad.md` (with claim extraction table)
 - `search_manifest.md` (with output file index table, subagent positioning method, data coverage assessment)
+- `fact_check.md` (Phase 3.3 source-level verification)
+- `brainstorm_brief.md` and `brainstorm_synthesis.md` (judgment-driven or external-facing work)
 - `search_notes.md` (as needed)
 - `source_index.md` (as needed)
 
@@ -257,7 +279,7 @@ If the research will later be turned into an external article, do one more check
 | Dimension division too clean with no overlap | Deliberately blur edges when designing dimensions |
 | Sub-agent returns too shallow information | Emphasize "depth", "specificity", "original text" in prompts |
 | Intermediate file clutter | Centralize in `tmp/<session_slug>/`, only retain key indices and judgments |
-| Using wrong subagent type | `subagent_type` must be a currently registered agent name; default to `general` for external research, `explore` for codebase exploration, `private_ds4` or Ollama Cloud route for privacy-sensitive tasks |
+| Using wrong subagent type | `subagent_type` must be a currently registered agent name; default to `general` for external research, `explore` for codebase exploration, and a locally configured privacy-preserving agent for sensitive material |
 | Research results become vendor marketing summaries | Phase 1 extracts claims, Phase 2 allocates dimensions by evidence function, Phase 3 checks verification status |
 
-For common failure modes in the writing phase (Relevance not landing, Demo as evidence, temporal dimension ambiguity, research summary instead of authorial writing, etc.), see the failure mode table in `workflow_external_writing.md`.
+For writing-stage requirements and failure prevention, see the [External Writing Workflow](./workflow_external_writing.md).
