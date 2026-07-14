@@ -3,7 +3,7 @@
 ## Metadata
 - Type: API Guide
 - Use when: building automation pipelines with CLI Agents, AI-calling-AI
-- Last updated: 2026-04-29
+- Last updated: 2026-07-14
 
 ---
 
@@ -20,13 +20,13 @@ Direct LLM API calls have shortcomings for complex tasks. CLI Agents as an inter
 
 ## Tool Quick Reference
 
-| Dimension | Claude Code | Codex CLI | OpenCode |
-|------|-------------|-----------|----------|
-| **Open source** | No | No | Yes, 100% |
-| **Model lock-in** | Claude only | OpenAI only | Provider-agnostic (xAI, Anthropic, OpenAI, Google, etc.) |
-| **CLI non-interactive** | `claude --print` | `codex exec` | `opencode serve` + `opencode run --attach` (two-step) |
-| **Web API** | No | No | Yes, full |
-| **Recommended use** | Deep reasoning | Automation | Multi-model comparison, automation + visualization |
+| Dimension | Claude Code | Codex CLI | OpenCode | Antigravity CLI |
+|------|-------------|-----------|----------|-----------------|
+| **Open source** | No | No | Yes, 100% | No |
+| **Model lock-in** | Claude only | OpenAI only | Provider-agnostic (xAI, Anthropic, OpenAI, Google, etc.) | Models included with an Antigravity subscription |
+| **CLI non-interactive** | `claude --print` | `codex exec` | `opencode serve` + `opencode run --attach` (two-step) | `agy --print` |
+| **Web API** | No | No | Yes, full | No |
+| **Recommended use** | Deep reasoning | Automation | Multi-model comparison, automation + visualization | Gemini agent work through subscription quota |
 
 ---
 
@@ -71,16 +71,28 @@ subprocess.run([
 
 ## Claude Code Quick Reference
 
-Claude Code content has been split into a separate skill: [`claude_code.md`](./claude_code.md).
+**Basic command**: `claude --print "prompt"`
 
-This overview page only retains cross-tool common content. For the following topics, jump directly to `claude_code.md`:
+**Key parameters**:
 
-- Using the `claude` CLI, not the Claude routing subagent
-- Default to Opus
-- Wrap Claude Code with a background subagent to stay non-blocking, but don't pre-do research for it
-- Launch from workspace root
-- `claude -p` non-interactive invocation, permissions, and tool control
-- Temporary context files and Python wrapper notes
+- `--model`: `claude-sonnet-4-6-20260217` for routine work or `claude-opus-4-6-20260205` for deep reasoning
+- `--output-format`: `text`, `json`, or `stream-json`
+- `--permission-mode`: `acceptEdits` or `bypassPermissions`
+- `--json-schema`: require output conforming to a JSON Schema
+
+Sonnet 4.6 is the default cost-effective choice; use Opus 4.6 when the task needs deeper reasoning.
+
+---
+
+## Antigravity CLI Quick Reference
+
+Use the standalone `agy` command for Antigravity automation, not `agy-ide chat`. See [Antigravity CLI File-Based Invocation](./antigravity_cli.md) for installation, authentication, privacy boundaries, and the complete execution contract.
+
+Core rules: persist the prompt, result, stdout, stderr, and event log as separate local-only files under a git-ignored `tmp/`; use `Gemini 3.5 Flash (High)` by default; pair `--dangerously-skip-permissions` with `--sandbox` only in a minimal trusted scratch workspace; set `--print-timeout 10m` and an outer process timeout of about 610 seconds.
+
+AGY 1.1.2 has no `login` command and no JSON event stream. It reuses the Google sign-in from the Antigravity App or IDE through the system keyring. A successful run requires exit code 0, a non-empty result file, satisfied hard constraints, and no unhandled stderr error.
+
+Use a fresh AGY conversation for every independent writing or review stage. Do not pass `--continue` or `--conversation` between IC-1, IC-2, and IC-3.
 
 ---
 
@@ -172,8 +184,7 @@ Suitable for scenarios requiring fine-grained session lifecycle control.
 
 **Start server**: `opencode web --port 4096` (or `opencode serve --port 4096`)
 
-**Python client**: `periodic_jobs/ai_heartbeat/src/v0/opencode_client.py` has implemented common API wrappers
-- `create_session()` / `send_message()` / `get_session_messages()` / `wait_for_session_complete()`
+Use an OpenCode client compatible with the current server API for operations such as `create_session()`, `send_message()`, `get_session_messages()`, and `wait_for_session_complete()`.
 
 **Model format**: `provider/model` (e.g. `xai/grok-4.20-experimental-beta-0304-non-reasoning`, `anthropic/claude-opus-4-6`)
 
@@ -187,14 +198,13 @@ Suitable for scenarios requiring fine-grained session lifecycle control.
 
 ### Common Model Quick Reference
 
-Claude Code default model selection rule: **Always use Opus 4.6.** No longer distinguish trivial vs. non-trivial, and no proactive downgrade to Sonnet. For any Claude Code invocation, default to explicitly specifying Opus.
-
 | Provider | Model ID | Characteristics |
 |----------|----------|------|
 | xai | `grok-4.20-experimental-beta-0304-non-reasoning` | Grok 4.20 non-reasoning, fast |
 | xai | `grok-4.20-experimental-beta-0304-reasoning` | Grok 4.20 reasoning edition |
 | xai | `grok-4-1-fast-non-reasoning` | Grok 4.1 non-reasoning, $0.20/1M input |
-| anthropic | `claude-opus-4-6` | Claude Code default and sole first choice; suitable for research, comprehensive analysis, multi-step tasks, and high-quality output |
+| anthropic | `claude-opus-4-6` | Claude deep reasoning |
+| anthropic | `claude-sonnet-4-6` | General Claude work with a lower cost |
 | openai | `gpt-5.4` | GPT-5.4 (requires Codex plugin) |
 
 ---
@@ -209,6 +219,8 @@ If you are writing an Agent to call these CLIs, provide the following meta-instr
 > 3. Set appropriate reasoning intensity (e.g. `low` for translation)
 > 4. Strip null characters from the prompt before passing (`.replace('\0', '')`)
 > 5. For OpenCode, prefer the Web Server API"
+
+The JSON-stream recommendation does not apply to Antigravity CLI. AGY uses `--log-file` for progress visibility and the designated result file as the only deliverable.
 
 ---
 
@@ -228,19 +240,15 @@ Core principle from the pi-mono project: **"What's missing matters more than wha
 
 ## Model Selection Quick Reference
 
-Default strategy: **Claude Code always uses Opus 4.6.** No Sonnet fallback, no downgrade based on triviality judgment.
-
 | Task Type | Claude Code | Codex | OpenCode |
 |---------|-------------|-------|----------|
-| **Translation / format conversion (clearly trivial)** | Opus 4.6 | gpt-5.2 + low | glm-5 / grok-4-1-fast-non-reasoning |
-| **Regular development** | Opus 4.6 | gpt-5.2 + medium | glm-5 / grok-4.20-non-reasoning |
+| **Translation / format conversion** | Sonnet 4.6 | gpt-5.2 + low | glm-5 / grok-4-1-fast-non-reasoning |
+| **Regular development** | Sonnet 4.6 | gpt-5.2 + medium | glm-5 / grok-4.20-non-reasoning |
 | **Deep reasoning / refactoring** | Opus 4.6 | gpt-5.2 + high | grok-4.20-reasoning / claude-opus-4-6 |
 
 ---
 
-## OpenCode Production Experience (agentic_trading experiment summary)
-
-The following comes from practical experience running V9.4 backtest experiments with OpenCode + Grok 4.20 in the agentic_trading project.
+## OpenCode Operational Notes
 
 ### Permission Model: Files Must Be Under Project Root
 
@@ -298,11 +306,7 @@ One `opencode serve` process can handle multiple concurrent `run --attach` reque
 6. If still fails → retry (max 3 times)
 ```
 
-### Key Data
-
-- Smoke test: 7/7 success (zero retries), ~3 minutes wall clock (6 × 30-minute intervals)
-- Average per-decision time: ~20-30 seconds (Grok 4.20 non-reasoning)
-- Server start command: `opencode serve --port 14097` (started from agentic_trading directory)
+Start the server from the intended project root, for example with `opencode serve --port 14097`, so the file-access boundary matches the task.
 
 ---
 
@@ -311,3 +315,4 @@ One `opencode serve` process can handle multiple concurrent `run --attach` reque
 - [Claude Code Official Documentation](https://docs.anthropic.com)
 - [OpenAI Codex Documentation](https://platform.openai.com/docs)
 - [OpenCode Official Documentation](https://opencode.ai/docs)
+- [Antigravity CLI Official Documentation](https://antigravity.google/docs/cli-overview)

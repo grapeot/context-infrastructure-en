@@ -3,176 +3,142 @@
 ## Metadata
 
 - **Type**: Workflow
-- **Use cases**: Transforming research materials into judgment-driven external-facing analysis articles, public survey reports, or course/client content for external readers.
-- **Prerequisites**: Phase 1-3 output from the Deep Research Workflow (`workflow_deep_research_survey.md`), or equivalent verified material.
-- **Created**: 2026-04-28
-- **Last updated**: 2026-07-11
+- **Use cases**: Turning verified research into an external-facing analysis, public survey report, or course/client material.
+- **Prerequisites**: Phase 1-3 output from the [Deep Research Survey Workflow](./workflow_deep_research_survey.md), or equivalent verified material.
+- **Last updated**: 2026-07-14
 
----
+## 1. Goal and Output Route
 
-## 1. What Problem This Skill Solves
+This skill addresses the case where the material is sufficient but the article still reads like an AI summary. The goal is an evidence-backed article with exactly one core thesis that an unfamiliar reader can retell.
 
-Research material may be sufficient while the resulting text still reads like an AI summary and lacks the author's analytical perspective and judgment framework. This skill defines how to turn facts into a retellable analysis whose core thesis can be stated in one or two sentences.
+For the user, internal collaborators, or future AI agents, use the [Internal Writing Workflow](./workflow_internal_writing.md). External-facing research analysis defaults to a survey report in `contexts/survey_sessions/`. Use a target project's blog directory and format only when the user explicitly requests a blog post.
 
-*   **Boundary**: Use for strangers without shared context, public channels, customers, or external course audiences. For internal documents written for the user, internal collaborators, or future AI agents, use `workflow_internal_writing.md`.
-*   **Output type decision (required before drafting)**: The default output for external-facing research analysis is a **survey report**, stored in `contexts/survey_sessions/`. Treat it as a blog post and store it in `contexts/blog/content/` only when the user explicitly says "write a blog post" or "publish to the blog."
+## 2. Acceptance Criteria
 
----
+1. **Concept before reference (blocking gate)**: Give enough context before the first mention of every proper noun, regulation, event, and technical term. This does not require a dictionary definition; one background anchor is often enough. The rule applies throughout the article, not only at the opening.
+2. **One thesis**: The core judgment is specific and open to agreement or disagreement, not merely that the topic is complex or interesting.
+3. **Thesis up front**: The first 25% establishes the problem, the author's judgment, and the reader's gain.
+4. **Reader-led organization**: Follow the reader's chain of questions instead of listing the author's analytical dimensions.
+5. **Author continuity**: Remain consistent with relevant Axioms and historical writing. If the judgment changes, explain the new evidence and why it changed.
+6. **Visuals reduce cognitive burden**: Images compress a mechanism, trend, or comparison; include alt text and correct relative references. Do not use decorative images as evidence.
+7. **Invisible scaffolding**: L1-L8, Axiom numbers, Phase labels, Thesis Catalog, and similar internal terms do not appear in the final draft.
+8. **Five-second continue-reading gate**: The title and opening immediately establish the subject, core judgment, and increment beyond the public summary.
 
-## 2. Acceptance Criteria for a Good External Article
+## 3. Thesis Mining Gate
 
-Validate the result against these criteria after writing:
+If the user has not supplied a clear thesis, or the proposed thesis has not survived evidence and counterargument testing, first run [External-Facing Thesis Mining](./workflow_external_thesis_mining.md). It reads Axioms, the Thesis Catalog, historical writing, adjacent work in the target publication environment, and the research packet, then writes `tmp/<session_slug>/thesis_decision.md`.
 
-1.  **A non-expert can understand and retell the thesis (blocking gate)**: A smart person who does not work in the field can retell the article in one or two sentences after hearing it read aloud. Friction in any section means its background assumptions or information density are wrong.
-2.  **One explicit core thesis**: The article has exactly one core judgment. It is specific and open to agreement or disagreement, not a vague statement such as "complex and worth watching."
-3.  **Thesis up front**: After the first 25%, the reader must know which problem the article discusses, what the author's judgment is, and what they will gain by finishing it.
-4.  **Organized around the reader**: Advance through the reader's chain of questions or needs rather than listing the author's analytical dimensions.
-5.  **Consistent with the existing viewpoint system**: Stay consistent with the author's established core views, axioms in `rules/axioms/`, and existing articles on the same subject. If the judgment changes, naturally explain the new evidence and why it changed the earlier view.
-6.  **Visuals reduce cognitive burden (hard constraint)**: Visuals compress a mechanism or show a trend or comparison. They are never decoration. The body must reference each visual with a relative link and descriptive alt text.
-7.  **The analytical framework remains invisible**: Thesis Catalog labels L1-L8, axiom numbers, Phase labels, and other writing-scaffold terms must never appear in the final draft.
-8.  **Five-second continue-reading gate**: After scanning the title and first few sentences, the reader can immediately confirm the subject or event, the author's core judgment, and what mechanisms, boundaries, counterexamples, or consequences the full article adds beyond the public summary.
+Create `writing_brief.md` only when the verdict is `PROCEED`. `DO_NOT_WRITE_YET` means the topic cannot yet support a judgment-driven article; gather missing evidence or stop rather than forcing a thesis.
 
----
+When the user supplied the thesis, preserve its direction. Still test evidence, boundaries, the strongest counterargument, author continuity, and reader delta. The main thread may perform a lightweight check for a low-risk short piece and record it in the brief.
 
-## 3. Discovering a Thesis from the Material
+## 4. Brief and Prose Calibration
 
-If the user has not supplied an explicit thesis, use these tools to discover and synthesize one in `tmp/<session_slug>/scratchpad.md`:
+Drafting, rewriting, and review must all load the [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md). `writing_brief.md` includes at least:
 
-1.  **Perspective matching**: Read the [Thesis Catalog](./reference_writing_thesis_catalog.md). Choose one to three perspectives that strongly fit the topic as inspiration. Do not force a framework.
-2.  **Search the author's existing writing**: Search `contexts/blog/`, `contexts/survey_sessions/`, and `rules/axioms/` for historical views and related axioms.
-3.  **Read existing work in the target environment**: Read three to six adjacent or same-topic articles in the target publication environment. Determine how the new article adds, fills a gap, or corrects earlier work instead of reproducing a familiar media narrative.
-4.  **Multi-model thesis brainstorm**: Before finalizing, use parallel subagents for divergence. Follow `workflow_parallel_subagents.md` and issue the calls in one message through `multi_tool_use.parallel`. Suggested roles:
-    *   `gemini_3.5_flash`: Reader entry point and low cognitive burden.
-    *   `glm`: Contrarian divergence and blind-spot detection.
-    *   `reasoning_gpt`: Argument strength, evidence risk, and consistency audit.
-5.  **Main-thread synthesis**: The main thread deeply integrates the subagent results. The synthesis must be written to disk and include:
-    *   **Thesis statement**: Two or three sentences, with a clear view that a non-expert can understand.
-    *   **Argument skeleton**: Three to five points matched to perspectives and the strongest evidence.
-    *   **Evidence risks and attribution limits**.
+- the thesis, reader contract, three to five argument nodes, and strongest counterargument;
+- verified facts, numbers, URLs, image placeholders, and limits on conclusion strength;
+- a concept-introduction plan naming concepts an unfamiliar reader may not know and where each first appears;
+- an immutable-term list for product names, model names, API names, code identifiers, and easily mistranslated terms;
+- three to five title candidates based on distinct judgments, plus the reason for the final choice;
+- a duplication check against the titles and openings of the last five to ten pieces in the same channel.
 
----
+Do not add redundant bilingual parentheticals when the primary language already communicates an ordinary concept. Preserve official product names, APIs, protocols, code identifiers, and standard abbreviations.
 
-## 4. Drafting Principles and Prose Calibration
+### 4.1 Title: The Shortest Reader Contract
 
-During drafting, rewriting, and review, load and strictly follow the [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md).
-*   Split overloaded modifiers and replace abstract subjects with people and actions.
-*   Do not use category-name headings or numbered announcements with no information gain at paragraph openings or in headings.
-*   Do not use the hard "not X but Y" AI template. State the point directly or use a light contrast.
-*   Do not add redundant bilingual parentheticals when the primary language already expresses the concept. Preserve official product names, APIs, protocols, code identifiers, and standard abbreviations.
+The title identifies the subject, establishes relevance, and signals what the article adds beyond public information.
 
-### 4.1 Title Design: The Shortest Reading Contract
+- Pair an unfamiliar company, paper, or protocol with its category, action, or change.
+- Name the news subject or concrete change in an event-driven article.
+- Put the analytical increment in mechanism, evolution, competitive position, boundary, or decision impact rather than repeating what launched.
+- Prefer accuracy. Avoid clickbait, false suspense, and inflated causality; a title may state the judgment directly.
+- Do not default to templates such as "not A but B," "why X is becoming Y," or "trend or hype."
 
-In the fewest words possible, the title should identify the subject, establish why it matters, and expose the article's analytical increment over public information. The title makes a promise, the opening confirms it, and the body fulfills it.
+Apply the substitution test: if replacing the company, paper, or event leaves a title reusable for ten other articles, it does not identify this article. Recheck title-body fit after IC-3 and update the title if the article's increment became clearer.
 
-Pair an unfamiliar company, paper, or protocol with its category, action, or change. Event-driven pieces should normally name the news subject. Analytical titles should signal that the body adds mechanism, evolution, competitive context, boundaries, or decision impact. Accuracy comes first: no clickbait, false suspense, hidden answers, or inflated causality.
+### 4.2 Opening: Let Evidence Choose the Entry Point
 
-Do not standardize titles around formulas such as "not A but B," "why X is becoming Y," "is X a trend or hype," or "stop doing X." Apply the substitution test: if replacing the company, paper, or event name leaves a title reusable for ten other pieces, it does not express this article's identity.
+There is no default opening template. A concrete scenario, second-person simulation, incident, or definition is not an automatic entry. The title makes the reader contract; the opening immediately confirms the subject, judgment, and increment without delaying them through atmosphere, reflection, generic history, or a definition.
 
-In `writing_brief.md`, draft three to five candidates from genuinely different judgment angles rather than synonymous variants of one template. Compare the last five to ten titles from the same channel to avoid repeated questions, contrasts, imperatives, or "from A to B" constructions. Recheck title-body fit after IC-2 finishes.
+Let distinctive evidence choose the entry: a real log may begin with its timeline; a paper with its key result or measurement; a product release with its defining design choice; a technical evolution with a pivot, deprecation, or changed constraint; a market analysis with its classification or strongest substitute. If no distinctive entry evidence exists, state the judgment directly rather than inventing a scene.
 
-### 4.2 Opening Design: Let the Evidence Choose the Entry Point
+Specific details must come from evidence. Do not invent step counts, character actions, incident sequences, or user reactions. An event-driven piece completes event anchoring and analytical increment on the first screen. By the end of the first two or three paragraphs, the reader can retell what happened, what the article says it changes, and why the rest is useful.
 
-Do not treat a concrete scenario, second-person simulation, incident, or "phenomenon first" as the default algorithm. Ask which evidence is most distinctive and best carries the thesis. A real log may begin with its first anomaly; a paper with its key result; product archaeology with a pivot or deprecation; a market analysis with its classification or strongest substitute. If no distinctive evidence exists, state the judgment directly rather than inventing a scene.
+Apply the substitution test to the opening. Read the first 150-300 words of the last five to ten pieces in the same channel. If two of the last five use the same entry pattern, do not repeat it without an evidence-based reason.
 
-Specificity must come from evidence. Do not invent step counts, user reactions, character actions, or incident details for atmosphere. In event-driven writing, the title or first screen must name the event and immediately expose the analytical increment. Avoid an archaeological detour that spends paragraphs on distant history before mentioning the current event, and avoid a news-summary ceiling where the body adds no new judgment. By the end of the first two or three paragraphs, the reader should be able to retell what happened, what the article says it changes, and why continuing is useful.
+## 5. AGY Two-Pass Drafting and Independent Prose QA
 
-Apply the substitution test to the opening as well. Before writing the brief, compare the first 150-300 words of the last five to ten articles from the same channel. If two of the last five already use the same entry pattern, do not repeat it without a reason grounded in this article's strongest evidence.
-
----
-
-## 5. Two-Pass Drafting and Model Division of Labor
-
-An external article is delivered through close coordination between the main thread and writing subagents.
+Every writing agent follows the [Antigravity CLI File-Based Invocation](./antigravity_cli.md).
 
 | Role | Execution model | Artifact | Responsibility |
-| :--- | :--- | :--- | :--- |
-| **Main thread (Manager)** | Main model | `tmp/<session_slug>/writing_brief.md` | Phase 1-3 research, fact-checking, thesis generation, brief structure including negative examples, and final image generation |
-| **Structural draft agent (IC-1)** | `gemini_3.5_flash` | `tmp/<session_slug>/article_structural.md` | Read `writing_brief.md` and produce a structurally complete draft with arguments, evidence, paragraph order, links, and image placeholders |
-| **Low-cognitive-burden rewrite agent (IC-2)** | `gemini_3.5_flash` | `tmp/<session_slug>/article.md` | Read `writing_brief.md` and `article_structural.md`; preserve the thesis, evidence, links, image references, and structural intent while rewriting the entire article for low cognitive burden |
+|---|---|---|---|
+| Main-thread Manager | Main model | `tmp/<session_slug>/writing_brief.md` | Research, fact-checking, thesis gate, brief, concept plan, final visuals, and mechanical acceptance checks |
+| IC-1 structural draft | AGY / `Gemini 3.5 Flash (High)` | `article_structural.md` | Read only the brief; place every argument, item of evidence, paragraph, concept introduction, link, and image placeholder |
+| IC-2 low-cognitive-burden rewrite | fresh AGY / `Gemini 3.5 Flash (High)` | `article.md` | Read the brief and structural draft; preserve every hard constraint and rewrite the complete article |
+| IC-3 independent prose QA | fresh AGY / `Gemini 3.5 Flash (High)` | `article_final.md`, `prose_qa.md` | Review first as an unfamiliar reader and editor, then revise without changing the thesis, facts, evidence, numbers, URLs, images, or structural intent |
 
-### Concrete Methods for the IC-2 Rewrite
+IC-1, IC-2, and IC-3 each use a fresh AGY conversation: one `agy --print` call without `--continue` or `--conversation`. Store a separate `agy_icN_prompt.md`, result, `agy_icN_stdout.txt`, `agy_icN_stderr.txt`, and `agy_icN_events.log` for each stage. Use the 10-minute internal timeout, an outer timeout of about 610 seconds, sandboxing, and non-interactive permission confirmation.
 
-IC-2 turns academic or stiff prose into language addressed to a smart reader outside the field. "Low cognitive burden" alone is not specific enough: Gemini can easily produce a translation-like summary. During the rewrite, do all four of the following and compare each against the negative examples in Section 5 of `bestpractice_external_prose.md`:
+After each stage, the main thread checks exit code, non-empty result file, absence of unhandled stderr errors, and preservation of numbers, URLs, images, structure, and immutable terms. Stdout self-reporting never replaces artifact inspection.
 
-1. **Do not default to a definition; let the evidence choose the entry point**. Follow Section 4.2 and select the article's distinctive fact, anomalous result, product decision, historical turn, lived experience, or direct judgment. Put the most informative material first, then name it when a label helps.
-2. **Turn abstract subjects into people and actions**. Replace "the discovery of this phenomenon produced a new judgment" with "maille reviewed 390,000 records and found..." Replace "failure occurs at the reasoning layer" with "the part that fails is the model's thinking layer." When the subject is a category word such as phenomenon, mechanism, failure surface, or paradigm, ask whether a concrete person and action can replace it.
-3. **Advance in short sentences, one action per sentence**. Default to no more than 30 words. Split overloaded modifiers into separate sentences. Avoid stacking multiple dependent clauses.
-4. **Replace specialized phrasing with everyday words**. "Benchmarks cannot cover it" becomes "benchmarks do not reveal it." "A new failure surface" becomes "a new way to fail." "Monotonic degradation" becomes "it gets worse every month." Keep necessary technical terms such as reasoning, doom loop, benchmark, token, and adaptive thinking, but describe them with ordinary verbs and adjectives rather than elevated vocabulary.
+### 5.1 IC-2: Audit Concepts Before Sentences
 
-Hard acceptance gate: Read the opening three paragraphs aloud. Rewrite any sentence that sounds like a paper abstract or requires rereading.
+Low cognitive burden starts with information availability, not sentence length. IC-2 reads from the beginning and asks at every first occurrence of a proper noun, regulation, event, or term: "Would a reader who never saw the structural draft know what this is here?" If not, add a background anchor before the reference. When a concept returns after a long gap, provide a light reminder.
 
-### 0. The Main Thread's Prose Authority Depends on Its Base Model
+Then revise sentences: replace abstract subjects with people and actions, split overloaded modifiers, advance one primary action per sentence, and prefer ordinary words over elevated abstractions. Short sentences are a tendency; do not put every sentence on a separate line.
 
-The IC-2 output is the delivery draft. Whether the main thread may review its prose quality depends on the model running the main thread:
+Read the opening three paragraphs aloud and audit every new concept from an unfamiliar reader's perspective. Fluent sentences still fail when the reader cannot identify the concepts.
 
-- **The main thread is a Gemini model, including `gemini_3.5_flash`**: It may apply the prose quality gate below because a same-family model editing same-family prose does not introduce a different model's style.
-- **The main thread is not a Gemini model, including Opus, DeepSeek, GPT, or GLM**: **Do not manually edit IC-2 prose.** Adopt the final draft directly. The main thread may perform only three mechanical checks: (a) numbers match the brief's numerical-precision constraints, (b) all inline link URLs are present and reachable, and (c) Markdown syntax is valid, including image placeholders not enclosed in code formatting and no duplicate H1. Record prose problems in the brief's writing retrospective for the next run instead of fixing them. A non-Gemini main thread editing Gemini prose introduces another model's style and makes the text less consistent.
+### 5.2 IC-3: Independent Authority Boundary
 
-### 1. Why Two Passes
-The first pass, the structural draft, decides what to say by placing the thesis, evidence, objections, image references, inline links, and paragraph order correctly. The second pass decides how to make the text easy to follow.
-*   Short pieces under 1,000 words, internal memos, or explicitly requested quick drafts may skip the second pass. External-facing analysis does not skip it by default.
+Within one fresh AGY conversation, IC-3 reviews before editing. It checks concept before reference, title and opening, natural language, cognitive burden, AI templates, scaffold leakage, local coherence, and repetition.
 
-### 2. Three-Question Gate Against Out-of-Scope Rewriting (Gemini Main Threads Only)
-This section applies only when the main thread is a Gemini model. Non-Gemini main threads adopt the IC-2 output directly and do not enter this gate.
+IC-3 may split or combine sentences, replace words, revise local paragraphs, adjust paragraph breaks, and change subheadings. It may not add or remove claims or alter factual attribution, numbers, URLs, images, thesis, conclusion strength, or the main argument order.
 
-Before overturning or manually rewriting large parts of the second-pass prose, the main thread must answer all three questions. If any answer is missing, revise the rewrite brief and rerun the second pass:
-1.  Does the reason fall into one of these hard categories: (a) missing facts, (b) missing URLs, (c) structure does not follow the brief, (d) an objective finished-product defect, or (e) failure of the low-cognitive-burden gate? Subjective reactions such as "the voice feels wrong" do not justify a manual rewrite.
-2.  Does the objection come from an explicit rule in `COMMUNICATION.md` or `bestpractice_external_prose.md`, or from subjective preference?
-3.  Is the problem a local objective defect or excessive reader burden across the whole article? Fix local defects narrowly. Rerun the low-cognitive-burden rewrite for article-wide burden.
+If the draft needs a new fact, a changed thesis, major section reordering, or a rebuilt evidence chain, IC-3 records a `BLOCKER` in `prose_qa.md` instead of repairing it. The main thread returns to fact-checking, the brief, or IC-1. `prose_qa.md` records review dimensions, major changes, preserved counts of numbers/URLs/images, and blocker status.
 
----
+After IC-3, the main thread performs only mechanical checks and does not manually edit prose. Prose issues return to IC-3; factual, thesis, or structural issues return upstream.
 
-## 6. Image Generation Rules
+## 6. Visuals
 
-Visuals are a **hard constraint** for external-facing articles. An external article without visuals is incomplete and cannot be delivered. Short articles under 2,000 words need at least one image. Longer articles need at least two or three.
+Visuals are a hard constraint for external-facing articles. Each image must compress a mechanism or show a trend or comparison, use a publication format supported by the target project such as PNG/JPG/WebP, remain reasonably sized, and appear through descriptive alt text and a relative Markdown path. Establish quantitative accuracy before visual refinement. Decoration does not replace evidence.
 
-1.  **Final-image gate**: Every image embedded in Markdown must be a PNG/JPG/WebP generated or redrawn by **`gpt-image-2`**. Matplotlib structural drafts, Mermaid, SVG, or Keynote exports may only serve as inputs and must never appear directly as final article images.
-2.  **Quantitative chart redraw**: The main thread first creates a structural draft with matplotlib to preserve data accuracy, then calls the Image Generation Skill with `gpt-image-2`, passing the matplotlib draft through `-i` for visual redrawing.
-3.  **Visual style**: Default to light backgrounds, low-saturation colors, and an understated business or research-report style. Avoid dark backgrounds, neon purple, high-contrast glow, and other decorative effects.
-4.  **File-size limit**: Compress final images to **JPG/WebP**. Keep each image under **200 KB** with a 1024-pixel long edge. Do not inline base64 images.
+## 7. Post-Writing Scans
 
----
-
-## 7. Post-Writing Quality Scans
-
-The scan scope depends on the main thread's base model, following the authority split in Section 5:
-
-- **Gemini main thread**: Run all nine scans below. For prose-related hits, use the three-question gate in Section 5.2 to decide between a narrow fix and a rerun.
-- **Non-Gemini main thread**: Run only scans 1 (em-dash Markdown defect), 7 (image-reference syntax), 8 (mixed-language defects), and 9 (redundant bilingual parentheticals), plus one numerical and link verification against the brief. Do not run prose scans 2, 3, 5, or 6. Return scan 9 hits to the writing model instead of rewriting them with a different model family.
-
-After drafting and image generation, the main thread **must run the applicable scans** rather than relying on visual review:
+After IC-3 semantic review, the main thread runs deterministic regression scans on `article_final.md`. Return prose hits to IC-3 rather than editing them directly:
 
 ```bash
-# 1. Em dashes (required for every main thread)
+# Em dashes
 rg -n '—' <file>
 
-# 2. Evaluative adjective summaries (Gemini main threads only)
-rg -n '\b(very|clearly|obviously|notably|importantly)\b' <file>
+# Evaluative intensifiers
+rg -ni '\b(very|clearly|obviously|notably|importantly)\b' <file>
 
-# 3. Internal scaffold leakage (Gemini main threads only)
-rg -n 'L[0-6]|axiom|Phase [A-Z]|narrative reconstruction|technology lineage|bottleneck shift|Thesis Catalog' <file>
+# Internal scaffolding
+rg -ni 'L[0-8]|axiom|Phase [A-Z]|narrative reconstruction|technology lineage|bottleneck shift|Thesis Catalog' <file>
 
-# 4. Long blockquote audit (Gemini main threads only)
-rg -n '^> ' <file> | awk '{ if (length($0) > 100) print }'
-
-# 5. Meta-commentary, evaluative leads, and article-wide prohibited-expression audit (Gemini main threads only)
+# Meta-commentary and prohibited evaluative leads
 rg -ni 'specifically|next we|it is important to note|clearly shows|\bworth\b|\b(grow|grows|grew|grown|growing) (out of|into)\b' <file>
 
-# 6. Passive-voice audit (Gemini main threads only; review each hit)
+# Passive voice; review each hit
 rg -n '\b(is|are|was|were|be|been|being)\s+\w+(ed|en)\b' <file>
 
-# 7. Image-reference check (required for every main thread)
+# Image references
 rg -n '!\[[^\]]+\]\([^\)]+\)' <file>
 
-# 8. Mixed-language residue audit (required for every main thread; adapt to target language)
-rg -n '<target-language residue pattern>' <file>
-
-# 9. Redundant bilingual parentheticals in Chinese output, e.g. “执行状态（execution state）”
-rg -n '[\p{Han}”’」』][（(][A-Za-z][A-Za-z0-9 _./+:-]{1,50}[）)]' <file> | rg -v 'https?://|!\['
+# Unexpected Chinese output. This Unicode range matches common CJK ideographs.
+rg -n '[\x{3400}-\x{4DBF}\x{4E00}-\x{9FFF}]' <file>
 ```
 
----
+A regex cannot reliably detect redundant cross-language parentheticals or verify concept before reference. IC-3 reviews both semantically and explicitly records a full first-occurrence concept audit in `prose_qa.md`. The main thread also compares `article.md` with `article_final.md` for numbers, URLs, image counts and targets, H2 order, evidence sections, and conclusion strength.
 
-## 8. Delivery Endpoint
+## 8. Final Read Gate
 
-The final Markdown file with complete images, retained in the local workspace, is the delivery endpoint. The main thread **must not automatically run any external publication flow**, including `yage_share`, blog deployment, Twitter, or Circle community publishing. Publication requires explicit user instruction, keeping research and writing separate from the publication decision.
+After drafting, visuals, fact-checking, and scans are complete, the main thread uses the current harness's file-reading tool to read the final Markdown from its beginning. This read must occur after the last edit; the brief, a temporary draft, a partial grep, or a diff does not satisfy the gate.
+
+Do not edit after the final read unless a mechanical defect must be corrected. If corrected, read the final file again. The final response links to that file with Markdown.
+
+## 9. Delivery Endpoint
+
+The final Markdown and visuals remaining in the local workspace are the delivery endpoint. Do not publish automatically to a blog, social platform, community, or other external channel. Every external action requires explicit authorization for that publication.
