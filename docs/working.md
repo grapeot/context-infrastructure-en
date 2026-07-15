@@ -1,5 +1,11 @@
 # Working Log
 
+## 2026-07-15
+
+- Added the English AI Session Search & Archive workflow with source routing, lexical-first retrieval, fresh semantic-search file lists, freshness checks, and privacy-safe result rules.
+- Added `ai_session_export` to the public ecosystem and documented a daily multi-source Session Sync covering OpenCode, Claude Code, Codex, Antigravity, and Second Mind.
+- Added the private `contexts/ai_sessions/<source>/` route to the starter workspace map.
+
 ## 2026-07-12
 
 - Added `genai_portrait_skill` to the public skill ecosystem for identity-preserving portrait, headshot, and ID-photo editing with photographic coherence.

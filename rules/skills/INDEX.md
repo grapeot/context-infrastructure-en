@@ -29,7 +29,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 - ⚙️ Delayed Execution — starter fallback; for durable/AI delayed tasks, install Process Launcher + OpenCode Skill
 
 ### Tier 3: Standalone public skill repos (install as needed)
-- 🔧 Image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
+- 🔧 AI Session Export, image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
 
 ### Legend
 ✅ = Ready to use in 15 minutes or less
@@ -78,6 +78,7 @@ Complete workflows for specific tasks.
 - [Video Download and Speech Recognition Workflow](./workflow_bilibili_whisper_transcription.md) — Bilibili/YouTube video processing
 - [Delayed Execution Skill](./delayed_execution.md) ⚙️ — Low-risk `sleep + nohup` fallback; for durable/AI delayed tasks, see ecosystem's Process Launcher + OpenCode Skill
 - [Project Scaffold](./project_scaffold.md) ✅ — Upgrade a loose directory into a standard project structure: `docs/`, `src/`, `scripts/`, `tests/`, `AGENTS.md`, and independent git
+- [AI Session Search & Archive](./ai_session_search_archive.md) — Search unified OpenCode, Claude Code, Codex, Antigravity, and Second Mind Markdown archives with source routing, lexical-first retrieval, and semantic fallback
 
 ### Best Practice
 

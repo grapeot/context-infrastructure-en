@@ -22,6 +22,18 @@ Daily     → Crontab Monitor: health audit, send alert email on anomalies
 
 ## Core Task Descriptions
 
+### Session Sync (daily)
+
+Use the standalone [ai_session_export](https://github.com/grapeot/ai_session_export)
+to incrementally export local OpenCode, Claude Code, Codex, Antigravity, and
+Second Mind sessions into unified Markdown. Store real archives in a private,
+gitignored data directory, never in a public repository.
+
+- **Recommended time**: Daily 4:00 AM
+- **Output**: `contexts/ai_sessions/<source>/`
+- **Optional post-processing**: refresh a private vector index with semantic-search-skill
+- **Search entrypoint**: `rules/skills/ai_session_search_archive.md`
+
 ### AI Heartbeat Observer (daily)
 
 Scans workspace file changes and extracts valuable observations into `contexts/memory/OBSERVATIONS.md`. This is the "input end" of the three-tier memory system.
@@ -67,6 +79,9 @@ Add the following to `crontab -e`. **Replace `/path/to/your/workspace` with your
 
 # AI Heartbeat Observer — daily 8:00 AM
 0 8 * * * cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/observer.py >> /tmp/observer.log 2>&1
+
+# Session Sync — daily 4:00 AM; configure a private output path per the ai_session_export README
+0 4 * * * cd /path/to/ai_session_export && /path/to/ai_session_export/.venv/bin/python export_sessions.py --base-dir /path/to/your/workspace/contexts/ai_sessions --state-file /path/to/your/workspace/contexts/ai_sessions/.export_state.json >> /tmp/ai_session_sync.log 2>&1
 
 # AI Heartbeat Reflector — every Sunday 9:00 AM
 0 9 * * 0 cd /path/to/your/workspace && /path/to/your/workspace/.venv/bin/python periodic_jobs/ai_heartbeat/src/v0/reflector.py >> /tmp/reflector.log 2>&1
