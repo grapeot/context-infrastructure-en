@@ -29,6 +29,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Email / newsletter | [kit-skill](https://github.com/grapeot/kit-skill) | Kit Broadcast CLI for Markdown newsletters, with dry-run, draft-only, web-only, and tag/segment targeting; account defaults stay in local overlays |
 | Messaging | [imessage_skill](https://github.com/grapeot/imessage_skill) | macOS iMessage send-only CLI; contact aliases in local overlay |
 | Agent operations | [opencode_skill](https://github.com/grapeot/opencode_skill) | OpenCode `submit` / `submit --dry-run` / batch submission, recurring cron workflow, SQLite data maintenance and archive |
+| Agent operations | [ai_session_export](https://github.com/grapeot/ai_session_export) | Incrementally export OpenCode, Claude Code, Codex, Antigravity, and Second Mind sessions into a unified Markdown archive for browsing and search |
 | Agent operations | [process-launcher](https://github.com/grapeot/process-launcher) | Local HTTP process launcher for TCC / GUI permission bridging, durable one-shot delayed jobs, process logs and cancellation |
 | Usage analytics | [ai_usage_dashboard](https://github.com/grapeot/ai_usage_dashboard) | Multi-platform AI token usage, cost estimation, local dashboard, E1002 JSON |
 | Social / growth | [typefully-twitter-skill](https://github.com/grapeot/typefully-twitter-skill) | Typefully posting, account metrics, X/Twitter single-post analytics |

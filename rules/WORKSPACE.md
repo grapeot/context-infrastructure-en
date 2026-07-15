@@ -13,6 +13,7 @@ Goal: let the AI know "where to find / put what" in every session. **Check here 
 - General research reports: `contexts/survey_sessions/`
 - Thoughts / retrospectives / methodology: `contexts/thought_review/`
 - Daily logs: `contexts/daily_records/`
+- AI session archive: `contexts/ai_sessions/<source>/` (generated with ai_session_export; search workflow at `rules/skills/ai_session_search_archive.md`)
 
 ### System and Rules
 - Reusable technical solutions / Skills: `rules/skills/`
