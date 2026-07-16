@@ -26,7 +26,7 @@ The following baseline constraints apply to all text output, including everyday 
 
 *   **Use active voice and reduce passive voice**: Avoid unnecessary passive constructions such as "was assigned," "was budgeted," or "was found to be." If the sentence stays clear in active voice, use it.
     *   *Example*: "Execution is being commoditized." $\rightarrow$ "Execution is becoming a commodity."
-*   **Split sentences and use natural transitions**: Default to one action per sentence. Avoid stacked modifiers. Prefer clauses or colons over em dashes used as emotional pauses.
+*   **Let sentences breathe and transition naturally**: Avoid stacked modifiers and do not pack more than three actions into one sentence. Use short sentences to land judgments and somewhat longer sentences to connect causes, examples, and contrasts. Do not split a coherent paragraph into a sequence of status-feed sentences merely to meet a uniform length. Avoid em dashes used as emotional pauses.
 *   **Remove evaluative adjective labels**: Do not evaluate the quality of your own content with openings or summaries such as "very straightforward," "very clear," or "very insightful." Delete the label and let the facts speak, or replace the adjective with a measurable property.
     *   *Example*: "The trade-off is very straightforward: we only have three days." $\rightarrow$ "The deadline is three days, so we compromised on the approach."
 *   **No meta-commentary preambles**: Do not announce what you are about to do with phrases such as "Specifically," "Next, we will look at," or "It is important to note." Enter the content directly.
