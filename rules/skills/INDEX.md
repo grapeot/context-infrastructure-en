@@ -29,7 +29,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 - ⚙️ Delayed Execution — starter fallback; for durable/AI delayed tasks, install Process Launcher + OpenCode Skill
 
 ### Tier 3: Standalone public skill repos (install as needed)
-- 🔧 AI Session Export, image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
+- 🔧 AI Session Export, ChatGPT/Codex OAuth, image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
 
 ### Legend
 ✅ = Ready to use in 15 minutes or less

@@ -1,5 +1,9 @@
 # Working Log
 
+## 2026-07-16
+
+- Added `chat-gpt-oauth-skill` to the public ecosystem as an opt-in local ChatGPT Plus/Pro OAuth compatibility reference; documented that its private endpoint is unstable and not recommended for production.
+
 ## 2026-07-15
 
 - Added the English AI Session Search & Archive workflow with source routing, lexical-first retrieval, fresh semantic-search file lists, freshness checks, and privacy-safe result rules.
