@@ -46,11 +46,21 @@ All final-output-facing text — axiom definitions, indices, methodology reports
 
 Sub-agent output is **raw research material**, not any part of the final draft.
 
-### 3. Iteration Rounds Dynamically Roll
+### 3. Round-Driven Iteration Engine (Replaces Fixed Phases)
 
-**Minimum floor**: 3 rounds (broad scan + deep verification + at least one round of stress testing/finalization).
+Do not use a linear Phase 1→2→3→4 flow. Use a loop driven by **Rounds (atomic units of work)**:
 
-**No upper limit**, but before each round begins, evaluate whether to continue (see "Convergence Judgment Criteria"). Empirical experience: 3-4 rounds is the common convergence point; beyond 5 rounds, marginal returns diminish noticeably, and there is overfitting risk.
+Each Round does one clear thing and produces an auditable record file (`rounds/R01.md`). Four action types:
+- **Discover**: dispatch sub-agents to scan data and find new candidates. Do not preset dimensions — let patterns emerge from data.
+- **Verify**: dispatch sub-agents to do counterexample hunting and boundary condition confirmation on candidates.
+- **Finalize**: Opus personally writes a finalized axiom.
+- **Restructure**: when two candidates each have counterexamples but their directions complement, merge and restructure into a higher-level structure.
+
+Each round, Opus reads the current state (candidates.md, the most recent 3-5 Round records), chooses an action, executes, and updates state. The user controls granularity through the number of rounds — "run 20 rounds" or "run 50 rounds" both have clear meaning.
+
+**R01 credibility is an unverified optimistic estimate.** Scanning-phase agents tend to give 8-9 scores, but counterexample verification often drops them significantly (observed: C01 9→6, C04 8→5). Do not use R01 credibility for finalization decisions.
+
+**Slogan detection rule**: if a candidate reads like a slogan (concise, counterintuitive, easy to spread), automatically raise its counterexample-verification priority. Slogans are often hooks (style-pattern), not genuine stances. Observed lesson: "think without thinking" was an opening hook, not an axiom.
 
 ### 4. Axioms Are Conditional Trigger Rules, Not Absolute Laws
 
@@ -334,6 +344,18 @@ The target person typically has audience-adaptive capability. Style axioms descr
 
 Don't preset "do N rounds"; monitor convergence signals. Over-iteration has two costs: context window consumption, and overfitting.
 
+### 10. Abstraction Level Determines Generalization Power
+
+The more abstract the level an axiom anchors at, the stronger its cross-domain predictive power, but the weaker its guidance in specific application scenarios. An "environment > individual effort" abstract axiom can derive multiple concrete conclusions like "pick the right track," "pick the company stage," "don't complain"; making each conclusion an independent axiom causes inflation — more numerous but without added predictive power. Criterion: if candidate A can be derived from existing axioms B+C (within a specific application domain), A should not be an independent axiom, but a "predicted scenario" annotation of B or C.
+
+### 11. Add a "Predicted Scenario Quick-Reference" to the Index
+
+For each axiom, add a short "trigger scenario / failure scenario" annotation (similar to "use when / don't use when"), letting the user quickly judge which axiom fires when. This is more efficient than having the user infer from the "boundary conditions" paragraph.
+
+### 12. Public vs Private Mapping Is an Independent Information Layer
+
+The same judgment from the target person in public vs private settings often differs in strength and wording. If private chat data is available, specifically annotate the mapping between "public version" and "private version." The private version is often more candid but unsuitable for external circulation; the public version is more measured but may lose the edge of the judgment.
+
 ---
 
 ## Pitfalls and Countermeasures
@@ -350,6 +372,11 @@ Don't preset "do N rounds"; monitor convergence signals. Over-iteration has two 
 | Over-iteration leading to overfitting | Monitor convergence signals; stop when ≥3 signals met |
 | Sub-agent research depth insufficient | Prompt explicitly requires original excerpts + timestamps; do not accept pure summaries |
 | Context window consumed by research | Strictly follow Plan/Write self-do, Execute fully delegate division of labor |
+| Slogan ≠ axiom | If a candidate is concise, counterintuitive, easy to spread, automatically raise counterexample-verification priority. Observed: "think without thinking" was a hook, not a stance |
+| R01 credibility inflated | Scanning-phase agents give 8-9 scores as unverified estimates. Observed: drops of 9→6, 8→5 after counterexample verification are common |
+| Two candidates' counterexamples complement → should restructure | When A and B each drop but their counterexample directions complement, consider merging into a higher-level structure. Observed: C01 (Craft) + C04 (Action) → C16 (two-layer model) |
+| evidence_log going stale | Every round must update evidence_log; the next round's sub-agent prompt must include the list of already-cited evidence |
+| Preset dimensions waste research budget | R01 should not preset "5 dimensions." Let patterns emerge from data. Observed: naturally emergent dimensions are more precise than preset ones |
 
 ---
 
@@ -380,3 +407,4 @@ Don't preset "do N rounds"; monitor convergence signals. Over-iteration has two 
 | Date | Change |
 |------|--------|
 | 2026-03-13 | Initial version; abstracted and generalized from example observation project methodology.md |
+| 2026-04-04 | Updated based on a second project (6.9M-word multi-source data, 22 Rounds, 20 axioms) feedback: (1) added Round-driven engine replacing fixed Phases; (2) added 5 new pitfalls including slogan detection, R01 credibility inflation, candidate restructuring; (3) added 3 new methodological insights including abstraction-level judgment, predicted-scenario quick-reference, public/private mapping; (4) updated scale-cost reference table with observed data |

@@ -48,6 +48,12 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Semantic search | [semantic-search-skill](https://github.com/grapeot/semantic-search-skill) | Local-text embedding + cosine similarity search CLI, supports any OpenAI-compatible endpoint, with atomic cache |
 | LLM market data | [open_router_data_scraper](https://github.com/grapeot/open_router_data_scraper) | Periodically scrape OpenRouter model activity data (token usage, request counts, rankings) into local SQLite, breaking the 31-day trailing window limit |
 | Innovation | [innovation-assistant-skill](https://github.com/grapeot/innovation-assistant-skill) | Encodes SIT and Think Bigger as executable pipelines with hard validators, turning an agent into a structured innovation engine that produces buildable candidates with derivation chains |
+| Documents | [docx-skill](https://github.com/grapeot/docx-skill) | DOCX inspection and editing scaffold |
+| SEO / marketing | [dataforseo-skill](https://github.com/grapeot/dataforseo-skill) | DataForSEO keyword / SERP / ranked keyword API CLI |
+| Design | [design_skill](https://github.com/grapeot/design_skill) | UI evaluation and improvement judgment framework |
+| Home automation | [smart_home_skill](https://github.com/grapeot/smart_home_skill) | Smart home CLI; device aliases and household details in local overlay |
+| E-ink display | [eink_diary](https://github.com/grapeot/eink_diary) | Visual diary generation for e-ink displays |
+| Identity | [logto-management-skill](https://github.com/grapeot/logto-management-skill) | Logto user and role management CLI |
 
 ## Selection Principles
 

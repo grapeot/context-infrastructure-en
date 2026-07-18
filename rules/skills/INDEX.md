@@ -53,6 +53,8 @@ Operational manuals for calling external systems or tools.
 - [Typefully Metrics CLI](./typefully_metrics.md) ⚙️ — Query Twitter impression, engagement, and followers data via browser session credentials
 - [Typefully Post CLI](./typefully_post.md) ⚙️ — Create drafts, schedule, and directly publish tweets/threads via Typefully v2 API
 - [Apple Compressor Skill](./compressor.md) ⚙️ — Local Apple Compressor CLI transcoding; custom preset paths, source file write-completion detection, batch submission and monitoring
+- [OpenReview API](./openreview.md) ✅ — CLI tool (`python tools/openreview_cli.py`) to query AI conference paper metadata and author profiles (institution history, position, tilde ID). Trigger words: "OpenReview", "author profile", "ICLR papers", "NeurIPS papers", "tilde ID"
+- [Download and Convert Academic Papers](./skill_download_paper.md) ✅ — Best practices for downloading arXiv papers and converting to markdown (HTML preferred, PDF fallback); includes index building, arXiv ID discovery, and duplicate/wrong-paper checks
 
 ### Workflow
 
@@ -79,6 +81,10 @@ Complete workflows for specific tasks.
 - [Delayed Execution Skill](./delayed_execution.md) ⚙️ — Low-risk `sleep + nohup` fallback; for durable/AI delayed tasks, see ecosystem's Process Launcher + OpenCode Skill
 - [Project Scaffold](./project_scaffold.md) ✅ — Upgrade a loose directory into a standard project structure: `docs/`, `src/`, `scripts/`, `tests/`, `AGENTS.md`, and independent git
 - [AI Session Search & Archive](./ai_session_search_archive.md) — Search unified OpenCode, Claude Code, Codex, Antigravity, and Second Mind Markdown archives with source routing, lexical-first retrieval, and semantic fallback
+- [Workflow Watchdog](./workflow_watchdog.md) — After dispatching a workflow / background agent, set a ~30-minute inspection to distinguish "genuinely busy" from "stuck in a loop"; kill stuck tasks and proceed with partial results. Trigger words: "watchdog", "workflow stuck", "background task inspection"
+- [Public Consensus Net Income Audit Workflow](./workflow_public_consensus_net_income_audit.md) — Audit FY / CY consensus net income for a set of stocks using public web sources (MarketScreener, Yahoo Finance, MarketWatch); distinguish direct/derived, current/baseline/revision, and require link-by-link QA. Trigger words: "consensus net income", "MarketScreener audit", "FY2026E net income consensus"
+- [Research Paper Survey and Writing Workflow](./workflow_research_paper_survey_writing.md) — Turn research papers into analysis articles aimed at technical practitioners. Core: order by reader importance (not paper sections), three-layer separation (paper claim / external verification / our judgment), mandatory niche analysis (bottleneck / alternative paths / stack layer / adjacent impact). Trigger words: "analyze this paper", "write paper analysis", "paper analysis"
+- [iOS Test Acceleration](./ios_test_acceleration.md) ✅ — iOS unit/UI test iteration tips: sequential `xcodebuild`, `build-for-testing` + `test-without-building`, fixed simulator UUID, focused `-only-testing`, fixture launch arguments, and `.xcresult` inspection
 
 ### Best Practice
 
@@ -101,6 +107,12 @@ General best practices and lessons learned.
 - [AI Product Design Principles](./bestpractice_ai_product_design.md) ✅ — Linear chat vs knowledge work, perception-rule decoupling
 - [Product/Technical Decision Reverse Engineering](./bestpractice_product_decision_analysis.md) ✅ — Analyze product or technical decisions from design space, constraints, and trade-offs
 - Playwright E2E Testing Methodology → see [`../../docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md): CDP step-by-step debugging CLI + E2E methodology, CLI `pw-test`
+
+### Deployment
+
+Configuration and procedures for deployment.
+
+- [GitHub Actions → Koyeb Deployment](./deployment_github_actions_koyeb.md) ✅ — Deploy to Koyeb via GitHub Actions after tests pass; disable Autodeploy, `needs` gating, explicit `git-builder: "docker"`. Applicable to any Dockerized app. Trigger words: "Koyeb deploy", "GitHub Actions deploy", "Docker Koyeb"
 
 ---
 

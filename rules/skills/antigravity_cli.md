@@ -111,15 +111,49 @@ The task file must identify the brief, draft, and prose rules that AGY must read
 
 Include an immutable-term list for product names, model names, API names, code identifiers, easily mistranslated terms, and labels that must be preserved verbatim. Use normal paragraphs in prose output. Short sentences are a tendency, not a reason to put every sentence on a separate line.
 
+A minimal task file template:
+
+```markdown
+# Task
+
+Read these files completely:
+1. `/absolute/path/to/writing_brief.md`
+2. `/absolute/path/to/source_draft.md`
+3. `/absolute/path/to/COMMUNICATION.md`
+4. `/absolute/path/to/bestpractice_external_prose.md`
+
+Write the complete result to:
+`/absolute/path/to/result.md`
+
+Do not modify any other file.
+
+## Hard invariants
+
+- Preserve the thesis, facts, numbers, URLs, image references, and H2 order.
+- Preserve product names and project-specific terms exactly as listed below.
+- Do not translate identifiers such as model names, API names, or code symbols.
+- Use normal paragraphs. Do not put every sentence on its own line.
+- Short sentences are a tendency, not a reason to create telegraph prose.
+- Read the output once after writing and verify every invariant.
+```
+
+The writing brief should provide an "immutable term list" of product names, model names, easily mistranslated terms, and labels that must be preserved verbatim. In practice AGY will proactively translate terms such as `Oracle`, `reset card`, `system of record`; without a term list, factual wording can drift.
+
 ## Fresh AGY Conversations
 
 Each `agy --print` call without `--continue` or `--conversation` creates a fresh AGY conversation. Run IC-1, IC-2, and IC-3 as separate calls:
 
 - IC-1 reads only the brief and writes the structural draft.
-- IC-2 reads the brief and structural draft and performs a complete rewrite.
-- IC-3 reads the brief, IC-2 deliverable, and prose rules, then independently reviews and writes the final draft.
+- IC-2 reads the brief and structural draft and performs a complete rewrite. The prompt must state that only the structural draft's claims, evidence, URLs, numbers, and H2 order are inherited; original sentences and paragraph entries are not. Rewrite from a blank page per the brief's voice route. The goal is "a person who understands the technology naturally introduces their discovery to a smart friend," while avoiding both textbook voice and performative colloquialism.
+- IC-3 reads the brief, IC-2 deliverable, and prose rules (with the positive sample and both negative extremes), first judges the whole-article voice. If the opening, multiple H2 entries, and the ending still read like a lecture, the whole prose must be rewritten, not just word-swapped. Then check whether familiarity was added by introducing metaphors, slang, absolute conclusions, or new facts not in the source pack. Output an `article_qa.md` candidate; do not treat your own prose as the final draft.
 
-Give every stage separate prompt, result, stdout, stderr, and events files, for example `agy_ic1_prompt.md`, `agy_ic1_result.md`, `agy_ic1_stdout.txt`, `agy_ic1_stderr.txt`, and `agy_ic1_events.log`.
+After IC-3, the main thread runs the Manager Voice Pass per `workflow_external_writing.md`: read `article_qa.md`, write `article_final.md` and a `translationese_audit.md` with real before/after pairs. This step no longer calls AGY; the final prose responsibility stays with the main thread.
+
+Give every stage separate prompt, result, stdout, stderr, and events files. File names should include the stage, for example:
+
+- `agy_ic1_prompt.md` / `agy_ic1_events.log`
+- `agy_ic2_prompt.md` / `agy_ic2_events.log`
+- `agy_ic3_prompt.md` / `agy_ic3_events.log`
 
 ## Limitations
 
@@ -128,6 +162,18 @@ Give every stage separate prompt, result, stdout, stderr, and events files, for 
 - Event logs are implementation details for liveness checks, not a stable business API.
 - `agy-ide chat` opens or reuses a GUI and is not a headless fallback.
 - AGY may invoke agent tools and take longer than a single API request. Use the 10-minute timeout and do not retry indefinitely.
+
+## Validation Records
+
+On 2026-07-14, a smoke test was completed on macOS arm64 with AGY 1.1.2:
+
+- Reading the task from a persisted prompt file succeeded.
+- Writing the designated result file inside the sandbox succeeded.
+- Stdout redirection succeeded; stderr was empty.
+- The event log contained timestamped auth, model request, file tool, and shutdown records.
+- Using `Gemini 3.5 Flash (High)`, a ~2,000-word memo rewrite completed while preserving all 17 URLs.
+- The first rewrite exposed technical-term mistranslation, line-by-line wrapping, and first-person drift; these improved markedly after adding an immutable term list and a normal-paragraph constraint.
+- A fresh AGY conversation ran an independent prose QA, preserving the Top 5 ordering, four-paragraph structure, two deep-dive candidates, and all 17 URLs, while correcting exaggerated wording and term drift. Therefore external-facing deliverables still default to keeping an independent IC-3; a single AGY rewrite cannot be treated as a ready-to-ship draft.
 
 ## Official Sources
 
