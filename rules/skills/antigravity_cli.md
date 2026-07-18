@@ -80,7 +80,7 @@ agy --print \
 
 Set the outer process timeout to about 610 seconds. `--print-timeout 10m` is AGY's internal wait limit; the extra time allows process shutdown and log flushing.
 
-Use `--dangerously-skip-permissions` only together with `--sandbox`, and only in the minimal trusted scratch workspace described above. The task file must name one output path and state that no other file may be modified.
+Use `--dangerously-skip-permissions` only together with `--sandbox`, and only in the minimal trusted scratch workspace described above. The task file must name one output path or enumerate a bounded set of output paths, then prohibit modification of every file outside that list.
 
 ## Models and Observability
 
@@ -99,15 +99,15 @@ AGY 1.1.2 has no `--json` or streaming JSON output. Use `--log-file` for observa
 A run is complete only when all checks pass:
 
 1. The process exits with code 0.
-2. The designated result file exists and is non-empty.
-3. The result satisfies hard constraints for structure, numbers, URLs, and other task requirements.
+2. Every designated result file exists and is non-empty.
+3. The results satisfy hard constraints for structure, numbers, URLs, and other task requirements.
 4. Stdout contains a completion note and stderr contains no unhandled error.
 
-A timeout or missing or empty result file is a failed run. Never substitute a stdout summary for the requested artifact.
+A timeout or any missing or empty result file is a failed run. Never substitute a stdout summary for the requested artifacts.
 
 ## Writing Task Requirements
 
-The task file must identify the brief, draft, and prose rules that AGY must read in full; the one result path; the prohibition on editing other files; and every thesis, fact, number, URL, image, H2 order, or term that must remain unchanged.
+The task file must identify the brief, draft, and prose rules that AGY must read in full; one result path or an enumerated bounded set of result paths; the prohibition on editing files outside that list; and every thesis, fact, number, URL, image, H2 order, or term that must remain unchanged.
 
 Include an immutable-term list for product names, model names, API names, code identifiers, easily mistranslated terms, and labels that must be preserved verbatim. Use normal paragraphs in prose output. Short sentences are a tendency, not a reason to put every sentence on a separate line.
 
@@ -141,13 +141,12 @@ The writing brief should provide an "immutable term list" of product names, mode
 
 ## Fresh AGY Conversations
 
-Each `agy --print` call without `--continue` or `--conversation` creates a fresh AGY conversation. Run IC-1, IC-2, and IC-3 as separate calls:
+Each `agy --print` call without `--continue` or `--conversation` creates a fresh AGY conversation. Run IC-1, IC-2, and IC-3 as separate calls. Store every prompt, draft, calibration artifact, review report, and runtime log under the gitignored `tmp/<session_slug>/` directory:
 
 - IC-1 reads only the brief and writes the structural draft.
-- IC-2 reads the brief and structural draft and performs a complete rewrite. The prompt must state that only the structural draft's claims, evidence, URLs, numbers, and H2 order are inherited; original sentences and paragraph entries are not. Rewrite from a blank page per the brief's voice route. The goal is "a person who understands the technology naturally introduces their discovery to a smart friend," while avoiding both textbook voice and performative colloquialism.
-- IC-3 reads the brief, IC-2 deliverable, and prose rules (with the positive sample and both negative extremes), first judges the whole-article voice. If the opening, multiple H2 entries, and the ending still read like a lecture, the whole prose must be rewritten, not just word-swapped. Then check whether familiarity was added by introducing metaphors, slang, absolute conclusions, or new facts not in the source pack. Output an `article_qa.md` candidate; do not treat your own prose as the final draft.
-
-After IC-3, the main thread runs the Manager Voice Pass per `workflow_external_writing.md`: read `article_qa.md`, write `article_final.md` and a `translationese_audit.md` with real before/after pairs. This step no longer calls AGY; the final prose responsibility stays with the main thread.
+- IC-2 reads the brief, structural draft, and same-channel prose calibration, then performs a complete rewrite from a blank page. The prompt must state that only the structural draft's claims, evidence, URLs, numbers, and H2 order are inherited; original sentences and paragraph entries are not. Rewrite per the brief's voice route. The goal is "a person who understands the technology naturally introduces their discovery to a smart friend," while avoiding both textbook voice and performative colloquialism.
+- IC-3 reads the brief, IC-2 deliverable, calibration material, prose rules (with the positive sample and both negative extremes), then first judges the whole-article voice. If the opening, multiple H2 entries, and the ending still read like a lecture, the whole prose must be rewritten, not just word-swapped. Then check whether familiarity was added by introducing metaphors, slang, absolute conclusions, or new facts not in the source pack. Output `article_qa.md` and `prose_qa.md` candidates; do not treat your own prose as the final draft.
+- The main thread then performs the Manager Voice Pass per `workflow_external_writing.md`: reads `article_qa.md`, writes `article_final.md`, and writes `voice_audit.md` (and `translationese_audit.md` with real before/after pairs). This pass is not an AGY conversation; the final prose responsibility stays with the main thread.
 
 Give every stage separate prompt, result, stdout, stderr, and events files. File names should include the stage, for example:
 

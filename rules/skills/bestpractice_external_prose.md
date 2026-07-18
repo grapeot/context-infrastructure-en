@@ -5,6 +5,7 @@
 - **Type**: BestPractice
 - **Use cases**: Long-form articles, reports, and blog posts for strangers without shared context, public channels, customers, or external course audiences.
 - **Created**: 2026-07-06
+- **Last updated**: 2026-07-16
 
 ## Core Design Philosophy
 
@@ -96,6 +97,7 @@ When drafting external articles, the main thread and writing agents should use t
 *   ✅ **Good**: Early 2026 put two opposing signals in front of AI engineers. Swarm systems set new benchmark highs while production frameworks continued to report high failure rates.
 
 ---
+
 
 ## 6. Anti-Textbook Tone: Make Explanations Sound Like a Person Talking
 
@@ -240,3 +242,4 @@ Follow four principles when reducing this kind of burden:
 * **One paragraph advances one main relation**: splitting short sentences cannot solve concept stacking. If a paragraph simultaneously introduces platform, component, state model, and failure boundary, re-arrange the information order so each paragraph starts from an object the reader already knows.
 
 Finally, run the retelling test: after reading the first paragraph of a section, without using the jargon just introduced, can you state who did what, what changed, and why it differs from the previous scheme? If you can only retell the classification labels, the article is still handing the author's framework to the reader.
+
