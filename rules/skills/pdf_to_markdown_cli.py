@@ -16,7 +16,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 DEFAULT_API_BASE = "http://127.0.0.1:1234/v1"
 DEFAULT_MODEL = "qwen/qwen3.5-35b-a3b"
 DEFAULT_DPI = 200

@@ -1,9 +1,9 @@
-import requests
-import json
 import base64
 import os
 import time
 from pathlib import Path
+
+import requests
 from dotenv import load_dotenv
 
 module_dir = Path(__file__).resolve().parent
@@ -22,14 +22,14 @@ class OpenCodeClient:
         self.base_url = os.getenv("OPENCODE_BASE_URL", "http://localhost:4096")
         self.username = os.getenv("OPENCODE_USERNAME", "opencode")
         self.password = os.getenv("OPENCODE_PASSWORD")
-        
+
         if not self.password:
             raise ValueError("OPENCODE_PASSWORD not found in environment variables.")
-            
+
         credentials = f"{self.username}:{self.password}"
         encoded = base64.b64encode(credentials.encode()).decode()
         self.headers = {"Authorization": f"Basic {encoded}"}
-        
+
     def list_sessions(self):
         """GET /session - list all sessions."""
         try:
@@ -116,14 +116,14 @@ class OpenCodeClient:
                 },
                 "agent": agent
             }
-            
+
             response = requests.post(
                 f"{self.base_url}/session/{session_id}/message",
                 json=payload,
                 headers=self.headers,
                 timeout=MESSAGE_TIMEOUT,
             )
-            
+
             if response.status_code != 200:
                 print(f"Server returned {response.status_code} Error: {response.text}")
 

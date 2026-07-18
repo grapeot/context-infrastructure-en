@@ -4,9 +4,8 @@ L1 Observer Agent (Trigger Script)
 Instructs OpenCode-Builder to autonomously scan, filter, and write to memory.
 """
 import os
-import sys
-import time
 from datetime import datetime
+
 from opencode_client import OpenCodeClient
 
 KNOWLEDGE_BASE = "/path/to/your/workspace/periodic_jobs/ai_heartbeat/docs/KNOWLEDGE_BASE.md"
@@ -62,11 +61,11 @@ def main():
 
     print(f"Triggering Fully Agentic Observer for date: {target_date} using model: {model_id}...")
     client = OpenCodeClient()
-    
+
     session_id = client.create_session(f"Heartbeat L1 - Persistence Mode - {target_date}")
     if not session_id:
         return
-        
+
     prompt = PROMPT_TEMPLATE.format(kb_path=KNOWLEDGE_BASE, target_date=target_date)
     client.send_message(session_id, prompt, model_id=model_id)
     # If send_message timed out, agent may still be running; poll until done

@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -81,13 +80,16 @@ class GA4Client:
         self.client = BetaAnalyticsDataClient()
 
     def _run(self, request: Any) -> list[dict[str, str]]:
-        from google.analytics.data_v1beta import BetaAnalyticsDataClient
         response = self.client.run_report(request)
         return rows_to_dicts(response)
 
     def daily(self, days: int = 30) -> list[dict[str, str]]:
         from google.analytics.data_v1beta.types import (
-            DateRange, Dimension, Metric, OrderBy, RunReportRequest,
+            DateRange,
+            Dimension,
+            Metric,
+            OrderBy,
+            RunReportRequest,
         )
         start, end = date_range_str(days)
         return self._run(RunReportRequest(
@@ -106,7 +108,11 @@ class GA4Client:
 
     def weekly(self, days: int = 90) -> list[dict[str, str]]:
         from google.analytics.data_v1beta.types import (
-            DateRange, Dimension, Metric, OrderBy, RunReportRequest,
+            DateRange,
+            Dimension,
+            Metric,
+            OrderBy,
+            RunReportRequest,
         )
         start, end = date_range_str(days)
         return self._run(RunReportRequest(
@@ -126,7 +132,11 @@ class GA4Client:
 
     def top_pages(self, limit: int = 20, days: int = 90) -> list[dict[str, str]]:
         from google.analytics.data_v1beta.types import (
-            DateRange, Dimension, Metric, OrderBy, RunReportRequest,
+            DateRange,
+            Dimension,
+            Metric,
+            OrderBy,
+            RunReportRequest,
         )
         start, end = date_range_str(days)
         return self._run(RunReportRequest(
@@ -148,7 +158,11 @@ class GA4Client:
 
     def sources(self, days: int = 90) -> list[dict[str, str]]:
         from google.analytics.data_v1beta.types import (
-            DateRange, Dimension, Metric, OrderBy, RunReportRequest,
+            DateRange,
+            Dimension,
+            Metric,
+            OrderBy,
+            RunReportRequest,
         )
         start, end = date_range_str(days)
         return self._run(RunReportRequest(
@@ -172,7 +186,11 @@ class GA4Client:
 
     def channels(self, days: int = 90) -> list[dict[str, str]]:
         from google.analytics.data_v1beta.types import (
-            DateRange, Dimension, Metric, OrderBy, RunReportRequest,
+            DateRange,
+            Dimension,
+            Metric,
+            OrderBy,
+            RunReportRequest,
         )
         start, end = date_range_str(days)
         return self._run(RunReportRequest(
@@ -192,7 +210,11 @@ class GA4Client:
 
     def campaigns(self, days: int = 30) -> list[dict[str, str]]:
         from google.analytics.data_v1beta.types import (
-            DateRange, Dimension, Metric, OrderBy, RunReportRequest,
+            DateRange,
+            Dimension,
+            Metric,
+            OrderBy,
+            RunReportRequest,
         )
         start, end = date_range_str(days)
         return self._run(RunReportRequest(

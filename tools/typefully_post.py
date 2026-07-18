@@ -25,7 +25,6 @@ from typing import Any
 
 import requests
 
-
 DEFAULT_BASE_URL = "https://api.typefully.com/v2"
 MAX_WEIGHTED_TWEET_LENGTH = 280
 MAX_WEIGHTED_LONG_POST_LENGTH = 25000

@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-import os
-import time
 import argparse
-from datetime import datetime, timedelta
 import sys
+from datetime import datetime
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))
@@ -17,17 +15,17 @@ def run_ai_news_survey(mode="weekly", model_id="anthropic/claude-opus-4-6", publ
     """
     Delegates the AI News Survey and personalized report generation to the OpenCode Agent.
     Uses axiom-based evaluation framework for evidence-tiered, builder-focused reporting.
-    
+
     Args:
         mode: "weekly" (7 days) or "daily" (1 day)
         model_id: OpenCode model ID to use
         publish_to_kit: If True, publish newsletter to Kit subscribers instead of personal email
     """
     client = OpenCodeClient()
-    
+
     date_str = datetime.now().strftime('%Y/%m/%d')
     date_file = datetime.now().strftime('%Y%m%d')
-    
+
     if mode == "daily":
         days_back = 1
         session_title = f"Daily AI News {datetime.now().strftime('%Y-%m-%d %H:%M')}"
@@ -46,9 +44,9 @@ def run_ai_news_survey(mode="weekly", model_id="anthropic/claude-opus-4-6", publ
         period_desc = "本周"
         days_desc = "7 天"
         max_lines = 300
-    
+
     session_id = client.create_session(session_title)
-    
+
     if not session_id:
         print("Failed to create OpenCode session.")
         return
@@ -198,13 +196,13 @@ def run_ai_news_survey(mode="weekly", model_id="anthropic/claude-opus-4-6", publ
     print(f"Using model: {model_id}")
     if publish_to_kit:
         print("Publish mode: Kit subscribers")
-    
+
     result = client.send_message(session_id, prompt, model_id=model_id)
 
     if not result:
         print("No immediate response from server. Sending continuation ping...")
         result = client.send_message(session_id, "继续", model_id=model_id)
-    
+
     if result:
         client.wait_for_session_complete(session_id)
         messages = client.get_session_messages(session_id) or []
@@ -225,7 +223,7 @@ if __name__ == "__main__":
     parser.add_argument("--publish-to-kit", "-k", action="store_true",
                         help="Publish newsletter to Kit subscribers instead of personal email")
     args = parser.parse_args()
-    
+
     print(f"Starting AI News Survey ({args.mode})...")
     run_ai_news_survey(mode=args.mode, model_id=args.model, publish_to_kit=args.publish_to_kit)
     print("Survey process finished.")

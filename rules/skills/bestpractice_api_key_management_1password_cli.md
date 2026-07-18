@@ -111,7 +111,7 @@ import os
 
 def get_api_key(service: str) -> str:
     """Retrieve API key from 1Password.
-    
+
     Args:
         service: e.g., 'tavily_api_key', 'openai_api_key'
     """
@@ -119,7 +119,7 @@ def get_api_key(service: str) -> str:
     env_key = os.environ.get(service.upper())
     if env_key:
         return env_key
-    
+
     # Read from 1Password
     result = subprocess.run(
         ["op", "read", f"op://dev/dev-api-keys/{service}"],
