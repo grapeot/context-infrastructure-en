@@ -41,19 +41,22 @@ Trigger when the user says:
 
 ## Tool 1: Kit Subscription Data
 
+The Kit commands have migrated from the legacy `tools/kit_metrics.py` script to the `kit-skill analytics` CLI. New workflows should use the CLI; the legacy script is retained only for backward compatibility.
+
 ```bash
-python tools/kit_metrics.py account              # Account info
-python tools/kit_metrics.py growth               # Last 14 days subscription growth
-python tools/kit_metrics.py growth --start-date 2026-02-28 --end-date 2026-03-14
-python tools/kit_metrics.py email-stats           # Last 90 days open/click rates
-python tools/kit_metrics.py subscribers --count   # Current active subscriber count
-python tools/kit_metrics.py broadcasts --limit 10 # Last 10 broadcasts
-python tools/kit_metrics.py broadcast-stats 23288438  # Single broadcast open/click rates
-python tools/kit_metrics.py snapshot              # Full data snapshot
-python tools/kit_metrics.py snapshot --output /tmp/kit_snapshot.json
-python tools/kit_metrics.py sequences             # List all sequences (automations), with active/email_count/subscriber_count
-python tools/kit_metrics.py sequence 2789126      # Single sequence details (Welcome Sequence)
-python tools/kit_metrics.py sequence 2789126 --subscribers  # Include active subscribers in the sequence
+cd <kit_skill_dir>
+op run --env-file=.env -- .venv/bin/kit-skill analytics account --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics growth --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics growth --start-date 2026-02-28 --end-date 2026-03-14 --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics email-stats --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics subscriber-count
+op run --env-file=.env -- .venv/bin/kit-skill analytics broadcasts --limit 10 --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics broadcast-stats 23288438 --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics snapshot --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics snapshot --output /tmp/kit_snapshot.json
+op run --env-file=.env -- .venv/bin/kit-skill analytics sequences --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics sequence 2789126 --format json
+op run --env-file=.env -- .venv/bin/kit-skill analytics sequence 2789126 --include-subscribers --format json
 ```
 
 ### Kit Key Metrics
@@ -61,9 +64,9 @@ python tools/kit_metrics.py sequence 2789126 --subscribers  # Include active sub
 - **growth_stats**: New, unsubscribed, net change, total over the period
 - **email_stats**: 90-day aggregate sent, opened, clicked
 - **broadcast stats**: Per-broadcast open_rate, click_rate, unsubscribes
-- **subscribers**: Active/inactive/unsubscribed subscriber list and counts
-- **sequences / sequence**: Welcome sequence and other automation active status, email count, subscribers entering the sequence. `Welcome Sequence` id is `2789126` (sends daily at 13:00 Pacific, 3 emails). Verify the sequence is working by checking whether `subscriber_count` grows with new subscriptions.
-- **sequence e2e verification**: `KIT_RUN_LIVE=1 .venv/bin/python -m pytest -m integration tools/tests/test_kit_sequences.py` (skipped by default; creates a probe subscriber that goes through the real sequence, clean up the probe after)
+- **subscribers**: Active/inactive/unsubscribed subscriber list and counts; `subscriber-count` is the account-wide active count, not equal to a specific newsletter tag's send audience; list commands mask emails by default, add `--show-emails` only for private-output scenarios
+- **sequences / sequence**: Welcome sequence and other automation active status, email count, subscribers entering the sequence. `Welcome Sequence` id is `2789126` (sends daily at 13:00 Pacific, 3 emails). `subscriber_count` is a flow metric (subscribers exit after completing all 3 emails); with organic subscription of 2-3/day, the steady-state in-sequence count is 8-15. Judge health by whether it stays in that band; do not expect it to grow with cumulative subscriptions. Batch-imported lists do not trigger form automations or enter sequences; this is expected behavior.
+- **sequence e2e verification**: Inside `<kit_skill_dir>`, run `KIT_ENABLE_LIVE_TESTS=1 .venv/bin/python -m pytest -m live_integration tests/test_analytics.py` (skipped by default; creates a probe subscriber that goes through the real sequence, clean up the probe after)
 
 ## Tool 2: GA4 Website Traffic
 
@@ -182,8 +185,8 @@ sqlite3 ai_builder_courses/short_url/data/short_url.db \
 ### Quick Growth Overview
 
 ```bash
-# One command for Kit full snapshot
-python tools/kit_metrics.py snapshot
+# One command for Kit full snapshot (kit-skill analytics CLI)
+cd <kit_skill_dir> && op run --env-file=.env -- .venv/bin/kit-skill analytics snapshot --format json
 
 # One command for GA4 full snapshot
 python tools/ga4_metrics.py snapshot
@@ -228,7 +231,7 @@ sqlite3 ai_builder_courses/short_url/data/short_url.db "SELECT count(*) FROM acc
 Pull Kit, GA4, GSC, short_url simultaneously, then cross-reference with Circle / Stripe:
 
 ```bash
-python tools/kit_metrics.py growth --start-date 2026-03-01 --end-date 2026-03-14
+cd <kit_skill_dir> && op run --env-file=.env -- .venv/bin/kit-skill analytics growth --start-date 2026-03-01 --end-date 2026-03-14 --format json
 python tools/ga4_metrics.py weekly --days 30
 python tools/gsc_metrics.py daily --days 30
 sqlite3 ai_builder_courses/short_url/data/short_url.db "SELECT date(accessed_at), count(*) FROM access_logs GROUP BY 1 ORDER BY 1 DESC LIMIT 30;"

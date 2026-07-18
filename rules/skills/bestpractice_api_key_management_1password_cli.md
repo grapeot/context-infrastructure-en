@@ -79,7 +79,29 @@ pm2 save
 4. Configure Service Account token injection chain for production.
 5. Establish a regular key rotation process and a leak emergency procedure.
 
-## 6. Calling API Keys in Code
+## 6. Field Naming Convention
+
+The vault is fixed as `dev` and the item is fixed as `dev-api-keys`. When inferring the 1Password path for a new service, compose the field name by these rules:
+
+| Type | Pattern | Example |
+|---|---|---|
+| API key (most common) | `<service>_api_key` | `ollama_api_key`, `typefully_api_key`, `koyeb_api_key` |
+| Token | `<service>_<descriptor>_token` | `circle_api_v2_token`, `data_for_seo_token` |
+| App-specific password | `<service>_app_password` | `gmail_skill_app_password` |
+| Webhook signing secret | `<service>_<use>_signing_secret` | `resend_webhook_signing_secret` |
+| Account ID | `<service>_account_id` | `cloudflare_account_id` |
+| Username / password pair | `<service>_username` / `<service>_password` | `twine_username` / `twine_password` |
+| Environment variant | `<service>_api_key_<env>` | `shippo_test_api_key`, `deepseek_api_key_opencode`, `resend_api_key_full` |
+
+Full path: `op://dev/dev-api-keys/<field_name>`.
+
+**Inference flow**:
+1. Determine the service name (typefully, kimi, deepseek, ...), in snake_case.
+2. Append the matching type suffix (default `_api_key`).
+3. Compose `op://dev/dev-api-keys/<field>`.
+4. If you are not sure the field exists, list existing fields first: `op item get dev-api-keys --vault dev --format json` and inspect `fields[*].label`. This avoids silent failures from typos (e.g., `olama` vs `ollama`).
+
+## 7. Calling API Keys in Code
 
 In Python/Node scripts, do not hardcode or read `.env`; instead, retrieve via `op read`:
 
@@ -113,5 +135,6 @@ api_key = get_api_key("tavily_api_key")
 
 **Key points**:
 1. Check environment variables first (CI/CD compatibility)
-2. Local development uses `op read`
-3. Vault path unified as `op://dev/dev-api-keys/<service>`
+2. `op read` works with both desktop authorization and `OP_SERVICE_ACCOUNT_TOKEN`
+3. For a CLI- or SSH-heavy machine, prefer configuring a service account
+4. Vault path unified as `op://dev/dev-api-keys/<service>`

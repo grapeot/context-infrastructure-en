@@ -103,6 +103,12 @@ The correct parallel method in the current OpenCode environment is: in the same 
 
 `subagent_type` is the OpenCode native agent name, not a model name, and not the old `category`. OpenCode executes `agent.get(subagent_type)`; if no agent with that name is found, it reports `Unknown agent type`.
 
+Source of built-in and custom agents:
+
+- `general` / `explore` are built-in agents in the OpenCode source.
+- Other named agents come from `~/.config/opencode/opencode.json`, the project `opencode.json`, or `.opencode/agent(s)/*.md`.
+- `provider/model` is only the underlying model entry. To be callable by `task`, it must be wrapped as an agent, e.g., `writer_deepseek -> deepseek/deepseek-v4-pro`.
+
 Common `subagent_type`:
 
 | subagent_type | Applicable Scenarios |
@@ -115,13 +121,21 @@ Common `subagent_type`:
 | `private_ds4` | Local DS4 route; suitable for privacy-sensitive, local-execution-priority, low-cost drafts |
 | `ollama_kimi` | Ollama Cloud Kimi K2.6, zero-data-retention, relatively cheap; suitable for tasks requiring high privacy posture but not the strongest model |
 | `ollama_deepseek_pro` | Ollama Cloud DeepSeek V4 Pro, zero-data-retention, relatively expensive; suitable for tasks requiring high privacy posture and stronger DeepSeek Pro |
+| `ds4` | Old alias; prefer `private_ds4` for new tasks |
 
-Each subagent's prompt should include:
-- Specific dimension/scope responsible for
-- Expected overlap area (let the agent know others are also looking at this part)
-- Output format requirements
-- Output file path (e.g., `tmp/<session_slug>/tier3_independent.md`)
-- Verification criteria: what evidence counts as valid, what situations must be marked as uncertain
+### File-First Agent Handoff
+
+By default, the main agent and subagents exchange substantive information through workspace files, rather than copying large context into prompts or relying on a subagent's last message to carry the full result.
+
+Five principles:
+
+1. **Prompt carries goals, boundaries, and paths.** Tell the subagent what to solve, what the acceptance criteria are, and which files to read. Material already in the workspace is passed by path, not pasted in full.
+2. **Subagents read and iterate files themselves.** Let the subagent build context from source artifacts, scratchpads, claim tables, or code. When changes are needed, write to a namespaced output path; do not let multiple agents overwrite the canonical file simultaneously.
+3. **Results land on disk first, then return a manifest.** The subagent's full research, judgment, code, or review goes into the designated artifact. The last message only returns path, status, key conclusions, and open issues; the chat summary cannot be the sole deliverable.
+4. **Parent merges from artifacts.** The main agent reads child artifacts, verifies evidence, and writes back to the canonical output. Information transfer between agents is anchored on inspectable files; a previous agent's natural-language summary is not treated directly as source of truth.
+5. **Preserve boundaries for failure recovery.** Long tasks update scratchpads, checkpoints, or partial outputs by stage. If a subagent is interrupted, a later agent should be able to continue from the file rather than only re-running the whole conversation.
+
+File-first handoff has three purposes: reduce prompt preprocessing and context copying; let agents read and write repeatedly on existing material; and leave auditable recovery points for interruption, model swap, or parent takeover. Only when the result is very short, there is no workspace, or it is a pure one-shot judgment, may the full deliverable be returned directly in the message.
 
 Main thread responsibilities:
 
