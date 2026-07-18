@@ -1,6 +1,8 @@
-from dataclasses import dataclass, asdict
-from typing import Optional, List, Dict, Any, Tuple
+from dataclasses import asdict, dataclass
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
+
 
 @dataclass
 class Chunk:

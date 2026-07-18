@@ -10,7 +10,6 @@ from typing import Any
 
 import requests
 
-
 DEFAULT_BASE_URL = "https://typefully.com"
 DEFAULT_REFERER = "https://typefully.com/grow"
 DEFAULT_USER_AGENT = "Mozilla/5.0"

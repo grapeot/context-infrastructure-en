@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-import os
-import time
-from datetime import datetime
 import sys
+from datetime import datetime
 from pathlib import Path
 
 # Add the parent directory to sys.path to import OpenCodeClient
@@ -20,7 +18,7 @@ def run_ai_analysis():
     client = OpenCodeClient()
     session_title = f"Autonomous Crontab Health Check {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     session_id = client.create_session(session_title)
-    
+
     if not session_id:
         print("Failed to create OpenCode session.")
         return
@@ -61,7 +59,7 @@ def run_ai_analysis():
 """
     print(f"Triggering autonomous analysis in OpenCode (Session: {session_id})...")
     result = client.send_message(session_id, prompt, model_id="glm-5")
-    
+
     if result:
         client.wait_for_session_complete(session_id)
         print("Autonomous AI Analysis complete.")

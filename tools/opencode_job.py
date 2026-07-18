@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+import argparse
 import os
 import sys
-import argparse
 from pathlib import Path
+
 
 def load_dotenv():
     """Load environment variables from .env file."""
@@ -33,7 +34,7 @@ def main():
     parser = argparse.ArgumentParser(description='Submit a job to OpenCode.')
     parser.add_argument('prompt', help='The task description/prompt for the agent.')
     parser.add_argument('--title', default='Automated Job', help='Session title.')
-    parser.add_argument('--model', default='glm-5', 
+    parser.add_argument('--model', default='glm-5',
                         choices=['glm-5', 'antigravity-gemini-3-flash'],
                         help='Model ID (default: glm-5).')
     parser.add_argument('--agent', default='OpenCode-Builder', help='Agent name (default: OpenCode-Builder).')
@@ -46,7 +47,7 @@ def main():
     load_dotenv()
 
     client = OpenCodeClient()
-    
+
     print(f"Creating session: {args.title}...")
     session_id = client.create_session(args.title)
     if not session_id:
@@ -55,7 +56,7 @@ def main():
 
     print(f"Sending message using model {args.model} and agent {args.agent}...")
     result = client.send_message(session_id, args.prompt, model_id=args.model, agent=args.agent)
-    
+
     if not result:
         print("Warning: Initial request timed out or failed, but the agent might still be running.")
 

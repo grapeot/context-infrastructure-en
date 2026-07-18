@@ -1,6 +1,7 @@
-from openai import OpenAI
 from typing import List
-import time
+
+from openai import OpenAI
+
 
 class EmbeddingClient:
     def __init__(self, base_url: str = "http://localhost:1234/v1", model: str = "text-embedding-qwen3-embedding-8b"):

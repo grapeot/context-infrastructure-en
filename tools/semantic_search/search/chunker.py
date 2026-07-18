@@ -1,7 +1,10 @@
-import yaml
 import re
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
+import yaml
+
 from .models import Chunk
+
 
 class MarkdownChunker:
     def __init__(self, max_chunk_size: int = 1000, overlap: int = 100):
@@ -25,7 +28,7 @@ class MarkdownChunker:
         """按标题分块并保留元数据。"""
         metadata, body = self.parse_yaml_frontmatter(content)
         chunks = []
-        
+
         lines = body.split('\n')
         current_header = ""
         current_chunk_lines = []
@@ -45,13 +48,13 @@ class MarkdownChunker:
                         metadata=metadata
                     ))
                     chunk_idx += 1
-                
+
                 current_header = line
                 current_chunk_lines = [line]
                 start_line = i
             else:
                 current_chunk_lines.append(line)
-                
+
                 # Split if chunk is too large
                 if len("\n".join(current_chunk_lines)) > self.max_chunk_size:
                     chunks.append(Chunk(
@@ -77,5 +80,5 @@ class MarkdownChunker:
                 position=(start_line, len(lines)),
                 metadata=metadata
             ))
-            
+
         return chunks
