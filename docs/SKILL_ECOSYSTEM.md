@@ -36,7 +36,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Social / growth | [typefully-twitter-skill](https://github.com/grapeot/typefully-twitter-skill) | Typefully posting, account metrics, X/Twitter single-post analytics |
 | Community publishing | [circle-post-skill](https://github.com/grapeot/circle-post-skill) | Circle community Markdown conversion, dry-run preflight, publish/update/delete CLI; community defaults in local overlay |
 | Payments / growth | [stripe-skill](https://github.com/grapeot/stripe-skill) | Stripe read-only finance / sales analytics, live tests default opt-in |
-| Media | [online-media-skill](https://github.com/grapeot/online-media-skill) | Online media download, ASR artifact, query pack, source identification workflow |
+| Media | [online-media-skill](https://github.com/grapeot/online-media-skill) | Online media download, ASR artifacts, query packs, source identification, and agent-led bilingual SRT: the agent corrects, segments, and translates while the CLI verifies coverage, renders, and validates |
 | Slides | [pptx.skill](https://github.com/grapeot/pptx.skill) | AI-first PPTX read, edit, and render |
 | Images | [image-generation-skill](https://github.com/grapeot/image-generation-skill) | Gemini Flash / Gemini Pro / GPT-Image-2 text-to-image, image editing, resolution upscaling |
 | Portraits | [genai_portrait_skill](https://github.com/grapeot/genai_portrait_skill) | Vision-agent-driven portrait, headshot, and ID-photo editing with identity preservation, photographic coherence, multi-image relighting, and alpha outputs |
