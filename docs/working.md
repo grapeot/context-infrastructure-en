@@ -3,6 +3,8 @@
 ## 2026-07-20
 
 - Updated the Antigravity CLI guide and quick reference for AGY 1.1.4: documented the top-level `agy --print` interface, rejected nonexistent `agy run` and JSON event flags, and added the new headless inheritance of persisted `settings.json` policies.
+- Added `apple-photos-skill` to the public ecosystem for metadata inspection, retrieval, backup, guarded imports, and default-dry-run deletion workflows.
+- Added `bright-horizons-photo-sync-skill` for resumable My Bright Day event and media backup with verified, deduplicated Apple Photos imports.
 
 ## 2026-07-16
 

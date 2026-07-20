@@ -41,6 +41,8 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Images | [image-generation-skill](https://github.com/grapeot/image-generation-skill) | Gemini Flash / Gemini Pro / GPT-Image-2 text-to-image, image editing, resolution upscaling |
 | Portraits | [genai_portrait_skill](https://github.com/grapeot/genai_portrait_skill) | Vision-agent-driven portrait, headshot, and ID-photo editing with identity preservation, photographic coherence, multi-image relighting, and alpha outputs |
 | Images | [tiff-icc-profile](https://github.com/grapeot/tiff-icc-profile) | Embed ICC profiles into untagged TIFFs, commonly used in DaVinci still workflows |
+| Photos | [apple-photos-skill](https://github.com/grapeot/apple-photos-skill) | Search, inspect, retrieve, back up, import, and safely plan or apply deletions in Apple Photos through a metadata CLI and PhotoKit helper |
+| Photos / backup | [bright-horizons-photo-sync-skill](https://github.com/grapeot/bright-horizons-photo-sync-skill) | Incrementally back up My Bright Day events and media, resume interrupted downloads, verify files, and deduplicate imports into a macOS Photos album |
 | Health | [health-quantification](https://github.com/grapeot/health-quantification) | Apple Health / manual records → SQLite → CLI → AI analysis |
 | Home network | [firewalla-local-skill](https://github.com/grapeot/firewalla-local-skill) | Firewalla local export analysis, device/flow reports, and redacted artifact workflow; home network details stay in local overlays |
 | Coffee | [roest-analysis](https://github.com/grapeot/roest-analysis) | Roest roast log capture and analysis |
