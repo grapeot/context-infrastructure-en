@@ -5,7 +5,7 @@
 - Type: API Guide
 - Use when: using Antigravity subscription quota to run a Gemini agent for writing, rewriting, review, or file processing
 - Command: `agy`
-- Verified version: 1.1.2 (2026-07-14)
+- Verified version: 1.1.4 (2026-07-20)
 
 ## Core Distinction
 
@@ -41,7 +41,7 @@ agy --help
 agy models
 ```
 
-`agy` 1.1.2 has no standalone `login` command. `agy models` or the first `agy --print` attempts to retrieve Antigravity credentials silently from the system keyring. If the machine is not authenticated, sign in with Google through the Antigravity App or IDE, then retry `agy models`.
+`agy` 1.1.4 has no standalone `login` command. `agy models` or the first `agy --print` attempts to retrieve Antigravity credentials silently from the system keyring. If the machine is not authenticated, sign in with Google through the Antigravity App or IDE, then retry `agy models`.
 
 `agy` uses the Antigravity subscription and system keyring. It does not read `GEMINI_API_KEY`. Do not fall back to an API key, because that switches to API billing rather than the subscription route this skill covers.
 
@@ -78,6 +78,10 @@ agy --print \
   2> "/absolute/path/to/agy_task_stderr.txt"
 ```
 
+`--print` / `-p` is a top-level flag, not a subcommand. AGY 1.1.4 has no `agy run` subcommand and no `--trust`, `--format`, or `--output-events` flags. Do not copy another agent CLI's command shape: `agy run ...` enters the wrong interactive path and may fail with a Bubble Tea `/dev/tty` error or hang in a non-TTY subprocess. Persist diagnostics and events with `--log-file` only.
+
+AGY 1.1.4 fixed headless `--print` runs so they honor persisted `settings.json` policies. Permissions, file access, sandbox mode, auto-execution, and artifact review settings can now affect non-interactive runs. Before a production invocation, inspect both global and project-level AGY settings in addition to the command-line flags; do not assume print mode is isolated from persisted configuration.
+
 Set the outer process timeout to about 610 seconds. `--print-timeout 10m` is AGY's internal wait limit; the extra time allows process shutdown and log flushing.
 
 Use `--dangerously-skip-permissions` only together with `--sandbox`, and only in the minimal trusted scratch workspace described above. The task file must name one output path or enumerate a bounded set of output paths, then prohibit modification of every file outside that list.
@@ -94,7 +98,7 @@ After first installation or an upgrade, run `agy --version`, `agy --help`, and `
 
 Always pass `--model` explicitly. Do not rely on an interactive `/model` setting. Treat an invalid model name as a failure; do not silently fall back.
 
-AGY 1.1.2 has no `--json` or streaming JSON output. Use `--log-file` for observability. Events such as `Print mode: starting`, `silent auth succeeded`, `streamGenerateContent`, tool confirmation, and shutdown help establish liveness. Startup logs may report an unauthenticated state before keyring-based silent authentication succeeds; judge the run by its final exit status and result file.
+AGY 1.1.4 has no `--json` or streaming JSON output. Use `--log-file` for observability. Events such as `Print mode: starting`, `silent auth succeeded`, `streamGenerateContent`, tool confirmation, and shutdown help establish liveness. Startup logs may report an unauthenticated state before keyring-based silent authentication succeeds; judge the run by its final exit status and result file.
 
 A run is complete only when all checks pass:
 
@@ -173,6 +177,13 @@ On 2026-07-14, a smoke test was completed on macOS arm64 with AGY 1.1.2:
 - Using `Gemini 3.5 Flash (High)`, a ~2,000-word memo rewrite completed while preserving all 17 URLs.
 - The first rewrite exposed technical-term mistranslation, line-by-line wrapping, and first-person drift; these improved markedly after adding an immutable term list and a normal-paragraph constraint.
 - A fresh AGY conversation ran an independent prose QA, preserving the Top 5 ordering, four-paragraph structure, two deep-dive candidates, and all 17 URLs, while correcting exaggerated wording and term drift. Therefore external-facing deliverables still default to keeping an independent IC-3; a single AGY rewrite cannot be treated as a ready-to-ship draft.
+
+On 2026-07-20, the CLI interface and headless path were rechecked on macOS arm64 with AGY 1.1.4:
+
+- The official GitHub latest release and local `agy --version` both reported 1.1.4.
+- `agy --help` confirmed that headless execution remains the top-level `--print` / `-p` flag, with no `run` subcommand or JSON event flags.
+- `agy --print` completed in a non-TTY subprocess with stdout, stderr, and `--log-file` redirected separately.
+- The 1.1.4 release explicitly changed headless runs to honor persisted `settings.json` policies; future upgrade reviews must compare both CLI help and release notes rather than replacing only the version string.
 
 ## Official Sources
 
