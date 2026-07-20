@@ -5,7 +5,7 @@
 - **Type**: Workflow
 - **Use cases**: Turning verified research into an external-facing analysis, public survey report, or course/client material.
 - **Prerequisites**: Phase 1-3 output from the [Deep Research Survey Workflow](./workflow_deep_research_survey.md), or equivalent verified material.
-- **Last updated**: 2026-07-16
+- **Last updated**: 2026-07-20
 
 ## 1. Goal and Output Route
 
@@ -102,8 +102,8 @@ Every writing agent follows the [Antigravity CLI File-Based Invocation](./antigr
 | Main-thread Manager | Main model | `tmp/<session_slug>/writing_brief.md` | Research, fact-checking, thesis gate, reasoning architecture, Voice Route, concept plan, final visuals, and acceptance checks |
 | IC-1 structural draft | AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article_structural.md` | Build the claim dependency graph with evidence, concepts, links, and images; mark the reader question and concrete consequence without aiming for publishable prose |
 | IC-2 natural-explanation rewrite | fresh AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article.md` | Read the brief, structural draft, and same-channel calibration pieces; inherit claims and hard constraints but retell the article from the Voice Route |
-| IC-3 independent voice QA | fresh AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article_qa.md`, `prose_qa.md` | Judge whole-article voice and cognitive comfort before revising prose; do not change claims, facts, evidence, numbers, URLs, images, or structural intent |
-| Manager Voice Pass | Main model | `tmp/<session_slug>/article_final.md`, `voice_audit.md` | Remove translation-like distance, perform invariant and new-claim audits, and preserve brief-authorized facts, structure, and conclusion strength |
+| IC-3 independent voice QA / Final Writer | fresh AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article_qa.md`, `prose_qa.md` | Judge whole-article voice and cognitive comfort before revising prose; preserve claims, facts, evidence, numbers, URLs, images, and structural intent. IC-3 is the final prose authority |
+| Manager Content Acceptance | Main model | `tmp/<session_slug>/article_final.md`, `content_audit.md` | Treat `article_qa.md` as the irreplaceable base document, perform invariant and new-claim audits, and make only word-level factual corrections within a 5% body-text budget |
 
 IC-1, IC-2, and IC-3 each use a fresh AGY conversation: one `agy --print` call without `--continue` or `--conversation`. Store a separate `agy_icN_prompt.md`, result, `agy_icN_stdout.txt`, `agy_icN_stderr.txt`, and `agy_icN_events.log` for each stage. Use the 10-minute internal timeout, an outer timeout of about 610 seconds, sandboxing, and non-interactive permission confirmation.
 
@@ -133,13 +133,17 @@ IC-3 may split or combine sentences, replace words, revise local paragraphs, adj
 
 If the draft needs a new fact, a changed thesis, major section reordering, removal of an analytical framework readers do not need to operate, or a rebuilt evidence chain, IC-3 records a `BLOCKER` in `prose_qa.md` instead of repairing it. The main thread returns to fact-checking, the brief, or IC-1.
 
-`prose_qa.md` separately records the comprehension gate and cognitive-comfort gate. It also records the whole-article voice judgment, major revisions, at least four real before-and-after pairs, cold-heading and restatement tests, preserved counts of numbers/URLs/images, performative-informality scan, and blocker state. Both gates must pass with no blocker before `article_qa.md` enters the Manager Voice Pass.
+`prose_qa.md` separately records the comprehension gate and cognitive-comfort gate. It also records the whole-article voice judgment, major revisions, at least four real before-and-after pairs, cold-heading and restatement tests, preserved counts of numbers/URLs/images, performative-informality scan, and blocker state. Both gates must pass with no blocker before `article_qa.md` enters Manager Content Acceptance.
 
-### 5.3 Manager Voice Pass
+### 5.3 Manager Content Acceptance
 
-The final prose cannot rely on IC-3's self-certification. The main thread removes invented role labels, institutional phrasing for ordinary actions, system-centered descriptions of results, and abstractions that hide what readers actually lose. `voice_audit.md` records every changed original sentence, the problem, and the rewrite rather than claiming that the prose was cleaned.
+Antigravity / Gemini owns final prose authority for external-facing articles. The main thread remains responsible for factual correctness and delivery acceptance, but review authority does not imply writing authority. `article_qa.md` is the irreplaceable base document. At least 95% of the final body text must come directly from it or a later AGY final-integration draft. Measure the main thread's direct changes as a non-whitespace-character diff; deletion, movement, and replacement all count toward the 5% limit. A title change explicitly requested by the user does not count toward the body-text ratio.
 
-After the pass, compare `article_qa.md` with `article_final.md`: numbers match; URL counts and targets match; image references match; H2 order matches; and no brief-authorized claim was added, removed, or strengthened. Also run a new-claim audit against the brief and research packet. Remove or reduce unsupported names, causal links, performance judgments, and absolutes introduced for friendliness. These unauthorized additions are not protected by the claim invariant.
+The main thread may make only four types of word-level surgical change: correct names, organizations, dates, numbers, URLs, code identifiers, and official product names; reduce guarantees, causal conclusions, or absolutes to the strength supported by the source pack; fix an unambiguous typo, grammar defect, repeated word, or punctuation error; or delete one unsupported local fact without rewriting its paragraph. It must not select and splice paragraphs, create a replacement draft, reorder paragraphs, or rewrite paragraph entries, transitions, or endings.
+
+When a paragraph-level or structural change is required, the main thread writes an itemized `content_audit.md` naming the affected sentence, evidence boundary, and permitted wording, then sends it to a fresh AGY conversation for targeted final integration. The prompt must require every unmarked paragraph to remain verbatim. After AGY returns, the main thread performs read-only acceptance plus the surgical corrections above. Any remaining large change goes back to AGY rather than being rewritten by the main thread.
+
+Finally, compare the AGY final draft with `article_final.md`: body-text preservation is at least 95%; numbers match; URL counts and targets match; image references match; H2 order matches; and no claim was added, removed, or strengthened. `content_audit.md` records every direct main-thread edit with its original text, reason, replacement, and body-text preservation rate.
 
 ## 6. Visuals
 
@@ -147,7 +151,7 @@ Visuals are a hard constraint for external-facing articles. Each image must comp
 
 ## 7. Post-Writing Scans
 
-After IC-3 semantic review and the Manager Voice Pass, the main thread runs deterministic regression scans on `article_final.md`. The Manager fixes mechanical prose hits within the Voice Pass boundary. If a hit requires IC-3 rewriting, regenerate `article_qa.md`, then rerun the Manager Voice Pass and every scan:
+After IC-3 semantic review and Manager Content Acceptance, the main thread runs deterministic regression scans on `article_final.md`. It may fix a hit only within the word-level boundary in Section 5.3. A paragraph-level change goes to a fresh AGY final-integration pass, followed by content acceptance and every scan again:
 
 ```bash
 # Em dashes
@@ -175,7 +179,7 @@ rg -n '[\x{3400}-\x{4DBF}\x{4E00}-\x{9FFF}]' <file>
 rg -ni '\b(waitable|rejectable|resumable|recoverable|traceable|verifiable)(,| and)\s*(waitable|rejectable|resumable|recoverable|traceable|verifiable)' <file>
 ```
 
-A regex cannot reliably verify concept before reference, lecture-like voice, cognitive comfort, performative informality, or redundant cross-language parentheticals. IC-3 reviews them semantically and records the results in `prose_qa.md`. The main thread separately compares `article.md` to `article_qa.md` and `article_qa.md` to `article_final.md` for numbers, URLs, image counts and targets, H2 order, evidence sections, and conclusion strength. Finally, inspect new headings, negations, and explanations: the preceding article must establish why they appear, and deleted sections must not leave unfulfilled opening promises, ending questions, links, or images.
+A regex cannot reliably verify concept before reference, lecture-like voice, cognitive comfort, performative informality, or redundant cross-language parentheticals. IC-3 reviews them semantically and records the results in `prose_qa.md`. The main thread separately compares `article.md` to `article_qa.md` and the AGY final draft to `article_final.md` for numbers, URLs, image counts and targets, H2 order, evidence sections, conclusion strength, and at least 95% body-text preservation. If direct main-thread edits exceed 5%, restore the AGY draft as the base and return the problem to AGY.
 
 ## 8. Final Read Gate
 

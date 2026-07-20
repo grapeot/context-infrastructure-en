@@ -68,7 +68,7 @@ Complete workflows for specific tasks.
   - Core parameters: parallelism ≤5, research overlap 30-50%, code overlap 0-20%
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
 - [External-Facing Thesis Mining](./workflow_external_thesis_mining.md) ✅ — The judgment layer between research and drafting; combines Axioms, the Thesis Catalog, historical material, independent candidates, an AGY reader, and fresh critique to return `PROCEED` or `DO_NOT_WRITE_YET`
-- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn material that passed the thesis gate into an external-facing analysis: reasoning architecture → AGY IC-1 structural draft → fresh AGY IC-2 natural-explanation rewrite → fresh AGY IC-3 voice QA → Manager Voice Pass
+- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn material that passed the thesis gate into an external-facing analysis; AGY IC-3 / final integration supplies at least 95% of final prose, while the main thread performs content acceptance and no more than 5% word-level correction
 - [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Core principle is low decision friction: conclusions first, skimmable, inline evidence, easy navigation and verification, use diagrams when helpful to reduce cognitive load.
 - [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data
   - Applicable to: group chats, Slack, Discord, email, podcast transcripts, and any conversation data
