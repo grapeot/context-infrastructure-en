@@ -1,192 +1,128 @@
 # External Writing and Drafting Workflow
 
+> [!IMPORTANT]
+> **Before taking any writing or drafting action, the agent must read this document completely to the end of file (EOF).**
+> The global permission boundaries and the non-overridable execution contract are explicitly defined on the first screen. The subsequent stage-specific reference guides serve only to progressively disclose implementation details and cannot override or modify the constraints in this chapter.
+
 ## Metadata
 
 - **Type**: Workflow
-- **Use cases**: Turning verified research into an external-facing analysis, public survey report, or course/client material.
-- **Prerequisites**: Phase 1-3 output from the [Deep Research Survey Workflow](./workflow_deep_research_survey.md), or equivalent verified material.
-- **Last updated**: 2026-07-20
+- **Applicability**: Writing verified research materials into analytical articles, public investigation reports, client content, or external course materials for readers with zero shared context.
+- **Prerequisites**: Output from the research phase, or an equivalent source pack (Source Pack).
+- **Applicable Roles**: Manager (manager/auditor), IC-1/IC-2/IC-3 (independent session writers for each stage).
+- **Default Output**: `contexts/survey_sessions/`; write to the target project's blog directory and format only if the user explicitly requests a blog post.
+- **Last Updated**: 2026-07-20
 
-## 1. Goal and Output Route
+## 0. Non-Overridable Execution Contract
 
-This skill addresses the case where the material is sufficient but the article still reads like an AI summary. The goal is an evidence-backed article with exactly one core thesis that an unfamiliar reader can retell.
+This section defines the highest-priority execution contract for this workflow. If any local instructions, historical versions, or stage-specific guidelines conflict with this section, this section shall prevail.
 
-For the user, internal collaborators, or future AI agents, use the [Internal Writing Workflow](./workflow_internal_writing.md). External-facing research analysis defaults to a survey report in `contexts/survey_sessions/`. Use a target project's blog directory and format only when the user explicitly requests a blog post.
+1. **IC-3 is the sole final prose authority.** The final title, body, punctuation, link anchor text, image references, and image alt text must come entirely from an accepted, complete Antigravity output. No other role or stage has the authority to rewrite the text.
+2. **The Manager has zero modification rights over the final text.** The Manager is responsible for research, drafting the writing brief, generating images, performing read-only audits, copying files, and running validation, but must never modify a single character in the IC-3 candidate text. Spelling, facts, links, or formatting issues must not be directly patched in the candidate text by the Manager. Any manual edit by the Manager violates this execution contract.
+3. **Issues must be resolved in a closed loop through complete rewriting.** When the Manager identifies an issue, they are only responsible for writing a read-only audit report and starting a completely new Antigravity session. The new session must read the writing brief, the original source pack, the previous complete candidate text, and the latest audit report, and write a complete new candidate text from a blank page. Splicing different versions or applying local patches is prohibited.
+4. **The image contract is frozen before IC-3.** The final image filenames, relative paths, placement in the text, and the semantic intent of each image must be locked in the writing brief. IC-3 is responsible for writing the final references into the text. After this point, the Manager can only copy the image files and must never modify the Markdown paths in the body.
+5. **Delivery is blocked until all issues are resolved.** A candidate text is allowed to be archived only when the comprehension gate, cognitive comfort gate, factual boundaries, structural continuity, image integration, and deterministic checks are all passed, and there are no blocking issues in the self-QA report. A maximum of three automatic revision rounds is allowed per task. If issues persist after three rounds, all intermediate artifacts must be preserved, and the specific blockers must be reported to the user.
+6. **Archiving requires direct copy and verification.** The final delivered archive file must be byte-for-byte identical to the accepted candidate text. There is zero tolerance for any modifications, and no word-level or mechanical exceptions are permitted (verified using the `cmp` command or by comparing SHA-256 hashes).
+7. **Separation of writing and publication.** The endpoint of this workflow is the local deliverable file. Any operations such as blog deployment, email distribution, or social media posting require explicit user authorization.
+8. **Exception limits for short articles or quick drafts.** Articles shorter than 1,000 words or quick drafts explicitly requested by the user may skip the IC-2 stage, but they must never skip the IC-3 stage, the Manager's read-only acceptance, or the final byte-for-byte comparison.
 
-## 2. Acceptance Criteria
+## 1. Routing and Applicability
 
-1. **Concept before reference (blocking gate)**: Give enough context before the first mention of every proper noun, regulation, event, and technical term. This does not require a dictionary definition; one background anchor is often enough. The rule applies throughout the article, not only at the opening.
-2. **Natural explanation, not a lecture (blocking gate)**: The article should sound like someone who understands the problem sharing a discovery. It must not repeatedly follow a define-object, explain-mechanism, announce-abstraction lecture rhythm or perform friendliness through exaggerated metaphors and slang.
-3. **Comprehensible and cognitively comfortable (blocking gate)**: Let concepts arrive one at a time. Show what happens through a concrete object or process before naming the difference. Do not turn the writer's multi-axis analysis into the reader's exposition order.
-4. **One thesis**: The core judgment is specific and open to agreement or disagreement, not merely that the topic is complex or interesting.
-5. **Thesis up front**: The first 25% establishes the problem, the author's judgment, and the reader's gain.
-6. **Reader-led organization**: Follow the reader's chain of questions instead of listing the author's analytical dimensions.
-7. **Author continuity**: Remain consistent with relevant Axioms and historical writing. If the judgment changes, explain the new evidence and why it changed.
-8. **Visuals reduce cognitive burden**: Images compress a mechanism, trend, or comparison; include alt text and correct relative references. Do not use decorative images as evidence.
-9. **Invisible scaffolding**: L1-L8, Axiom numbers, Phase labels, Thesis Catalog, and similar internal terms do not appear in the final draft.
-10. **Five-second continue-reading gate**: The title and opening immediately establish the subject, core judgment, and increment beyond the public summary.
+This workflow is used for writing finished products aimed at external readers. For internal documents read by the user, internal collaborators, or future agents, use the [Internal Writing Workflow](./workflow_internal_writing.md).
 
-## 3. Thesis Mining Gate
+External articles must ensure that readers with zero shared context obtain sufficient background when first encountering the company, product, events, or technical terms. Zero context means the reader's understanding does not rely on implicit premises provided by the current conversation, source pack, or the author's previous articles.
 
-If the user has not supplied a clear thesis, or the proposed thesis has not survived evidence and counterargument testing, first run [External-Facing Thesis Mining](./workflow_external_thesis_mining.md). It reads Axioms, the Thesis Catalog, historical writing, adjacent work in the target publication environment, and the research packet, then writes `tmp/<session_slug>/thesis_decision.md`.
+This workflow makes no prior assumptions about the reader. The reader is treated as an external entity with basic general knowledge but zero prior knowledge of the current project, technical details, internal decisions, or organizational structure. Therefore, clarity of writing and completeness of explanation are the highest priorities.
 
-Create `writing_brief.md` only when the verdict is `PROCEED`. `DO_NOT_WRITE_YET` means the topic cannot yet support a judgment-driven article; gather missing evidence or stop rather than forcing a thesis.
+If a reader must understand prior background or specific editorial discussions to comprehend a passage, then that passage does not meet the requirements of external writing. After evaluating the nature of the article, the Manager should route articles with external audiences to this workflow and load the reference for each active stage. Short, simple articles may skip IC-2, but the remaining gates and byte-comparison contract still apply.
 
-When the user supplied the thesis, preserve its direction. Still test evidence, boundaries, the strongest counterargument, author continuity, and reader delta. The main thread may perform a lightweight check for a low-risk short piece and record it in the brief.
+## 2. Thesis Mining Gate
 
-## 4. Brief and Prose Calibration
+Before entering the formal writing design (the Reasoning stage), the Thesis Mining Gate must be passed to ensure the article has a solid core argument:
 
-Drafting, rewriting, and review must all load the [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md). `writing_brief.md` includes at least:
+- If the user has not provided a clear core thesis, or the existing thesis has not survived sufficient evidence and adversarial stress testing, [External-Facing Thesis Mining](./workflow_external_thesis_mining.md) must be run first.
+- It reads the relevant inputs and generates a temporary decision file `tmp/<session_slug>/thesis_decision.md`.
+- Creation of the design brief (`writing_brief.md`) is permitted only when its verdict is `PROCEED`.
+- A verdict of `DO_NOT_WRITE_YET` indicates that the current materials or arguments cannot support an external article. In this case, writing must stop or missing evidence must be gathered; fabricating arguments just to complete the task is strictly prohibited.
+- If the user has provided a clear thesis, preserve their writing direction, but still stress-test it against evidence, boundaries, the strongest counterargument, continuity with established views, and the reader delta (Reader Delta). The test results must be recorded in the brief.
 
-- the thesis, reader contract, three to five argument nodes, and strongest counterargument;
-- the reader's start state, target belief change, and three to seven directional causal claims;
-- verified facts, numbers, URLs, image placeholders, and limits on conclusion strength;
-- the role each core piece of evidence plays in the argument;
-- a concept-introduction plan naming concepts an unfamiliar reader may not know and where each first appears;
-- an immutable-term list for product names, model names, API names, code identifiers, and easily mistranslated terms;
-- three to five title candidates based on distinct judgments, plus the reason for the final choice;
-- a duplication check against the titles and openings of the last five to ten pieces in the same channel.
+## 3. Phases and Reading Order Map
 
-Do not add redundant bilingual parentheticals when the primary language already communicates an ordinary concept. Preserve official product names, APIs, protocols, code identifiers, and standard abbreviations.
+Throughout the writing lifecycle, all participating parties must advance tasks in the order specified in the map below and ensure that the current exit gates are fully met before entering the next phase:
 
-### 4.1 Reasoning Architecture Gate
+| Phase | Executor | Required Reading | Core Deliverable | Exit Gate |
+| :--- | :--- | :--- | :--- | :--- |
+| **Preflight** | Manager | This document, `COMMUNICATION.md`, `bestpractice_external_prose.md` | Routing and task boundaries | Confirm external attributes, output location, and publication limits to ensure the process stays within boundaries. |
+| **Thesis Mining (As Needed)** | Manager | [Thesis Mining](./workflow_external_thesis_mining.md) | `thesis_decision.md` | When mining or stress-testing a thesis, the verdict must be `PROCEED`. If `DO_NOT_WRITE_YET`, abort or gather missing evidence. |
+| **Reasoning** | Manager | [Structure Guide](./reference_external_reasoning_structure.md), Source Pack, previous articles | Writing brief, style calibration | Determine core thesis, thesis dependency graph, concept introduction plan, and image contract. |
+| **IC-1** | Fresh AGY Session | Writing brief, Source Pack, [Antigravity CLI](./antigravity_cli.md) | Structural draft | Complete structure and evidence; do not pursue final voice and micro-sentence styling. |
+| **IC-2** | Fresh AGY Session | Writing brief, structural draft, calibration set, [Voice Guide](./reference_external_voice_rewrite.md), [Antigravity CLI](./antigravity_cli.md) | Rewrite draft | Natural introduction of concepts; pass cognitive comfort and chapter handoff checks. |
+| **Image Freeze** | Manager | Writing brief, structural draft, [Delivery Guide](./reference_external_delivery_checks.md) | Final image files | Freeze image filenames, paths, placement, and intent to lock the visual contract. |
+| **IC-3** | Fresh AGY Session | Writing brief, Source Pack, rewrite draft, calibration set, frozen image contract, [QA Guide](./reference_external_prose_qa.md), [Antigravity CLI](./antigravity_cli.md) | Complete candidate text, self-QA report | Pass both comprehension and cognitive comfort gates; no blocking issues in the self-QA report. |
+| **Acceptance** | Manager | Writing brief, Source Pack, candidate text, self-QA report, [Delivery Guide](./reference_external_delivery_checks.md) | Audit report or approval decision | Pass all read-only regression checks and fact-checking; audit status is PASS. |
+| **Delivery** | Manager | Accepted candidate text | Final file and images | Complete file copy and byte-level comparison; trigger final rendering on the client via the `read` tool. |
 
-A thesis is not an isolated sentence, and an outline is not a material-classification list. Before drafting, define the change in understanding the article should create, then order the material by comprehension dependencies:
+## 4. Core Artifacts List
 
-1. **Reader start state**: How the target reader probably understands the subject and which prerequisites are missing.
-2. **Target belief change**: The specific before-and-after understanding. It must be more precise than "understand the product or event" and open to agreement or disagreement.
-3. **Causal model**: Three to seven directional claims that show the thesis's causal dependencies.
-4. **Evidence roles**: Whether each core source establishes the old model, proves a change, explains a mechanism, validates a judgment, or limits extrapolation. Material without a role stays out of the draft.
+All intermediate artifacts must be stored in the temporary session directory `tmp/<session_slug>/` and archived with explicit version numbers to ensure the revision history is fully traceable and easily referenced by new writing sessions:
 
-The brief also includes a **Voice Route**. It does not replace the outline; it prevents the claim graph from becoming a lecture:
+- `source_pack.md`: Records facts, original links, citation boundaries, and immutable proper nouns. It acts as the authoritative factual boundary for the draft; no new facts outside its scope may be introduced in the body.
+- `writing_brief.md`: Defines the reader's start state, target belief change, causal model, evidence roles, concept introduction plan, and the image contract. This is the primary brief guiding all subsequent writing stages.
+- `style_calibration.md`: Contains 3 to 5 positive channel-specific samples, inheritable voice traits, and negative examples of both textbook and performative styles. It ensures the article's voice aligns with the target channel.
+- `article_structural.md`: The structural draft generated by IC-1, marking structural metadata and evidence positions to lock the logical framework.
+- `article.md`: The draft rewritten by IC-2, resolving terminology introduction issues and cognitive coherence.
+- `article_final_vN.md`: The complete candidate text produced by IC-3, serving as the sole candidate for delivery.
+- `prose_qa_vN.md`: The self-QA report submitted by IC-3, documenting the checklist results for all gates and review dimensions.
+- `content_audit_vN.md`: The read-only audit report written by the Manager, highlighting problems and specifying permitted directions for revisions.
 
-1. **Opening oddity or observation**: The contrast, anomaly, or change the writer would genuinely tell a friend about.
-2. **Author stake**: An optional light first-person sentence explaining why the writer cares, without emotional performance.
-3. **Reader question chain**: The natural question the reader asks at each section, not "this section introduces X."
-4. **Concrete consequence anchors**: At least one observable action or consequence per section.
-5. **Tone hazards**: Likely textbook phrasing and performative informality for this topic.
-6. **Concrete carrier or running example**: When comparing three or more abstract objects, prefer one task, person, request, or business record across sections.
+## 5. Unified Go/No-go Gates
 
-Analytical frameworks may help discover the thesis but do not enter the article by default. Unless readers need to operate the framework themselves, show the difference through a concrete process and name it only after they can see it. Every section must answer four questions: which reader belief changes; whether all prerequisites have appeared; which concrete object, action, or consequence carries it; and whether the reader must hold several ungrounded concepts at once.
+A candidate text is permitted for delivery only when it fully satisfies the following conditions. The Manager must verify each gate systematically during the read-only audit, leaving no room for ambiguity:
 
-### 4.2 Title: The Shortest Reader Contract
+1. **First-Screen Contract**: The title and first screen immediately clarify the subject, the core judgment, and the incremental value of reading further.
+2. **Core Thesis**: The article contains a single, specific, and disputable core thesis, presented clearly within the first 25% of the content.
+3. **Concept Introduction**: Every concept has sufficient context before its first mention and does not rely on any implicit reader background.
+4. **Dependency Order**: Every section advances based on the reader's questions, with dependencies introduced before conclusions. Even with the headings hidden, adjacent sections must transition naturally.
+5. **Cognitive Load**: The reader is not forced to hold multiple ungrounded classifications in working memory. For three or more real alternatives, a local map outlining the total count, shared criteria, and mutual relationships must be provided.
+6. **Voice Balance**: The prose style sits between textbook lecture and performative colloquialism, and the analytical framework is kept out of the reader-facing body text.
+7. **Factual Boundaries**: All facts, figures, attributions, links, and argument strengths remain strictly within the boundaries of the source pack.
+8. **Visuals Compliance**: Visuals effectively reduce cognitive load, and their references, format, and dimensions comply with delivery specifications.
+9. **QA Verdict**: The self-QA report indicates that both the comprehension gate and cognitive comfort gate have passed, and no blocking issues are present.
+10. **Byte Identity**: The final archived file is byte-for-byte identical to the accepted candidate text.
 
-The title identifies the subject, establishes relevance, and signals what the article adds beyond public information.
+## 6. Failure and Rework State Machine
 
-- Pair an unfamiliar company, paper, or protocol with its category, action, or change.
-- Name the news subject or concrete change in an event-driven article.
-- Put the analytical increment in mechanism, evolution, competitive position, boundary, or decision impact rather than repeating what launched.
-- Prefer accuracy. Avoid clickbait, false suspense, and inflated causality; a title may state the judgment directly.
-- Do not default to templates such as "not A but B," "why X is becoming Y," or "trend or hype."
+IC-3 has the authority to polish the prose without changing the thesis, causal model, factual boundaries, or section dependencies. If IC-3 determines that new facts must be added, the core thesis must be changed, major sections reordered, or the evidence chain rebuilt, it must not execute these changes directly. Instead, it must mark a `BLOCKER` in the self-QA report, specifying the exact location and the dependency gap.
 
-Apply the substitution test: if replacing the company, paper, or event leaves a title reusable for ten other articles, it does not identify this article. Recheck title-body fit after IC-3 and update the title if the article's increment became clearer.
+When the Manager identifies an issue, they must document it in a read-only audit report, identifying the original sentence, the failed gate, and the permitted direction of revision. The Manager must not write the corrected alternative paragraph in the audit report. Subsequently, a new AGY session must be started to generate a new candidate text from scratch.
 
-### 4.3 Opening: Let Evidence Choose the Entry Point
+The state machine transitions are defined as follows:
+- If any gate fails, the Manager logs the audit report and starts the next round of IC-3.
+- If blocking issues persist at the third round, generation must stop immediately. All intermediate artifacts must be preserved, and the failure details must be reported to the user. This prevents the agent from entering an endless loop of mechanical self-repetition. The fourth round may start only after the user recalibrates the brief, adjusts the source pack, or provides new instructions.
+- If all gates pass and the audit report status is pass, archiving and delivery are permitted.
 
-There is no default opening template. A concrete scenario, second-person simulation, incident, or definition is not an automatic entry. The title makes the reader contract; the opening immediately confirms the subject, judgment, and increment without delaying them through atmosphere, reflection, generic history, or a definition.
+## 7. Micro-Language and Formatting Constraints
 
-Let distinctive evidence choose the entry: a real log may begin with its timeline; a paper with its key result or measurement; a product release with its defining design choice; a technical evolution with a pivot, deprecation, or changed constraint; a market analysis with its classification or strongest substitute. If no distinctive entry evidence exists, state the judgment directly rather than inventing a scene.
+When writing any documents related to this workflow and reference guides, the following baseline constraints for English quality must be strictly followed:
+- **Active Voice Preference**: Wherever a verb can be changed to active voice while keeping the sentence natural, avoid passive constructions.
+- **Natural Sentence Rhythm**: Avoid stacking multiple actions or layering complex modifiers in a single sentence. Use short sentences to state core judgments and slightly longer sentences to connect cause, evidence, and constraints.
+- **Eliminate Subjective Appraisals**: Do not use subjective evaluation labels like "straightforward", "clear", or "insightful". Use objective facts, data, and boundaries instead.
+- **No Em Dashes**: Do not use em dashes ('—') for emotional pauses or transitions in the body text. Use commas, parentheses, or semicolons instead.
+- **No Redundant Parentheticals**: Do not use redundant parenthetical explanations. Only use parentheses to enclose technical terminology when first introduced.
+- **Terminology Consistency**: Capitalization, spelling, and spacing of proper nouns (product names, API identifiers, model names) must match the source pack exactly.
 
-Specific details must come from evidence. Do not invent step counts, character actions, incident sequences, or user reactions. An event-driven piece completes event anchoring and analytical increment on the first screen. By the end of the first two or three paragraphs, the reader can retell what happened, what the article says it changes, and why the rest is useful.
+## 8. Reference Document Index
 
-Apply the substitution test to the opening. Read the first 150-300 words of the last five to ten pieces in the same channel. If two of the last five use the same entry pattern, do not repeat it without an evidence-based reason.
+- [Reasoning, Brief, and Structure Guide](./reference_external_reasoning_structure.md)
+- [Voice Rewrite and Style Calibration Guide](./reference_external_voice_rewrite.md)
+- [Prose QA and Read-Only Acceptance Guide](./reference_external_prose_qa.md)
+- [Visuals, Verification, and Delivery Guide](./reference_external_delivery_checks.md)
+- [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md)
+- [Thesis Catalog](./reference_writing_thesis_catalog.md)
+- [Antigravity CLI File-Based Invocation](./antigravity_cli.md)
 
-Also check continuity with the author's existing views. Do not search only the current product or event name. Search by problem and concept to determine whether the current subject fills, revises, or contradicts an earlier judgment. When that continuity explains "why now" better than an isolated product introduction, connect the old judgment in one or two sentences before introducing the current subject. Record the old judgment, the relationship, the prior URL, and the reason for using or rejecting this entry in the brief.
+## 9. Local Delivery Endpoint
 
-## 5. AGY Two-Pass Drafting and Independent Prose QA
+The final Markdown files and images remain in the workspace. After the final write, the Manager must use the `read` tool to read the final Markdown file and trigger client rendering. The final response provides the file paths and any known residual risks. No publication action is authorized without explicit user approval.
 
-Every writing agent follows the [Antigravity CLI File-Based Invocation](./antigravity_cli.md).
-
-| Role | Execution model | Artifact | Responsibility |
-|---|---|---|---|
-| Main-thread Manager | Main model | `tmp/<session_slug>/writing_brief.md` | Research, fact-checking, thesis gate, reasoning architecture, Voice Route, concept plan, final visuals, and acceptance checks |
-| IC-1 structural draft | AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article_structural.md` | Build the claim dependency graph with evidence, concepts, links, and images; mark the reader question and concrete consequence without aiming for publishable prose |
-| IC-2 natural-explanation rewrite | fresh AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article.md` | Read the brief, structural draft, and same-channel calibration pieces; inherit claims and hard constraints but retell the article from the Voice Route |
-| IC-3 independent voice QA / Final Writer | fresh AGY / `Gemini 3.5 Flash (High)` | `tmp/<session_slug>/article_qa.md`, `prose_qa.md` | Judge whole-article voice and cognitive comfort before revising prose; preserve claims, facts, evidence, numbers, URLs, images, and structural intent. IC-3 is the final prose authority |
-| Manager Content Acceptance | Main model | `tmp/<session_slug>/article_final.md`, `content_audit.md` | Treat `article_qa.md` as the irreplaceable base document, perform invariant and new-claim audits, and make only word-level factual corrections within a 5% body-text budget |
-
-IC-1, IC-2, and IC-3 each use a fresh AGY conversation: one `agy --print` call without `--continue` or `--conversation`. Store a separate `agy_icN_prompt.md`, result, `agy_icN_stdout.txt`, `agy_icN_stderr.txt`, and `agy_icN_events.log` for each stage. Use the 10-minute internal timeout, an outer timeout of about 610 seconds, sandboxing, and non-interactive permission confirmation.
-
-Store every brief, calibration artifact, prompt, draft, review report, and runtime log under the gitignored `tmp/<session_slug>/` directory so unpublished material and local paths do not enter version control.
-
-After each stage, the main thread checks exit code, non-empty result file, absence of unhandled stderr errors, and preservation of numbers, URLs, images, structure, and immutable terms. Stdout self-reporting never replaces artifact inspection.
-
-### 5.1 IC-2: Retell the Structural Draft Instead of Polishing It
-
-Low cognitive burden has three gates: whether context exists when a concept arrives; whether the prose sounds like a person following a real question; and how many ungrounded concepts the reader must hold at once. Defined concepts and short sentences can still produce a lecture.
-
-IC-2 reads the structural draft to recover claims, evidence positions, URLs, numbers, and section dependencies, not to polish its sentences. Reduce each section to reader question, concrete action or consequence, and judgment, then rewrite from a blank page. Preserving the same opening logic for two consecutive paragraphs means the rewrite failed.
-
-When comparing options, prefer one request, ticket, person, or data record across sections. Put actions before categories, delay terminology, and advance one main relationship per paragraph. An H2 must survive a cold read; if it requires the article's internal taxonomy, rewrite it as an action, change, or reader question.
-
-Before every IC-2 pass, select three to five recent, human-edited pieces from the same channel with similar explanatory difficulty. `tmp/<session_slug>/style_calibration.md` records sample paths, useful paragraphs and voice traits, plus textbook and performatively informal counterexamples from the current structural draft. Calibrate narrative distance, not reusable phrases, openings, or metaphors.
-
-Read the opening three paragraphs and the first paragraph under every H2 aloud. For each section, check whether an unfamiliar reader understands first-occurrence concepts, can restate the action without the new terms, avoids repeated rereading, and still understands the mechanism after metaphors and slang are removed.
-
-### 5.2 IC-3: Independent Authority Boundary
-
-Within one fresh AGY conversation, IC-3 reviews before editing. First read only the opening, first paragraph under every H2, and ending. Decide whether the article naturally explains a discovery or lectures from an outline. Three or more repetitions of announce-topic, define-object, abstract-summary require a whole-prose rewrite rather than word replacement.
-
-Then check concept before reference, title and opening, natural language, cognitive comfort, AI templates, scaffold leakage, local coherence, repetition, same-channel voice, performative informality, and statements that make sense only to someone who saw the editing conversation.
-
-IC-3 may split or combine sentences, replace words, revise local paragraphs, adjust paragraph breaks, and change subheadings. When the whole-article voice fails, it may also rewrite all prose while preserving claims, facts, numbers, URLs, images, and major section order. It may not add or remove brief-authorized claims or alter factual attribution, thesis, or conclusion strength.
-
-If the draft needs a new fact, a changed thesis, major section reordering, removal of an analytical framework readers do not need to operate, or a rebuilt evidence chain, IC-3 records a `BLOCKER` in `prose_qa.md` instead of repairing it. The main thread returns to fact-checking, the brief, or IC-1.
-
-`prose_qa.md` separately records the comprehension gate and cognitive-comfort gate. It also records the whole-article voice judgment, major revisions, at least four real before-and-after pairs, cold-heading and restatement tests, preserved counts of numbers/URLs/images, performative-informality scan, and blocker state. Both gates must pass with no blocker before `article_qa.md` enters Manager Content Acceptance.
-
-### 5.3 Manager Content Acceptance
-
-Antigravity / Gemini owns final prose authority for external-facing articles. The main thread remains responsible for factual correctness and delivery acceptance, but review authority does not imply writing authority. `article_qa.md` is the irreplaceable base document. At least 95% of the final body text must come directly from it or a later AGY final-integration draft. Measure the main thread's direct changes as a non-whitespace-character diff; deletion, movement, and replacement all count toward the 5% limit. A title change explicitly requested by the user does not count toward the body-text ratio.
-
-The main thread may make only four types of word-level surgical change: correct names, organizations, dates, numbers, URLs, code identifiers, and official product names; reduce guarantees, causal conclusions, or absolutes to the strength supported by the source pack; fix an unambiguous typo, grammar defect, repeated word, or punctuation error; or delete one unsupported local fact without rewriting its paragraph. It must not select and splice paragraphs, create a replacement draft, reorder paragraphs, or rewrite paragraph entries, transitions, or endings.
-
-When a paragraph-level or structural change is required, the main thread writes an itemized `content_audit.md` naming the affected sentence, evidence boundary, and permitted wording, then sends it to a fresh AGY conversation for targeted final integration. The prompt must require every unmarked paragraph to remain verbatim. After AGY returns, the main thread performs read-only acceptance plus the surgical corrections above. Any remaining large change goes back to AGY rather than being rewritten by the main thread.
-
-Finally, compare the AGY final draft with `article_final.md`: body-text preservation is at least 95%; numbers match; URL counts and targets match; image references match; H2 order matches; and no claim was added, removed, or strengthened. `content_audit.md` records every direct main-thread edit with its original text, reason, replacement, and body-text preservation rate.
-
-## 6. Visuals
-
-Visuals are a hard constraint for external-facing articles. Each image must compress a mechanism or show a trend or comparison, use a publication format supported by the target project such as PNG/JPG/WebP, remain reasonably sized, and appear through descriptive alt text and a relative Markdown path. Establish quantitative accuracy before visual refinement. Decoration does not replace evidence.
-
-## 7. Post-Writing Scans
-
-After IC-3 semantic review and Manager Content Acceptance, the main thread runs deterministic regression scans on `article_final.md`. It may fix a hit only within the word-level boundary in Section 5.3. A paragraph-level change goes to a fresh AGY final-integration pass, followed by content acceptance and every scan again:
-
-```bash
-# Em dashes
-rg -n '—' <file>
-
-# Evaluative intensifiers
-rg -ni '\b(very|clearly|obviously|notably|importantly)\b' <file>
-
-# Internal scaffolding
-rg -ni 'L[0-8]|axiom|Phase [A-Z]|narrative reconstruction|technology lineage|bottleneck shift|Thesis Catalog' <file>
-
-# Meta-commentary and prohibited evaluative leads
-rg -ni 'specifically|next we|it is important to note|clearly shows|\bworth\b|\b(grow|grows|grew|grown|growing) (out of|into)\b' <file>
-
-# Passive voice; review each hit
-rg -n '\b(is|are|was|were|be|been|being)\s+\w+(ed|en)\b' <file>
-
-# Image references
-rg -n '!\[[^\]]+\]\([^\)]+\)' <file>
-
-# Unexpected Chinese output. This Unicode range matches common CJK ideographs.
-rg -n '[\x{3400}-\x{4DBF}\x{4E00}-\x{9FFF}]' <file>
-
-# Mechanical adjective stacks that hide actors and sequence
-rg -ni '\b(waitable|rejectable|resumable|recoverable|traceable|verifiable)(,| and)\s*(waitable|rejectable|resumable|recoverable|traceable|verifiable)' <file>
-```
-
-A regex cannot reliably verify concept before reference, lecture-like voice, cognitive comfort, performative informality, or redundant cross-language parentheticals. IC-3 reviews them semantically and records the results in `prose_qa.md`. The main thread separately compares `article.md` to `article_qa.md` and the AGY final draft to `article_final.md` for numbers, URLs, image counts and targets, H2 order, evidence sections, conclusion strength, and at least 95% body-text preservation. If direct main-thread edits exceed 5%, restore the AGY draft as the base and return the problem to AGY.
-
-## 8. Final Read Gate
-
-After drafting, visuals, fact-checking, and scans are complete, the main thread uses the current harness's file-reading tool to read the final Markdown from its beginning. This read must occur after the last edit; the brief, a temporary draft, a partial grep, or a diff does not satisfy the gate.
-
-Do not edit after the final read unless a mechanical defect must be corrected. If corrected, read the final file again. The final response links to that file with Markdown.
-
-## 9. Delivery Endpoint
-
-The final Markdown and visuals remaining in the local workspace are the delivery endpoint. Do not publish automatically to a blog, social platform, community, or other external channel. Every external action requires explicit authorization for that publication.
+Before archiving, the Manager must verify that the content of the local delivery file is byte-for-byte identical to the accepted candidate text, and contains no internal debugging residue or incomplete placeholders.
