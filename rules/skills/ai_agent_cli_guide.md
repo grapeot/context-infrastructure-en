@@ -3,7 +3,7 @@
 ## Metadata
 - Type: API Guide
 - Use when: building automation pipelines with CLI Agents, AI-calling-AI
-- Last updated: 2026-07-14
+- Last updated: 2026-07-21
 
 ---
 
@@ -98,15 +98,57 @@ Use a fresh AGY conversation for every independent writing or review stage. Do n
 
 ## Codex CLI Quick Reference
 
-**Basic command**: `codex exec [options] "prompt"`
+> Verified against Codex CLI 0.144.x (2026-07-21). The 0.1.x series changed a lot: the old `--full-auto` is gone, sandbox/approval are now separate parameters, and structured-output plus last-message-to-file capabilities were added.
 
-**Key parameters**:
-- `-m, --model`: `gpt-5.2` (recommended)
-- `-c model_reasoning_effort`: `low` (translation) / `medium` (regular) / `high` (deep refactoring)
-- `--full-auto`: Auto-accept all operations
-- `--json`: JSON output format
+**Basic command**: `codex exec [options] "prompt"` (`exec` can be shortened to `e`). The prompt can also be read from stdin via `-`; when both stdin and a positional prompt are given, stdin is appended as a `<stdin>` block.
 
-**Recommendation**: Use `low` for simple tasks, `high` for complex tasks
+**Core parameters**:
+- `-m, --model`: Select the model. The current generation is the GPT-5.x Codex family; no longer `gpt-5.2` as in old docs.
+- `-c model_reasoning_effort=<level>`: `low` (translation / format conversion) / `medium` (regular) / `high` (deep refactoring). This overrides config via `-c`, not a standalone flag.
+- `-s, --sandbox <mode>`: `read-only` / `workspace-write` / `danger-full-access`. **Replaces the old `--full-auto`.** Use `workspace-write` to let the agent write files; `read-only` for read-only reasoning.
+- `-a, --ask-for-approval <policy>`: `untrusted` / `on-request` / `never`. For automation use `never` so execution failures flow straight back to the model instead of blocking.
+- `--skip-git-repo-check`: Run outside a git repo (required in temp directories).
+- `--ephemeral`: Don't persist the session to disk (recommended for one-shot calls, avoids rollout file buildup).
+- `-C, --cd <dir>`: Set the agent's working root; `--add-dir <dir>` adds writable directories.
+- `--color never`: Disable ANSI for easier stdout parsing.
+
+**Automation essentials: structured output and result-to-file**
+
+This is the biggest practical improvement over old versions, replacing the fragile "beg the model to output only JSON in the prompt" approach:
+
+- `-o, --output-last-message <file>`: Write the agent's final message **cleanly** to a file (no event noise). The preferred exit for file-response mode.
+- `--output-schema <file>`: Pass a JSON Schema file to force the final response to conform to that schema. Combined with `-o` you get validated JSON directly. Verified working:
+
+```bash
+# schema.json: {"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"],"additionalProperties":false}
+codex exec --skip-git-repo-check --sandbox read-only --color never \
+  -c model_reasoning_effort=low \
+  --output-schema schema.json \
+  -o out.json \
+  "What is 17 times 3?"
+# out.json => {"answer":51}
+```
+
+**JSONL event stream (`--json`)**
+
+`--json` emits a JSONL event stream whose schema has been restructured. Current event types:
+
+```
+{"type":"thread.started","thread_id":"..."}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"final answer here"}}
+{"type":"turn.completed","usage":{"input_tokens":...,"output_tokens":...}}
+```
+
+The final answer is in the `text` field of the item with `item.type == "agent_message"`; tool calls appear as `command_execution` / `file_change` etc. item types. To monitor progress, parse items one by one. Note the occasional `failed to renew cache TTL` warning on stderr — it doesn't affect results; ignore it when parsing.
+
+**Other new subcommands (automation-relevant)**:
+- `codex exec resume <session_id>` or `--last`: Resume a prior session.
+- `codex review [--uncommitted | --base <branch>]`: Non-interactive code review (also `codex exec review`).
+- `codex sandbox <command...>`: Run arbitrary commands directly inside Codex's seatbelt sandbox.
+- `codex doctor`: Diagnose install, auth, and runtime health (first step for CLI issues).
+
+**Recommendation**: Use `low` + `read-only` for simple tasks, `workspace-write` when files must be written, `high` for complex refactoring. For production automation, standardize on `--output-schema` + `-o` to get structured results — more reliable than parsing stdout.
 
 ### Codex Built-in imagegen
 
@@ -205,7 +247,7 @@ Use an OpenCode client compatible with the current server API for operations suc
 | xai | `grok-4-1-fast-non-reasoning` | Grok 4.1 non-reasoning, $0.20/1M input |
 | anthropic | `claude-opus-4-6` | Claude deep reasoning |
 | anthropic | `claude-sonnet-4-6` | General Claude work with a lower cost |
-| openai | `gpt-5.4` | GPT-5.4 (requires Codex plugin) |
+| openai | `gpt-5.x` | Current GPT-5.x Codex generation (requires Codex plugin) |
 
 ---
 
@@ -242,9 +284,9 @@ Core principle from the pi-mono project: **"What's missing matters more than wha
 
 | Task Type | Claude Code | Codex | OpenCode |
 |---------|-------------|-------|----------|
-| **Translation / format conversion** | Sonnet 4.6 | gpt-5.2 + low | glm-5 / grok-4-1-fast-non-reasoning |
-| **Regular development** | Sonnet 4.6 | gpt-5.2 + medium | glm-5 / grok-4.20-non-reasoning |
-| **Deep reasoning / refactoring** | Opus 4.6 | gpt-5.2 + high | grok-4.20-reasoning / claude-opus-4-6 |
+| **Translation / format conversion** | Sonnet 4.6 | GPT-5.x Codex + low | glm-5 / grok-4-1-fast-non-reasoning |
+| **Regular development** | Sonnet 4.6 | GPT-5.x Codex + medium | glm-5 / grok-4.20-non-reasoning |
+| **Deep reasoning / refactoring** | Opus 4.6 | GPT-5.x Codex + high | grok-4.20-reasoning / claude-opus-4-6 |
 
 ---
 
