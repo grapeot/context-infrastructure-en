@@ -47,7 +47,7 @@ For a high-value topic with substantial judgment uncertainty, follow the [Parall
 
 - **Evidence and mechanism reader**: derives defensible mechanism claims from the strongest evidence and identifies attribution or scope overreach.
 - **Continuity and novelty reader**: compares Axioms, earlier writing, and correction history to find a judgment the author has not already published.
-- **Unfamiliar-reader and antithesis reader**: AGY CLI with `Gemini 3.5 Flash (High)`. Put the complete task in `agy_reader_prompt.md`, use a fresh AGY conversation, explain why a reader would care, propose the strongest alternative explanation, and test whether each candidate merely restates industry consensus. Store result, stdout, stderr, and events separately.
+- **Unfamiliar-reader and antithesis reader**: AGY CLI with `gemini-3.6-flash-high`. Put the complete task in `agy_reader_prompt.md`, use a fresh AGY conversation, explain why a reader would care, propose the strongest alternative explanation, and test whether each candidate merely restates industry consensus. Store result, stdout, stderr, and events separately.
 
 Each reader writes two to four candidates. Every candidate includes: Thesis, Reader Delta, Reasoning Chain, Strongest Evidence, Strongest Counterargument, Scope and Falsifier, Relationship to Prior Writing, and Whether to Write Now. A reader may return no qualifying thesis; never manufacture candidates to fill a quota.
 

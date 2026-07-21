@@ -88,9 +88,9 @@ Sonnet 4.6 is the default cost-effective choice; use Opus 4.6 when the task need
 
 Use the standalone `agy` command for Antigravity automation, not `agy-ide chat`. See [Antigravity CLI File-Based Invocation](./antigravity_cli.md) for installation, authentication, privacy boundaries, and the complete execution contract.
 
-Core rules: persist the prompt, result, stdout, stderr, and event log as separate local-only files under a git-ignored `tmp/`; use `Gemini 3.5 Flash (High)` by default; pair `--dangerously-skip-permissions` with `--sandbox` only in a minimal trusted scratch workspace; set `--print-timeout 10m` and an outer process timeout of about 610 seconds.
+Core rules: persist the prompt, result, stdout, stderr, and event log as separate local-only files under a git-ignored `tmp/`; use `gemini-3.6-flash-high` by default; pair `--dangerously-skip-permissions` with `--sandbox` only in a minimal trusted scratch workspace; set `--print-timeout 10m` and an outer process timeout of about 610 seconds.
 
-AGY 1.1.4 uses the top-level `agy --print` headless interface and has no `agy run`, `login`, or JSON event stream. It reuses the Google sign-in from the Antigravity App or IDE through the system keyring. Version 1.1.4 also makes headless runs honor persisted `settings.json` policies, which must be reviewed before execution. A successful run requires exit code 0, a non-empty result file, satisfied hard constraints, and no unhandled stderr error.
+AGY 1.1.5 uses the top-level `agy --print` headless interface and has no `agy run`, `login`, or JSON event stream. It reuses the Google sign-in from the Antigravity App or IDE through the system keyring. Version 1.1.4 introduced persisted `settings.json` policy inheritance for headless runs, which remains applicable and must be reviewed before execution. A successful run requires exit code 0, a non-empty result file, satisfied hard constraints, and no unhandled stderr error.
 
 Use a fresh AGY conversation for every independent writing or review stage. Do not pass `--continue` or `--conversation` between IC-1, IC-2, and IC-3.
 
