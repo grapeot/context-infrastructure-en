@@ -45,7 +45,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 Operational manuals for calling external systems or tools.
 
 - [AI CLI Agent Practical Guide](./ai_agent_cli_guide.md) ✅ — CLI Agent design principles, tool comparison (Claude Code / Codex / OpenCode / Antigravity), file response patterns, and AI calling AI
-- [Antigravity CLI File-Based Invocation](./antigravity_cli.md) ✅ — Use `agy --print` to run a Gemini agent; covers first-run installation, keyring/App authentication, sandbox boundaries, timeouts, file-based results, and run-record acceptance checks
+- [Antigravity CLI File-Based Invocation](./antigravity_cli.md) ✅ — Use `agy --print` to run a Gemini agent; covers installation, keyring/App authentication, sandbox boundaries, file-based artifacts, two independent external-writing candidates, three Main Agent verdicts, one fresh retry, and logged completion edits
 - [Send Email Skill](./send_email.md) ⚙️ — Send email notifications via Gmail; requires App Password configuration
 - [Share Report to Web](./share_report.md) ⚙️ — Convert MD reports to HTML and publish to your own server; returns URL
 - [Google Docs Operations](./google_docs.md) ⚙️ — CLI tool: publish Markdown, create/search/modify/share documents
@@ -67,8 +67,7 @@ Complete workflows for specific tasks.
   - Judgment criteria: the task hits at least 2 of: broad information surface, independent read tasks, independent judgment, high-value uncertainty, main thread needs to retain integration capability
   - Core parameters: parallelism ≤5, research overlap 30-50%, code overlap 0-20%
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
-- [External-Facing Thesis Mining](./workflow_external_thesis_mining.md) ✅ — The judgment layer between research and drafting; combines Axioms, the Thesis Catalog, historical material, independent candidates, an AGY reader, and fresh critique to return `PROCEED` or `DO_NOT_WRITE_YET`
-- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn material that passed the thesis gate into an external-facing analysis; the root file declares the non-overridable contract and phase map, then loads four stage references. IC-3 supplies 100% of final prose, the main thread performs read-only acceptance, and the archive is byte-for-byte identical to the accepted AGY candidate
+- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn verified research into an external-facing analysis through five rounds: Main Agent source of truth, two independent AGY candidates, Main Agent cold-read acceptance, one optional fresh prose retry, and logged surgical completion
 - [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Core principle is low decision friction: conclusions first, skimmable, inline evidence, easy navigation and verification, use diagrams when helpful to reduce cognitive load.
 - [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data
   - Applicable to: group chats, Slack, Discord, email, podcast transcripts, and any conversation data
@@ -90,7 +89,7 @@ Complete workflows for specific tasks.
 
 General best practices and lessons learned.
 
-- [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md) ✅ — Word-choice correction, metaphor restrictions, and long-form prose guidance for external articles and blog posts
+- [External Prose Diagnosis and Voice Contract Guide](./bestpractice_external_prose.md) ✅ — Manager-only guide for diagnosing textbook voice, performative casualness, and cognitive load, then distilling a roughly one-page article-specific `voice_contract.md`; do not pass the complete guide to a writer
 - [Analytical Perspectives for External Articles (Thesis Catalog)](./reference_writing_thesis_catalog.md) ✅ — L1-L8 analytical perspectives and related axiom mappings
 - [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md) ✅ — Adaptive HTML cards, theme variables, dark-mode compatibility, and visual component rules for internal memos, RFCs, and weekly reports
 - [Core AI Programming Methodology](./bestpractice_ai_programming_mindset.md) ✅ — 70% problem, success criteria, verifiability

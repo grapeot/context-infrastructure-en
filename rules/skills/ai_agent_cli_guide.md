@@ -92,7 +92,7 @@ Core rules: persist the prompt, result, stdout, stderr, and event log as separat
 
 AGY 1.1.5 uses the top-level `agy --print` headless interface and has no `agy run`, `login`, or JSON event stream. It reuses the Google sign-in from the Antigravity App or IDE through the system keyring. Version 1.1.4 introduced persisted `settings.json` policy inheritance for headless runs, which remains applicable and must be reviewed before execution. A successful run requires exit code 0, a non-empty result file, satisfied hard constraints, and no unhandled stderr error.
 
-Use a fresh AGY conversation for every independent writing or review stage. Do not pass `--continue` or `--conversation` between IC-1, IC-2, and IC-3.
+Use a fresh AGY conversation for each independent candidate and for the single optional prose retry. Do not pass `--continue` or `--conversation` between external-writing calls.
 
 ---
 
