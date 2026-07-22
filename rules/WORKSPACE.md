@@ -32,3 +32,4 @@ Goal: let the AI know "where to find / put what" in every session. **Check here 
 
 <!-- As your project grows, add active project quick-routes here -->
 <!-- Format: - `project-name` → `adhoc_jobs/project_name/` (description) -->
+<!-- Example: - `weather monitor` / `weather_monitor` → `adhoc_jobs/weather_monitor/` (home weather-data collection and alerts) -->

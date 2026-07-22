@@ -201,6 +201,7 @@ Recommended order:
 3. Write `prd.md` / `rfc.md` / `test.md` first
 4. Then migrate code into `src/`, put executable entrypoints into `scripts/`
 5. Finally supplement `working.md`
+6. Register the new project's quick-route in `rules/WORKSPACE.md`. Include the names readers will use, the project path, and one-line purpose, for example: `weather monitor` / `weather_monitor` → `adhoc_jobs/weather_monitor/` (home weather-data collection and alerts).
 
 Don't restructure code and improvise the directory layout at the same time. Build the skeleton first; subsequent changes will be more stable.
 
