@@ -109,54 +109,59 @@ A run is complete only when all checks pass:
 
 A timeout or any missing or empty result file is a failed run. Never substitute a stdout summary for the requested artifacts.
 
-## Writing Task Requirements
+## External-Writing Task Packet
 
-The task file must identify the brief, draft, and prose rules that AGY must read in full; one result path or an enumerated bounded set of result paths; the prohibition on editing files outside that list; and every thesis, fact, number, URL, image, H2 order, or term that must remain unchanged.
+For external writing, AGY does not read the complete workflow, `COMMUNICATION.md`, or `bestpractice_external_prose.md`. The Main Agent first establishes the article's source of truth and compresses the requirements into a small writer packet. AGY then performs complete drafting only.
 
-Include an immutable-term list for product names, model names, API names, code identifiers, easily mistranslated terms, and labels that must be preserved verbatim. Use normal paragraphs in prose output. Short sentences are a tendency, not a reason to put every sentence on a separate line.
-
-A minimal task file template:
+A Round 2 candidate task file includes at least:
 
 ```markdown
 # Task
 
 Read these files completely:
-1. `/absolute/path/to/writing_brief.md`
-2. `/absolute/path/to/source_draft.md`
-3. `/absolute/path/to/COMMUNICATION.md`
-4. `/absolute/path/to/bestpractice_external_prose.md`
+1. `/absolute/path/to/source_contract.md`
+2. `/absolute/path/to/writing_brief.md`
+3. `/absolute/path/to/voice_contract.md`
+4. `/absolute/path/to/article_source.md`
 
 Write the complete result to:
 `/absolute/path/to/result.md`
 
 Do not modify any other file.
 
-## Hard invariants
+## Task
 
-- Preserve the thesis, facts, numbers, URLs, image references, and H2 order.
-- Preserve product names and project-specific terms exactly as listed below.
-- Do not translate identifiers such as model names, API names, or code symbols.
+- Write one complete external-facing article from a blank page.
+- Use only facts, scenes, causal claims, and boundaries present in `source_contract.md` and `article_source.md`.
+- Preserve the thesis, claim strength, numbers, URLs, image references, and immutable terms.
+- Follow `voice_contract.md`. Do not output an audit, explanation, invariant count, or PASS statement.
 - Use normal paragraphs. Do not put every sentence on its own line.
-- Short sentences are a tendency, not a reason to create telegraph prose.
-- Read the output once after writing and verify every invariant.
 ```
 
-The writing brief should provide an "immutable term list" of product names, model names, easily mistranslated terms, and labels that must be preserved verbatim. In practice AGY will proactively translate terms such as `Oracle`, `reset card`, `system of record`; without a term list, factual wording can drift.
+`source_contract.md` should include an immutable-term list for product names, model names, API names, code identifiers, easily mistranslated terms, and labels that must remain verbatim. In practice, AGY may proactively translate terms such as `Oracle`, `reset card`, or `system of record`; without this list, factual wording can drift.
 
-## Fresh AGY Conversations
+## Fresh Context, Parallel Candidates, and One Retry
 
-Each `agy --print` call without `--continue` or `--conversation` creates a fresh AGY conversation. Run IC-1, IC-2, and IC-3 as separate calls. Store every prompt, draft, calibration artifact, review report, and runtime log under the gitignored `tmp/<session_slug>/` directory:
+Each `agy --print` call without `--continue` or `--conversation` creates a fresh conversation. The external-writing workflow uses two kinds of AGY calls:
 
-- IC-1 reads only the brief and writes the structural draft.
-- IC-2 reads the brief, structural draft, and same-channel prose calibration, then performs a complete rewrite from a blank page. The prompt must state that only the structural draft's claims, evidence, URLs, numbers, and H2 order are inherited; original sentences and paragraph entries are not. Rewrite per the brief's voice route. The goal is "a person who understands the technology naturally introduces their discovery to a smart friend," while avoiding both textbook voice and performative colloquialism.
-- IC-3 reads the brief, IC-2 deliverable, calibration material, prose rules (with the positive sample and both negative extremes), then first judges the whole-article voice. If the opening, multiple H2 entries, and the ending still read like a lecture, the whole prose must be rewritten, not just word-swapped. Then check whether familiarity was added by introducing metaphors, slang, absolute conclusions, or new facts not in the source pack. Output a complete `article_final_vN.md` candidate and `prose_qa_vN.md`.
-- IC-3 is the external-facing workflow's sole final prose authority. The main thread has read-only audit rights and must not modify any character. Factual, naming, numeric, URL, path, Markdown, or prose issues go into `content_audit_vN.md`; a fresh AGY conversation then writes the next complete candidate from a blank page. The final archive must be byte-for-byte identical to the accepted AGY candidate. See `workflow_external_writing.md` for convergence limits and gates.
+- **Round 2 parallel candidates**: By default, start two fresh conversations from the same task packet. They independently write `candidate_a.md` and `candidate_b.md`; neither reads nor revises the other. The two calls may run in parallel.
+- **Round 4 optional revision**: Start one fresh conversation only when the Main Agent's cold-read acceptance returns `RETRY_PROSE`. It reads the selected candidate, original task packet, and a `revision_delta.md` containing no more than three to five blockers, then writes one complete revision.
 
-Give every stage separate prompt, result, stdout, stderr, and events files. File names should include the stage, for example:
+The AGY writer does not write QA and is not the `PASS` authority. The Main Agent reads the candidate body, checks numbers, URLs, images, and structure deterministically, then judges factual fidelity and whole-article voice against the source contract. Round 3 records exactly one verdict in `acceptance_audit.md`:
 
-- `agy_ic1_prompt.md` / `agy_ic1_events.log`
-- `agy_ic2_prompt.md` / `agy_ic2_events.log`
-- `agy_ic3_prompt.md` / `agy_ic3_events.log`
+- `ACCEPT`: Content and prose may proceed to surgical completion.
+- `RETRY_PROSE`: Thesis and structure are sound, but one complete prose rewrite can address specific blockers.
+- `RETURN_TO_ROUND_1`: Thesis, evidence, structure, or the source contract must be repaired upstream.
+
+Round 4 is allowed at most once. If a non-surgical blocker remains, return to the Main Agent's upstream artifacts or report the failure; do not start another AGY conversation automatically.
+
+After acceptance, the Main Agent may perform logged surgical completion for typos, punctuation, Markdown, proper nouns, and local single-sentence corrections uniquely determined by `source_contract.md`. Record every change in `completion_edits.md`. This contract does not permit changing the thesis, reordering sections, splicing candidates, or rewriting whole paragraphs without returning to acceptance.
+
+Give every call separate prompt, result, stdout, stderr, and events files. Include the purpose in each filename, for example:
+
+- `agy_candidate_a_prompt.md` / `agy_candidate_a_events.log`
+- `agy_candidate_b_prompt.md` / `agy_candidate_b_events.log`
+- `agy_revision_prompt.md` / `agy_revision_events.log`
 
 ## Limitations
 
@@ -176,7 +181,7 @@ On 2026-07-14, a smoke test was completed on macOS arm64 with AGY 1.1.2:
 - The event log contained timestamped auth, model request, file tool, and shutdown records.
 - Using `Gemini 3.5 Flash (High)`, a ~2,000-word memo rewrite completed while preserving all 17 URLs.
 - The first rewrite exposed technical-term mistranslation, line-by-line wrapping, and first-person drift; these improved markedly after adding an immutable term list and a normal-paragraph constraint.
-- A fresh AGY conversation ran an independent prose QA, preserving the Top 5 ordering, four-paragraph structure, two deep-dive candidates, and all 17 URLs, while correcting exaggerated wording and term drift. Therefore external-facing deliverables still default to keeping an independent IC-3; a single AGY rewrite cannot be treated as a ready-to-ship draft.
+- A fresh AGY conversation also completed an independent prose-QA experiment while preserving the Top 5 ordering, four-paragraph structure, two deep-dive candidates, and all 17 URLs. Later writing runs showed that writer self-review is not a reliable `PASS` decision. The current workflow therefore keeps acceptance with the Main Agent and permits at most one fresh prose retry.
 
 On 2026-07-20, the CLI interface and headless path were rechecked on macOS arm64 with AGY 1.1.4:
 

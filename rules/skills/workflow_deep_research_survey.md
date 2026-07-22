@@ -6,7 +6,7 @@
 - **Applicable Scenarios**: When deep, comprehensive, verifiable third-party research on a topic is needed
 - **Output Location**: `contexts/survey_sessions/`
 - **Created**: 2026-02-19
-- **Last Updated**: 2026-07-14
+- **Last Updated**: 2026-07-22
 
 ## Core Principles
 
@@ -196,7 +196,7 @@ Brainstorming is not title polishing or generic multi-agent restatement. It must
 
 After Phase 1-3 research is complete, enter the writing phase. Choose the path based on target output type:
 
-**External-facing analysis article** → First run [External-Facing Thesis Mining](./workflow_external_thesis_mining.md). Only a `PROCEED` verdict may enter the [External Writing Workflow](./workflow_external_writing.md). That workflow uses the [Antigravity CLI](./antigravity_cli.md) for AGY IC-1 structural drafting, a fresh AGY IC-2 low-cognitive-burden rewrite, and a fresh AGY IC-3 independent prose QA. The main thread must not bypass the writing agent or manually edit prose after IC-3.
+**External-facing analysis article** -> Enter the [External Writing Workflow](./workflow_external_writing.md). Start with its thesis-and-outline selection and article-warrant check. The Main Agent then establishes the source contract, writing brief, voice contract, and complete content draft. Use the [Antigravity CLI](./antigravity_cli.md) to generate independent prose candidates in parallel. The Main Agent performs cold-read acceptance, permits at most one fresh AGY prose retry when the verdict is `RETRY_PROSE`, and finishes with logged surgical edits.
 
 **Internal memo** (for yourself or collaborators sharing context) → Load the [Internal Writing Workflow](./workflow_internal_writing.md). First surface the conclusions and basis that most affect decisions, and clearly note unresolved points and next steps. Read [`COMMUNICATION.md`](../COMMUNICATION.md) before writing.
 

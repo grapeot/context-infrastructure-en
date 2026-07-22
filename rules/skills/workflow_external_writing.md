@@ -1,128 +1,235 @@
 # External Writing and Drafting Workflow
 
-> [!IMPORTANT]
-> **Before taking any writing or drafting action, the agent must read this document completely to the end of file (EOF).**
-> The global permission boundaries and the non-overridable execution contract are explicitly defined on the first screen. The subsequent stage-specific reference guides serve only to progressively disclose implementation details and cannot override or modify the constraints in this chapter.
-
 ## Metadata
 
 - **Type**: Workflow
-- **Applicability**: Writing verified research materials into analytical articles, public investigation reports, client content, or external course materials for readers with zero shared context.
-- **Prerequisites**: Output from the research phase, or an equivalent source pack (Source Pack).
-- **Applicable Roles**: Manager (manager/auditor), IC-1/IC-2/IC-3 (independent session writers for each stage).
-- **Default Output**: `contexts/survey_sessions/`; write to the target project's blog directory and format only if the user explicitly requests a blog post.
-- **Last Updated**: 2026-07-20
+- **Use when**: Turning verified research into an external-facing analytical article, public survey report, course asset, or client deliverable.
+- **Prerequisite**: Phases 1-3 of `workflow_deep_research_survey.md`, or an equivalent verified factual record.
+- **Last updated**: 2026-07-22
 
-## 0. Non-Overridable Execution Contract
+## 1. Core Model
 
-This section defines the highest-priority execution contract for this workflow. If any local instructions, historical versions, or stage-specific guidelines conflict with this section, this section shall prevail.
+External writing contains three different kinds of work that should not share one generation context:
 
-1. **IC-3 is the sole final prose authority.** The final title, body, punctuation, link anchor text, image references, and image alt text must come entirely from an accepted, complete Antigravity output. No other role or stage has the authority to rewrite the text.
-2. **The Manager has zero modification rights over the final text.** The Manager is responsible for research, drafting the writing brief, generating images, performing read-only audits, copying files, and running validation, but must never modify a single character in the IC-3 candidate text. Spelling, facts, links, or formatting issues must not be directly patched in the candidate text by the Manager. Any manual edit by the Manager violates this execution contract.
-3. **Issues must be resolved in a closed loop through complete rewriting.** When the Manager identifies an issue, they are only responsible for writing a read-only audit report and starting a completely new Antigravity session. The new session must read the writing brief, the original source pack, the previous complete candidate text, and the latest audit report, and write a complete new candidate text from a blank page. Splicing different versions or applying local patches is prohibited.
-4. **The image contract is frozen before IC-3.** The final image filenames, relative paths, placement in the text, and the semantic intent of each image must be locked in the writing brief. IC-3 is responsible for writing the final references into the text. After this point, the Manager can only copy the image files and must never modify the Markdown paths in the body.
-5. **Delivery is blocked until all issues are resolved.** A candidate text is allowed to be archived only when the comprehension gate, cognitive comfort gate, factual boundaries, structural continuity, image integration, and deterministic checks are all passed, and there are no blocking issues in the self-QA report. A maximum of three automatic revision rounds is allowed per task. If issues persist after three rounds, all intermediate artifacts must be preserved, and the specific blockers must be reported to the user.
-6. **Archiving requires direct copy and verification.** The final delivered archive file must be byte-for-byte identical to the accepted candidate text. There is zero tolerance for any modifications, and no word-level or mechanical exceptions are permitted (verified using the `cmp` command or by comparing SHA-256 hashes).
-7. **Separation of writing and publication.** The endpoint of this workflow is the local deliverable file. Any operations such as blog deployment, email distribution, or social media posting require explicit user authorization.
-8. **Exception limits for short articles or quick drafts.** Articles shorter than 1,000 words or quick drafts explicitly requested by the user may skip the IC-2 stage, but they must never skip the IC-3 stage, the Manager's read-only acceptance, or the final byte-for-byte comparison.
+1. **Editorial judgment**: why the article deserves to exist, what belief it should change, and in what order the evidence should arrive.
+2. **Complete drafting**: turning locked content into natural, coherent prose.
+3. **Acceptance**: checking factual fidelity, constraints, reader path, and whole-article voice.
 
-## 1. Routing and Applicability
+The Main Agent is the editor, factual owner, and sole acceptance authority. An Antigravity writer produces a complete candidate; it does not audit its own article and cannot declare `PASS`. Deterministic checks cover numbers, URLs, images, and formatting. The Main Agent judges meaning, structure, cognitive comfort, and voice.
 
-This workflow is used for writing finished products aimed at external readers. For internal documents read by the user, internal collaborators, or future agents, use the [Internal Writing Workflow](./workflow_internal_writing.md).
+Do not ask a writer to read this workflow, all of `bestpractice_external_prose.md`, `COMMUNICATION.md`, or a large archive of prior feedback. The Main Agent must compress the requirements that matter for the current article into a short task packet. Long rule sets are Manager references, not writer context.
 
-External articles must ensure that readers with zero shared context obtain sufficient background when first encountering the company, product, events, or technical terms. Zero context means the reader's understanding does not rely on implicit premises provided by the current conversation, source pack, or the author's previous articles.
+## 2. Output Routing and Publication Boundary
 
-This workflow makes no prior assumptions about the reader. The reader is treated as an external entity with basic general knowledge but zero prior knowledge of the current project, technical details, internal decisions, or organizational structure. Therefore, clarity of writing and completeness of explanation are the highest priorities.
+- If the user requests an external-facing deliverable without naming a channel, use the workspace's survey-report location.
+- If the user explicitly requests a blog post, use the target project's documented blog location and format. Do not assume a private or machine-specific directory.
+- The completed local Markdown file is the endpoint of this workflow. Publishing, scheduling, emailing, or posting to any external channel requires separate explicit authorization.
+- Images are part of the deliverable and follow Section 10.
 
-If a reader must understand prior background or specific editorial discussions to comprehend a passage, then that passage does not meet the requirements of external writing. After evaluating the nature of the article, the Manager should route articles with external audiences to this workflow and load the reference for each active stage. Short, simple articles may skip IC-2, but the remaining gates and byte-comparison contract still apply.
+## 3. Acceptance Standard
 
-## 2. Thesis Mining Gate
+An article passes only when all of these conditions hold:
 
-Before entering the formal writing design (the Reasoning stage), the Thesis Mining Gate must be passed to ensure the article has a solid core argument:
+- A smart reader with no shared context can understand it from the first paragraph without searching later sections for prerequisites.
+- The first 25% establishes the subject, current trigger, core judgment, and the value of reading further.
+- The article has one thesis. Every section advances that thesis rather than mirroring the categories in the research notes.
+- Concepts arrive through actions, conflicts, and consequences. The article does not repeatedly follow a lecture pattern of definition, mechanism, and abstract summary.
+- The reader is not asked to hold several ungrounded taxonomies or comparison axes at once. When three or more parallel items genuinely matter, provide a local map first.
+- Adjacent H2 sections connect through the same object, action, limitation, or consequence. The transition still makes sense with the headings hidden.
+- Numbers, URLs, attributions, qualifications, images, and proper nouns match the source of truth. The prose introduces no invented scenes, causes, or user reactions.
+- The voice sounds like someone familiar with the problem sharing a verified finding. It is neither ceremonious nor artificially casual through slang, exaggerated metaphors, or copywriting tricks.
 
-- If the user has not provided a clear core thesis, or the existing thesis has not survived sufficient evidence and adversarial stress testing, [External-Facing Thesis Mining](./workflow_external_thesis_mining.md) must be run first.
-- It reads the relevant inputs and generates a temporary decision file `tmp/<session_slug>/thesis_decision.md`.
-- Creation of the design brief (`writing_brief.md`) is permitted only when its verdict is `PROCEED`.
-- A verdict of `DO_NOT_WRITE_YET` indicates that the current materials or arguments cannot support an external article. In this case, writing must stop or missing evidence must be gathered; fabricating arguments just to complete the task is strictly prohibited.
-- If the user has provided a clear thesis, preserve their writing direction, but still stress-test it against evidence, boundaries, the strongest counterargument, continuity with established views, and the reader delta (Reader Delta). The test results must be recorded in the brief.
+A writer's self-assessment cannot compensate for a failed condition.
 
-## 3. Phases and Reading Order Map
+## 4. Choose the Right Article Before Drafting
 
-Throughout the writing lifecycle, all participating parties must advance tasks in the order specified in the map below and ensure that the current exit gates are fully met before entering the next phase:
+### 4.1 Thesis-and-outline options
 
-| Phase | Executor | Required Reading | Core Deliverable | Exit Gate |
-| :--- | :--- | :--- | :--- | :--- |
-| **Preflight** | Manager | This document, `COMMUNICATION.md`, `bestpractice_external_prose.md` | Routing and task boundaries | Confirm external attributes, output location, and publication limits to ensure the process stays within boundaries. |
-| **Thesis Mining (As Needed)** | Manager | [Thesis Mining](./workflow_external_thesis_mining.md) | `thesis_decision.md` | When mining or stress-testing a thesis, the verdict must be `PROCEED`. If `DO_NOT_WRITE_YET`, abort or gather missing evidence. |
-| **Reasoning** | Manager | [Structure Guide](./reference_external_reasoning_structure.md), Source Pack, previous articles | Writing brief, style calibration | Determine core thesis, thesis dependency graph, concept introduction plan, and image contract. |
-| **IC-1** | Fresh AGY Session | Writing brief, Source Pack, [Antigravity CLI](./antigravity_cli.md) | Structural draft | Complete structure and evidence; do not pursue final voice and micro-sentence styling. |
-| **IC-2** | Fresh AGY Session | Writing brief, structural draft, calibration set, [Voice Guide](./reference_external_voice_rewrite.md), [Antigravity CLI](./antigravity_cli.md) | Rewrite draft | Natural introduction of concepts; pass cognitive comfort and chapter handoff checks. |
-| **Image Freeze** | Manager | Writing brief, structural draft, [Delivery Guide](./reference_external_delivery_checks.md) | Final image files | Freeze image filenames, paths, placement, and intent to lock the visual contract. |
-| **IC-3** | Fresh AGY Session | Writing brief, Source Pack, rewrite draft, calibration set, frozen image contract, [QA Guide](./reference_external_prose_qa.md), [Antigravity CLI](./antigravity_cli.md) | Complete candidate text, self-QA report | Pass both comprehension and cognitive comfort gates; no blocking issues in the self-QA report. |
-| **Acceptance** | Manager | Writing brief, Source Pack, candidate text, self-QA report, [Delivery Guide](./reference_external_delivery_checks.md) | Audit report or approval decision | Pass all read-only regression checks and fact-checking; audit status is PASS. |
-| **Delivery** | Manager | Accepted candidate text | Final file and images | Complete file copy and byte-level comparison; trigger final rendering on the client via the `read` tool. |
+When the user has not fixed the main line, the Main Agent should develop about three genuinely different options before drafting. They cannot be title paraphrases. Choosing another option should change the article's protagonist, evidence order, excluded material, and closing judgment.
 
-## 4. Core Artifacts List
+Useful distances include, without becoming templates:
 
-All intermediate artifacts must be stored in the temporary session directory `tmp/<session_slug>/` and archived with explicit version numbers to ensure the revision history is fully traceable and easily referenced by new writing sessions:
+- **Object explanation**: make the project, paper, or event itself legible.
+- **Landscape or belief change**: use the object to revise how readers understand a persistent problem.
+- **Decision framework**: use the object as a worked example that improves future judgment.
 
-- `source_pack.md`: Records facts, original links, citation boundaries, and immutable proper nouns. It acts as the authoritative factual boundary for the draft; no new facts outside its scope may be introduced in the body.
-- `writing_brief.md`: Defines the reader's start state, target belief change, causal model, evidence roles, concept introduction plan, and the image contract. This is the primary brief guiding all subsequent writing stages.
-- `style_calibration.md`: Contains 3 to 5 positive channel-specific samples, inheritable voice traits, and negative examples of both textbook and performative styles. It ensures the article's voice aligns with the target channel.
-- `article_structural.md`: The structural draft generated by IC-1, marking structural metadata and evidence positions to lock the logical framework.
-- `article.md`: The draft rewritten by IC-2, resolving terminology introduction issues and cognitive coherence.
-- `article_final_vN.md`: The complete candidate text produced by IC-3, serving as the sole candidate for delivery.
-- `prose_qa_vN.md`: The self-QA report submitted by IC-3, documenting the checklist results for all gates and review dimensions.
-- `content_audit_vN.md`: The read-only audit report written by the Manager, highlighting problems and specifying permitted directions for revisions.
+For each option, record:
 
-## 5. Unified Go/No-go Gates
+```markdown
+## Option name
 
-A candidate text is permitted for delivery only when it fully satisfies the following conditions. The Manager must verify each gate systematically during the read-only audit, leaving no room for ambiguity:
+One-sentence thesis: What judgment should change after reading?
+Why now: What event, evidence, or persistent confusion creates the warrant?
+Target reader: What do they already know, and why would they continue?
+Article protagonist: The object, the landscape, or the reader's decision?
+Proof route: Four to six evidentiary steps, not a source inventory.
+Must explain deeply: What mechanism or comparison is indispensable?
+Deliberately omit: What useful research would dilute the takeaway?
+Largest risk: Why might this feel flat, old, empty, too specialized, or under-supported?
+Recommendation: Which option does the Main Agent recommend, and why?
+```
 
-1. **First-Screen Contract**: The title and first screen immediately clarify the subject, the core judgment, and the incremental value of reading further.
-2. **Core Thesis**: The article contains a single, specific, and disputable core thesis, presented clearly within the first 25% of the content.
-3. **Concept Introduction**: Every concept has sufficient context before its first mention and does not rely on any implicit reader background.
-4. **Dependency Order**: Every section advances based on the reader's questions, with dependencies introduced before conclusions. Even with the headings hidden, adjacent sections must transition naturally.
-5. **Cognitive Load**: The reader is not forced to hold multiple ungrounded classifications in working memory. For three or more real alternatives, a local map outlining the total count, shared criteria, and mutual relationships must be provided.
-6. **Voice Balance**: The prose style sits between textbook lecture and performative colloquialism, and the analytical framework is kept out of the reader-facing body text.
-7. **Factual Boundaries**: All facts, figures, attributions, links, and argument strengths remain strictly within the boundaries of the source pack.
-8. **Visuals Compliance**: Visuals effectively reduce cognitive load, and their references, format, and dimensions comply with delivery specifications.
-9. **QA Verdict**: The self-QA report indicates that both the comprehension gate and cognitive comfort gate have passed, and no blocking issues are present.
-10. **Byte Identity**: The final archived file is byte-for-byte identical to the accepted candidate text.
+When the user has already fixed the main line, do not invent three alternatives for process compliance. Restate it as the reader takeaway, proof route, and depth boundary; surface likely misunderstandings, then continue.
 
-## 6. Failure and Rework State Machine
+### 4.2 Article warrant and reasoning architecture
 
-IC-3 has the authority to polish the prose without changing the thesis, causal model, factual boundaries, or section dependencies. If IC-3 determines that new facts must be added, the core thesis must be changed, major sections reordered, or the evidence chain rebuilt, it must not execute these changes directly. Instead, it must mark a `BLOCKER` in the self-QA report, specifying the exact location and the dependency gap.
+Before Round 1 is complete, the Main Agent must be able to answer:
 
-When the Manager identifies an issue, they must document it in a read-only audit report, identifying the original sentence, the failed gate, and the permitted direction of revision. The Manager must not write the corrected alternative paragraph in the audit report. Subsequently, a new AGY session must be started to generate a new candidate text from scratch.
+- **Reader start state**: How does the reader currently understand the subject, and which prerequisite is missing?
+- **Target belief change**: Which judgment should move from A to B?
+- **Article warrant**: Why does this require an article rather than a short summary?
+- **Causal model**: How do three to seven directional claims support the thesis?
+- **Evidence roles**: Which claim does each core source prove, explain, or limit?
+- **Concrete carrier**: Which request, task, number, person, or business record can carry the argument?
+- **Answer timing**: When does the reader encounter the question, evidence, and complete answer? A real tension may remain open briefly, but the answer must be established within the first 25%.
 
-The state machine transitions are defined as follows:
-- If any gate fails, the Manager logs the audit report and starts the next round of IC-3.
-- If blocking issues persist at the third round, generation must stop immediately. All intermediate artifacts must be preserved, and the failure details must be reported to the user. This prevents the agent from entering an endless loop of mechanical self-repetition. The fourth round may start only after the user recalibrates the brief, adjusts the source pack, or provides new instructions.
-- If all gates pass and the audit report status is pass, archiving and delivery are permitted.
+An analytical tool does not automatically belong in the public thesis. Timelines, taxonomies, axes, and question sets may help discover the judgment. Keep them as private evidence organization unless readers need to learn the method itself.
 
-## 7. Micro-Language and Formatting Constraints
+## 5. Round 1: Main Agent Establishes the Source of Truth
 
-When writing any documents related to this workflow and reference guides, the following baseline constraints for English quality must be strictly followed:
-- **Active Voice Preference**: Wherever a verb can be changed to active voice while keeping the sentence natural, avoid passive constructions.
-- **Natural Sentence Rhythm**: Avoid stacking multiple actions or layering complex modifiers in a single sentence. Use short sentences to state core judgments and slightly longer sentences to connect cause, evidence, and constraints.
-- **Eliminate Subjective Appraisals**: Do not use subjective evaluation labels like "straightforward", "clear", or "insightful". Use objective facts, data, and boundaries instead.
-- **No Em Dashes**: Do not use em dashes ('—') for emotional pauses or transitions in the body text. Use commas, parentheses, or semicolons instead.
-- **No Redundant Parentheticals**: Do not use redundant parenthetical explanations. Only use parentheses to enclose technical terminology when first introduced.
-- **Terminology Consistency**: Capitalization, spelling, and spacing of proper nouns (product names, API identifiers, model names) must match the source pack exactly.
+The Main Agent completes the research, editorial choice, and factual draft. Round 1 creates four artifacts in the session's temporary working directory.
 
-## 8. Reference Document Index
+### `source_contract.md`
 
-- [Reasoning, Brief, and Structure Guide](./reference_external_reasoning_structure.md)
-- [Voice Rewrite and Style Calibration Guide](./reference_external_voice_rewrite.md)
-- [Prose QA and Read-Only Acceptance Guide](./reference_external_prose_qa.md)
-- [Visuals, Verification, and Delivery Guide](./reference_external_delivery_checks.md)
-- [External Article Prose and Rhetoric Guide](./bestpractice_external_prose.md)
-- [Thesis Catalog](./reference_writing_thesis_catalog.md)
-- [Antigravity CLI File-Based Invocation](./antigravity_cli.md)
+This is the factual authority for every later writer. Include:
 
-## 9. Local Delivery Endpoint
+- Every claim permitted in the article and the source that supports it.
+- Exact numbers, dates, versions, URLs, image references, and immutable terms.
+- Attribution, measurement definitions, comparison baselines, and limits on extrapolation.
+- Unknowns that the writer must not fill in.
+- For any running example, which actions come from evidence and which may appear only as clearly hypothetical illustrations.
 
-The final Markdown files and images remain in the workspace. After the final write, the Manager must use the `read` tool to read the final Markdown file and trigger client rendering. The final response provides the file paths and any known residual risks. No publication action is authorized without explicit user approval.
+Do not provide a bare link list. State what each source supports.
 
-Before archiving, the Manager must verify that the content of the local delivery file is byte-for-byte identical to the accepted candidate text, and contains no internal debugging residue or incomplete placeholders.
+### `writing_brief.md`
+
+Include at least:
+
+- Reader start state, reader takeaway, exact thesis, and article warrant.
+- Article protagonist, current trigger, and first-screen promise.
+- Continuity with the author's prior judgments: whether current evidence fills, revises, or contradicts an earlier view, with relevant public URLs when available.
+- Claim dependencies, H2 order, and section handoffs.
+- Concrete carrier, material that requires depth, and material deliberately omitted.
+- Three to five title candidates from different angles, plus why the selected title accurately names both the subject and the article's increment.
+- What new evidence would weaken or overturn the thesis.
+
+### `voice_contract.md`
+
+Keep the writer-facing voice instructions to roughly one page and specific to this article:
+
+- Two or three sentences defining the desired narrative stance.
+- One or two user-approved positive excerpts of similar explanatory difficulty, with a note on what to learn from each.
+- Two or three likely failure excerpts from the current draft, with a direct diagnosis of what feels ceremonious, instructional, or performatively casual.
+- Boundaries for first person, questions, technical density, and local lists.
+- No more than eight high-impact voice constraints.
+
+Do not paste an entire published article, a universal banned-word list, this workflow, `COMMUNICATION.md`, or the full prose guide into the writer context. Use `bestpractice_external_prose.md` to produce this short contract.
+
+### `article_source.md`
+
+The Main Agent writes a complete, verifiable content draft with the correct thesis, facts, evidence order, H2 sections, links, and image positions. It does not need final prose, but it must be more than keywords or a claim outline. Complete concrete information reduces the writer's incentive to invent actions or causality.
+
+Before leaving Round 1, compare `article_source.md` against `source_contract.md`. Resolve factual gaps here instead of assigning research to a prose writer.
+
+## 6. Round 2: Two Independent Antigravity Candidates
+
+By default, start two fresh Antigravity conversations in parallel. Both receive the same task packet and independently write `candidate_a.md` and `candidate_b.md`. For a very short article or an explicit single-version request, one candidate is acceptable, but never generate B by asking it to revise A.
+
+Each writer reads only:
+
+1. `source_contract.md`
+2. `writing_brief.md`
+3. `voice_contract.md`
+4. `article_source.md`
+5. Its own short round prompt
+
+The writer returns the complete article only. It does not output an audit, explanation, invariant count, or `PASS` statement. Both candidates use the same facts and thesis; parallelism exists to obtain independent prose paths, not exaggerated style variants.
+
+The Round 2 prompt should say only what is necessary:
+
+- Draft from a blank page without adding facts, scenes, or causal claims outside `source_contract.md`.
+- Preserve the thesis, claim strength, numbers, URLs, image references, and immutable terms.
+- Paragraph entries, syntax, and H2 wording may change. If the supplied structure makes natural expression difficult, still produce the best complete candidate without discussing the problem outside the article.
+- Advance through the concrete carrier rather than teaching the rules by category.
+- Write only the article.
+
+Every call follows the file-based contract in `antigravity_cli.md`. Persist prompt, result, stdout, stderr, and events separately.
+
+## 7. Round 3: Main Agent Cold-Read Acceptance
+
+The Main Agent is the only `PASS` authority. Read each candidate body before reading its stdout; the writer provides no self-QA report.
+
+### 7.1 Deterministic checks first
+
+Use scripts or direct comparison for:
+
+- Numbers, dates, and versions.
+- URL targets and image paths.
+- Required and prohibited terms.
+- H2 count and any required order.
+- Markdown, word count, and output path.
+
+Do not substitute a model-written natural-language audit for these checks.
+
+### 7.2 Semantic acceptance second
+
+Compare candidates with `source_contract.md`, `writing_brief.md`, and the positive excerpts. Judge in this order:
+
+1. Does the candidate add an unsupported fact, action, cause, or absolute conclusion?
+2. Do the opening, first paragraph under each H2, and ending sound like a natural explanation, or do they announce a topic, define it, and summarize its significance?
+3. Can readers understand a concept's role and consequence when it first appears?
+4. Did analysis scaffolding, editorial feedback, or QA language leak into the article?
+5. Did the writer add decorative metaphors, slang, hypothetical failures, or unsupported detail to sound approachable?
+6. Do section handoffs and whole-article rhythm work?
+7. Does the title accurately state the subject and analytical increment, and does the article fulfill that promise?
+
+Choosing the better candidate does not authorize paragraph splicing. Write `acceptance_audit.md` with the selection, evidence, and exactly one verdict:
+
+- `ACCEPT`: Content and prose may proceed to Round 5.
+- `RETRY_PROSE`: Thesis and structure are sound, but one complete rewrite can address specific prose blockers. Proceed to Round 4.
+- `RETURN_TO_ROUND_1`: The problem lies in the thesis, evidence, structure, or source contract. The Main Agent must repair the upstream artifacts instead of labeling it a prose issue.
+
+## 8. Round 4: One Optional Fresh Antigravity Retry
+
+Run Round 4 only after a `RETRY_PROSE` verdict, and run it at most once. Use one fresh Antigravity conversation, never the candidate-generation conversation.
+
+The Main Agent writes `revision_delta.md` with only the three to five highest-impact blockers. Each item identifies the original location, why it fails, and the correct direction. Do not attach the complete prose taxonomy again.
+
+The Round 4 writer reads:
+
+1. The selected candidate
+2. `source_contract.md`
+3. `writing_brief.md`
+4. `voice_contract.md`
+5. `revision_delta.md`
+
+It returns one complete revised article and no QA commentary. The Main Agent repeats the deterministic and semantic acceptance from Round 3. If a non-surgical blocker remains, do not start another writer. Return to Round 1 or report that the article did not pass, avoiding an indefinite mutation loop.
+
+## 9. Round 5: Logged Surgical Completion by the Main Agent
+
+After acceptance, the Main Agent may directly fix:
+
+- Typos, missing words, punctuation, and unambiguous grammar errors.
+- Markdown, URLs, image paths, and alt text.
+- Mechanical misspellings of proper nouns.
+- Numbers, qualifications, or attributions with one uniquely correct form in `source_contract.md`.
+- A local single-sentence issue that does not change paragraph purpose or claim strength.
+
+Round 5 must not silently replace the thesis, reorder sections, splice candidates, or rewrite whole paragraphs without another acceptance cycle. Record every change in `completion_edits.md`. If a correction requires renewed judgment about structure or whole-article voice, Round 3 accepted the draft incorrectly; return to the appropriate earlier round.
+
+## 10. Images
+
+Images are a hard requirement for an external-facing deliverable and must reduce cognitive burden rather than decorate the page. An article shorter than 2,000 words needs at least one image. An article of 2,000 words or more needs two to three images.
+
+Every generated image in the final Markdown must come from the image generation or redrawing tool available in the current workspace. Compress final assets to JPG or WebP with a long edge no greater than 1024 pixels and a file size below 200 KB. For quantitative visuals, the Main Agent must first draw or calculate the data accurately with deterministic tools, then use the available image tool for redrawing. Every image needs a relative path and meaningful alt text.
+
+## 11. Final Verification and Delivery
+
+After the last edit, the Main Agent:
+
+1. Scans the final file for numbers, URLs, images, H2 sections, leaked scaffolding terms, and Markdown problems.
+2. Confirms that the archived deliverable equals the accepted candidate plus the changes recorded in `completion_edits.md`.
+3. Reads the final Markdown from the beginning with the available file-reading tool to trigger rendering and perform one last visual review.
+4. Reports the final path and any residual risk.
+
+If final verification finds a mechanical issue, repair it under Round 5 and reread the result. If it finds a non-surgical issue, do not deliver a failed article merely because the workflow reached its last step, and do not add more writers indefinitely. Return to Round 1 or report the blocker.
