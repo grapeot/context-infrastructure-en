@@ -43,9 +43,19 @@ A writer's self-assessment cannot compensate for a failed condition.
 
 ## 4. Choose the Right Article Before Drafting
 
-### 4.1 Thesis-and-outline options
+### 4.0 Extract the Framing Already Seeded in the Initial Ask
 
-When the user has not fixed the main line, the Main Agent should develop about three genuinely different options before drafting. They cannot be title paraphrases. Choosing another option should change the article's protagonist, evidence order, excluded material, and closing judgment.
+Before drafting or building options, the Main Agent first restates what already exists in the initial request. Users frequently seed a thesis, a protagonist, an oppositional structure, or a reader positioning in the very first sentence. Ignoring it and converging directly on a mechanism the Main Agent personally finds more elegant is the most common way this goes wrong. Handle it as one of three cases:
+
+- **Already locked**: Do not reinvent three options. Restate the seed as the reader takeaway, proof route, and depth boundary; surface likely misunderstandings, then continue.
+- **Seeded but not locked**: Still produce three options, but one of them must be a faithful execution of that seed; the other two are the Main Agent's alternative framings. The seed is not a default to be overturned — it is one option to place on the table alongside the rest.
+- **Genuinely open-ended**: The three options are free to diverge, but the Main Agent must still verify object attribution and load-bearing premises first.
+
+The gray zone between "seeded" and "locked" is a high-accident area historically. When in doubt, default to treating it as "seeded but not locked," and say that judgment out loud to the user.
+
+### 4.1 Thesis-and-Outline Options
+
+When the case falls into the second or third bucket above, the Main Agent should develop about three genuinely different options before drafting. They cannot be title paraphrases. Choosing another option should change the article's protagonist, evidence order, excluded material, and closing judgment.
 
 Useful distances include, without becoming templates:
 
@@ -69,9 +79,18 @@ Largest risk: Why might this feel flat, old, empty, too specialized, or under-su
 Recommendation: Which option does the Main Agent recommend, and why?
 ```
 
-When the user has already fixed the main line, do not invent three alternatives for process compliance. Restate it as the reader takeaway, proof route, and depth boundary; surface likely misunderstandings, then continue.
+**What counts as genuinely different**: rephrasing the same thesis as a question, a verdict, or a metaphor does not count as three options. Practical test: if the user picked another option, which material leaves the body, which evidence moves up, and what different verdict does the ending leave? If the answer isn't obvious, the options aren't different enough. The Main Agent may recommend one, but the reasoning must be grounded in this article's evidence and the calibration criteria below, not in "more depth" or "more shareable."
 
-### 4.2 Article warrant and reasoning architecture
+### 4.2 Six Calibration Criteria (Both the Yardstick for Options and the Article's Targets)
+
+1. **The object is downgraded to a case, but the altitude stays mid-level.** Carry a claim about the field through a concrete mechanism — not stuck at object-introduction, and not floating up into abstract economic or legal conclusions. *Ceiling test*: for every load-bearing noun in the thesis sentence, can you point at a concrete mechanism or number in the case and say "this is it"? A noun you can't point to is the abstraction to cut. *Floor test*: delete the project's name — does the article still help the reader understand some long-term problem? Both tests must pass.
+2. **Critical adjudication (a sharp verdict), not relay.** The article should correct the reader's most likely wrong default and render a verdict on whether something actually matters, treating the object's own headline framing as suspect by default. A useful gate: how is this judgment different from a three-year-old cliché? If you can't say, there's no informational increment. Critique stays positive in tone and on target — aimed at problem framing and evidence boundaries, never at the author's motive or competence — and a debunked thing still gets its due.
+3. **Minimize cognitive load.** The reader should spend mental budget judging the conclusion, not decoding omitted premises, stacked abstract nouns, dense number clusters, or code-mixed jargon. Distinguish "thick relational context" (the reader already knows the big background) from "thin conceptual context" (terms introduced for the first time in this piece) — don't mistake shared context for shared vocabulary. This is not about less information; it's about reordering, unpacking, and glossing in place: gloss a proper noun with one grounding clause the moment it first appears.
+4. **The entry point earns a stranger's attention on the stranger's own terms.** The opening must pass "why would an unfamiliar reader care in the first second," anchored in the reader's felt experience — not an insider event, a paradox only experts find counterintuitive, a straw man, or the news story that triggered the research. Unifying rule: the first screen must deliver either a tension the reader genuinely owns, or the article's increment itself. For news-driven pieces, freshness is also a gate — the first screen must show new information; don't let the reader feel it's old news by the first paragraph.
+5. **Explanatory depth (the mechanism/causal why), not descriptive coverage.** Don't stop at "who did what" — give "why this player, why now," and give the reader a transferable model rather than more terminology. The transferable model must come from a real conflict in the case; there is an upper bound on the operational side too — give a high-level perspective, stop at the measurement framework, and don't drop into a spec sheet.
+6. **End on an actionable hook in the reader's own domain.** External pieces typically deliver the freshest signal up top and what the reader should do at the bottom — not "who won" or "what the paper said."
+
+### 4.3 Article Warrant and Reasoning Architecture
 
 Before Round 1 is complete, the Main Agent must be able to answer:
 
@@ -217,19 +236,32 @@ After acceptance, the Main Agent may directly fix:
 
 Round 5 must not silently replace the thesis, reorder sections, splice candidates, or rewrite whole paragraphs without another acceptance cycle. Record every change in `completion_edits.md`. If a correction requires renewed judgment about structure or whole-article voice, Round 3 accepted the draft incorrectly; return to the appropriate earlier round.
 
+**The gate only detects; it never hand-edits prose.** Round 5 handles only the mechanical five categories above. Issues that require prose judgment — banned metaphors or personification, spoken-word performance, meta-instructions or analysis scaffolding leaking into the body, a stiff or affected tone — are not Round 5 hand-fixes, even for a single sentence. The correct handling is to write these as blockers in `revision_delta.md` and re-run the designated writing model in a clean context (Round 4); the rewriter is always the writing model, never the Main Agent. The Main Agent "touching up" the writer's prose by personal feel is a repeatedly-corrected overreach, and its output gets reverted wholesale. The dividing line: mechanical fixes uniquely determined against `source_contract.md` (typos, numbers, paths) may be hand-edited; prose issues that require taste judgment must go back to the writing model.
+
 ## 10. Images
 
 Images are a hard requirement for an external-facing deliverable and must reduce cognitive burden rather than decorate the page. An article shorter than 2,000 words needs at least one image. An article of 2,000 words or more needs two to three images.
 
 Every generated image in the final Markdown must come from the image generation or redrawing tool available in the current workspace. Compress final assets to JPG or WebP with a long edge no greater than 1024 pixels and a file size below 200 KB. For quantitative visuals, the Main Agent must first draw or calculate the data accurately with deterministic tools, then use the available image tool for redrawing. Every image needs a relative path and meaningful alt text.
 
+Visual style is a standing constraint: light background, elegant, simple, business. No dark themes, sci-fi look, purple, or high-saturation colors — a sci-fi visual lowers an external piece's credibility. Infographics carry the distinctions that are hardest to put into words (scope and boundary, lifecycle, parallel versus sequential relationships) and must stay faithful to the concept's real topology; don't linearize a genuinely parallel relationship into a pipeline for the sake of tidiness. Redraw a diagram whenever it reads as messy or misleading.
+
 ## 11. Final Verification and Delivery
 
-After the last edit, the Main Agent:
+Delivery is not just prose. The canonical file, the render form, the title, and the images all count toward "the article being right," carrying the same weight as a framing error. After the last edit, the Main Agent works through this checklist:
 
-1. Scans the final file for numbers, URLs, images, H2 sections, leaked scaffolding terms, and Markdown problems.
-2. Confirms that the archived deliverable equals the accepted candidate plus the changes recorded in `completion_edits.md`.
-3. Reads the final Markdown from the beginning with the available file-reading tool to trigger rendering and perform one last visual review.
-4. Reports the final path and any residual risk.
+1. **Title** has been generated as a first-class artifact, not an afterthought; the title lives at the thesis/tension level, not the action level — an action-level title demotes a paradigm-level analysis to a tool introduction.
+2. Scans the final file for numbers, URLs, images, H2 sections, leaked scaffolding terms, and Markdown problems.
+3. **First-screen line-by-line scan** for prompt residue and leaked meta-instructions — an instruction to the writer like "replace the first sentence with…" is the thing most easily pasted into the body as if it were content.
+4. **Language-consistency scan**: no machine-translation residue, no accidental code-mixing of languages within a sentence, terminology rendered consistently throughout; judge cumulative density by the reader's felt experience, not by flagging every line individually.
+5. **Canonical path** is clear, with no stale known-bad draft sitting unmarked in the durable directory.
+6. **Render form is faithful to the content**: the article is presented in its readable article form, not a stand-in chart; if pushed to a device or render endpoint, orientation, font, and size must be correct.
+7. Confirms that the archived deliverable equals the accepted candidate plus the changes recorded in `completion_edits.md`.
+8. Reads the final Markdown from the beginning with the available file-reading tool to trigger rendering and perform one last visual review.
+9. Reports the final path and any residual risk.
 
 If final verification finds a mechanical issue, repair it under Round 5 and reread the result. If it finds a non-surgical issue, do not deliver a failed article merely because the workflow reached its last step, and do not add more writers indefinitely. Return to Round 1 or report the blocker.
+
+## 12. Codify Corrections Back Into the Skill
+
+A meta rule the user has repeatedly emphasized: every correction should be codified back into this skill or the relevant config so the same error can't recur. The landing point of feedback is a reusable process asset, not a single edited paragraph. When a correction reveals that this skill is missing a rule or is ambiguous, edit this file — add a gate or a banned item — then rewrite the product from the updated rule. If you suspect the model-routing table lacks a role or is wrong, propose a config or skill change for the user's approval, and use an equivalent existing agent for the current session rather than unilaterally deviating from the routing table.
