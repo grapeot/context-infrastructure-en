@@ -196,7 +196,7 @@ Brainstorming is not title polishing or generic multi-agent restatement. It must
 
 After Phase 1-3 research is complete, enter the writing phase. Choose the path based on target output type:
 
-**External-facing analysis article** -> Enter the [External Writing Workflow](./workflow_external_writing.md). Start with its thesis-and-outline selection and article-warrant check. The Main Agent then establishes the source contract, writing brief, voice contract, and complete content draft. Use the [Antigravity CLI](./antigravity_cli.md) to generate independent prose candidates in parallel. The Main Agent performs cold-read acceptance, permits at most one fresh AGY prose retry when the verdict is `RETRY_PROSE`, and finishes with logged surgical edits.
+**External-facing analysis article** -> Enter the [External Writing Workflow](./workflow_external_writing.md). Start with its thesis-and-outline selection and article-warrant check. The Main Agent then establishes the source contract, writing brief, voice contract, and prose-neutral content map. Use the [Antigravity CLI](./antigravity_cli.md) to generate independent prose candidates in parallel. The Main Agent cold-reads independently before cross-checking a blind-reader audit, permits at most one fresh AGY prose retry when the verdict is `RETRY_PROSE`, and finishes with logged surgical edits.
 
 **Internal memo** (for yourself or collaborators sharing context) → Load the [Internal Writing Workflow](./workflow_internal_writing.md). First surface the conclusions and basis that most affect decisions, and clearly note unresolved points and next steps. Read [`COMMUNICATION.md`](../COMMUNICATION.md) before writing.
 
