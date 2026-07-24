@@ -45,7 +45,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 Operational manuals for calling external systems or tools.
 
 - [AI CLI Agent Practical Guide](./ai_agent_cli_guide.md) ✅ — CLI Agent design principles, tool comparison (Claude Code / Codex / OpenCode / Antigravity), file response patterns, and AI calling AI
-- [Antigravity CLI File-Based Invocation](./antigravity_cli.md) ✅ — Use `agy --print` to run a Gemini agent; covers installation, keyring/App authentication, sandbox boundaries, file-based artifacts, two independent external-writing candidates, three Main Agent verdicts, one fresh retry, and logged completion edits
+- [Antigravity CLI File-Based Invocation](./antigravity_cli.md) ✅ — Use `agy --print` to run a Gemini agent; covers installation, keyring/App authentication, sandbox boundaries, file-based artifacts, cross-model candidates, blind-reader audits, three Main Agent verdicts, one fresh retry, and logged completion edits
 - [Send Email Skill](./send_email.md) ⚙️ — Send email notifications via Gmail; requires App Password configuration
 - [Share Report to Web](./share_report.md) ⚙️ — Convert MD reports to HTML and publish to your own server; returns URL
 - [Google Docs Operations](./google_docs.md) ⚙️ — CLI tool: publish Markdown, create/search/modify/share documents
@@ -67,8 +67,8 @@ Complete workflows for specific tasks.
   - Judgment criteria: the task hits at least 2 of: broad information surface, independent read tasks, independent judgment, high-value uncertainty, main thread needs to retain integration capability
   - Core parameters: parallelism ≤5, research overlap 30-50%, code overlap 0-20%
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
-- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn verified research into an external-facing analysis through five rounds: Main Agent source of truth, two independent AGY candidates, Main Agent cold-read acceptance, one optional fresh prose retry, and logged surgical completion
-- [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Core principle is low decision friction: conclusions first, skimmable, inline evidence, easy navigation and verification, use diagrams when helpful to reduce cognitive load.
+- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn verified research into an external-facing analysis through source-of-truth and prose-neutral content-map construction, independent candidates, Main Agent cold reads cross-checked by a blind reader, one optional fresh prose retry, and logged surgical completion
+- [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Establish a testable question contract, then use problem, solution, and decision layers to reduce decision friction.
 - [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data
   - Applicable to: group chats, Slack, Discord, email, podcast transcripts, and any conversation data
   - Process: broad scan → deep validation → stress testing → finalization (≥3 rounds of dynamic iteration)

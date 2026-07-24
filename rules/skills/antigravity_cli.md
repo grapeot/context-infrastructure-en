@@ -122,7 +122,7 @@ Read these files completely:
 1. `/absolute/path/to/source_contract.md`
 2. `/absolute/path/to/writing_brief.md`
 3. `/absolute/path/to/voice_contract.md`
-4. `/absolute/path/to/article_source.md`
+4. `/absolute/path/to/content_map.md`
 
 Write the complete result to:
 `/absolute/path/to/result.md`
@@ -132,9 +132,10 @@ Do not modify any other file.
 ## Task
 
 - Write one complete external-facing article from a blank page.
-- Use only facts, scenes, causal claims, and boundaries present in `source_contract.md` and `article_source.md`.
+- Use only facts, scenes, causal claims, and boundaries present in `source_contract.md` and `content_map.md`.
 - Preserve the thesis, claim strength, numbers, URLs, image references, and immutable terms.
 - Follow `voice_contract.md`. Do not output an audit, explanation, invariant count, or PASS statement.
+- Decide H2 wording and paragraph entrances independently. Do not copy content-map labels or research taxonomy into the article outline.
 - Use normal paragraphs. Do not put every sentence on its own line.
 ```
 
@@ -142,12 +143,13 @@ Do not modify any other file.
 
 ## Fresh Context, Parallel Candidates, and One Retry
 
-Each `agy --print` call without `--continue` or `--conversation` creates a fresh conversation. The external-writing workflow uses two kinds of AGY calls:
+Each `agy --print` call without `--continue` or `--conversation` creates a fresh conversation. The external-writing workflow uses three kinds of AGY calls:
 
-- **Round 2 parallel candidates**: By default, start two fresh conversations from the same task packet. They independently write `candidate_a.md` and `candidate_b.md`; neither reads nor revises the other. The two calls may run in parallel.
+- **Round 2 parallel candidates**: By default, start two fresh conversations from the same task packet. They independently write `candidate_a.md` and `candidate_b.md`; neither reads nor revises the other. Prefer different available model families when possible.
+- **Round 3 blind reader**: For each candidate, start a fresh conversation that reads only the candidate body and writes `blind_reader_audit_a.md` or `blind_reader_audit_b.md`. It neither fact-checks nor decides `PASS`.
 - **Round 4 optional revision**: Start one fresh conversation only when the Main Agent's cold-read acceptance returns `RETRY_PROSE`. It reads the selected candidate, original task packet, and a `revision_delta.md` containing no more than three to five blockers, then writes one complete revision.
 
-The AGY writer does not write QA and is not the `PASS` authority. The Main Agent reads the candidate body, checks numbers, URLs, images, and structure deterministically, then judges factual fidelity and whole-article voice against the source contract. Round 3 records exactly one verdict in `acceptance_audit.md`:
+The AGY writer does not write QA and is not the `PASS` authority. The Main Agent first writes `main_cold_read_a.md` or `main_cold_read_b.md` from the candidate alone, then reads the blind-reader audit, checks numbers, URLs, images, and structure deterministically, and judges factual fidelity and whole-article voice. Round 3 records exactly one verdict in `acceptance_audit.md`:
 
 - `ACCEPT`: Content and prose may proceed to surgical completion.
 - `RETRY_PROSE`: Thesis and structure are sound, but one complete prose rewrite can address specific blockers.

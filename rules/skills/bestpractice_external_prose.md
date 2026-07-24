@@ -5,7 +5,7 @@
 - **Type**: Manager Reference
 - **Use when**: The Main Agent needs to diagnose narrative distance, cognitive load, or paragraph architecture in an external article and produce a roughly one-page `voice_contract.md`.
 - **Restriction**: Manager-only. Never pass this complete guide to a prose writer.
-- **Last updated**: 2026-07-22
+- **Last updated**: 2026-07-23
 
 ## 1. Boundary and Editorial Responsibility
 
@@ -54,6 +54,22 @@ Hide adjacent H2 headings and read the end of one section into the beginning of 
 
 Phrases such as "X is a...", "to understand X, first understand Y", or "this shows the broader significance" often signal definition-first openings, abstract subjects, or summary tails. Diagnose and rebuild the paragraph's movement. Synonym replacement does not fix the architecture.
 
+### Over-compression is not low cognitive burden
+
+Another common failure compresses an article into "institution plus one verdict," "jurisdiction plus one difference," or "recommendation plus one checklist." The facts may be correct, but the reader never follows the causal chain from the old arrangement through a concrete action to a new consequence. Lower cognitive burden does not mean deleting explanation. It means that at any moment the reader follows one changing object. If reducing each paragraph to one sentence loses almost no information, the draft is a correct outline, not an article.
+
+### Parenthetical translation is not terminology explanation
+
+Doubling terms such as "observability (可观测能力)" or "provenance（来源链）" often proves only that the writer knows both labels. Except for formal names, acronym expansion, quotations, or a first name with genuine retrieval value, do not use `Chinese (English)` or `English (Chinese gloss)`. Choose one body term and let the surrounding actions explain it.
+
+Parenthetical density is also an early signal of translationese. If deleting the parenthetical loses nothing, delete it. If deleting it breaks comprehension, rewrite the relation rather than retaining a glossary entry.
+
+### Analytical frameworks must melt into the article
+
+Timelines, two axes, three layers, four questions, and six-item checklists can help the Main Agent think, but they cannot automatically become H2s, images, body lists, and closing summaries at once. Make a framework explicit only when readers need it to judge, or when it compresses a conflict already established in the body.
+
+Use a scaffold-deletion test: remove labels such as "two axes" or "three layers." If concrete objects, actions, and consequences no longer carry the article, it has no narrative spine. If they do, retain only the one explicit framework that lowers cognitive burden.
+
 ## 4. Produce the Voice Contract
 
 Keep `voice_contract.md` to roughly one page and include only evidence relevant to the current article.
@@ -85,6 +101,7 @@ Use this template:
 - [First-person and question boundary]
 - [Technical density and explanation depth]
 - [Local-map and finite-comparison boundary]
+- [Terminology boundary: choose one body term; do not use glossary-style parenthetical translation]
 - [No more than eight article-specific constraints total]
 ```
 
@@ -102,5 +119,8 @@ For voice and cognitive comfort, ask:
 4. Must the reader hold several unattached classifications or axes at once?
 5. Before three or more options appear, does the article provide their count and comparison basis?
 6. Does approachability come from a clear mechanism, or from slang, decorative metaphors, and invented detail?
+7. Do three consecutive paragraphs define, classify, explain items, or summarize abstractions without the same concrete object continuing to change?
+8. Does the article contain bilingual parenthetical translation that can be deleted without losing information?
+9. Has a taxonomy used for analysis been copied directly into H2s, lists, and the ending instead of melting into the narrative?
 
 A natural, comprehensible article may need a few surgical edits even if it contains an occasional pattern phrase. Conversely, a draft can avoid every flagged phrase and still fail because its whole rhythm remains "announce, define, summarize." Treat the latter as `RETRY_PROSE` or `RETURN_TO_ROUND_1`, not as a word-replacement task.
