@@ -1,299 +1,146 @@
-# External Writing and Drafting Workflow
+# External Writing and Drafting Workflow (Operational Spine)
 
 ## Metadata
 
-- **Type**: Workflow
+- **Type**: Workflow (operational spine)
 - **Use when**: Turning verified research into an external-facing analytical article, public survey report, course asset, or client deliverable.
 - **Prerequisite**: Phases 1-3 of `workflow_deep_research_survey.md`, or an equivalent verified factual record.
+- **Diagnostic vocabulary**: `bestpractice_external_prose.md` (a Manager reference, not a gate checklist, and not part of the writer context).
 - **Last updated**: 2026-07-23
 
-## 1. Core Model
+## 0. The Discipline of This File
 
-External writing contains three different kinds of work that should not share one generation context:
+This is the operational spine. Every item here is either an **artifact spec** or an **executable, blocking gate** — it does not carry expansive prose about principles (that belongs in `bestpractice_external_prose.md`).
 
-1. **Editorial judgment**: why the article deserves to exist, what belief it should change, and in what order the evidence should arrive.
-2. **Complete drafting**: turning locked content into natural, coherent prose.
-3. **Acceptance**: checking factual fidelity, constraints, reader path, and whole-article voice.
+A hard lesson from five writing sessions: writing the same prose rule into nine places and then letting a model narrate "I scanned it and it's fine" does not make the rule bind. The model can see the symptoms, but a self-narrated verdict never converts a symptom into a block; a scoped local `PASS` gets silently promoted into a global `ACCEPT`. **A gate only counts when two conditions hold**: (a) its judgment happens in a context that cannot see the answer, and (b) its verdict is machine-extracted and script-blocks "done," rather than being overridden by the Main Agent's sense of language. The whole apparatus is already saturated on the checkable failures (numbers, URLs, parentheticals, scaffolding leaks); what it has genuinely failed to catch are the two axes of **textbook voice** and **cognitive load** — and those are exactly what this workflow now solves with structure rather than with more rules.
 
-The Main Agent is the editor, factual owner, and sole acceptance authority. An Antigravity writer produces a complete candidate; it does not audit its own article and cannot declare `PASS`. Deterministic checks cover numbers, URLs, images, and formatting. The Main Agent judges meaning, structure, cognitive comfort, and voice.
+## 1. Three Kinds of Work That Cannot Share One Context
 
-Do not ask a writer to read this workflow, all of `bestpractice_external_prose.md`, `COMMUNICATION.md`, or a large archive of prior feedback. The Main Agent must compress the requirements that matter for the current article into a short task packet. Long rule sets are Manager references, not writer context.
+1. **Editorial judgment**: why the article deserves to exist, what belief the reader should change, and in what order the evidence should arrive.
+2. **Complete drafting**: turning locked content into natural, coherent prose (handed to the Antigravity writer).
+3. **Acceptance**: whether facts have drifted, whether constraints are met, and whether the whole-article voice holds.
 
-## 2. Output Routing and Publication Boundary
+The Main Agent is the editor, the factual owner, and the final acceptance authority — but **not the judge of prose**. That judgment goes to independent cold reads that cannot see the contract (the separated acceptance in Section 6 and the terminal cold read in Section 8). The writer produces only a complete candidate; it does not write its own QA and has no authority to declare `PASS`. **The Main Agent must not touch up the writer's prose by personal feel** (mechanical fixes uniquely determined against the source contract — typos, numbers, paths — are the exception). Any prose issue that requires taste judgment goes back to the writer for a re-run.
 
-- If the user requests an external-facing deliverable without naming a channel, use the workspace's survey-report location.
-- If the user explicitly requests a blog post, use the target project's documented blog location and format. Do not assume a private or machine-specific directory.
-- The completed local Markdown file is the endpoint of this workflow. Publishing, scheduling, emailing, or posting to any external channel requires separate explicit authorization.
-- Images are part of the deliverable and follow Section 10.
+## 2. Output Routing and Delivery Boundary
 
-## 3. Acceptance Standard
+- If the user only says external-facing: default to `contexts/survey_sessions/`.
+- If the user explicitly says blog: use the target project's agreed blog directory.
+- The completed local Markdown is the endpoint of this workflow. Publishing, scheduling, social media, community posting, and any other outbound action must wait for explicit user authorization.
+- Images are part of the deliverable; see Section 10.
 
-An article passes only when all of these conditions hold:
+## 3. Choose the Right Article Before Drafting
 
-- A smart reader with no shared context can understand it from the first paragraph without searching later sections for prerequisites.
-- The first 25% establishes the subject, current trigger, core judgment, and the value of reading further.
-- The article has one thesis. Every section advances that thesis rather than mirroring the categories in the research notes.
-- Concepts arrive through actions, conflicts, and consequences. The article does not repeatedly follow a lecture pattern of definition, mechanism, and abstract summary.
-- The reader is not asked to hold several ungrounded taxonomies or comparison axes at once. When three or more parallel items genuinely matter, provide a local map first.
-- Adjacent H2 sections connect through the same object, action, limitation, or consequence. The transition still makes sense with the headings hidden.
-- Numbers, URLs, attributions, qualifications, images, and proper nouns match the source of truth. The prose introduces no invented scenes, causes, or user reactions.
-- The voice sounds like someone familiar with the problem sharing a verified finding. It is neither ceremonious nor artificially casual through slang, exaggerated metaphors, or copywriting tricks.
-- Technical concepts become legible through actions and consequences, not glossary-style bilingual parentheticals.
-- Make frameworks explicit only when they help the reader judge. Repeated patterns such as two axes, three layers, four items, or define-classify-explain-summarize are textbook voice unless the reader genuinely needs the framework.
-- **The explanatory increment must be irreplaceable**: every core claim needs the chain of concrete action or scene, why the old arrangement existed, what the new action changes, and which consequence follows.
-- **Anti-outline test**: with titles and H2s hidden, the body must remain a continuous argument. If reducing each paragraph to one sentence loses almost no information, return to Round 1.
+### 3.1 First Extract the Framing Already Seeded in the Initial Ask
 
-A writer's self-assessment cannot compensate for a failed condition.
+Before drafting or building options, restate what already exists in the initial request. Users frequently seed a thesis, a protagonist, an oppositional structure, or a reader positioning in the very first sentence; ignoring it and converging directly on a mechanism conclusion you personally find more elegant is the most common way this goes wrong. Handle it as one of three cases:
 
-## 4. Choose the Right Article Before Drafting
+- **Already locked on a main line**: Do not reinvent three options. Restate it as the reader takeaway, proof route, and depth boundary; surface likely misunderstandings, then continue. **When the user has validated the thesis and outline, the failure is necessarily in execution (prose / reading experience), not in the center** — do not use voice feedback as an excuse to go back and re-pick the center.
+- **Seeded but not locked**: Still produce three options, but one of them must faithfully execute that seed; only the other two are alternative framings.
+- **Genuinely open-ended**: The three options are free to diverge, but first verify object attribution and load-bearing premises.
 
-### 4.0 Extract the Framing Already Seeded in the Initial Ask
+The gray zone between "seeded" and "locked" is a high-accident area historically. When in doubt, treat it as "seeded but not locked," and say that judgment out loud to the user.
 
-Before drafting or building options, the Main Agent first restates what already exists in the initial request. Users frequently seed a thesis, a protagonist, an oppositional structure, or a reader positioning in the very first sentence. Ignoring it and converging directly on a mechanism the Main Agent personally finds more elegant is the most common way this goes wrong. Handle it as one of three cases:
+### 3.2 Three Thesis-and-Outline Options
 
-- **Already locked**: Do not reinvent three options. Restate the seed as the reader takeaway, proof route, and depth boundary; surface likely misunderstandings, then continue.
-- **Seeded but not locked**: Still produce three options, but one of them must be a faithful execution of that seed; the other two are the Main Agent's alternative framings. The seed is not a default to be overturned — it is one option to place on the table alongside the rest.
-- **Genuinely open-ended**: The three options are free to diverge, but the Main Agent must still verify object attribution and load-bearing premises first.
+When options are needed, present about three **genuinely different** options before drafting (switching options should change the article's protagonist, evidence order, discarded material, and closing judgment; merely rephrasing the thesis as a question or a verdict does not count). Default to three distances, without forcing the template: object explanation / landscape-belief-change / decision-framework. Each option states: a one-sentence thesis (what judgment the reader will change), why now, the target reader's start state, the article's protagonist, the proof route (4-6 steps, not a source inventory), what must be explained deeply, what is deliberately omitted, the largest risk, and a recommendation level. You may recommend one, but the reasoning must cite this article's evidence and the calibration criteria below.
 
-The gray zone between "seeded" and "locked" is a high-accident area historically. When in doubt, default to treating it as "seeded but not locked," and say that judgment out loud to the user.
+### 3.3 Six Calibration Criteria (The Yardstick for Options, Also the Article's Targets)
 
-### 4.1 Thesis-and-Outline Options
+1. **The object is downgraded to a case; stay at mid-level altitude.** *Ceiling test*: for every load-bearing noun in the thesis sentence, can you point at a concrete mechanism or number in the case and say "this is it"? A noun you can't point to is the abstraction to cut. *Floor test*: delete the project's name — does it still help the reader understand some long-term problem? Both tests must pass.
+2. **Sharp adjudication, not relay.** Correct the reader's most likely wrong default, and render a verdict on whether something matters. Gate: how is this judgment different from a three-year-old cliché? If you can't say, there's no increment. Critique stays positive in tone and on target, not aimed at the person.
+3. **Minimize cognitive load** (see reference §4 for detail). The reader should spend mental budget judging the conclusion, not decoding premises, abstract nouns, dense numbers, or code-mixed jargon.
+4. **The entry point earns attention on the stranger reader's own terms.** The first screen delivers a tension the reader genuinely owns, or the article's increment itself — not an insider event, a paradox only experts find counterintuitive, a straw man, or the news story that triggered the research. News-driven freshness is also a gate.
+5. **Explanatory depth (the mechanism/causal why)**, not descriptive coverage. Give a transferable model rather than more terminology; the model comes from a real conflict in the case, and the operational side stops at the measurement framework.
+6. **End on an actionable hook in the reader's own domain.**
 
-When the case falls into the second or third bucket above, the Main Agent should develop about three genuinely different options before drafting. They cannot be title paraphrases. Choosing another option should change the article's protagonist, evidence order, excluded material, and closing judgment.
+### 3.4 Article Warrant
 
-Useful distances include, without becoming templates:
+Before entering writing, you must be able to answer: reader start state, target belief change (from A to B), article warrant (why an article rather than a summary), causal model (how 3-7 directional claims jointly support the thesis), concrete carrier (which request/number/person runs through), answer timing (the answer is established within the first 25%).
 
-- **Object explanation**: make the project, paper, or event itself legible.
-- **Landscape or belief change**: use the object to revise how readers understand a persistent problem.
-- **Decision framework**: use the object as a worked example that improves future judgment.
+**Reframe gate**: that a technical fact suffices to prove one claim in the article does not mean it can carry the whole article's warrant. If the title, first screen, and most of the length shrink from the original industry change into a single field/term/product boundary — and that detail only proves one link in the central judgment — return to this section and Section 3; do not keep polishing under the banner of "more focused." **Equally, do not use "reduce load / de-textbook" as a reason to hack away the case background, market, or history and replace it with a narrow, dry compliance memo — that is the failure at the other end.**
 
-For each option, record:
+## 4. Round 1: The Main Agent Builds the Single Source of Truth
 
-```markdown
-## Option name
+Generate five artifacts. The first four are the writer's input; `content_map.md` is a fact-complete but prose-neutral map.
 
-One-sentence thesis: What judgment should change after reading?
-Why now: What event, evidence, or persistent confusion creates the warrant?
-Target reader: What do they already know, and why would they continue?
-Article protagonist: The object, the landscape, or the reader's decision?
-Proof route: Four to six evidentiary steps, not a source inventory.
-Must explain deeply: What mechanism or comparison is indispensable?
-Deliberately omit: What useful research would dilute the takeaway?
-Largest risk: Why might this feel flat, old, empty, too specialized, or under-supported?
-Recommendation: Which option does the Main Agent recommend, and why?
-```
+- **`source_contract.md`**: every claim permitted in the body plus its source (with stable claim IDs); exact numbers/dates/versions/URLs/image references/truly immutable product, protocol, and legal names (do not mark ordinary analytical English as immutable wholesale); attribution, measurement definitions, and limits on extrapolation; explicitly forbidden gap-filling of unknowns; for a running example, which actions come from the source and which are flagged as hypothetical. **It is the factual boundary, not a coverage checklist.**
+- **`writing_brief.md`**: reader start state / takeaway / exact thesis / warrant; protagonist, trigger, first-screen promise; continuity with the author's prior judgments (fills/revises/contradicts, with the earlier public URL); the claim dependency graph and the core conflict that must be established first (it does not prescribe evidence order, does not prewrite final H2s, and does not auto-promote research taxonomy into an outline); the concrete carrier, what must be explained deeply, and what is deliberately omitted; three to five title candidates and why the final title is accurate; which new piece of evidence would weaken the thesis.
+- **`audience_contract.md`** (within one page, for the writer and the cognitive walkthrough): what the reader is actually doing in real life and why they open this; the ordinary concepts they already know; **the terms/tools/mechanisms you may not assume the reader understands**; the single core judgment they only need to take away; the budget of new concepts the body is allowed to introduce. Do not substitute "smart but no background" for a concrete description; do not write article structure/H2s/a fact list/style adjectives.
+- **`voice_contract.md`** (within one page, actually read by the writer): produced per `bestpractice_external_prose.md` §7 — 2-3 sentences of target stance, 1-2 positive excerpts, 2-3 negative excerpts from the current draft, the epistemic movement, first-person / technical-density boundaries, term-choice rules. No more than eight items. Do not paste an entire published article, do not transcribe a universal banned-word list, and do not ask the writer to read this workflow or the reference.
+- **`content_map.md`**: fact-complete, prose-neutral, **non-linear**. Each evidence card: the concrete object/action, the referenced claim ID, what belief the reader should change, which known fact it depends on, `body-essential` / `appendix-only` / `omit`, and image placement. Cards are not numbered in article order, carry no section handoff, and do not prewrite paragraph entrances/summary sentences/final H2s. Only actions the reader needs to understand the thesis go into `body-essential`.
 
-**What counts as genuinely different**: rephrasing the same thesis as a question, a verdict, or a metaphor does not count as three options. Practical test: if the user picked another option, which material leaves the body, which evidence moves up, and what different verdict does the ending leave? If the answer isn't obvious, the options aren't different enough. The Main Agent may recommend one, but the reasoning must be grounded in this article's evidence and the calibration criteria below, not in "more depth" or "more shareable."
+**Anti-anchoring gate**: if `content_map.md` contains final titles/H2s, continuous full paragraphs, definition-first openings, or copy-ready endings, judge the source draft anchored and rebuild it. Before Round 1 ends, reconcile against `source_contract.md` by claim ID; factual gaps are closed here, not passed on to the writer as research.
 
-### 4.2 Six Calibration Criteria (Both the Yardstick for Options and the Article's Targets)
+## 5. Round 2: Generate Candidates (Double-Generation, Single-Review)
 
-1. **The object is downgraded to a case, but the altitude stays mid-level.** Carry a claim about the field through a concrete mechanism — not stuck at object-introduction, and not floating up into abstract economic or legal conclusions. *Ceiling test*: for every load-bearing noun in the thesis sentence, can you point at a concrete mechanism or number in the case and say "this is it"? A noun you can't point to is the abstraction to cut. *Floor test*: delete the project's name — does the article still help the reader understand some long-term problem? Both tests must pass.
-2. **Critical adjudication (a sharp verdict), not relay.** The article should correct the reader's most likely wrong default and render a verdict on whether something actually matters, treating the object's own headline framing as suspect by default. A useful gate: how is this judgment different from a three-year-old cliché? If you can't say, there's no informational increment. Critique stays positive in tone and on target — aimed at problem framing and evidence boundaries, never at the author's motive or competence — and a debunked thing still gets its due.
-3. **Minimize cognitive load.** The reader should spend mental budget judging the conclusion, not decoding omitted premises, stacked abstract nouns, dense number clusters, or code-mixed jargon. Distinguish "thick relational context" (the reader already knows the big background) from "thin conceptual context" (terms introduced for the first time in this piece) — don't mistake shared context for shared vocabulary. This is not about less information; it's about reordering, unpacking, and glossing in place: gloss a proper noun with one grounding clause the moment it first appears.
-4. **The entry point earns a stranger's attention on the stranger's own terms.** The opening must pass "why would an unfamiliar reader care in the first second," anchored in the reader's felt experience — not an insider event, a paradox only experts find counterintuitive, a straw man, or the news story that triggered the research. Unifying rule: the first screen must deliver either a tension the reader genuinely owns, or the article's increment itself. For news-driven pieces, freshness is also a gate — the first screen must show new information; don't let the reader feel it's old news by the first paragraph.
-5. **Explanatory depth (the mechanism/causal why), not descriptive coverage.** Don't stop at "who did what" — give "why this player, why now," and give the reader a transferable model rather than more terminology. The transferable model must come from a real conflict in the case; there is an upper bound on the operational side too — give a high-level perspective, stop at the measurement framework, and don't drop into a spec sheet.
-6. **End on an actionable hook in the reader's own domain.** External pieces typically deliver the freshest signal up top and what the reader should do at the bottom — not "who won" or "what the paper said."
+By default, launch **two mutually independent Antigravity conversations** that generate `candidate_a.md` and `candidate_b.md` in parallel from the same task packet, using heterogeneous models (default: one Gemini Flash High, one Claude Sonnet). **The value of two candidates is sampling diversity — cross-model-family sampling is one of the few levers that genuinely affects "warmth/approachability," which is precisely the hardest axis to gate.** For a short article, or when only one version is explicitly needed, generate just one; never serially have B rewrite A.
 
-### 4.3 Article Warrant and Reasoning Architecture
+Each writer reads only: `source_contract.md`, `writing_brief.md`, `voice_contract.md`, `audience_contract.md`, `content_map.md`, and this round's short prompt. The task is to deliver a complete article, not an audit/count/`PASS`. The prompt emphasizes only: draft from a blank page but add no facts/scenes/causality outside the source contract; preserve the thesis, claim strength, numbers, URLs, images, necessary terms; decide paragraph entrances/syntax/H2s yourself, and do not move content-map block headings or research frameworks into the body; advance along the concrete carrier rather than teaching by category; show how the object changes before introducing the concept's name; explain technical terms through what they are doing, without parenthetical glosses. Every call follows the file-based contract in `antigravity_cli.md`.
 
-Before Round 1 is complete, the Main Agent must be able to answer:
+**Single-review selection**: do not run the full acceptance on both. First do a **cheap blind read** on each (§7.1, judging stance only, not full semantic acceptance) to pick the one closer to the target voice, then run the complete Section 7 acceptance only on the **winner**.
 
-- **Reader start state**: How does the reader currently understand the subject, and which prerequisite is missing?
-- **Target belief change**: Which judgment should move from A to B?
-- **Article warrant**: Why does this require an article rather than a short summary?
-- **Causal model**: How do three to seven directional claims support the thesis?
-- **Evidence roles**: Which claim does each core source prove, explain, or limit?
-- **Concrete carrier**: Which request, task, number, person, or business record can carry the argument?
-- **Answer timing**: When does the reader encounter the question, evidence, and complete answer? A real tension may remain open briefly, but the answer must be established within the first 25%.
+## 6. Round 3: Acceptance (Separated Context, an Answer-Blind Cold Read)
 
-An analytical tool does not automatically belong in the public thesis. Timelines, taxonomies, axes, and question sets may help discover the judgment. Keep them as private evidence organization unless readers need to learn the method itself.
+**Scoped verdicts are the mandatory default**: any local reviewer may output only `LOCAL_PASS(scope=[...])`, `LOCAL_BLOCK(scope=[...])`, or observation notes. A `LOCAL_PASS` only says the listed blockers are gone; it **cannot** be auto-promoted into a global `ACCEPT` by a script or by the Main Agent. The global verdict belongs solely to the terminal cold read in Section 8.
 
-## 5. Round 1: Main Agent Establishes the Source of Truth
+First run the **deterministic scan** (defined in Section 9; you must actually run the commands and paste the output — a self-narrated "scanned it, it's fine" is not accepted), then the following live gates.
 
-The Main Agent completes the research, editorial choice, and factual draft. Round 1 creates four artifacts in the session's temporary working directory.
+### 6.1 Unprompted style blind read
 
-### `source_contract.md`
+The winning candidate enters a **brand-new** conversation, using a **model family different from the writer's**, reading only the single candidate body — forbidden to read the other candidate, any contract, this workflow, the reference, prior audits, chat history, or the web. Do not ask "is this textbook"; ask only: with the title removed, what text form does this most resemble, what is the author-reader relationship, which three spots most determine that feeling, and what is the emotional distance; then label the primary speech act by paragraph, report the most common consecutive speech-act sequence, and note whether the author shows an old judgment → trigger → new judgment. It writes observations only; it does not declare `PASS`. `Low intimacy` / `engineering guide` / `standards proposal`, or a recurring "propose a standard → explain the mechanism → define the boundary," are high-risk signals that must block (see reference §2-§3).
 
-This is the factual authority for every later writer. Include:
+### 6.2 Non-technical reader cognitive walkthrough
 
-- Every claim permitted in the article and the source that supports it, with stable claim IDs for later artifacts.
-- Exact numbers, dates, versions, URLs, image references, and truly immutable product, protocol, or legal names. Do not mark ordinary analytical English as immutable wholesale.
-- Attribution, measurement definitions, comparison baselines, and limits on extrapolation.
-- Unknowns that the writer must not fill in.
-- For any running example, which actions come from evidence and which may appear only as clearly hypothetical illustrations.
+Start another brand-new conversation reading only the single candidate + `audience_contract.md`, not the factual contract/brief/voice contract/other candidate. Read strictly along the audience contract's known/unknown boundary; do not use the model's own technical knowledge to fill in for the reader. Maintain a reader concept ledger paragraph by paragraph (reference §4); after each H2, require a restatement, using no new terms, of "what happened, why the old approach wasn't enough, why the next step appears." Any of the following occurring systemically blocks: a paragraph introducing more than two unknown concepts; more than four dangling relationships still needing to be held across paragraphs; only being able to re-read the term back; an abstract mechanism not first landed on a concrete example; the body carrying implementation detail that could move into the prompt/appendix.
 
-Do not provide a bare link list. State what each source supports.
+### 6.3 Calibrated voice comparison
 
-### `writing_brief.md`
+An independent reviewer reads the candidate, the positive excerpts from `voice_contract.md`, and the confirmed textbook-voice negative excerpts (not the source contract or the other candidate). **Calibration first** (reference §8): have it distinguish the positive and negative excerpts on author-reader relationship, epistemic movement, and paragraph speech act; if it cannot distinguish them reliably, its verdict is void.
 
-Include at least:
+### 6.4 Verdict
 
-- Reader start state, reader takeaway, exact thesis, and article warrant.
-- Article protagonist, current trigger, and first-screen promise.
-- Continuity with the author's prior judgments: whether current evidence fills, revises, or contradicts an earlier view, with relevant public URLs when available.
-- Claim dependencies, evidence order, and section handoffs. Unless locked by the user, do not prewrite final H2 wording or turn research taxonomy into the article outline.
-- Concrete carrier, material that requires depth, and material deliberately omitted.
-- Three to five title candidates from different angles, plus why the selected title accurately names both the subject and the article's increment.
-- What new evidence would weaken or overturn the thesis.
+After the three gates' observations are pooled, `acceptance_audit.md` records the findings + necessary disagreements + one of three verdicts. It must also state "the article's irreplaceable explanatory increment" and "the place in the body where it is achieved" — an `ACCEPT` cannot rest only on "no factual/format/reader-path error triggered" (a positive-value gate). Guard against two misjudgments: writing the "relatively best of the candidates" up as a publish conclusion; and lowering the willingness to rebuild because many rounds are already invested.
 
-### `voice_contract.md`
+- `ACCEPT`: proceed to the Section 8 terminal cold read.
+- `RETRY_PROSE`: thesis and structure hold, and the prose has a clear problem fixable in one rewrite; proceed to Section 7.
+- `RETURN_TO_ROUND_1`: the problem is in the thesis/evidence/structure/source contract; fix the upstream artifacts first.
 
-Keep the writer-facing voice instructions to roughly one page and specific to this article:
+## 7. Round 4: One Optional Fresh Retry
 
-- Two or three sentences defining the desired narrative stance.
-- One or two user-approved positive excerpts of similar explanatory difficulty, with a note on what to learn from each.
-- Two or three likely failure excerpts from the current draft, with a direct diagnosis of what feels ceremonious, instructional, or performatively casual.
-- Boundaries for first person, questions, technical density, and local lists.
-- Do not use "very + adjective + colon" as an evaluative label before a fact; begin with the fact, action, or consequence.
-- Do not use bilingual parenthetical glosses for ordinary concepts; explain necessary English terms in natural syntax.
-- No more than eight high-impact voice constraints.
+Run only on `RETRY_PROSE`, and at most once. A brand-new Antigravity conversation. The Main Agent writes `revision_delta.md` listing only the 3-5 highest-impact blockers (original location + why it fails + the correct direction), without re-attaching the whole taxonomy. The writer reads: the selected candidate, the four contracts, and `revision_delta.md`, and returns a complete revised draft. When done, it **must re-run all the Section 6 live gates**; do not carry over the old verdict. If a non-surgical blocker remains, do not auto-start a second retry — return to Round 1 or report the failure to the user explicitly.
 
-Do not paste an entire published article, a universal banned-word list, this workflow, `COMMUNICATION.md`, or the full prose guide into the writer context. Use `bestpractice_external_prose.md` to produce this short contract.
+## 8. Terminal Cold Read (The Only Global Gate; the Machine Blocks "Done")
 
-### `content_map.md`
+After all merges, mechanical fixes, the title, and the images have landed in the canonical file, do **one non-skippable, non-overridable terminal stranger-reader cold read** — it is the only place in the whole apparatus authorized to issue a global verdict, and a failure vetoes every upstream `PASS`.
 
-The Main Agent writes a **fact-complete, prose-neutral** content map. Each block contains only the current concrete object or action, referenced claim IDs, the belief the evidence should change, the causal relation to the preceding block, the next question, and image placement. It may contain essential quotations and immutable numbers, but not continuous prose, paragraph entrances, summary sentences, final H2s, or analysis scaffolds.
+- **Context**: a brand-new conversation, a model family different from the writer's, reading **only the body of the final canonical file** — not any contract, candidate, prior verdict, audit, or the process goals of this workflow.
+- **Two outputs**: (1) who does the reader feel they are being spoken to by — **a peer sharing a finding**, or an instructor/consultant/standards author? (2) **a section-by-section restatement using no technical terms** of what happened.
+- **A machine-parseable verdict**: the cold read must end in a fixed format, e.g. `TERMINAL_VERDICT: SHIP` or `TERMINAL_VERDICT: BLOCK` (with the judgment word from (1) and the failing sections from (2)).
+- **The block is executed by a script, not by the Main Agent's sense of language**: the Main Agent greps the verdict line with a command and pastes the captured output; only capturing `SHIP` permits claiming done. If (1) judges instructor/consultant, or any section in (2) fails to restate, that is `BLOCK` — return to Section 6/7, with no "better than the other candidate" exemption.
 
-`content_map.md` is neither a keyword outline nor a half-written article: the writer should not need to invent research, causality, or scenes, while three adjacent blocks should not paste into body prose. Before leaving Round 1, reconcile it against `source_contract.md` by claim ID.
+**Why this one binds when nine rules do not**: its judgment happens in a context that cannot see the contract or the "answer key" (so it won't, like a grader who knows the answer, misjudge "relatively less textbook" as "natural"), and its verdict is machine-extracted and blocks the word "done," rather than passing through a Main Agent carrying many rounds of sunk cost.
 
-**Anti-anchoring gate:** if `content_map.md` contains final titles or H2s, continuous paragraphs, definition-first openings, or copy-ready endings, rebuild it.
+## 9. Deterministic Scan and Mechanical Fixes
 
-### Article-warrant gate
+**The scan must actually run commands and paste the captured output**. Reporting "scanned it, it's fine" in natural language is **defined as a gate failure** (a QA once self-narrated "scan passed" while there were 12 parenthetical violations in fact). Scan at least: numbers/dates/versions; URL targets and image paths; terms that must be kept and terms that must not appear; H2 count; parenthetical candidates (the `Chinese (English)` / `English (Chinese)` regex); evaluative labels (the `very [adjective]:` regex, e.g. "very intuitive:" — delete-the-word test: if deleting the label loses no information, let the fact begin directly); Markdown, word count, file paths.
 
-Before handing work to a writer, create `article_warrant_audit.md`: how the reader currently understands the problem, what must change, the concrete carrier, the first content block that answers why, and the block whose removal would reduce the article to a summary. If these answers are unavailable, rebuild the map.
-
-### Reader-path gate
-
-Create a short `reader_path_audit.md` before drafting. For each block, record the known object, one new relationship, the next question and handoff, and whether new terms can be restated in ordinary language. If readers must hold more than two ungrounded categories at once, rebuild the map and brief instead of asking prose to repair it.
-
-## 6. Round 2: Two Independent Antigravity Candidates
-
-By default, start two fresh Antigravity conversations in parallel. Both receive the same task packet and independently write `candidate_a.md` and `candidate_b.md`. For a very short article or an explicit single-version request, one candidate is acceptable, but never generate B by asking it to revise A.
-
-Each writer reads only:
-
-1. `source_contract.md`
-2. `writing_brief.md`
-3. `voice_contract.md`
-4. `content_map.md`
-5. Its own short round prompt
-
-The writer returns the complete article only. It does not output an audit, explanation, invariant count, or `PASS` statement. Both candidates use the same facts and thesis; parallelism exists to obtain independent prose paths, not exaggerated style variants.
-
-The Round 2 prompt should say only what is necessary:
-
-- Draft from a blank page without adding facts, scenes, or causal claims outside `source_contract.md`.
-- Preserve the thesis, claim strength, numbers, URLs, image references, and immutable terms.
-- Decide paragraph entries, syntax, and H2 wording independently. Do not copy content-map labels or research taxonomies into the article outline.
-- Advance through the concrete carrier rather than teaching the rules by category.
-- Explain technical terms through what they are doing, not parenthetical glosses or definition-first entries.
-- Write only the article.
-
-Every call follows the file-based contract in `antigravity_cli.md`. Persist prompt, result, stdout, stderr, and events separately.
-
-## 7. Round 3: Two-Stage Cold-Read Acceptance
-
-The Main Agent is the only `PASS` authority, but a fresh isolated blind reader performs the first cold read. The Main Agent then makes its own factual and structural judgment.
-
-### 7.1 Blind-reader audit
-
-For each candidate, use a fresh context that reads only the candidate body, not source artifacts, this workflow, prior audits, chat history, or the web. It does not edit or fact-check. Write separate `blind_reader_audit_a.md` and `blind_reader_audit_b.md` files. At the first screen, each H2 entrance, and ending, record the known object/action/problem, new names or rules, why they appear now, and whether the next section catches the formed question. Run explanatory-increment and anti-textbook-voice rejection tests. Its verdict is diagnostic only.
-
-### 7.2 Main Agent final acceptance
-
-Before reading the blind-reader verdict, the Main Agent writes `main_cold_read_a.md` or `main_cold_read_b.md` from the candidate body alone. It then reconciles blind-reader findings, source artifacts, and positive excerpts in `acceptance_audit.md`, documenting any disagreement.
-
-### 7.2.1 Deterministic checks first
-
-Use scripts or direct comparison for:
-
-- Numbers, dates, and versions.
-- URL targets and image paths.
-- Required and prohibited terms.
-- H2 count and any required order.
-- Markdown, word count, and output path.
-- Candidate bilingual parenthetical glosses. Scanning locates candidates; the Main Agent decides whether an item is a necessary full name or redundant doubling.
-
-Do not substitute a model-written natural-language audit for these checks.
-
-### 7.2.2 Semantic acceptance second
-
-Compare candidates with `source_contract.md`, `writing_brief.md`, and the positive excerpts. Judge in this order:
-
-1. Does the candidate add an unsupported fact, action, cause, or absolute conclusion?
-2. Do the opening, first paragraph under each H2, and ending sound like a natural explanation, or do they announce a topic, define it, and summarize its significance?
-3. Can readers understand a concept's role and consequence when it first appears?
-4. Did analysis scaffolding, editorial feedback, or QA language leak into the article?
-5. Did the writer add decorative metaphors, slang, hypothetical failures, or unsupported detail to sound approachable?
-6. Do section handoffs and whole-article rhythm work?
-7. Does the title accurately state the subject and analytical increment, and does the article fulfill that promise?
-8. Can readers restate each H2 opening through an already-known concrete object, rather than only a new term, category, or author label?
-9. Do three consecutive paragraphs define, classify, explain items, or summarize abstractions without the same concrete object continuing to act?
-10. Does deleting a bilingual parenthetical leave information unchanged? If so, retry prose; systemic use returns to Round 1.
-11. Do analytical scaffolds need to be taught explicitly, or can the concrete comparison or action carry the argument without becoming H2s, lists, and a closing summary?
-
-Choosing the better candidate does not authorize paragraph splicing. Write `acceptance_audit.md` with the selection, evidence, and exactly one verdict:
-
-- `ACCEPT`: Content and prose may proceed to Round 5.
-- `RETRY_PROSE`: Thesis and structure are sound, but one complete rewrite can address specific prose blockers. Proceed to Round 4.
-- `RETURN_TO_ROUND_1`: The problem lies in the thesis, evidence, structure, or source contract. The Main Agent must repair the upstream artifacts instead of labeling it a prose issue.
-
-## 8. Round 4: One Optional Fresh Antigravity Retry
-
-Run Round 4 only after a `RETRY_PROSE` verdict, and run it at most once. Use one fresh Antigravity conversation, never the candidate-generation conversation.
-
-The Main Agent writes `revision_delta.md` with only the three to five highest-impact blockers. Each item identifies the original location, why it fails, and the correct direction. Do not attach the complete prose taxonomy again.
-
-The Round 4 writer reads:
-
-1. The selected candidate
-2. `source_contract.md`
-3. `writing_brief.md`
-4. `voice_contract.md`
-5. `revision_delta.md`
-
-It returns one complete revised article and no QA commentary. The Main Agent repeats the deterministic and semantic acceptance from Round 3. If a non-surgical blocker remains, do not start another writer. Return to Round 1 or report that the article did not pass, avoiding an indefinite mutation loop.
-
-## 9. Round 5: Logged Surgical Completion by the Main Agent
-
-After acceptance, the Main Agent may directly fix:
-
-- Typos, missing words, punctuation, and unambiguous grammar errors.
-- Markdown, URLs, image paths, and alt text.
-- Mechanical misspellings of proper nouns.
-- Numbers, qualifications, or attributions with one uniquely correct form in `source_contract.md`.
-- A local single-sentence issue that does not change paragraph purpose or claim strength.
-
-Round 5 must not silently replace the thesis, reorder sections, splice candidates, or rewrite whole paragraphs without another acceptance cycle. Record every change in `completion_edits.md`. If a correction requires renewed judgment about structure or whole-article voice, Round 3 accepted the draft incorrectly; return to the appropriate earlier round.
-
-**The gate only detects; it never hand-edits prose.** Round 5 handles only the mechanical five categories above. Issues that require prose judgment — banned metaphors or personification, spoken-word performance, meta-instructions or analysis scaffolding leaking into the body, a stiff or affected tone — are not Round 5 hand-fixes, even for a single sentence. The correct handling is to write these as blockers in `revision_delta.md` and re-run the designated writing model in a clean context (Round 4); the rewriter is always the writing model, never the Main Agent. The Main Agent "touching up" the writer's prose by personal feel is a repeatedly-corrected overreach, and its output gets reverted wholesale. The dividing line: mechanical fixes uniquely determined against `source_contract.md` (typos, numbers, paths) may be hand-edited; prose issues that require taste judgment must go back to the writing model.
+After passing the terminal cold read, the Main Agent makes only mechanical fixes: typos/dropped words/punctuation/obvious grammar errors, Markdown/URLs/image paths/alt text, mechanical misspellings of proper nouns, numbers/qualifiers/attributions uniquely determined against the source contract, and single-sentence local fixes that change neither paragraph purpose nor claim strength. Record every change in `completion_edits.md`. **Banned metaphors/personification, spoken-word performance, meta-instructions or scaffolding leaks, an affected tone — these are not objects of mechanical repair, even for a single sentence**: write them into `revision_delta.md` and return them to the writer for a re-run (Section 7).
 
 ## 10. Images
 
-Images are a hard requirement for an external-facing deliverable and must reduce cognitive burden rather than decorate the page. An article shorter than 2,000 words needs at least one image. An article of 2,000 words or more needs two to three images.
+A hard requirement for an external deliverable, reducing cognitive load rather than decorating. A short article (<2,000 words) needs ≥1 image; a long one needs ≥2-3. Every image entering the final Markdown must be generated or redrawn by the image generation/redraw tool available in the current workspace, compressed to JPG/WebP with a long edge of about 1024px and each image under 200KB, with a relative path and valid alt text; for quantitative visuals, first draw the data accurately with a deterministic tool, then hand it to the image model to redraw. The standing visual constraint: light-colored, elegant, simple, business; no dark/sci-fi/purple/high-saturation — a sci-fi visual lowers an external piece's credibility. An infographic stays faithful to the concept's real topology, and a parallel relationship is not drawn as a linear pipeline for the sake of tidiness.
 
-Every generated image in the final Markdown must come from the image generation or redrawing tool available in the current workspace. Compress final assets to JPG or WebP with a long edge no greater than 1024 pixels and a file size below 200 KB. For quantitative visuals, the Main Agent must first draw or calculate the data accurately with deterministic tools, then use the available image tool for redrawing. Every image needs a relative path and meaningful alt text.
+For an infographic with text, also maintain `image_text_contract.md` (every heading/label/number that should appear + variants that must not appear). Inspect the final compressed image character by character at 100% size (OCR can assist but cannot replace it); any typo/dropped word/changed number/malformed product name means regenerate.
 
-Visual style is a standing constraint: light background, elegant, simple, business. No dark themes, sci-fi look, purple, or high-saturation colors — a sci-fi visual lowers an external piece's credibility. Infographics carry the distinctions that are hardest to put into words (scope and boundary, lifecycle, parallel versus sequential relationships) and must stay faithful to the concept's real topology; don't linearize a genuinely parallel relationship into a pipeline for the sake of tidiness. Redraw a diagram whenever it reads as messy or misleading.
+## 11. Delivery
 
-For any infographic with text, maintain `image_text_contract.md` listing every required heading, label, number, and prohibited variant. Inspect the final compressed image character by character at 100% size. Any typo, omission, changed number, or malformed product name requires regeneration before the image enters final Markdown.
+After the terminal cold read is `SHIP` and mechanical fixes are complete: confirm the archived file = the accepted candidate + `completion_edits.md`; the canonical path is clear, with no known-bad old draft sitting unmarked in the durable directory; the render form is faithful to the content (the article is presented in its readable article form, not a diagram standing in for it; when pushed to a device, orientation/font/size are all correct, and text in images is re-checked against `image_text_contract.md`); the title is a first-class deliverable (at the thesis/tension level, not the action level); read the final Markdown from the beginning with the file-reading tool to trigger client rendering for one last visual check; give the user the final file link and a note on residual risk.
 
-## 11. Final Verification and Delivery
+## 12. Where to Codify Corrections Back (A Ratchet With a Budget)
 
-Delivery is not just prose. The canonical file, the render form, the title, and the images all count toward "the article being right," carrying the same weight as a framing error. After the last edit, the Main Agent works through this checklist:
+Every correction should be codified into a reusable asset so it can't recur — but **the default landing point for codification is `bestpractice_external_prose.md` (diagnostic vocabulary) or the voice/example corpus, not this spine**. This is the core discipline of the current restructuring: what produced 366 bloated lines was exactly the ratchet of "stuff one more line into the spine on every correction"; without changing it, the trimmed spine will grow right back.
 
-1. **Title** has been generated as a first-class artifact, not an afterthought; the title lives at the thesis/tension level, not the action level — an action-level title demotes a paradigm-level analysis to a tool introduction.
-2. Scans the final file for numbers, URLs, images, H2 sections, leaked scaffolding terms, and Markdown problems.
-3. **First-screen line-by-line scan** for prompt residue and leaked meta-instructions — an instruction to the writer like "replace the first sentence with…" is the thing most easily pasted into the body as if it were content.
-4. **Language-consistency and parenthetical scan**: no machine-translation residue or accidental code-mixing; choose the needed Chinese or English body name without repeating the same meaning in bilingual parentheticals.
-5. **Canonical path** is clear, with no stale known-bad draft sitting unmarked in the durable directory.
-6. **Render form is faithful to the content**: the article is presented in its readable article form, not a stand-in chart; if pushed to a device or render endpoint, orientation, font, and size must be correct.
-7. Confirms that the archived deliverable equals the accepted candidate plus the changes recorded in `completion_edits.md`.
-8. Reads the final Markdown from the beginning with the available file-reading tool to trigger rendering and perform one last visual review.
-9. Reports the final path and any residual risk.
-
-If final verification finds a mechanical issue, repair it under Round 5 and reread the result. If it finds a non-surgical issue, do not deliver a failed article merely because the workflow reached its last step, and do not add more writers indefinitely. Return to Round 1 or report the blocker.
-
-## 12. Codify Corrections Back Into the Skill
-
-A meta rule the user has repeatedly emphasized: every correction should be codified back into this skill or the relevant config so the same error can't recur. The landing point of feedback is a reusable process asset, not a single edited paragraph. When a correction reveals that this skill is missing a rule or is ambiguous, edit this file — add a gate or a banned item — then rewrite the product from the updated rule. If you suspect the model-routing table lacks a role or is wrong, propose a config or skill change for the user's approval, and use an equivalent existing agent for the current session rather than unilaterally deviating from the routing table.
+- **The spine has a hard line budget (target ≤160 lines).** Adding a new gate must delete an equivalent amount of old content at the same time (one-in-one-out).
+- **The admission bar for a new spine gate**: it can name a specific historical failure it would have blocked, **and** it has a holdout plan (it cannot be validated only on the same draft that exposed the failure — re-running the same topic is a regression test, not a holdout). Falling short means it goes into the reference, not the spine.
+- If you suspect the model-routing table is missing a role or is wrong: propose the config/skill change for the user's approval, use an equivalent existing agent for this session, and do not unilaterally deviate from the routing table.

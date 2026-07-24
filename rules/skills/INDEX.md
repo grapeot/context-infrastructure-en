@@ -67,7 +67,7 @@ Complete workflows for specific tasks.
   - Judgment criteria: the task hits at least 2 of: broad information surface, independent read tasks, independent judgment, high-value uncertainty, main thread needs to retain integration capability
   - Core parameters: parallelism ≤5, research overlap 30-50%, code overlap 0-20%
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
-- [External Writing Workflow](./workflow_external_writing.md) ✅ — Turn verified research into an external-facing analysis through source-of-truth and prose-neutral content-map construction, independent candidates, Main Agent cold reads cross-checked by a blind reader, one optional fresh prose retry, and logged surgical completion
+- [External Writing Workflow](./workflow_external_writing.md) ✅ — The operational spine for turning research into an external-facing analysis: the Main Agent owns thesis, source of truth, and upstream artifacts, the writer double-generates heterogeneous candidates and single-reviews to select the best, acceptance runs as a separated blind cold read that can't see the answer, and a terminal fresh-stranger cold read machine-blocks "done" with a single veto. Diagnostic vocabulary lives in `bestpractice_external_prose.md`.
 - [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Establish a testable question contract, then use problem, solution, and decision layers to reduce decision friction.
 - [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data
   - Applicable to: group chats, Slack, Discord, email, podcast transcripts, and any conversation data
@@ -89,7 +89,7 @@ Complete workflows for specific tasks.
 
 General best practices and lessons learned.
 
-- [External Prose Diagnosis and Voice Contract Guide](./bestpractice_external_prose.md) ✅ — Manager-only guide for diagnosing textbook voice, performative casualness, and cognitive load, then distilling a roughly one-page article-specific `voice_contract.md`; do not pass the complete guide to a writer
+- [External Prose Diagnosis and Voice Contract Guide](./bestpractice_external_prose.md) ✅ — Reference vocabulary for the Main Agent to diagnose textbook voice, cognitive load, and performative casualness and compress them into a one-page article-specific voice contract; it is a diagnostic reference, not an acceptance gate list, and is not handed to the writer wholesale
 - [Analytical Perspectives for External Articles (Thesis Catalog)](./reference_writing_thesis_catalog.md) ✅ — L1-L8 analytical perspectives and related axiom mappings
 - [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md) ✅ — Adaptive HTML cards, theme variables, dark-mode compatibility, and visual component rules for internal memos, RFCs, and weekly reports
 - [Core AI Programming Methodology](./bestpractice_ai_programming_mindset.md) ✅ — 70% problem, success criteria, verifiability
