@@ -5,7 +5,7 @@
 - **Type**: Workflow
 - **Use cases**: Collaborators, AI agents, and project workflows that already share the same project or decision context. Covers research memos, decision briefs, work logs, and execution summaries.
 - **Created**: 2026-06-11
-- **Last updated**: 2026-07-23
+- **Last updated**: 2026-07-15
 
 ---
 

@@ -1,126 +1,95 @@
-# External Prose Diagnosis and Voice Contract Guide
+# External Prose Diagnosis Vocabulary (Manager Reference)
 
 ## Metadata
 
-- **Type**: Manager Reference
-- **Use when**: The Main Agent needs to diagnose narrative distance, cognitive load, or paragraph architecture in an external article and produce a roughly one-page `voice_contract.md`.
-- **Restriction**: Manager-only. Never pass this complete guide to a prose writer.
+- **Type**: Manager Reference (diagnostic vocabulary, not a gate checklist)
+- **Use when**: The Main Agent is writing `voice_contract.md` or diagnosing why a candidate sounds ceremonious or cognitively overloaded.
+- **Restriction**: Manager-only. **Never** paste this whole file into a prose writer's generation context, and it is **not** a checklist to tick off item by item during acceptance — acceptance happens in the workflow's three live gates; this file only supplies the names and the reasoning behind the judgments.
 - **Last updated**: 2026-07-23
 
-## 1. Boundary and Editorial Responsibility
+## 0. Why this file exists and how to use it
 
-This is a diagnostic guide for the Main Agent, not writer context. Natural prose is not what remains after satisfying hundreds of prohibitions. Giving a writer a taxonomy of failures, years of feedback, and an exhaustive style manual dilutes the voice target and encourages audit or lecture language.
+The lesson from `workflow_external_writing.md` is this: writing the same anti-textbook rule into nine different places and then asking the model to self-report "I scanned it and it's fine" does not make the rule bind. The model can see the symptoms (a blind cold read will surface "low intimacy, restrained"), but the self-reported verdict never turns those symptoms into a block. So the rules land in two layers: **in the workflow spine they are executable, blocking gates**; **in this file they are the vocabulary the Main Agent uses when diagnosing and writing the voice_contract**. Each principle appears exactly once in the spine; the "why, and how to recognize it" that needs unpacking lives here.
 
-The Main Agent has three responsibilities:
+Do not narrate paragraphs from this file in the body as though they were "gates already passed." It produces no PASS.
 
-1. **Diagnose stance and architecture**: identify why the draft sounds ceremonious, instructional, cognitively overloaded, or artificially casual.
-2. **Distill the contract**: turn evidence from the current article into a `voice_contract.md` of roughly one page.
-3. **Cold-read acceptance**: judge the complete reading experience and distinguish a whole-article voice failure from a surgical local defect.
+## 1. Natural Chinese is not "the leftover region after satisfying the prohibitions"
 
-## 2. Narrative Stance: State the Finding Directly
+Natural external prose is the writer, at the distance of an equal peer, stating verified findings directly to a smart reader who lacks this article's context. It is not what remains after dodging hundreds of prohibitions — dumping the entire taxonomy, historical failures, and the full rulebook onto the writer only dilutes this article's voice focus and pushes it to organize the body in audit and lecture language.
 
-Good external prose establishes peer distance. The writer addresses a smart reader who lacks this article's private context and explains a verified change or finding directly.
+The Main Agent's three jobs: diagnose stance and architecture (why it sounds ceremonious / like a lecture handout / cognitively overloaded / performatively casual); write a `voice_contract.md` of under one page grounded in this article's evidence and its real negative examples; and on a cold read, judge the whole voice by the reading experience rather than by counting banned words.
 
-Diagnose two opposite failures:
+## 2. Textbook voice: one definition, two directions of deviation
 
-- **Textbook voice**: announce the topic, define the object, explain the mechanism, then summarize its abstract significance. The reader becomes a student receiving a lesson.
-- **Performative casualness**: use slang, exaggerated metaphors, fake dialogue, or excessive second person to imitate intimacy while leaving the mechanism unclear.
+**Textbook voice** (the canonical negative example): the whole piece holds the stance "I already know the complete map, now I'll walk you through it item by item." Its typical rhythm is a continuous loop of **announce the topic → define → explain the mechanism → delimit the boundaries → abstract summary**. It treats the reader as a trainee. Note: deleting "first / second / third" or changing the numbering into "one boundary, another boundary" does **not** change this stance — the structure is unchanged, only the wording is. This is the spot most often misjudged as "already fixed."
 
-The target stance keeps the writer and reader focused on the same concrete object. It advances through actions, constraints, and consequences; introduces concepts when they become necessary; and places judgments after evidence. Any running scene must come from `source_contract.md` or be marked explicitly as hypothetical. Naturalness never licenses invented incidents, user reactions, or causal detail.
+Two directions of deviation:
+- **Textbook voice**: as above. Reads like course material.
+- **Performative casualness**: overusing slang, exaggerated metaphors, fake dialogue, and excessive second person, using surface friendliness to cover up a mechanism that was never explained.
 
-Sentence rhythm should breathe. Longer sentences can connect causes and examples; shorter ones can land judgments. Enter through a fact or conflict unique to this article. Let paragraphs end on an observable consequence or genuine open question instead of forcing a grand conclusion.
+**The target stance**: writer and reader face the same concrete object, advancing along actions, constraints, and consequences; concepts appear as needed, and judgments land after evidence; the entry comes straight from a new fact or conflict unique to this piece; paragraphs stop on an observed consequence or an open question, without forcing a grand summary. Any concrete scene or running example that carries the piece must be strictly grounded in `source_contract.md` or explicitly marked as hypothetical — never manufacture "naturalness" from invented on-scene incidents, guessed user reactions, or unsupported causation.
 
-## 3. Information Architecture and Cognitive Comfort
+## 3. Warmth comes from epistemic movement, not from casual decoration
 
-Voice problems often begin as architecture problems.
+The most natural way a practitioner's article advances is not "what I know" but "how I used to understand it, what I ran into, and which action changed my judgment." This kind of **epistemic movement** can come from a real attempt, failure, tradeoff, or an explicit counterfactual check; it does not require performing emotion, nor first person in every paragraph.
 
-### Concept dependency
+The diagnostic key: do not automatically pass "professional-peer, restrained, clearly structured" as an acceptable voice. If a stranger reading it identifies the writer as **a lecturer / consultant / standard-setter organizing knowledge on the reader's behalf** rather than **a practitioner sharing one concrete finding**, then even with no bureaucratic phrasing anywhere, the narrative distance is too far. Unprompted stylistic verdicts like `low intimacy`, `engineering practice guide`, `systematic advocacy`, and `compressing judgment cost` are re-read signals, not compliments. The positive signal is: the reader can answer "how the writer used to do it, why it once seemed good enough, what they later observed, and which judgment they finally changed." Showing only finished-state knowledge and best practices is usually still textbook voice.
 
-Avoid defining an abstraction before the reader has a reason to care. A smoother sequence starts with a real constraint or action: when the system stalls, what someone does, and what changes. Name the concept when it resolves or explains that sequence.
+## 4. Cognitive load: diagnostic vocabulary
 
-### Cognitive comfort
+Voice failures often stem from organizing the article around **the writer's knowledge map** instead of **the reader's process of understanding**.
 
-A draft can define every term and still overload the reader. If a paragraph requires several ungrounded classifications, comparison axes, or components to remain active in working memory, the reader must pause, reread, or draw the relation. Reorder the material around one concrete carrier rather than splitting the same overload into shorter sentences.
+**Cognitive comfort**: even if every proper noun was explained individually, a paragraph that forces the reader to hold too many ungrounded classifications, comparison axes, or system components active at once is still overloaded. The signal — the reader has to stop, page back, or manually draw the relations to keep up. Explaining a term does not remove its cognitive cost: the first time a reader meets a tool name / component / mechanism / boundary, they must simultaneously remember "what it is, what it's doing right now, and how it relates to the previous concept." A grammatically clear sentence can still cram five or six prerequisite concepts at once ("a borg check cannot replace a real extraction" is one example: a short sentence stacking archiving, verification, restore, and extractability, several prerequisite concepts at once).
 
-### Local map rule
+**The reader's concept ledger** (a method for the cognitive walkthrough): maintain three items per paragraph — the unfamiliar concepts newly introduced in this paragraph, the concepts already grounded by a concrete action, and the relations left dangling across paragraphs. High-risk signals (not mechanically score-able sufficient conditions): a paragraph introduces more than two unfamiliar concepts; more than four ungrounded relations must be held across paragraphs; the reader can only copy the jargon and cannot restate it in plain language; an abstract concept appears before any person / file / request / device performs a corresponding action; deleting the proper nouns leaves the reader unable to say what this paragraph changed. The most important check is **section-by-section restatement**: relying only on the body read so far, can the target reader answer "what just happened, why the old way wasn't enough, and why the next step naturally appears" without new jargon? When they can't, cut concepts or add a concrete example — don't keep piling on definitions.
 
-When readers genuinely need to compare three or more finite alternatives or parallel items, state the total set and shared comparison basis before expanding it. A numbered comparison is not automatically textbook voice; omitting the local map can impose more cognitive cost.
+**Concept budget and active omission**: `source_contract.md` is the boundary of permissible facts, **not a body-coverage checklist**. Distinguish three kinds: concepts the reader needs to understand the thesis, details useful only to an implementer, and material that merely guards against factual overreach — the latter two go into appendices / prompt / footnotes or are dropped outright. Low cognitive load often comes from actively not saying something: if the ordinary reader still grasps the core judgment after you delete a platform boundary or component description, it should not stay in the body just because "we researched it."
 
-### Section handoffs
+**Over-compression is not low burden** (the failure at the other end): compressing the article into "institution name + one qualitative line," "jurisdiction name + one difference," or "recommendation + one checklist" — the facts are all correct, but the reader never experiences the causal chain of old arrangement → concrete action → new consequence. Low burden is not deleting explanation; it is letting the reader, at any moment, need to understand only one object that is changing. If compressing each paragraph to one sentence loses almost no information, the draft is only a correct outline.
 
-Hide adjacent H2 headings and read the end of one section into the beginning of the next. A natural handoff follows the same object's next action, a boundary exposed by the mechanism, or the consequence of the previous choice. If only the heading supplies the connection, rewrite both ends as a pair.
+## 5. Paragraph architecture: diagnostic signals
 
-### Pattern phrases are signals, not a banned-word list
+- **Concept dependency order**: show the real pain point and action first (when the system stalls → what operation is taken → what change results), and let concepts land while solving the problem; avoid "abstract definition first, then usage."
+- **Local map**: when readers genuinely need to compare three or more finite alternatives, give the total number of options and a unified comparison basis before expanding. Do not mechanically judge all structured comparison as textbook voice; a continuous expansion missing its local map harms comfort just as much.
+- **Section handoffs**: cover adjacent H2s and read the end of the previous section straight into the start of the next. A natural handoff is driven by the same object's next action, a newly exposed boundary, or the consequence of the previous choice; if only the heading supplies the causation, the handoff must be rewritten.
+- **Pattern phrases are diagnostic signals, not banned words**: "this is a...", "to understand X you must first understand Y", "this means far-reaching impact" are signals of definition-first entries / abstract subjects / summary tails. Once found, restructure the paragraph's movement rather than doing synonym replacement.
+- **Parenthetical translation is not terminology explanation**: doublings like "observability (可观测能力)" or "provenance（来源链）" usually only prove the writer knows the English word, without helping the reader understand its role in the current action. Except for formal full names, acronym expansions, original-language quotations, or a first-mention name with genuine retrieval value, do not use "Chinese (English)" or "English (Chinese gloss)." Pick one body term and let the following actions explain it. If meaning is unchanged after deleting the parenthetical, just delete it; if it becomes incomprehensible after deletion, that shows the syntax was not carrying the explanation — rewrite the relation rather than keep the entry.
+- **Analytical frameworks must melt down first**: a timeline, two axes, three layers, four questions, or a six-item checklist can help the Main Agent think, but they cannot automatically become H2s, images, lists, and the ending all at once. Run the **scaffold deletion test**: after deleting the "two axes / three layers / four questions" labels, can the concrete objects, actions, and consequences still drive the whole piece? If not, there is no narrative spine; if yes, keep only the one explicit framework that genuinely lowers burden.
 
-Phrases such as "X is a...", "to understand X, first understand Y", or "this shows the broader significance" often signal definition-first openings, abstract subjects, or summary tails. Diagnose and rebuild the paragraph's movement. Synonym replacement does not fix the architecture.
+## 6. Two specialized diagnostics (new vocabulary, not gates)
 
-### Over-compression is not low cognitive burden
+- **Causal coherence of a load-bearing distinction**: when the thesis rests on a "dichotomy" (two copies / two uses / parallel vs. sequential), you must be able to reconstruct the underlying mechanism and confirm the distinction is a real topology, not a false dichotomy of rhetorical convenience. Every fact agreeing item-by-item with the source does not mean the central distinction holds — for example, "the training copy vs. the disk copy are mutually exclusive" is item-by-item traceable yet self-contradictory (training itself needs the file kept), and only a domain reader who can reconstruct the pipeline will catch it. A source-fidelity check cannot clear this bar.
+- **The organizing unit of a comparison**: if a section compares a shared attribute across several objects, the organizing unit should be **the attribute (one fixed matrix)**, not **the object**. Writing one paragraph per object (one for FrugalGPT, one for RouteLLM…) forces the reader to build the matrix in their head. On finding per-item enumeration, reorganize into a per-dimension matrix (e.g., the three dimensions scope / signal / output) rather than vaguely "lowering burden."
 
-Another common failure compresses an article into "institution plus one verdict," "jurisdiction plus one difference," or "recommendation plus one checklist." The facts may be correct, but the reader never follows the causal chain from the old arrangement through a concrete action to a new consequence. Lower cognitive burden does not mean deleting explanation. It means that at any moment the reader follows one changing object. If reducing each paragraph to one sentence loses almost no information, the draft is a correct outline, not an article.
+## 7. How to write this article's Voice Contract
 
-### Parenthetical translation is not terminology explanation
+Keep `voice_contract.md` to about one page, containing only the positive and negative evidence this article needs:
 
-Doubling terms such as "observability (可观测能力)" or "provenance（来源链）" often proves only that the writer knows both labels. Except for formal names, acronym expansion, quotations, or a first name with genuine retrieval value, do not use `Chinese (English)` or `English (Chinese gloss)`. Choose one body term and let the surrounding actions explain it.
-
-Parenthetical density is also an early signal of translationese. If deleting the parenthetical loses nothing, delete it. If deleting it breaks comprehension, rewrite the relation rather than retaining a glossary entry.
-
-### Analytical frameworks must melt into the article
-
-Timelines, two axes, three layers, four questions, and six-item checklists can help the Main Agent think, but they cannot automatically become H2s, images, body lists, and closing summaries at once. Make a framework explicit only when readers need it to judge, or when it compresses a conflict already established in the body.
-
-Use a scaffold-deletion test: remove labels such as "two axes" or "three layers." If concrete objects, actions, and consequences no longer carry the article, it has no narrative spine. If they do, retain only the one explicit framework that lowers cognitive burden.
-
-## 4. Produce the Voice Contract
-
-Keep `voice_contract.md` to roughly one page and include only evidence relevant to the current article.
-
-- **Positive excerpts**: one or two real excerpts the user has explicitly approved, chosen from work with similar explanatory difficulty. Note the pacing or narrative movement to learn, not sentence templates to copy.
-- **Current-draft hazards**: two or three representative excerpts from the current draft. Diagnose the exact problem in the entry, progression, or ending.
-- **Boundaries**: state what this article permits for first person, questions, technical density, lists, and local maps.
-- **Constraints**: no more than eight high-impact instructions specific to this draft.
-
-Use this template:
+- **Positive excerpts**: 1-2 real passages the user has explicitly approved, of similar explanatory difficulty, annotated with the advancing rhythm to learn — do not lead the writer to mechanically copy sentence patterns.
+- **Negative excerpts**: lift the 2-3 most typical diseased paragraphs directly from the **current draft**, pointing out the specific problem in entry / progression / ending. A real negative example far outweighs a generic banned-word list.
+- **Epistemic movement**: write clearly which real old-judgment → trigger → tradeoff → new-judgment this piece should let the reader see. Don't just write "warm, natural, practitioner's voice."
+- **Reader baseline**: only the known/unknown boundary directly relevant to voice; the full concept ledger goes in `audience_contract.md`.
 
 ```markdown
 # Voice Target
-
-[Two or three sentences: who is explaining what to whom, and at what narrative distance?]
+[2-3 sentences: who is explaining what to whom, with what narrative stance and distance]
 
 ## Positive Excerpts
-
-[One or two approved excerpts]
-- **Learn**: [The movement, pacing, or explanation behavior to absorb]
+[1-2 real high-quality passages]
+- Learning focus: [the paragraph progression / narrative rhythm to absorb]
 
 ## Current-Draft Hazards
+[2-3 typical failed paragraphs from the current draft]
+- Diagnosis: [definition-first entry / performative metaphor / abstract summary tail / jargon stacking]
 
-[Two or three representative failed excerpts]
-- **Diagnosis**: [Definition-first entry, performative metaphor, abstract summary tail, or another specific failure]
-
-## Boundaries and Constraints
-
-- [First-person and question boundary]
-- [Technical density and explanation depth]
-- [Local-map and finite-comparison boundary]
-- [Terminology boundary: choose one body term; do not use glossary-style parenthetical translation]
-- [No more than eight article-specific constraints total]
+## Boundaries & Constraints
+- First-person and question boundary; technical density and explanation-depth limits; local-map and finite-set comparison norms.
+- Terminology rule: choose a Chinese or English body term; no dictionary-style parenthetical translation.
+- [No more than 8 high-impact article-specific constraints]
 ```
 
-## 5. Manager Cold-Read Check
+## 8. Review-model calibration (for the spine's live gate to reference)
 
-Ignore generation commentary and audit claims. Read the candidate itself.
+Style judgment cannot rely on an abstract rubric alone. Give any voice/burden review model one positive example the user explicitly approved and one confirmed textbook-voice negative example, and first have it explain the difference between the two along "the writer-reader relationship, the epistemic movement, the paragraph's speech acts"; **if it cannot reliably distinguish the calibration samples, its verdict on the current candidate is void**. Calibration is not about getting the writer to imitate words and phrases, nor about stuffing the full positive example into the generation context — it tests whether the review model truly understands the target style rather than just counting banned words.
 
-Factual fidelity is a hard gate: numbers, dates, URLs, proper nouns, attributions, and qualifications must match `source_contract.md`. Unsupported incidents, psychological guesses, and absolute extrapolations fail immediately.
-
-For voice and cognitive comfort, ask:
-
-1. Does the opening share a concrete finding, or announce what the article will teach?
-2. With H2 headings hidden, do sections still follow one another naturally?
-3. When a concept first appears, can the reader understand its role and consequence?
-4. Must the reader hold several unattached classifications or axes at once?
-5. Before three or more options appear, does the article provide their count and comparison basis?
-6. Does approachability come from a clear mechanism, or from slang, decorative metaphors, and invented detail?
-7. Do three consecutive paragraphs define, classify, explain items, or summarize abstractions without the same concrete object continuing to change?
-8. Does the article contain bilingual parenthetical translation that can be deleted without losing information?
-9. Has a taxonomy used for analysis been copied directly into H2s, lists, and the ending instead of melting into the narrative?
-
-A natural, comprehensible article may need a few surgical edits even if it contains an occasional pattern phrase. Conversely, a draft can avoid every flagged phrase and still fail because its whole rhythm remains "announce, define, summarize." Treat the latter as `RETRY_PROSE` or `RETURN_TO_ROUND_1`, not as a word-replacement task.
+Treat the two axes the user raises repeatedly — **textbook voice, cognitive load** — as standing first-class gate targets; do not re-guess from scratch each time what the feedback will be. ("Being able to state clearly where it failed" is not the same as "guessing the user's specific judgment axis": the model can generate a pile of plausible failure hypotheses and still miss the one the user actually cares about.)
