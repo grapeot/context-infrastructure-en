@@ -58,7 +58,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Design | [design_skill](https://github.com/grapeot/design_skill) | UI evaluation and improvement judgment framework |
 | Home automation | [smart_home_skill](https://github.com/grapeot/smart_home_skill) | Smart home CLI; device aliases and household details in local overlay |
 | E-ink display | [eink_diary](https://github.com/grapeot/eink_diary) | Visual diary generation for e-ink displays |
-| Identity | [logto-management-skill](https://github.com/grapeot/logto-management-skill) | Logto user and role management CLI |
+| Identity | [logto-management-skill](https://github.com/grapeot/logto-management-skill) | Safely discover, audit, and manage Logto tenant configuration with tenant Swagger search, mandatory backup-and-verify writes, snapshot diffs, MFA operations, and dry-run destructive actions |
 
 ## Selection Principles
 
