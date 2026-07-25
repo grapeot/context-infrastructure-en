@@ -24,6 +24,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Web search | [tavily-skill](https://github.com/grapeot/tavily-skill) | Tavily search/extract CLI, stable JSON output for agents |
 | Documents | [gdocs-skill](https://github.com/grapeot/gdocs-skill) | Google Docs create, search, modify, share; Markdown and tab support |
 | Maps / travel | [google-maps-routing-skill](https://github.com/grapeot/google-maps-routing-skill) | Google Maps Routes + Geocoding CLI; address resolution, real-time drive time, leave-by planning |
+| Domains / DNS | [go-daddy-skill](https://github.com/grapeot/go-daddy-skill) | Read-first GoDaddy domain and authoritative-DNS CLI with complete inventory, redaction, and separate-write-token TXT create plan/apply |
 | Email | [outlook_skill](https://github.com/grapeot/outlook_skill) | Outlook.com mail download, archive, Markdown rendering, send, calendar invites |
 | Email | [resend_email_skill](https://github.com/grapeot/resend_email_skill) | Resend custom-domain sending, inbox reading, Markdown export, attachment inspection |
 | Email / newsletter | [kit-skill](https://github.com/grapeot/kit-skill) | Kit Broadcast CLI for Markdown newsletters, with dry-run, draft-only, web-only, and tag/segment targeting; account defaults stay in local overlays |
