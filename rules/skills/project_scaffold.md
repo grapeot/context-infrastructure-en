@@ -4,6 +4,30 @@ Upgrade a temporary directory, loose script directory, or structurally incomplet
 
 **Trigger words**: "bootstrap a project", "scaffold a project", "organize this directory into a project", "fill in PRD/RFC/working", "create a separate git repo for this directory"
 
+## What This Skill Solves
+
+When AI agents repeatedly create temporary scripts and ad-hoc directories in a workspace, these loose files accumulate into technical debt that no other agent can pick up. This Skill ensures every scaffold follows a unified structure, documentation, testing, and Git convention, so subsequent agents don't need to guess commands or read READMEs to get started.
+
+Core value:
+- Gives each project a unified structural convention, reducing handoff cost between agents
+- Builds skeleton and writes docs before touching code, avoiding restructure-while-coding
+- Prevents privacy leakage to public repos via the public/private intake gate
+- Enforces testing and privacy scanning before delivery, guaranteeing a verifiable state
+
+## When to Use This Skill
+
+- User says "create a new project", "scaffold", "bootstrap"
+- A directory already has 2+ scripts/modules and will continue to iterate
+- Needs independent git history, can't stay in the workspace monorepo
+- User requests PRD/RFC/working docs
+- Needs to organize loose files into a testable, deployable standard project
+
+## When Not to Use
+
+- One-off script, throw away after running → put in `tmp/` or `adhoc_jobs/tmp_*/`
+- User explicitly wants rapid prototype, no docs or tests → build first, scaffold when stable
+- Directory already has a mature structure, only needs small changes → don't do a major relocation
+
 ---
 
 ## 1. Applicable Scenarios
@@ -251,6 +275,59 @@ Don't stuff a major refactoring, doc supplementation, test fixes, and history ba
 
 ---
 
+## 5.5. CI / CD Configuration
+
+### CI (GitHub Actions)
+
+If the project has tests, the scaffold phase should default to a minimal CI workflow. Don't wait for the user to ask.
+
+Minimal `.github/workflows/ci.yml` (Python + uv project example):
+
+```yaml
+name: CI
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Set up Python
+        run: uv python install 3.12
+      - name: Create venv and install dependencies
+        run: |
+          uv venv
+          uv pip install -e '.[dev]'
+      - name: Run tests
+        run: uv run python -m pytest tests/ -v
+```
+
+Notes:
+- **Don't use `uv pip install --system`** — GitHub Actions runners have externally-managed Python and will error. Use `uv venv` + `uv pip install` instead.
+- Branch names should cover both `master` and `main`; don't assume only one.
+- If the project has lint configured, add a lint step in CI.
+
+### CD (Continuous Deployment)
+
+CD is not a default scaffold configuration. Common approaches:
+- **Vercel**: connects to GitHub repo and auto-deploys, no CI config needed
+- **Koyeb / Railway**: similar, connect repo and auto-deploy
+- **Self-hosted**: needs a separate deploy workflow
+
+If the user requests CD, see `rules/skills/deployment_github_actions_koyeb.md`.
+
+### Branch Protection
+
+Private repo branch protection requires GitHub Pro or higher plan. If the user requests it but the plan doesn't support it, inform the user and skip — don't block the flow.
+
+---
+
 ## 6. Minimum Content for AGENTS.md
 
 The project-local `AGENTS.md` must at minimum cover:
@@ -312,3 +389,24 @@ The value of `test.md` is not repeating pytest commands, but letting subsequent 
 If a directory will continue to be modified in the future, and you want different AIs/people to be able to take over at low cost, then it should not remain in "loose script directory" state — it should be upgraded to the project skeleton above as soon as possible.
 
 If this repo will be published to public GitHub in the future, Phase 0 must ask the user, and Phase 4's privacy scan cannot be skipped.
+
+---
+
+## 11. Common Pitfalls
+
+### Vercel Python Deployment
+
+- `vercel.json`'s `builds` + `routes` format is deprecated. Use the modern `rewrites` format. The old format causes Vercel to treat the project as Next.js and return the default Vercel page instead of your app.
+- Vercel Python runtime doesn't recognize `src/` layout. If your package is under `src/`, the entry file (e.g., `api/index.py`) needs to manually `sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))`.
+- Vercel needs a `requirements.txt` (or `pyproject.toml` will be auto-detected) to install Python dependencies.
+- Vercel team SSO / Deployment Protection will protect random deployment URLs, but alias domains (e.g., `project.vercel.app`) are typically unaffected.
+
+### GitHub Actions CI
+
+- `uv pip install --system` fails on GitHub Actions runners (externally-managed Python). Use `uv venv` + `uv pip install` instead.
+- Branch names in CI should cover both `master` and `main`; don't assume only one.
+
+### Branch Protection
+
+- Private repo branch protection requires GitHub Pro. Free plan can only set branch protection on public repos.
+- Both `gh api repos/.../rulesets` and `gh api repos/.../branches/.../protection` will return 403 if the plan doesn't support it.
