@@ -1,5 +1,9 @@
 # Working Log
 
+## 2026-07-29
+
+- Added `m5stack-sticks3-skill` to the public ecosystem for source-backed M5StickS3 board bring-up and hardware acceptance checks; it contains no workspace-private overlay or device secrets.
+
 ## 2026-07-20
 
 - Updated the Antigravity CLI guide and quick reference for AGY 1.1.4: documented the top-level `agy --print` interface, rejected nonexistent `agy run` and JSON event flags, and added the new headless inheritance of persisted `settings.json` policies.
