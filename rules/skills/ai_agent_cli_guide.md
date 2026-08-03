@@ -150,6 +150,52 @@ The final answer is in the `text` field of the item with `item.type == "agent_me
 
 **Recommendation**: Use `low` + `read-only` for simple tasks, `workspace-write` when files must be written, `high` for complex refactoring. For production automation, standardize on `--output-schema` + `-o` to get structured results — more reliable than parsing stdout.
 
+### Using third-party model providers (Ollama Cloud, etc.)
+
+Codex defaults to ChatGPT login with GPT-5.x, but it also supports any OpenAI-compatible third-party provider. This is useful when you want a cheaper or faster model (e.g. Ollama Cloud's GLM-5.2, DeepSeek-V4-Flash), want data to stay outside the OpenAI ecosystem, or want to use a local model.
+
+**How it works**: Define a `[model_providers.<id>]` section in `~/.codex/config.toml` (or a profile file) specifying `base_url`, auth method, and wire API. Then route to it with `model_provider = "<id>"` + `model = "<model_id>"`. Provider IDs cannot reuse the reserved names `openai`, `ollama`, or `lmstudio`.
+
+**Profile approach (recommended — does not touch main config)**:
+
+```toml
+# ~/.codex/ollama-cloud.config.toml
+model = "glm-5.2"
+model_provider = "ollama_cloud"
+
+[model_providers.ollama_cloud]
+name = "Ollama Cloud"
+base_url = "https://ollama.com/v1"
+env_key = "OLLAMA_API_KEY"
+```
+
+Load it at invocation time with `--profile ollama-cloud`; Codex overlays this file on top of your main config:
+
+```bash
+OLLAMA_API_KEY=<your_key> codex exec --full-auto --profile ollama-cloud \
+  -s danger-full-access -c model_reasoning_effort=low "your prompt"
+```
+
+**Key points**:
+
+- `env_key` names the environment variable Codex reads the API key from at runtime. Never put the key itself in the config file.
+- `base_url` must be an OpenAI-compatible endpoint (ending in `/v1`). Ollama Cloud is `https://ollama.com/v1`.
+- `wire_api` defaults to `chat` (Chat Completions). Add `wire_api = "responses"` if the provider supports the Responses API.
+- Custom providers cannot use `--oss` / `--local-provider` (those are for local ollama/lmstudio only).
+- Third-party model tool-calling quality varies. In testing, Ollama Cloud GLM-5.2 successfully used Codex's read/bash/write tools to complete a file-processing task, but its token control on long reasoning is less precise than GPT-5.x; for simple tasks, `model_reasoning_effort=low` is recommended.
+- Codex refreshes the model list on startup; some providers return a slightly different format (e.g. Ollama Cloud returns `{"data":[...]}` instead of `{"models":[...]}`), which logs an ERROR but does not affect inference — safe to ignore.
+
+**Auth methods**:
+- `env_key = "XXX"`: read API key from an environment variable (most common).
+- `requires_openai_auth = true`: reuse ChatGPT/API key login (for OpenAI proxies).
+- No auth field: unauthenticated (for local models).
+- `[model_providers.<id>.auth]` + `command`: fetch a bearer token from an external command (for dynamic-token providers).
+
+**Verification checklist** (run after wiring up a new provider):
+1. Minimal connectivity: `Please reply with only OK` to confirm provider routing works.
+2. Tool calling: `Write a Python hello world and run it` to confirm the read/bash/write tool chain.
+3. File I/O: have the agent read and write a real file inside the workspace, confirming sandbox IO works (note that paths outside the workspace will be blocked by the sandbox).
+
 ### Codex Built-in imagegen
 
 Codex CLI can currently trigger the built-in `imagegen` capability through natural language. The key is having `codex exec` receive an instruction like `Use imagegen to create an image with this request:`; the prompt can be natural language, not necessarily JSON. JSON's value is mainly in templating and stable reuse, e.g. managing `subject / background / lighting / composition` separately for e-commerce assets.
