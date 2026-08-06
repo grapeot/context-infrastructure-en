@@ -3,72 +3,125 @@
 ## Metadata
 
 - **Type**: Workflow
-- **Use cases**: Collaborators, AI agents, and project workflows that already share the same project or decision context. Covers research memos, decision briefs, work logs, and execution summaries.
+- **Use case**: For readers who share project context: the author themselves, internal collaborators, AI agents, project workflows. Covers research memos, decision briefs, work logs, and execution summaries.
 - **Created**: 2026-06-11
-- **Last updated**: 2026-07-15
+- **Last updated**: 2026-08-05
 
 ---
 
-## 1. When to Use It
+## 1. When to Use
 
-Load this workflow when the audience shares context and the goal is to help them form a judgment, verify evidence, and decide the next step quickly.
-*   For strangers without shared context, public channels, customers, or external course audiences, use `workflow_external_writing.md`.
+The audience already shares project context. The goal is to help them form a quick judgment, verify the evidence, and decide on next steps. When writing for unfamiliar readers who lack shared context, use `workflow_external_writing.md`.
 
-AI has made the marginal cost of internal documents extremely low, but reader attention remains the bottleneck. The goal of form and layout is therefore to **reduce decision friction and give the reader the most actionable judgment in the same amount of time.**
+AI has made the marginal cost of internal documentation nearly zero, but reader attention remains the bottleneck. The design goal is: **reduce decision friction — maximize the amount of actionable judgment the reader can extract per unit of attention.**
 
-### Shared Project Context Is Not Shared Vocabulary
+### Shared Background Does Not Mean Shared Terminology
 
-An internal reader may know the project, its goals, and the decision at hand without knowing concepts introduced by the current round of work. Treat these as two separate questions:
+Internal documentation only assumes the reader is familiar with the project, its goals, and the decision background. It does not assume the reader already understands concepts newly introduced by the current round of work. These must be judged separately:
 
-*   **Project context**: Does the reader know why the project exists, what problem is being addressed, and what decision follows?
-*   **Concept context**: Does the reader already understand the new terms, metrics, system boundaries, and causal relationships used here?
+- **Relationship and project context**: Does the reader know whose project this is, why it is being researched now, and what decision it ultimately serves.
+- **Conceptual context**: Does the reader already understand the newly introduced terminology, metrics, system boundaries, and causal relationships.
 
-When project context is thick but concept context is thin, build the full chain of conceptual dependencies. Shared context lets you omit facts that are genuinely shared. It does not let you skip concepts created by the current work.
-
-### Do Not Treat the Research Endpoint as the Reader's Starting Point
-
-After research, the author holds a compressed set of categories, terms, and boundaries. They are useful for review and retrieval, but not for building a reader's first understanding. Do not ask the reader to begin where the research ended.
-
-When explaining a technology or product the reader has not encountered, establish a mental model in this order. If the object has no linear runtime path, use a before-and-after contrast, timeline, role relationship, or causal chain instead of forcing a process:
-
-1. **Start with a concrete scene.** For a runtime path, show how the system used to work. Otherwise, use a specific event, role conflict, or before-and-after contrast.
-2. **Name the observable old problem.** State who pays more, loses state, chooses the wrong path, or cannot judge the return, rather than replacing the phenomenon with an abstract label.
-3. **Show the new action.** Explain what the new object can save, constrain, compare, or recover before naming that capability for later reuse.
-4. **Add product boundaries and strict terminology last.** Shipped versus roadmap, GA versus experimental, metric definitions, and implementation details matter, but not before the reader understands the problem.
-
-If removing the terms still leaves the reader unable to describe how the object works or changes, where the problem is, and what the new approach changes, the document is a research summary rather than an explanation.
+When the former is strong but the latter is weak, conceptual dependencies must still be fully established. Shared context only permits omitting facts both parties genuinely share — it does not permit omitting concepts newly created by the current task.
 
 ---
 
-## 2. Information Order and Structure (Bottom Line Up Front)
+## 2. Core Principle: Cognitive Efficiency
 
-Put the most important decisions and recommendations first. Do not list work chronologically or begin with extensive background.
-The first screen must pass a comprehension gate. Within 15 seconds, the reader should be able to restate in plain language what happened and why it changes the current decision, then decide whether to continue and which section matters most. A first screen that requires guessing terminology, searching ahead for definitions, or reconstructing missing reasoning fails the gate.
+Cognitive efficiency = the amount of actionable judgment the reader gains per unit of attention. It is improved not by cramming in more information, but by carefully arranging two things: **presentation order** and the **pace at which new concepts are introduced**.
 
-Putting the conclusion first does not justify placing it before its prerequisites. If a conclusion depends on an unfamiliar concept, first provide one or two sentences of concrete facts, actions, or contrasts that create the minimum step needed to understand it. This context exists only to make the current judgment intelligible, not to provide a full domain overview.
+The most common failure mode in internal documents is the researcher treating their own endpoint as the reader's starting point. After finishing research, the researcher's mind contains a highly compressed set of categories, terms, and boundaries. This compression is useful for review and retrieval, but when used directly to build the reader's first layer of understanding, the reader must first reverse-engineer the author's compression before grasping what the author means. Most of the reader's mental energy goes into translating terminology and reconstructing premises, rather than evaluating conclusions.
 
-### Establish a Testable Writing Contract
+This skill's core contribution is turning "build the picture first, then give the conclusion, introduce terminology last" from a principle into an actionable presentation order. Section 3 below provides hard rules, Section 4 covers information structure, Section 5 addresses visuals and folding, and Section 6 covers pre-delivery verification.
 
-For an explanatory memo with a clear main question, rewrite the question as a testable contract before drafting, for example:
+---
 
-> After reading, the reader can explain in ordinary language why this appeared now, where the old approach falls short, and what the new object specifically adds.
+## 3. Concept Presentation Order: Hard Rules
 
-The body length and order must serve this contract. Related but distinct questions such as product status, roadmap, adoption advice, or a full experimental protocol may have their own sections, but cannot compete for the main thread. Do not turn an explanatory memo into a benchmark RFC, product history, or feature list.
+### 3.1 Before any term appears, the action or consequence it describes must already be present in the preceding text
 
-When the user explicitly requests several parallel deliverables, the contract must cover each one. A work log or execution summary may likewise use multiple contracts for status, evidence, risk, and next steps.
+This is the most important rule in this skill and takes priority over all structural advice.
 
-The first screen still previews the conclusion and recommendation. After it, explanations of a new technology or product normally proceed through three layers without jumping back and forth:
+When a term first appears, the reader must already have encountered the phenomenon it describes through a concrete action, a concrete scenario, or a concrete consequence. If deleting the term still leaves the preceding text understandable, the term is merely a label and can be postponed or removed. If deleting it makes the text unintelligible, the conceptual dependency is inverted: the term has appeared before the phenomenon it explains.
 
-1. **Problem layer:** How did the old system work, and when did it become insufficient?
-2. **Solution layer:** Which actions or boundaries does the new object change?
-3. **Decision layer:** What is complete now, and what should we do?
+Verification method: read sentence by sentence from the beginning. For each new term, ask — has the reader already seen the thing it names in the preceding text? If not, either move the term to after the phenomenon appears, or insert a concrete action before the term to build the picture first.
 
-The first screen may preview the decision, but shipped-versus-roadmap boundaries and recommendations should follow only after the problem and solution are understandable. A decision preview does not replace either layer.
+### 3.2 Default unfolding order: Action → Difference → Impact → Name
 
-### Restore Minimum Context
-The reader may be switching between tasks and may not have the current context in mind. Open with one or two sentences that restore the minimum context: what the project is, what question this round addresses, and why it matters now.
+New concepts should appear in the following order, not in the researcher's compressed "Term → Framework → Conclusion" order:
 
-### Recommended Conclusion Card Structure
+1. **Concrete object or action**: who saved, deleted, read, or changed what, and when. Start with a runnable picture or a specific event, not a definition.
+2. **Observable difference or contradiction**: how two approaches differ, what the reader concretely cannot see, cannot recover, or must pay extra for after something goes wrong.
+3. **Impact on the current decision**: which choice, cost, or risk this changes.
+4. **Name the concept only when necessary**: introduce the term or metric name only when later text needs to reference, compare, or search for it repeatedly.
+
+A judgment must not enter the main text before the concepts and facts it depends on have appeared. When order issues arise, rearrange the content rather than patching with parenthetical definitions after the term.
+
+### 3.3 Role, scope, and consequence arrive together
+
+When a new term, metric, or ratio first appears, the reader must simultaneously learn:
+
+- What it describes in the current problem;
+- Which object, phase, or comparison baseline it measures;
+- How an increase or decrease in it changes someone's behavior, cost, or outcome.
+
+Prefer introducing these through actions, comparisons, and concrete consequences rather than automatically supplying a dictionary-style definition. Write "after a restart, the program can pick up where the last task left off" first, and call it "recovery capability" later only if the text genuinely needs to refer to it repeatedly.
+
+### 3.4 First-screen concept budget
+
+The scarce resource on the first screen is not word count — it is the number of new concepts the reader must simultaneously hold in working memory. For each new label added, check whether it serves the current judgment. Names that exist only for later categorization, to signal professionalism, or to compress the author's expression should be moved to later sections or removed.
+
+Once compression exceeds the reader's existing conceptual structure, what is saved is the author's word count; what is added is the reader's decoding work. Internal documents should let the reader spend most of their mental energy judging conclusions, not reconstructing the premises the author omitted.
+
+### 3.5 Constraints and caveats come later, but are not hidden
+
+Factual boundaries must be accurate, but do not stack version numbers, paper limitations, schema names, and release statuses in rapid succession before the core subject has been established. Use two or three sentences to build the main model first, then immediately follow with "where we are now, what is still incomplete."
+
+The first screen may keep the single most important boundary; the remaining constraints go near the corresponding claims. Accuracy does not mean front-loading every caveat, and low cognitive burden does not mean omitting caveats.
+
+---
+
+## 4. Information Order and Structure (Bottom Line Up Front)
+
+### 4.1 Establish a verifiable writing contract first
+
+Before writing, rewrite the user's main question as a single verifiable question contract, for example:
+
+> After reading, the reader should be able to explain in plain language "why it appeared now, where the old approach fell short, and what it concretely adds."
+
+The main text's length and order must obey this contract. Related but distinct questions should be downgraded: product status, future roadmap, adoption recommendations, and full experimental protocols can be separated into sections but must not take turns competing for the main thread. In particular, avoid turning an explanatory memo into a benchmark RFC, a product timeline, or a feature checklist.
+
+When the user explicitly requests multiple parallel deliverables, the contract must cover all explicit requirements and may be written as multiple verification sentences. Work logs and execution summaries may also establish multiple contracts based on status, evidence, risk, and next steps.
+
+### 4.2 First screen: conclusion first, but without leaping over comprehension prerequisites
+
+The opening screen must let the reader **see and understand** the core conclusion within 15 seconds, then decide whether to continue reading and which section to focus on. A first-screen conclusion is invalid if the reader must guess at terms, search ahead for definitions, or fill in reasoning gaps on their own.
+
+Leading with the conclusion does not allow leaping over comprehension prerequisites. If a conclusion depends on concepts the reader has not yet encountered, first use one or two sentences of concrete facts, actions, or comparisons to build a minimal comprehension step, then give the conclusion. The background provided here serves only to understand the current judgment and does not constitute a full domain survey.
+
+For complex topics, the first screen defaults to a two-layer expression:
+
+1. **Plain-language layer**: first state who did what, what difference emerged, and which decision this affects. The reader must be able to restate it without knowing any new terminology.
+2. **Technical-precision layer**: only after the plain language has established meaning, provide the necessary metric names, system names, or strict qualifications.
+
+Technical expression cannot substitute for the plain-language layer. If removing English terms from a sentence makes it impossible to tell what actually happened, the author is still using labels in place of explanation.
+
+### 4.3 Restore minimal context
+
+The reader may be switching between multiple tasks and lack real-time context in their head. Open with 1–2 sentences restoring minimal context: what project this is, what question this round of work answers, and why it needs attention now.
+
+### 4.4 Three-layer expansion of the explanatory body
+
+After the first screen previews the conclusion, the explanatory body defaults to a three-layer expansion, avoiding back-and-forth jumping between layers. These three layers correspond to the presentation order in Section 3, taking the reader from "seeing the problem" to "evaluating the solution":
+
+1. **Problem layer**: how the old system worked, and when it started falling short. Open with a concrete action or failure scenario.
+2. **Solution layer**: which actions or boundaries the new subject concretely changes. First write what it can save, constrain, compare, or recover. Only name the capability when later text needs to reference it repeatedly.
+3. **Decision layer**: how far it has progressed, and what we should do now. Shipped/roadmap boundaries and action recommendations unfold after the problem and solution are understandable.
+
+The first screen may preview the final decision to the reader; shipped/roadmap boundaries and action recommendations in the body should unfold after the problem and solution are already understandable. A decision preview cannot substitute for the explanation provided by the first two layers.
+
+### 4.5 Recommended conclusion card structure
+
 ```markdown
 ## Bottom Line
 
@@ -76,113 +129,74 @@ One-sentence conclusion.
 
 ## Why This Matters
 
-Which judgment or action this affects.
+What judgment or action this affects.
 
 ## Recommended Action
 
-What to do, or what not to do yet.
+What to do, or what to defer for now.
 ```
 
-### Two-Layer Conclusions
+### 4.6 Segmented editing for long documents
 
-For a complex topic, use two layers on the first screen:
-
-1. **Plain-language layer**: State who did what, what changed or differs, and which decision that affects. A reader who knows none of the new terms should still be able to restate it.
-2. **Technical-precision layer**: Once the meaning is established, add the metric name, system name, or strict qualification needed for precision.
-
-Technical language cannot replace the plain-language layer. If removing the terminology leaves the sentence unable to explain what actually happened, the labels are standing in for an explanation.
-
-### Put Qualifications Later, Without Hiding Them
-
-Keep factual boundaries accurate, but do not stack version numbers, paper limitations, schema names, and release states before the core object exists in the reader's mind. Establish the main model in two or three sentences, then state what is complete and what remains unfinished.
-
-The first screen may retain one most important boundary. Put other qualifications next to the claims they limit. Accuracy does not mean front-loading every caveat, and lower cognitive burden does not mean omitting them.
+For longer documents, write in batches by heading, with at most 4 headings per batch. Within each batch, independently ensure correct concept presentation order; across batches, verify that concepts established in earlier batches are not prematurely referenced in later ones. This is more controllable than writing the entire document at once and then revising it wholesale, and it makes maintaining ordering consistency easier.
 
 ---
 
-## 3. Concept Dependencies and Exposition Order
+## 5. Skimmability Optimization
 
-### Default Order
+- **Headings carry decision-relevant information**: do not write `Findings` or `Notes`; write specific conclusions or discoveries (e.g., "WebView runs only bundled JS, filtered through the sanitizer before execution").
+- **Short paragraphs, explicit numbering**: each paragraph addresses a single judgment point. When listing multiple parallel statements, always use explicit `First… Second…` numbering (see `COMMUNICATION.md` language hygiene).
+- **Mobile skimmability**: optimize the first screen for narrow mobile-widths by default: short paragraphs, narrow tables, and no horizontal scrolling.
+- **Mixed-language formatting**: for internal documents, default to the primary language throughout; do not intersperse foreign-language headings or table headers within predominantly monoglot prose. Retain only necessary API names, code identifiers, and metric names.
+- **Separate explanation from protocol**: the body of an explanatory document is responsible for building the mental model. Experimental parameters, full field tables, budget details, and kill criteria that exceed what the main question requires should be condensed into a single recommendation or moved to an appendix / separate RFC. Once the protocol length approaches or exceeds the explanatory main thread, treat it by default as a document-type drift.
 
-Introduce a new concept in this order unless the material gives a clear reason not to:
-
-1. **Concrete actor, object, or action**: Who saved, deleted, read, or changed what, and when?
-2. **Observable difference or conflict**: What differs between the options? After a failure, what can the reader no longer see, recover, or avoid paying for?
-3. **Decision consequence**: Which choice, cost, or risk changes as a result?
-4. **Name the concept only when useful**: Introduce a term or metric name only if later sections need to compare, retrieve, or repeatedly reference it.
-
-Do not write in the author's post-research compression order of term, framework, conclusion. If a judgment depends on facts or concepts that have not appeared yet, reorder the material. A parenthetical definition after the term does not repair a broken dependency chain.
-
-### Role, Scope, and Consequence Arrive Together
-
-The first appearance of a new term, metric, or ratio must also tell the reader:
-
-*   what it describes in the current problem;
-*   which object, stage, population, or comparison baseline it covers;
-*   whose behavior, cost, or result changes when it rises or falls.
-
-Prefer actions, contrasts, and concrete consequences over dictionary-style definitions. For example, explain that a program can resume the previous task after restarting before naming that property recoverability, if the name is needed at all.
-
-### First-Screen Concept Budget
-
-The scarce resource on the first screen is not word count. It is the number of unfamiliar concepts the reader must hold in working memory at once. For every new label, ask whether it helps the immediate judgment. Move or remove names that exist only to classify later material, signal expertise, or compress the writer's phrasing.
-
-Maximizing cognitive bandwidth is not the same as maximizing information density. Compression beyond the reader's existing conceptual structure saves words for the writer while increasing decoding work for the reader.
+Skimmability is not the same as understandability. Short paragraphs, tables, cards, and high information density can pack more unexplained concepts into the first screen. After completing visual skimmability optimization, re-audit for reasoning continuity; if the reader needs to pause, backtrack, or search ahead for definitions, the document cannot pass under the defense of "the layout is clear."
 
 ---
 
-## 4. Skimmability
+## 6. Verifiability
 
-*   **Headings carry decision information**: Do not write `Findings` or `Notes`. Write the specific conclusion, such as "The task resumes after restart without repeating completed steps."
-*   **Short paragraphs and explicit numbering**: Each paragraph should resolve one judgment point. When stating several parallel items, number them explicitly with `First... Second...` as required by `COMMUNICATION.md` language hygiene.
-*   **Mobile scanning**: Optimize the first screen for a narrow phone display by default. Use short paragraphs and narrow tables that do not require horizontal scrolling.
-*   **Language consistency**: Keep internal documents in one primary language. Retain only necessary API names, code identifiers, and metric names from another language.
+Trust in internal documents comes from verifiability. Alongside every factual claim, code behavior, or historical conclusion, **evidence links must be placed in situ**.
 
-*   **Separate explanation from protocol**: The body of an explanatory document builds the mental model. Experimental parameters, full field tables, budget details, and kill criteria that exceed the main question belong in a short recommendation, appendix, or separate RFC. If protocol material approaches or exceeds the explanatory thread, the document has drifted in type.
-
-Skimmability is not the same as comprehension. Short paragraphs, tables, and cards can still pack too many unexplained concepts onto the first screen. After optimizing the visual scan, verify that the reasoning remains continuous. A layout does not pass if the reader must pause, reread, or search ahead for definitions.
+- **Evidence forms**: inline links, file paths (e.g., `file:line`), commands, commit hashes, log/raw-data paths, original text excerpts.
+- **Placement requirement**: evidence must sit immediately beside the sentence it supports; do not batch it all at the end.
 
 ---
 
-## 5. Verifiability
+## 7. Adaptive Reading Trajectory
 
-Internal documents earn trust through verifiability. Put evidence links **next to the factual claim, code behavior, or historical conclusion they support.**
-*   **Evidence forms**: Inline links, file paths such as `file:line`, commands, commit hashes, log or raw-data paths, and original excerpts.
-*   **Placement**: Keep evidence beside the statement it supports. Do not collect all evidence at the end.
+Do not assume the reader will spend either 30 seconds or 30 minutes. The same long document should simultaneously satisfy both skimming and auditing paths:
 
----
+1. **Skim layer**: first-screen one-sentence conclusion + takeaway + status card.
+2. **Deep-read layer**: detailed argumentation, rejected alternatives, long data, implementation details. **Default to wrapping in `<details>` tags or anchoring at the end.**
 
-## 6. Adaptive Reading Trajectory
-
-Do not assume the reader will spend either 30 seconds or 30 minutes. The same long document should support both scanning and auditing:
-1.  **Scanning layer**: A one-sentence conclusion, takeaway, and status card on the first screen.
-2.  **Deep-reading layer**: Detailed argument, rejected alternatives, long data, and implementation details. **Collapse these in `<details>` sections by default or anchor them at the end.**
-
-The scanning layer may omit evidence details, but it may not omit the premises required to understand the conclusion. The deep-reading layer explains why to trust the claim; it should not repair undefined concepts from the first screen.
+The skim layer may omit evidentiary detail but must not omit the prerequisites needed to understand the conclusion. The deep-read layer is responsible for answering "why should I believe this," not for retroactively fixing undefined concepts from the first screen.
 
 ---
 
-## 7. Low-Cognitive-Burden Acceptance Checks
+## 8. Pre-Delivery Verification
 
-Before delivery, audit the document from the reader's perspective:
+Before delivery, complete the following checks from the reader's perspective. The first three are order and concept checks and carry the highest weight; if they fail, rearrange before addressing the others.
 
-1. **First-screen restatement**: After reading only the first screen, can the reader explain in plain language what happened and why it affects the decision? Repeating the document's terminology without explaining it does not count.
-2. **First-appearance audit**: When each new term or metric first appears, are its role, scope, and observable consequence already present?
-3. **No pre-reading required**: Does any sentence require material that appears later? If so, reorder the dependency chain instead of sending the reader to another section.
-4. **Decoding-tax audit**: Is the reader spending effort judging facts and conclusions, or translating terminology, expanding acronyms, and guessing abstractions? Replace the latter with concrete actors, actions, and outcomes.
-5. **Abstraction grounding**: Before words such as governance, recovery, transparency, boundary, capability, or efficiency appear, does the text show what was added, removed, made impossible, or made costly?
-6. **Two-layer conclusion**: Does every technical conclusion have a plain-language version that does not depend on the new terminology?
-7. **Concrete mental-model test**: Can a first-time reader explain how the object works or changes through an appropriate process, before-and-after contrast, timeline, role relationship, or causal chain?
-8. **Causal-thread test**: Can the reader answer where the old system falls short, why this is happening now, and which step the new approach changes, rather than merely repeating product positioning?
-9. **Research-compression reversal**: Does the document begin with the author's final terminology system? If so, restart from concrete actions and failure modes.
-10. **Question-share test**: Does material that directly answers the question contract occupy most of the body? If feature lists, chronology, implementation boundaries, or protocols dominate, rebuild the structure instead of adding another summary.
-11. **Three-layer separation**: After the first-screen preview, do problem, solution, and decision arrive in dependency order? Is the reader forced to decode GA, roadmap, or adoption advice before understanding the object?
+1. **Term-lag test**: read sentence by sentence. For each new term as it first appears, has the action or consequence it names already appeared in the preceding text? If not, move the term later or add a concrete picture before it.
+2. **First-screen restatement test**: reading only the first screen, can the reader restate in plain language what happened and why it affects the current decision? If the restatement can only repeat the original terms verbatim, comprehension has not been achieved.
+3. **Research-compression inversion test**: does the document open from the author's final compressed system of terms? If so, rewrite to open from concrete actions and failure phenomena.
+4. **First-appearance concept audit**: list all newly introduced terms and metrics. When each first appears, are its role, statistical scope, and observable consequence already in place?
+5. **No-preread test**: does understanding any sentence require reading later text first? If so, rearrange the dependency order — do not shift the comprehension burden using "see below."
+6. **Decoding-tax audit**: is the reader's mental energy spent on judging facts and conclusions, or on translating jargon, expanding abbreviations, and guessing at abstract nouns? The latter should be rewritten as concrete people, actions, and results.
+7. **Concreteness test**: when abstract words like "governance, recovery, transparency, boundary, capability, efficiency" appear, has the preceding text already made concrete what was added, what was removed, and what can no longer continue?
+8. **Two-layer conclusion test**: before the technical conclusion, is there a plain-language version that does not depend on new terminology?
+9. **Concrete mental-model test**: can a reader encountering this subject for the first time concretely describe how the subject operates or changes, using the appropriate form among process flow, before/after comparison, timeline, role relationships, or causal chain?
+10. **Causal main-thread test**: can the reader separately answer "where the old system fell short," "why now," and "which step the new approach changes" — rather than only being able to restate product positioning?
+11. **Question-proportion test**: does the content directly answering the question contract make up the majority of the main text? If feature checklists, historical timelines, implementation boundaries, or experimental protocols dominate, restructure the document rather than continuing to add summaries.
+12. **Three-layer separation test**: after the first screen previews the conclusion, do the explanatory body's problem layer, solution layer, and decision layer arrive in comprehension-dependency order? Is the reader forced to decode GA status, roadmaps, or adoption plans before understanding the subject?
 
 ---
 
-## 8. Layout and Visual Components
+## 9. Layout and Visual Component Usage
 
 Internal documents should actively use visual components to reduce the reader's cognitive burden.
-*   When the document needs specific layouts such as status-card grids, adaptive tables, semantic chips, or dark-mode-compatible CSS, load and follow the [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md).
-*   **Charts and diagrams**: Prefer PNG/JPG/WebP images. **Do not use inline SVG**, because mobile rendering is inconsistent.
-*   **Mermaid** may serve only as a supporting view. It must not carry the only version of a core conclusion, and it requires a Markdown fallback nearby.
+
+- When specific layout patterns are needed (such as status card grids, responsive tables, semantic chip annotations, dark-mode-compatible CSS, etc.), load and follow the [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md).
+- **Diagram generation**: prefer PNG/JPG/WebP images. **Do not use inline SVG** (to avoid mobile rendering incompatibilities).
+- **Mermaid** may only serve as a supplementary view, must never carry the sole core conclusion, and must always have a Markdown fallback before and after.

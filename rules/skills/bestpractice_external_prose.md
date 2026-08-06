@@ -19,13 +19,14 @@ Natural external prose is the writer, at the distance of an equal peer, stating 
 
 The Main Agent's three jobs: diagnose stance and architecture (why it sounds ceremonious / like a lecture handout / cognitively overloaded / performatively casual); write a `voice_contract.md` of under one page grounded in this article's evidence and its real negative examples; and on a cold read, judge the whole voice by the reading experience rather than by counting banned words.
 
-## 2. Textbook voice: one definition, two directions of deviation
+## 2. Textbook voice: one definition, three directions of deviation
 
 **Textbook voice** (the canonical negative example): the whole piece holds the stance "I already know the complete map, now I'll walk you through it item by item." Its typical rhythm is a continuous loop of **announce the topic → define → explain the mechanism → delimit the boundaries → abstract summary**. It treats the reader as a trainee. Note: deleting "first / second / third" or changing the numbering into "one boundary, another boundary" does **not** change this stance — the structure is unchanged, only the wording is. This is the spot most often misjudged as "already fixed."
 
-Two directions of deviation:
+Three directions of deviation:
 - **Textbook voice**: as above. Reads like course material.
 - **Performative casualness**: overusing slang, exaggerated metaphors, fake dialogue, and excessive second person, using surface friendliness to cover up a mechanism that was never explained.
+- **Polar dramatization**: absolute negations and theatrical intensifiers ("this is fundamentally not…", "never depends on…", "cruel reality", "utterly cannot", "extremely typical", "locked dead on…"). They add emotional spin and undermine peer-level restraint. **Diagnostic fix**: drop the polarity modifiers (e.g. "cruel reality" → "reality", "fundamentally cannot" → "cannot"), avoid scare-quoting ordinary concepts, and let concrete facts, numbers, and interest boundaries carry the judgment.
 
 **The target stance**: writer and reader face the same concrete object, advancing along actions, constraints, and consequences; concepts appear as needed, and judgments land after evidence; the entry comes straight from a new fact or conflict unique to this piece; paragraphs stop on an observed consequence or an open question, without forcing a grand summary. Any concrete scene or running example that carries the piece must be strictly grounded in `source_contract.md` or explicitly marked as hypothetical — never manufacture "naturalness" from invented on-scene incidents, guessed user reactions, or unsupported causation.
 
@@ -45,7 +46,7 @@ Voice failures often stem from organizing the article around **the writer's know
 
 **Concept budget and active omission**: `source_contract.md` is the boundary of permissible facts, **not a body-coverage checklist**. Distinguish three kinds: concepts the reader needs to understand the thesis, details useful only to an implementer, and material that merely guards against factual overreach — the latter two go into appendices / prompt / footnotes or are dropped outright. Low cognitive load often comes from actively not saying something: if the ordinary reader still grasps the core judgment after you delete a platform boundary or component description, it should not stay in the body just because "we researched it."
 
-**Over-compression is not low burden** (the failure at the other end): compressing the article into "institution name + one qualitative line," "jurisdiction name + one difference," or "recommendation + one checklist" — the facts are all correct, but the reader never experiences the causal chain of old arrangement → concrete action → new consequence. Low burden is not deleting explanation; it is letting the reader, at any moment, need to understand only one object that is changing. If compressing each paragraph to one sentence loses almost no information, the draft is only a correct outline.
+**Over-compression is not low burden** (the failure at the other end): compressing the article into "institution name + one qualitative line," "jurisdiction name + one difference," or "recommendation + one checklist" — the facts are all correct, but the reader never experiences the causal chain of old arrangement → concrete action → new consequence. Low Cognitive Burden is orthogonal to length: low load means easy to follow, causally coherent, and paragraphs that breathe — not shorter word count or stripped context. Chopping natural paragraphs into consecutive manual-style one-liners increases decoding load. Low burden is not deleting explanation; it is letting the reader, at any moment, need to understand only one object that is changing. If compressing each paragraph to one sentence loses almost no information, the draft is only a correct outline.
 
 ## 5. Paragraph architecture: diagnostic signals
 
