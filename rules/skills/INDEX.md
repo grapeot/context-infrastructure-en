@@ -107,6 +107,7 @@ General best practices and lessons learned.
 - [AI Product Design Principles](./bestpractice_ai_product_design.md) ✅ — Linear chat vs knowledge work, perception-rule decoupling
 - [Product/Technical Decision Reverse Engineering](./bestpractice_product_decision_analysis.md) ✅ — Analyze product or technical decisions from design space, constraints, and trade-offs
 - Playwright E2E Testing Methodology → see [`../../docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md): CDP step-by-step debugging CLI + E2E methodology, CLI `pw-test`
+- [Playwright Ajax Capture](./playwright_ajax_capture.md) — Reverse-engineer a logged-in web app's internal API via CDP network monitoring, then replay with plain requests (no Admin API key needed). Trigger words: "capture ajax", "reverse-engineer internal API", "browser session API call", "no admin key"
 
 ### Deployment
 
