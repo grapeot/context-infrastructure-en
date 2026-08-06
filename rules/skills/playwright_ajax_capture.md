@@ -253,6 +253,20 @@ Only after `requests` verification passes should you write it into a CLI. Write 
 
 **Fix**: Before sending a thread reply, confirm the parent message's real ID via API. Don't infer the ID from the POST response's `creation_uuid`. When verifying in the UI, make sure you open the thread panel for the same message you replied to.
 
+### 10. Guessing SPA URL patterns causes 404 and poisons the browser session
+
+**Symptom**: To capture a single post's ajax call with Playwright, you navigate directly to a guessed URL like `https://community.circle.so/s/<space-slug>/p/<post-slug>`. The page returns "We were unable to process your request" (404 error page), and subsequent navigations to `/s/<space-slug>` from the same session also keep returning 404.
+
+**Cause**: Circle's SPA routing doesn't use the `/s/<space>/p/<post>` pattern. The guessed URL structure doesn't match the actual route, and navigating to a non-existent route puts the SPA's frontend router into a broken state where subsequent navigations to valid routes also fail. CDP `page.on("request"/"response")` only captures the 404 HTML document request — no `internal_api` calls at all, because the SPA failed at the routing stage and never reached the data-loading stage.
+
+**Fix**: Don't guess SPA deep-link URL patterns. The correct approach:
+1. First navigate to a known-valid entry page (e.g. community home `/` or feed), wait for `networkidle`
+2. Use `page.locator("a[href*='keyword']")` to find the target link's `<a>` tag, then `.click()` to navigate via SPA internal routing
+3. If the list endpoint (e.g. `list-posts`) already returns full records (including body), just replay that endpoint with plain HTTP — no Playwright capture needed
+4. If you're unsure of the URL structure, manually navigate to the target page in the browser first, copy the real URL from the address bar, then feed it to Playwright
+
+This lesson also shows: when `list-posts` already returns full data, you shouldn't use Playwright to capture the "view single post" ajax — just call the existing list endpoint or add a `get-post` CLI command. Playwright Ajax Capture is a reverse-engineering tool for "when there's no API documentation", not the first choice "when an API already exists".
+
 ## Acceptance Criteria
 
 - [ ] CDP Chrome is running and the user is logged in (`pw-test url` returns a logged-in URL, not a login page)
