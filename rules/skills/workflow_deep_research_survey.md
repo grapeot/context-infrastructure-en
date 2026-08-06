@@ -196,9 +196,9 @@ Brainstorming is not title polishing or generic multi-agent restatement. It must
 
 After Phase 1-3 research is complete, enter the writing phase. Choose the path based on target output type:
 
-**External-facing analysis article** -> Enter the [External Writing Workflow](./workflow_external_writing.md). Start with its thesis-and-outline selection and article-warrant check. The Main Agent then establishes the source contract, writing brief, audience contract, voice contract, and prose-neutral content map. Use the [Antigravity CLI file-based invocation](./antigravity_cli.md) to double-generate heterogeneous prose candidates and pick the best in a single review. Acceptance runs separated blind reads that cannot see the contract (style blind read + cognitive walkthrough + calibrated voice comparison), permits at most one fresh AGY retry when needed, and finally passes a machine-blocked terminal cold read by an unfamiliar reader before logged surgical edits.
+**External-facing analysis article** -> Enter the [External Writing Workflow](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_external_writing.md). Start with its thesis-and-outline selection and article-warrant check. The Main Agent then establishes the source contract, writing brief, audience contract, voice contract, and prose-neutral content map. Use the [Antigravity CLI file-based invocation](./antigravity_cli.md) to double-generate heterogeneous prose candidates and pick the best in a single review. Acceptance runs separated blind reads that cannot see the contract (style blind read + cognitive walkthrough + calibrated voice comparison), permits at most one fresh AGY retry when needed, and finally passes a machine-blocked terminal cold read by an unfamiliar reader before logged surgical edits.
 
-**Internal memo** (for yourself or collaborators sharing context) → Load the [Internal Writing Workflow](./workflow_internal_writing.md). First surface the conclusions and basis that most affect decisions, and clearly note unresolved points and next steps. Read [`COMMUNICATION.md`](../COMMUNICATION.md) before writing.
+**Internal memo** (for yourself or collaborators sharing context) → Load the [Internal Writing Workflow](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_internal_writing.md). First surface the conclusions and basis that most affect decisions, and clearly note unresolved points and next steps. Read [`COMMUNICATION.md`](../COMMUNICATION.md) before writing.
 
 **Shared Format Requirements** (common to both modes):
 - Use the requested output language consistently in Markdown
@@ -282,4 +282,4 @@ If the research will later be turned into an external article, do one more check
 | Using wrong subagent type | `subagent_type` must be a currently registered agent name; default to `general` for external research, `explore` for codebase exploration, and a locally configured privacy-preserving agent for sensitive material |
 | Research results become vendor marketing summaries | Phase 1 extracts claims, Phase 2 allocates dimensions by evidence function, Phase 3 checks verification status |
 
-For writing-stage requirements and failure prevention, see the [External Writing Workflow](./workflow_external_writing.md).
+For writing-stage requirements and failure prevention, see the [External Writing Workflow](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_external_writing.md).
