@@ -1,5 +1,9 @@
 # Working Log
 
+## 2026-08-05
+
+- Synced external/internal writing skills from private workspace: mandatory Round 4 CLI mechanical self-check (`external_prose_lint_cli`), genre-label writer lever, polarity diagnostics, updated internal concept-order hard rules. Chinese-tuned CLI lexicon retained with English skill notes; no private paths or secrets.
+
 ## 2026-07-29
 
 - Added `m5stack-sticks3-skill` to the public ecosystem for source-backed M5StickS3 board bring-up and hardware acceptance checks; it contains no workspace-private overlay or device secrets.
