@@ -67,9 +67,9 @@ Complete workflows for specific tasks.
   - Judgment criteria: the task hits at least 2 of: broad information surface, independent read tasks, independent judgment, high-value uncertainty, main thread needs to retain integration capability
   - Core parameters: parallelism ≤5, research overlap 30-50%, code overlap 0-20%
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
-- [External Writing Workflow](./workflow_external_writing.md) ✅ — The operational spine for turning research into an external-facing analysis: the Main Agent owns thesis, source of truth, and upstream artifacts; the writer double-generates candidates and single-reviews to select the best; acceptance runs as a separated blind cold read; Round 4 mandates CLI mechanical self-check plus residual rewrite; a terminal stranger cold read machine-blocks "done". Diagnostic vocabulary: `bestpractice_external_prose.md`. Mechanical scan: `external_prose_lint.md`.
-- [External Prose Lint CLI](./external_prose_lint.md) ✅ — Deterministic scan for em dashes, quotes, parenthetical glosses, banned lexicon, single-sentence paragraphs, bare URLs, etc.; each finding attaches a skill question. `python -m rules.skills.external_prose_lint_cli <md>` (Chinese-tuned lexicon; shared checks still help English drafts).
-- [Internal Writing Workflow](./workflow_internal_writing.md) ✅ — Internal document writing for the user, shared-context collaborators, and future AI agents. Hard rules on concept presentation order, a testable question contract, and problem/solution/decision layering to reduce decision friction.
+- [External Writing Workflow](./workflow_external_writing.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_external_writing.md) — operational spine for external-facing analysis; double-generate single-review, separated cold reads, terminal machine-blocked verdict
+- [External Prose Lint CLI](./external_prose_lint.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/external_prose_lint.md) — deterministic Chinese prose scan; `python -m writing_skill.external_prose_lint_cli <md>`
+- [Internal Writing Workflow](./workflow_internal_writing.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_internal_writing.md) — internal docs; concept ordering, BLUF, verifiability
 - [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data
   - Applicable to: group chats, Slack, Discord, email, podcast transcripts, and any conversation data
   - Process: broad scan → deep validation → stress testing → finalization (≥3 rounds of dynamic iteration)
@@ -90,8 +90,8 @@ Complete workflows for specific tasks.
 
 General best practices and lessons learned.
 
-- [External Prose Diagnosis and Voice Contract Guide](./bestpractice_external_prose.md) ✅ — Reference vocabulary for the Main Agent to diagnose textbook voice, cognitive load, performative casualness, and polar dramatization and compress them into a one-page article-specific voice contract; diagnostic reference only — mechanical scan: [External Prose Lint CLI](./external_prose_lint.md)
-- [Analytical Perspectives for External Articles (Thesis Catalog)](./reference_writing_thesis_catalog.md) ✅ — L1-L8 analytical perspectives and related axiom mappings
+- [External Prose Diagnosis and Voice Contract Guide](./bestpractice_external_prose.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/bestpractice_external_prose.md) — Manager reference vocabulary; not a gate checklist
+- [Analytical Perspectives for External Articles (Thesis Catalog)](./reference_writing_thesis_catalog.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/reference_writing_thesis_catalog.md) — L1-L8 analytical perspectives and axiom mappings
 - [Internal Document Layout and Adaptive Visual Components Guide](./bestpractice_internal_visuals.md) ✅ — Adaptive HTML cards, theme variables, dark-mode compatibility, and visual component rules for internal memos, RFCs, and weekly reports
 - [Core AI Programming Methodology](./bestpractice_ai_programming_mindset.md) ✅ — 70% problem, success criteria, verifiability
 - [Skill Writing Guide (Meta-Skill)](./bestpractice_skill_writing.md) ✅ — Use when creating or rewriting skills; emphasizes outcome determinism, acceptance criteria, and boundary conditions

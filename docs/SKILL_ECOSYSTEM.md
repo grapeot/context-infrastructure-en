@@ -60,6 +60,8 @@ After installation, the workspace typically forms two layers: the public repo ha
 | E-ink display | [eink_diary](https://github.com/grapeot/eink_diary) | Visual diary generation for e-ink displays |
 | Embedded hardware | [m5stack-sticks3-skill](https://github.com/grapeot/m5stack-sticks3-skill) | Source-backed M5StickS3 board bring-up and hardware acceptance guide for Arduino/ESP-IDF, buttons, power, LCD, IR, ES8311 audio, NVS, and BLE HID pitfalls; device secrets are never exposed |
 | Identity | [logto-management-skill](https://github.com/grapeot/logto-management-skill) | Safely discover, audit, and manage Logto tenant configuration with tenant Swagger search, mandatory backup-and-verify writes, snapshot diffs, MFA operations, and dry-run destructive actions |
+| Writing | [writing-skill](https://github.com/grapeot/writing-skill) | Internal and external writing workflows with a shared diagnostic vocabulary, L1-L8 thesis catalog, and a deterministic Chinese prose lint CLI; internal docs reduce decision friction, external articles prevent textbook voice and cognitive overload |
+| Vision | [dinov3-classifier-skill](https://github.com/grapeot/dinov3-classifier-skill) | Turn unlabeled images into compact local vision models via active sampling, human calibration, ONNX export, and low-cost edge deployment |
 
 ## Selection Principles
 
