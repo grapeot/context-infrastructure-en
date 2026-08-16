@@ -29,7 +29,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 - ⚙️ Delayed Execution — starter fallback; for durable/AI delayed tasks, install Process Launcher + OpenCode Skill
 
 ### Tier 3: Standalone public skill repos (install as needed)
-- 🔧 AI Session Export, ChatGPT/Codex OAuth, image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
+- 🔧 AI Session Export, ChatGPT/Codex OAuth, AI Agent CLI, image generation, Tavily, Google Docs, Google Maps, Outlook, Resend, OpenCode, Process Launcher, PPTX, Typefully, Circle Post, Stripe, Firewalla, Smart Home, and other capabilities — see [`docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md)
 
 ### Legend
 ✅ = Ready to use in 15 minutes or less
@@ -44,8 +44,7 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 
 Operational manuals for calling external systems or tools.
 
-- [AI CLI Agent Practical Guide](./ai_agent_cli_guide.md) ✅ — CLI Agent design principles, tool comparison (Claude Code / Codex / OpenCode / Antigravity), file response patterns, and AI calling AI
-- [Antigravity CLI File-Based Invocation](./antigravity_cli.md) ✅ — Use `agy --print` to run a Gemini agent; covers installation, keyring/App authentication, sandbox boundaries, file-based artifacts, cross-model candidates, blind-reader audits, three Main Agent verdicts, one fresh retry, and logged completion edits
+- [AI CLI Agent Practical Guide](https://github.com/grapeot/ai-agent-cli-skill) → moved to a standalone public repo. Expose only the root skill `skills/skill_ai_agent_cli.md`; Claude Code, Codex, OpenCode, Antigravity, and Grok are on-demand files inside that repo.
 - [Send Email Skill](./send_email.md) ⚙️ — Send email notifications via Gmail; requires App Password configuration
 - [Share Report to Web](./share_report.md) ⚙️ — Convert MD reports to HTML and publish to your own server; returns URL
 - [Google Docs Operations](./google_docs.md) ⚙️ — CLI tool: publish Markdown, create/search/modify/share documents
