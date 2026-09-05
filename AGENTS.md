@@ -38,13 +38,9 @@ Don't ask permission. Just do it.
 ### Common Skill Quick Reference (INDEX.md is authoritative)
 
 **Deep research tasks** → `rules/skills/workflow_deep_research_survey.md`
-- Initial scan → split dimensions → multi-agent parallel → cross-validate → write report
-- Output: `contexts/survey_sessions/`
-
 **Background agent / parallel subagent** → `rules/skills/workflow_parallel_subagents.md`
-- When to split tasks, when not to, how to dispatch multiple subagents in parallel
-- Before calling multiple `functions.task`, read this skill first, then execute
-- Current parallel method is `multi_tool_use.parallel`; do not use the old `run_in_background` / `background_output` pattern
+
+Read the matching skill file after a hit, then execute. INDEX.md is the single routing source; no step details here.
 
 ## Axioms
 
