@@ -44,36 +44,36 @@ Quick judgment: subagents are suitable for parallel reading, independent explora
 
 Operational manuals for calling external systems or tools.
 
-- [AI CLI Agent Practical Guide](https://github.com/grapeot/ai-agent-cli-skill) → moved to a standalone public repo; install the Claude Code / Codex / OpenCode / Antigravity / Grok capabilities from that repo on demand
-- [Send Email Skill](./send_email.md) ⚙️ — Send email notifications via Gmail; requires App Password configuration
-- [Share Report to Web](./share_report.md) ⚙️ — Convert MD reports to HTML and publish to your own server; returns URL
-- [Google Docs Operations](./google_docs.md) ⚙️ — CLI tool: publish Markdown, create/search/modify/share documents
-- [Growth Analytics](./growth_analytics.md) ⚙️ — Three CLIs to query website traffic (GA4), email subscriptions (Kit), Twitter engagement (Typefully)
-- [Typefully Metrics CLI](./typefully_metrics.md) ⚙️ — Query X account and tweet data (impressions, engagement, followers)
-- [Typefully Post CLI](./typefully_post.md) ⚙️ — Create drafts, schedule, and directly publish tweets/threads via Typefully v2 API
+- [AI CLI Agent Practical Guide](https://github.com/grapeot/ai-agent-cli-skill) → moved to a standalone public repo; install Claude Code / Codex / OpenCode / Antigravity / Grok capabilities from that repo on demand
+- [Send Email Skill](./send_email.md) ⚙️ — Send email notifications via Gmail; requires an App Password
+- [Share Report to Web](./share_report.md) ⚙️ — Render Markdown reports as HTML and publish to a personal server; returns the published URL
+- [Google Docs Operations](./google_docs.md) ⚙️ — CLI tool to publish Markdown, search, create, edit, and share Google Docs
+- [Growth Analytics](./growth_analytics.md) ⚙️ — Three CLIs to query website traffic (GA4), email subscriptions (Kit), and Twitter engagement (Typefully)
+- [Typefully Metrics CLI](./typefully_metrics.md) ⚙️ — Query X account and tweet performance metrics (impressions, engagement, follower counts)
+- [Typefully Post CLI](./typefully_post.md) ⚙️ — Create drafts, schedule, and directly publish tweets/threads via the Typefully v2 API
 - [Apple Compressor Skill](./compressor.md) ⚙️ — Local Apple Compressor CLI transcoding; custom preset paths, source file write-completion detection, batch submission and monitoring
 - [OpenReview API](./openreview.md) ✅ — CLI tool (`python tools/openreview_cli.py`) to query AI conference paper metadata and author profiles (institution history, position, tilde ID). Trigger words: "OpenReview", "author profile", "ICLR papers", "NeurIPS papers", "tilde ID"
-- [Download and Convert Academic Papers](./skill_download_paper.md) ✅ — Best practices for downloading arXiv papers and converting to markdown (HTML preferred, PDF fallback); includes index building, arXiv ID discovery, and duplicate/wrong-paper checks
+- [Download and Convert Academic Papers](./skill_download_paper.md) ✅ — Download arXiv papers and convert them to Markdown (HTML preferred, PDF fallback); includes index building, arXiv ID discovery, and duplicate/wrong-paper checks
 
 ### Workflow
 
 Complete workflows for specific tasks.
 
-- [Parallel Subagent Workflow](./workflow_parallel_subagents.md) ✅ — How to dispatch multiple `functions.task` subagents in parallel; must-read before first use, tasks must be bundled in a single message
-- [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel + cross-validation (Phase 1-3 information gathering)
+- [Parallel Subagent Workflow](./workflow_parallel_subagents.md) ✅ — Dispatch multiple `functions.task` subagents in parallel; must-read before first use, tasks must be bundled in a single message
+- [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel information gathering and cross-validation across Phase 1-3
 - [External Writing Workflow](./workflow_external_writing.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_external_writing.md) — operational spine for external-facing analysis; double-generate single-review, separated cold reads, terminal machine-blocked verdict
 - [External Prose Lint CLI](./external_prose_lint.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/external_prose_lint.md) — deterministic Chinese prose scan; `python -m writing_skill.external_prose_lint_cli <md>`
 - [Internal Writing Workflow](./workflow_internal_writing.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_internal_writing.md) — internal docs; concept ordering, BLUF, verifiability
-- [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversation data (group chats, Slack, Discord, email, podcast transcripts); requires the Opus model to write the final text itself
-- [AI-Generated Slide Deck Workflow](./workflow_presentation_slides.md) — Gemini rendering, Clean Ink style, 8-process parallel, pre-4K upscale validation
-- Semantic Search Skill → see [`../../docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md): local-text embedding + cosine similarity search with any OpenAI-compatible endpoint
+- [Cognitive Profile Extraction Workflow](./workflow_cognitive_profile_extraction.md) — Extract predictable cognitive axioms from unstructured conversations (chat groups, Slack, Discord, email, podcast transcripts); requires the Opus model to write the final text itself
+- [AI-Generated Slide Deck Workflow](./workflow_presentation_slides.md) — Slide deck generation using Gemini rendering in Clean Ink style, with 8-process parallel execution and pre-4K upscale validation
+- Semantic Search Skill → see [`../../docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md): local-text embedding and cosine similarity search using any OpenAI-compatible endpoint
 - [Knowledge Flywheel Design Pattern](./workflow_knowledge_flywheel.md) — Dumb data + dumb methods + dumb models = refined knowledge
-- [Video Download and Speech Recognition Workflow](./workflow_bilibili_whisper_transcription.md) — Bilibili/YouTube video processing
-- [Delayed Execution Skill](./delayed_execution.md) ⚙️ — Low-risk `sleep + nohup` fallback; for durable/AI delayed tasks, see ecosystem's Process Launcher + OpenCode Skill
-- [Project Scaffold](./project_scaffold.md) ✅ — Upgrade a loose directory into a standard project structure: `docs/`, `src/`, `scripts/`, `tests/`, `AGENTS.md`, and independent git
-- [AI Session Search & Archive](./ai_session_search_archive.md) — Search the unified Markdown archives of AI sessions from OpenCode, Claude Code, Codex, Antigravity, and Second Mind, routed by source
+- [Video Download and Speech Recognition Workflow](./workflow_bilibili_whisper_transcription.md) — Download video and transcribe speech from Bilibili and YouTube
+- [Delayed Execution Skill](./delayed_execution.md) ⚙️ — Low-risk `sleep + nohup` fallback; for durable or AI-driven delayed tasks, use Process Launcher + OpenCode Skill from the ecosystem
+- [Project Scaffold](./project_scaffold.md) ✅ — Restructure an ad-hoc directory into a standard project hierarchy: `docs/`, `src/`, `scripts/`, `tests/`, `AGENTS.md`, and an independent git repo
+- [AI Session Search & Archive](./ai_session_search_archive.md) — Search unified Markdown archives of AI sessions from OpenCode, Claude Code, Codex, Antigravity, and Second Mind, routed by source
 - [Workflow Watchdog](./workflow_watchdog.md) — After dispatching a workflow / background agent, set a ~30-minute inspection to distinguish normal execution from a stuck loop. Trigger words: "watchdog", "workflow stuck", "background task inspection"
-- [Public Consensus Net Income Audit Workflow](./workflow_public_consensus_net_income_audit.md) — Audit FY / CY consensus net income for a set of stocks using public financial sites (MarketScreener, Yahoo Finance, MarketWatch). Trigger words: "consensus net income", "MarketScreener audit", "FY2026E net income consensus"
+- [Public Consensus Net Income Audit Workflow](./workflow_public_consensus_net_income_audit.md) — Audit FY / CY consensus net income across a basket of tickers using public financial portals (MarketScreener, Yahoo Finance, MarketWatch). Trigger words: "consensus net income", "MarketScreener audit", "FY2026E net income consensus"
 - [Research Paper Survey and Writing Workflow](./workflow_research_paper_survey_writing.md) — Turn research papers into in-depth analysis articles aimed at technical practitioners. Trigger words: "analyze this paper", "write paper analysis", "paper analysis"
 - [iOS Test Acceleration](./ios_test_acceleration.md) ✅ — iOS unit/UI test iteration tips: sequential `xcodebuild`, `build-for-testing` + `test-without-building`, fixed simulator UUID, focused `-only-testing`, fixture launch arguments, and `.xcresult` inspection
 
@@ -87,14 +87,14 @@ General best practices and lessons learned.
 - [Core AI Programming Methodology](./bestpractice_ai_programming_mindset.md) ✅ — 70% problem, success criteria, verifiability
 - [Skill Writing Guide (Meta-Skill)](./bestpractice_skill_writing.md) ✅ — Use when creating or rewriting skills; emphasizes outcome determinism, acceptance criteria, and boundary conditions
 - [API Key Management](./bestpractice_api_key_management_1password_cli.md) ✅ — Securely manage keys using 1Password CLI
-- [Interview Evaluation Framework](./bestpractice_interview_evaluation.md) ✅ — Trait > Skill, AI cheating detection, technical depth probing
+- [Interview Evaluation Framework](./bestpractice_interview_evaluation.md) ✅ — Technical interview rubric: prioritizing Trait > Skill, detecting AI cheating, and probing technical depth
 - [Markdown to HTML Best Practice](./bestpractice_markdown_html_conversion.md) ✅
 - [PDF to Markdown](./bestpractice_pdf_to_markdown.md) ✅ — Default to Docling; avoid MarkItDown / PyMuPDF4LLM / Marker for PDF scenarios due to quality or licensing issues
 - [Temporal Information Verification](./bestpractice_temporal_info_verification.md) ✅ — Verify information that may exceed knowledge cutoff
 - [Staged Approach](./bestpractice_staged_approach.md) ✅ — Isolate-process-verify closed loop; Dry Run before destructive operations
 - [GUI Automation Methodology](./bestpractice_gui_automation.md) ✅ — Turn interfaces without APIs into programmable interfaces
 - [AI-Assisted Debugging Diagnosis](./bestpractice_ai_debugging_diagnosis.md) ✅ — Root cause diagnosis decision tree for "code won't fix"
-- [Mac Universal Clipboard Reset](./mac_universal_clipboard.md) ✅ — Reset `useractivityd` / `sharingd` / `pboard` when Mac and iPhone/iPad clipboard syncing breaks
+- [Mac Universal Clipboard Reset](./mac_universal_clipboard.md) ✅ — Reset `useractivityd`, `sharingd`, and `pboard` when Mac and iPhone/iPad clipboard syncing breaks
 - [AI Product Design Principles](./bestpractice_ai_product_design.md) ✅ — Linear chat vs knowledge work, perception-rule decoupling
 - [Product/Technical Decision Reverse Engineering](./bestpractice_product_decision_analysis.md) ✅ — Analyze product or technical decisions from design space, constraints, and trade-offs
 - Playwright E2E Testing Methodology → see [`../../docs/SKILL_ECOSYSTEM.md`](../../docs/SKILL_ECOSYSTEM.md): CDP step-by-step debugging CLI + E2E methodology, CLI `pw-test`
@@ -104,8 +104,8 @@ General best practices and lessons learned.
 
 Configuration and procedures for deployment.
 
-- [GitHub Actions → Koyeb Deployment](./deployment_github_actions_koyeb.md) ✅ — Auto-deploy Dockerized apps to Koyeb via a GitHub Actions CI/CD pipeline after tests pass. Trigger words: "Koyeb deploy", "GitHub Actions deploy", "Docker Koyeb"
-- [Release to App Store Connect with Apple Command-Line Tools](./deployment_app_store_connect_cli.md) ✅ — Use stable Xcode to archive an iOS app, export and verify the distribution IPA, and upload it after explicit authorization
+- [GitHub Actions → Koyeb Deployment](./deployment_github_actions_koyeb.md) ✅ — Automatically deploy Dockerized apps to Koyeb via a GitHub Actions CI/CD pipeline after tests pass. Trigger words: "Koyeb deploy", "GitHub Actions deploy", "Docker Koyeb"
+- [Release to App Store Connect with Apple Command-Line Tools](./deployment_app_store_connect_cli.md) ✅ — Archive an iOS app using stable Xcode CLI tools, export and verify the distribution IPA, and upload it after explicit authorization
 
 ---
 
