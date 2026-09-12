@@ -105,7 +105,7 @@ General best practices and lessons learned.
 Configuration and procedures for deployment.
 
 - [GitHub Actions → Koyeb Deployment](./deployment_github_actions_koyeb.md) ✅ — Automatically deploy Dockerized apps to Koyeb via a GitHub Actions CI/CD pipeline after tests pass. Trigger words: "Koyeb deploy", "GitHub Actions deploy", "Docker Koyeb"
-- [Release to App Store Connect with Apple Command-Line Tools](./deployment_app_store_connect_cli.md) ✅ — Archive an iOS app using stable Xcode CLI tools, export and verify the distribution IPA, and upload it after explicit authorization
+- [Release to App Store Connect with Apple Command-Line Tools](./deployment_app_store_connect_cli.md) ✅ — Archive an iOS app using stable Xcode CLI tools, export and verify the distribution IPA, and upload it after explicit authorization; covers cloud-managed distribution signing, profile certificate rotation, and upload troubleshooting
 
 ---
 
