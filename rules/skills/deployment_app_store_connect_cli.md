@@ -6,6 +6,7 @@
 - **Applicable Scenarios**: Archive, export, and upload an iOS app to App Store Connect from the command line with a non-beta Xcode release
 - **Output**: An auditable `.xcarchive`, App Store `.ipa`, upload result, and final version metadata
 - **Created**: 2026-07-31
+- **Updated**: 2026-09-11
 
 ## Goal and Boundaries
 
@@ -71,6 +72,7 @@ xcodebuild archive \
   -configuration Release \
   -destination 'generic/platform=iOS' \
   -archivePath <output/App.xcarchive> \
+  -allowProvisioningUpdates \
   CODE_SIGN_STYLE=Automatic \
   DEVELOPMENT_TEAM=<TEAM_ID>
 ```
@@ -99,7 +101,8 @@ Create a temporary `ExportOptions.plist`. Do not commit it to a public repositor
 xcodebuild -exportArchive \
   -archivePath <output/App.xcarchive> \
   -exportPath <output/export> \
-  -exportOptionsPlist <output/ExportOptions.plist>
+  -exportOptionsPlist <output/ExportOptions.plist> \
+  -allowProvisioningUpdates
 ```
 
 Xcode may use `manageAppVersionAndBuildNumber` to replace the source build number with the next value accepted by App Store Connect. Treat `DistributionSummary.plist` and the exported IPA as authoritative, and record any difference between source and upload build numbers. If source-controlled versioning is required, disable managed versioning explicitly and increment the project build number before archiving.
@@ -125,7 +128,8 @@ After explicit authorization, change the export option `destination` to `upload`
 xcodebuild -exportArchive \
   -archivePath <output/App.xcarchive> \
   -exportPath <output/upload> \
-  -exportOptionsPlist <output/UploadOptions.plist>
+  -exportOptionsPlist <output/UploadOptions.plist> \
+  -allowProvisioningUpdates
 ```
 
 With a dedicated App Store Connect API key, Apple's `altool` is another supported path:
@@ -138,6 +142,8 @@ xcrun altool --upload-app -f <App.ipa> \
 ```
 
 Keep the private key in an Apple-supported private-key search directory or inject it from a controlled environment. Never place `.p8` contents in shell history.
+
+When calling `altool` with an app-specific password (rather than an API key) and the Apple ID is attached to multiple providers, you must add `--provider-public-id <PROVIDER_PUBLIC_ID>`; a first run without that flag lists each provider's Name and Public ID. For read-only queries (such as `--list-apps`), use an app-specific password from 1Password (for example `op read 'op://dev/dev-api-keys/icloud_app_specific_password'`) and do not write the plaintext into history. Note: an app-specific password cannot query the processing state of a single build; that requires an App Store Connect API key or the web UI.
 
 ## Known Pitfalls
 
@@ -160,6 +166,20 @@ Managed versioning may query App Store Connect and select the next build number 
 ### Upload Success Is Not Processing Success
 
 `Upload succeeded` means Apple accepted the package. Report it as “uploaded and processing.” If the endpoint is a TestFlight-selectable build, wait for processing to finish and report any later rejection.
+
+### The Team Store Profile Can Lack the Cloud-Managed Distribution Certificate
+
+When using `method=app-store-connect` with `signingStyle=automatic` (cloud-managed signing), Apple rotates the distribution certificate roughly 90 days before it expires. If the "iOS Team Store Provisioning Profile" on the portal still references the older certificate, export fails the qualification step before re-signing with `Provisioning profile "iOS Team Store Provisioning Profile: <bundle-id>" doesn't include signing certificate "Apple Distribution: <team>"`, or `failed qualification checks`. Xcode does not refresh that profile on its own unless the command passes `-allowProvisioningUpdates`. Fix: add `-allowProvisioningUpdates` to archive / export / upload so Xcode rebuilds the profile. Do not try to delete the Xcode-managed profile on the Apple Developer portal — it usually does not appear in the portal list and cannot be deleted there; if the flag alone does not fix it, remove the two local profile caches and re-run: `~/Library/Developer/Xcode/UserData/Provisioning Profiles/` (Xcode 16+) and `~/Library/MobileDevice/Provisioning Profiles/` (legacy), locating the entry by `Name` via `security cms -D -i <file>`.
+
+## Troubleshooting
+
+When a command fails, do not only read the last line of the terminal. Each `xcodebuild -exportArchive` run writes an `.xcdistributionlogs` bundle (the terminal prints its path); read `IDEDistribution.standard.log` inside it and follow the steps to find where it stalls:
+
+- Stuck at `IDEDistributionUploadAccountStep` with `Failed to find an account with App Store Connect access for team ...`: Xcode has no signed-in Apple ID with App Store Connect access. Cloud-managed signing depends entirely on this session; sign in or re-authenticate (2FA) under Xcode → Settings → Accounts. Check the session with `plutil -p ~/Library/Preferences/com.apple.dt.Xcode.plist | grep -A6 DVTDeveloperAccountManagerAppleIDLists`; that plist is **shared** by stable and beta Xcode, so a missing account is usually not a version-selection problem.
+- Stuck at profile qualification (`failed qualification checks` / `doesn't include signing certificate`): the profile and the currently resolved distribution certificate do not match — see the pitfall above and add `-allowProvisioningUpdates`.
+- `No signing certificate "iOS Distribution" found`: usually a surface symptom of "no signed-in account". Check the account state first instead of hunting for a local distribution certificate in the keychain.
+
+Diagnosis only reads logs and account state; it does not modify portal resources. The actual fixes still follow the method and authorization boundaries above.
 
 ## Output Specification
 
