@@ -49,6 +49,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Photos | [apple-photos-skill](https://github.com/grapeot/apple-photos-skill) | Search, inspect, retrieve, back up, import, and safely plan or apply deletions in Apple Photos through a metadata CLI and PhotoKit helper |
 | Photos / backup | [bright-horizons-photo-sync-skill](https://github.com/grapeot/bright-horizons-photo-sync-skill) | Incrementally back up My Bright Day events and media, resume interrupted downloads, verify files, and deduplicate imports into a macOS Photos album |
 | Health | [health-quantification](https://github.com/grapeot/health-quantification) | Apple Health / manual records → SQLite → CLI → AI analysis |
+| Health / education | [ct-education-skill](https://github.com/grapeot/ct-education-skill) | Accepts supported external chest CT DICOM for local interactive 3D visualization linked to source slices and Blender educational films. For education, not diagnosis; study data and all derivatives remain private outside the repository. |
 | Home network | [firewalla-local-skill](https://github.com/grapeot/firewalla-local-skill) | Firewalla local export analysis, device/flow reports, and redacted artifact workflow; home network details stay in local overlays |
 | Coffee | [roest-analysis](https://github.com/grapeot/roest-analysis) | Roest roast log capture and analysis |
 | Intake | [intake-skill](https://github.com/grapeot/intake-skill) | Voice memos / intake workflow public-ready skill |
