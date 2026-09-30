@@ -75,7 +75,6 @@ Complete workflows for specific tasks.
 - [Workflow Watchdog](./workflow_watchdog.md) — After dispatching a workflow / background agent, set a ~30-minute inspection to distinguish normal execution from a stuck loop. Trigger words: "watchdog", "workflow stuck", "background task inspection"
 - [Public Consensus Net Income Audit Workflow](./workflow_public_consensus_net_income_audit.md) — Audit FY / CY consensus net income across a basket of tickers using public financial portals (MarketScreener, Yahoo Finance, MarketWatch). Trigger words: "consensus net income", "MarketScreener audit", "FY2026E net income consensus"
 - [Research Paper Survey and Writing Workflow](./workflow_research_paper_survey_writing.md) — Turn research papers into in-depth analysis articles aimed at technical practitioners. Trigger words: "analyze this paper", "write paper analysis", "paper analysis"
-- [iOS Test Acceleration](./ios_test_acceleration.md) ✅ — iOS unit/UI test iteration tips: sequential `xcodebuild`, `build-for-testing` + `test-without-building`, fixed simulator UUID, focused `-only-testing`, fixture launch arguments, and `.xcresult` inspection
 
 ### Best Practice
 
@@ -105,7 +104,6 @@ General best practices and lessons learned.
 Configuration and procedures for deployment.
 
 - [GitHub Actions → Koyeb Deployment](./deployment_github_actions_koyeb.md) ✅ — Automatically deploy Dockerized apps to Koyeb via a GitHub Actions CI/CD pipeline after tests pass. Trigger words: "Koyeb deploy", "GitHub Actions deploy", "Docker Koyeb"
-- [Release to App Store Connect with Apple Command-Line Tools](./deployment_app_store_connect_cli.md) ✅ — Archive an iOS app using stable Xcode CLI tools, export and verify the distribution IPA, and upload it after explicit authorization; covers cloud-managed distribution signing, profile certificate rotation, and upload troubleshooting
 
 ---
 
