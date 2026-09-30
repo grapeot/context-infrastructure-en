@@ -22,6 +22,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Domain | Repo | Capability |
 |---|---|---|
 | Web search | [tavily-skill](https://github.com/grapeot/tavily-skill) | Tavily search/extract CLI, stable JSON output for agents |
+| Web search | [firecrawl-skill](https://github.com/grapeot/firecrawl-skill) | Firecrawl v2 search/extract CLI built with standard library only; drop-in compatible with tavily-skill command interface and JSON envelope, featuring search with full-page markdown, URL extraction with query highlights, and pre-call credit estimates |
 | Documents | [gdocs-skill](https://github.com/grapeot/gdocs-skill) | Google Docs create, search, modify, share; Markdown and tab support |
 | Maps / travel | [google-maps-routing-skill](https://github.com/grapeot/google-maps-routing-skill) | Google Maps Routes + Geocoding CLI; address resolution, real-time drive time, leave-by planning |
 | Domains / DNS | [go-daddy-skill](https://github.com/grapeot/go-daddy-skill) | Read-first GoDaddy domain and authoritative-DNS CLI with complete inventory, redaction, and separate-write-token TXT create plan/apply |
