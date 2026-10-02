@@ -41,6 +41,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | Usage analytics | [ai_usage_dashboard](https://github.com/grapeot/ai_usage_dashboard) | Multi-platform AI token usage, cost estimation, local dashboard, E1002 JSON |
 | Social / growth | [typefully-twitter-skill](https://github.com/grapeot/typefully-twitter-skill) | Typefully posting, account metrics, X/Twitter single-post analytics |
 | Community publishing | [circle-post-skill](https://github.com/grapeot/circle-post-skill) | Circle community Markdown conversion, dry-run preflight, publish/update/delete CLI; community defaults in local overlay |
+| Course operations | [maven-skill](https://github.com/grapeot/maven-skill) | CDP-based Chrome automation for Maven course operations, supporting dynamic course and cohort discovery, enrolled student CSV export, data validation, and export receipts |
 | Payments / growth | [stripe-skill](https://github.com/grapeot/stripe-skill) | Stripe read-only finance / sales analytics, live tests default opt-in |
 | Media | [online-media-skill](https://github.com/grapeot/online-media-skill) | Online media download, ASR artifacts, query packs, source identification, and agent-led bilingual SRT: the agent corrects, segments, and translates while the CLI verifies coverage, renders, and validates |
 | Slides | [pptx.skill](https://github.com/grapeot/pptx.skill) | AI-first PPTX read, edit, and render |
