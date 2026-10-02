@@ -104,6 +104,7 @@ General best practices and lessons learned.
 Configuration and procedures for deployment.
 
 - [GitHub Actions → Koyeb Deployment](./deployment_github_actions_koyeb.md) ✅ — Automatically deploy Dockerized apps to Koyeb via a GitHub Actions CI/CD pipeline after tests pass. Trigger words: "Koyeb deploy", "GitHub Actions deploy", "Docker Koyeb"
+- [Koyeb Operations Skill](https://github.com/grapeot/koyeb-skill) 🔧 — Manage Koyeb applications, deployments, and runtime logs, or configure sleep and scaling through the official CLI. Root: `skills/koyeb/SKILL.md`; credentials and project policies stay in local overlays. Trigger words: "koyeb", "light sleep", "Koyeb logs", "Koyeb scaling"
 
 ---
 
