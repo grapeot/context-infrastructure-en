@@ -69,6 +69,7 @@ After installation, the workspace typically forms two layers: the public repo ha
 | SEO / marketing | [dataforseo-skill](https://github.com/grapeot/dataforseo-skill) | DataForSEO keyword / SERP / ranked keyword API CLI |
 | Design | [design_skill](https://github.com/grapeot/design_skill) | UI evaluation and improvement judgment framework |
 | Home automation | [smart_home_skill](https://github.com/grapeot/smart_home_skill) | Smart home CLI; device aliases and household details in local overlay |
+| Home automation | [narwal-skill](https://github.com/grapeot/narwal-skill) | Read-only local WebSocket (port 9002) Python CLI and agent skill for Narwal vacuums without cloud accounts or Home Assistant. Provides status snapshots, floor plans, bounded telemetry, and diagnostics. Flow 2 hardware smoke tested; select Flow/Freo models are candidates. |
 | E-ink display | [eink_diary](https://github.com/grapeot/eink_diary) | Visual diary generation for e-ink displays |
 | Embedded hardware | [m5stack-sticks3-skill](https://github.com/grapeot/m5stack-sticks3-skill) | Source-backed M5StickS3 board bring-up and hardware acceptance guide for Arduino/ESP-IDF, buttons, power, LCD, IR, ES8311 audio, NVS, and BLE HID pitfalls; device secrets are never exposed |
 | Identity | [logto-management-skill](https://github.com/grapeot/logto-management-skill) | Safely discover, audit, and manage Logto tenant configuration with tenant Swagger search, mandatory backup-and-verify writes, snapshot diffs, MFA operations, and dry-run destructive actions |
