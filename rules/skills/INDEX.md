@@ -59,6 +59,7 @@ Operational manuals for calling external systems or tools.
 
 Complete workflows for specific tasks.
 
+- [Astra Coordinator / PI Workflow](./workflow_astra_coordinator.md) — Activates only when the actual primary model is GPT-6 Astra and the user explicitly requests coordinator or PI; delegates to competent executors at the lowest total cost while retaining main-thread final acceptance. Triggers: "astra coordinator", "coordinator", "PI"
 - [Parallel Subagent Workflow](./workflow_parallel_subagents.md) ✅ — Dispatch multiple `functions.task` subagents in parallel; must-read before first use, tasks must be bundled in a single message
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel information gathering and cross-validation across Phase 1-3
 - [External Writing Workflow](./workflow_external_writing.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_external_writing.md) — operational spine for external-facing analysis; double-generate single-review, separated cold reads, terminal machine-blocked verdict
