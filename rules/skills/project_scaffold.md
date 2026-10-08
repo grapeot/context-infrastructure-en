@@ -198,6 +198,58 @@ Don't let the backend, frontend, and reverse proxy each maintain three separate 
 
 ---
 
+## 3.5. Resident Services: Service Form, API Contract, and Runtime Configuration
+
+### Service Form and Persistence Isolation
+
+Decide the service form before writing code. One-off or batch jobs whose state does not need to outlive a single invocation become a CLI or standalone script. Tasks that maintain shared state across calls, processes, or users, that are called repeatedly by a web frontend or other agents, or that need concurrency and real-time push (such as SSE or WebSocket), become a resident REST service. Do not start a long-running process by default just because it might be needed later.
+
+Keep the resident process separate from the persistence layer. The service must be restartable without losing data; business state lives in SQLite or an equivalent persistent store, not only in process memory. The process owns request orchestration and business rules; the store owns data. Recover state from the store on restart. At runtime, shared state is written through the unified service entry point, and an agent must not bypass the service to write the store directly; offline migration or maintenance needs an explicit contract so it does not write concurrently with a live service.
+
+When using change-hint SSE, the hint carries only a change signal; a missed hint must not alter stored state, and a reconnecting client must recover the current state from the persistent store.
+
+If a project provides both a CLI entrypoint and an HTTP API, both must call one shared business-logic module. Do not maintain two validation and state-transition implementations that drift apart.
+
+### AI-Primary API Contracts and Executability
+
+For an API consumed primarily by AI, schema presence is not usability. Define request, response, and error models with Pydantic or an equivalent typed tool, and give every field a description, examples, and value constraints (type, range, enum).
+
+Per-field descriptions alone do not let an AI complete the task. The following rules must be stated in the schema or accompanying docs, and be genuinely executable:
+
+- Cross-field rules: for example, an omitted field on a terminal transition means clearing that property, and the semantic difference between null and an empty string.
+- Idempotency-key scope: state the key's scope explicitly (global, resource, or task); key reuse across scopes must behave as implemented and must not return another resource's receipt.
+- Concurrency and conflict recovery: how revision / CAS conflicts are handled, and the concrete recovery steps after an error.
+
+Give routes a summary, and make declared HTTP status codes match the implementation: success codes, plus the exact trigger conditions for conflict variants, validation failures, and server errors. Error bodies must be a typed model that does not echo unknown fields which may carry sensitive input, and known path or query parameters must not be misreported as request body fields.
+
+### Runtime Configuration and Startup Order
+
+Host address, port, database path, secrets, and the write token all come from environment variables. The repository holds only `.env.example` with fake placeholders. Never bundle the write token into frontend static assets, error responses, or logs.
+
+One clarification to the existing rule that public files use fake values: privacy scanners and test suites themselves must not store a real private needle, or encode one to hide it; real scan inputs stay outside the repository.
+
+The startup order is fixed:
+
+1. Create and activate the venv.
+2. Install dependencies.
+3. Configure `.env` (write the token before start).
+4. Start the service.
+5. Fetch the schema as a readiness check.
+
+If the host runs a process manager (such as a Process Launcher) to keep the service resident and restart it on failure, public docs must not contain machine-specific ports, IP addresses, or usernames, must not mandate a specific service, and must not introduce unbounded human approval gates or overly complex safety scheduling.
+
+### Behavioral Acceptance
+
+Acceptance is based on runtime behavior, not the static presence of text. Field descriptions existing is only a starting point; delivery must meet these criteria:
+
+1. Fetch the running `GET /openapi.json` and verify that routes, status codes, and field contracts match the implementation.
+2. Using only the exported schema, without reading business source, drive one normal flow and one error-correction flow (for example, recover from a conflict with a fresh key).
+3. Doc JSON examples are split into request and response: request examples are actually sent and verified to succeed or to produce the expected error, response examples are type-validated against their response model, and response examples are never sent as HTTP requests.
+
+Test commands and execution output must let the next agent judge completion directly.
+
+---
+
 ## 4. Recommended Execution Order
 
 ### Phase 0: Confirm Public/Private
