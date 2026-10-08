@@ -49,7 +49,7 @@ An ordinary peer message is marked as coming from an agent, not as a new user in
 
 Before sending, read the current attempt from the existing dispatch or current-owner mapping. A successful lookup, a matching title, or an idle status does not rule out an aborted session that a replacement has already superseded. Reuse existing task-owner records, and do not stand up a global registry service for a one-off collaboration. This does not forbid a small run manifest for that collaboration.
 
-Do not assert that a task id always equals or never equals a session id. Verify the mapping in the current runtime before using one as an address. A Process Launcher job id is not a session address. A transport receipt, such as `submitted` or HTTP 204, proves only that the transport accepted the handoff. Acknowledgement, completion, and acceptance stay separate.
+Do not assert that a task id always equals or never equals a session id. Verify the mapping in the current runtime before using one as an address. A Process Launcher job id is not a session address. A transport receipt, such as `submitted` or HTTP 204, proves only that the transport accepted the handoff. Acknowledgement, completion, and acceptance stay separate. The same discipline applies to a running child task: an append receipt such as `context sent` is transport-level only, and a scope change requires an observable `timeline` record or an explicit correlated acknowledgement; see the [Parallel Subagent Workflow](./workflow_parallel_subagents.md).
 
 Address lookup, delivery, and receipt layers belong to the installed agent-to-agent session skill: https://github.com/grapeot/opencode_skill/blob/master/skills/skill_opencode_agent_to_agent.md . This file does not copy that interface.
 

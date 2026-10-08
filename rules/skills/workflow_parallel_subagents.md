@@ -5,7 +5,7 @@
 - **Type**: Workflow
 - **Applicable Scenarios**: Using `multi_tool_use.parallel` to execute multiple `functions.task` subagents in parallel
 - **Created**: 2026-02-20
-- **Last Updated**: 2026-06-08
+- **Last Updated**: 2026-10-08
 
 ---
 
@@ -153,6 +153,10 @@ Integration steps:
 1. Read the artifact files written by each subagent.
 2. Cross-validate overlapping areas: discovered by multiple agents → high credibility; single source → annotate pending verification; contradictory information → annotate and analyze reasons.
 3. Write integration results to the session directory, e.g., `phase3_synthesis.md`, `fact_check.md`, `brainstorm_synthesis.md`.
+
+### 3.1 Running Continuation and Steering
+
+When appending a prompt with the same `task_id` to an already-running `functions.task`, a tool receipt such as `context sent` or `Background task updated` is transport-level acceptance only, not proof the child received or saw the new scope. In that check the appended scope was not visible, which only means no observable delivery record was seen at the time; async context does not necessarily land in the timeline. It does not let you claim the child received it, and it is not a universal platform behavior. So do not treat a tool `accepted` as delivered: a real scope change needs an observable `timeline` record or an explicit correlated acknowledgement before you rely on it, and once an ack exists you do not need to re-check the timeline. Background subagent completion still uses the built-in automatic parent chain; do not poll progress or turn waiting into a busy-wait. A delivery check is a single bounded step reserved for when you append meaningful scope or require an ack, not a monitor over every tool call. When an explicit append is the fallback, first verify it is still the same current owner, task, attempt, and directory, preserve the child's current model and agent, and do not guess defaults; on an unknown outcome, read state before retrying, do not blind-retry, deduplicate on the same request id (a caller-side convention that does not assume the legacy API implements idempotency), and do not double-post what was already delivered. A task-completion flag is not the deliverable; acceptance needs a correlated ack and the actual artifact in addition to the timeline, and a task-context tool receipt alone is not enough. See the acceptance criteria in the [Astra Coordinator workflow](./workflow_astra_coordinator.md).
 
 ## Routing Decisions
 
