@@ -44,7 +44,7 @@ context-infrastructure-en/
 │   ├── COMMUNICATION.md         # Communication style guide (ready to use)
 │   ├── WORKSPACE.md             # Directory routing index
 │   ├── axioms/                  # 43 decision axioms (demonstration layer)
-│   └── skills/                  # 25+ reusable skills (demonstration layer)
+│   └── skills/                  # 43 skill Markdown files (includes migration pointers; excludes INDEX)
 │
 ├── contexts/
 │   ├── memory/
