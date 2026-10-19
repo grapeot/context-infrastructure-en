@@ -16,11 +16,12 @@ Before doing anything else:
 
 ## Multi-Agent Nudge
 
-This harness can delegate work to multiple sub-agents. You don't need to use them by default, but keep the capability in mind for tasks that are large, parallelizable, research-heavy, or benefit from independent cross-checking.
+Before invoking sub-agents or an independent review runner, read `rules/skills/workflow_parallel_subagents.md`.
 
-Before using sub-agents, read `rules/skills/workflow_parallel_subagents.md`. The current OpenCode pattern is `multi_tool_use.parallel` wrapping multiple `functions.task` calls in the same assistant message.
+- **Engineering and code implementation**: The main thread implements by default; delegate implementation only when the user explicitly requests it.
+- **Code / privacy / design review**: Normally use an independent sub-agent or Antigravity CLI for a fresh context, with main-thread final acceptance. Trivial, low-risk local edits may be excepted proportionally. A single review is exempt from the multi-agent parallel threshold.
 
-Don't ask permission. Just do it.
+- **Broad survey and codebase exploration**: Use multiple sub-agents when the parallel threshold is met; launch co-ready tasks in one message via `multi_tool_use.parallel`, default to `background: true` when supported, and wait for automatic completion without polling.
 
 ## File Routing
 
@@ -50,23 +51,15 @@ Decision principles distilled from personal experience, used to inspire deeper t
 
 Configuration entry: OpenCode native `opencode.json` `agent` field, or `.opencode/agent(s)/*.md` agent files. `subagent_type` must be a registered agent name, not a model name, and not the old `category`.
 
-Common routing quick reference:
-- **Codebase exploration** → `subagent_type="explore"`
-- **General parallel tasks** → `subagent_type="general"`
-- **High-reliability reasoning / engineering judgment** → `subagent_type="reasoning_gpt"`
-- **Chinese writing / editing** → `subagent_type="writer_deepseek"`
-- **Low-cost initial screening / lightweight organization** → `subagent_type="cheap_glm"`
-- **Local privacy-sensitive tasks** → `subagent_type="private_ds4"`
-- **Ollama Cloud zero-data-retention low-cost tasks** → `subagent_type="ollama_kimi"`
-- **Ollama Cloud zero-data-retention high-quality tasks** → `subagent_type="ollama_deepseek_pro"`
+Select a capability from the runtime schema only after deciding to delegate under the workflow: `explore` for codebase exploration, `general` for general research, and currently registered agents for specialized review, coding, screening, or privacy needs. Do not maintain fixed model or historical alias lists; routing does not authorize implementation delegation.
 
-For creative work (brainstorming, article structure, viewpoint collision), dispatch one subagent with a different approach in parallel by default for a counter-perspective or supplementary view. Do not use the old `category="artistry"` / `category="deep"` / `category="ultrabrain"` pattern unless the current OpenCode config has explicitly registered these agent names.
+Antigravity CLI is an external runner, not a Gemini subagent. For independent review or a selected writing workflow, read the installed `ai-agent-cli` root skill and its Antigravity focused skill, then use the current available model list.
 
 ## Opus Work Mode
 
 If your model ID contains `opus`, the following rules apply:
 
-**Your context window is precious.** Opus's core strengths are design, quality control, and writing. Delegate research, scripting, and keyword search to sub-agents. Your two main tasks: (1) **Design**: break down problems, design plans, assign sub-agent tasks; (2) **Writing and quality control**: write the final text yourself, verify sub-agent results yourself. Delegate all coding, research, and data processing. Never outsource writing and quality verification. When designing task splits, default to considering parallelism. For execution details, follow `rules/skills/workflow_parallel_subagents.md`.
+**Implementation and final acceptance stay on the main thread by default.** Opus also implements directly unless the user explicitly requests delegation. Broad research and exploration may be delegated as needed; code / privacy / design review normally uses an independent runner. A selected writing workflow may designate a writer, while the main thread still reads back, verifies, and owns final delivery. Follow `rules/skills/workflow_parallel_subagents.md` for scheduling boundaries.
 
 ## Memory System
 

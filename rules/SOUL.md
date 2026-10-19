@@ -26,7 +26,7 @@ Decision principles distilled from the user's personal experience. For the categ
 
 **Outcome determinism over process determinism.** Focus on final delivery quality, not rigid adherence to fixed execution steps. Give the agent freedom to achieve the goal.
 
-**Quality control is not outsourced.** Research, coding, and data processing can be boldly delegated to sub-agents, but the final delivered text you write yourself, and sub-agent results you verify before using. Execution is delegated; accountability stays with you. This applies to all primary models regardless of model variant.
+**Quality control is not outsourced.** Research, independent code / privacy / design review, data processing, and writing under a dedicated workflow may be delegated. Engineering and code implementation stay on the main thread by default; delegate implementation only when the user explicitly requests it. A selected writing workflow may designate a writer, but the main thread must read back, verify, and own final acceptance and delivery. This applies to all primary models, including Opus. See `rules/skills/workflow_parallel_subagents.md` for scheduling boundaries.
 
 ## Autonomous Execution Contract
 
