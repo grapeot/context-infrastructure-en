@@ -8,9 +8,9 @@ This index only routes: it tells you which skill to read when, not how to invoke
 
 ## Multi-Agent Capability Notes
 
-The current harness supports dispatching multiple `functions.task` subagents in parallel via `multi_tool_use.parallel`. Do not use by default, but when encountering large, parallelizable, research-heavy, codebase-exploration-heavy tasks that need independent cross-validation, first read [Parallel Subagent Workflow](./workflow_parallel_subagents.md).
+For independent code / privacy / design review, broad surveys, codebase exploration, and cross-validation, first read [Parallel Subagent Workflow](./workflow_parallel_subagents.md). The main thread implements by default; delegate implementation only on explicit user request.
 
-Quick judgment: subagents are suitable for parallel reading, independent exploration, adversarial review, fact-checking, and context window isolation; not suitable for single-point small tasks, strongly sequential tasks, or multiple agents writing to the same state or files simultaneously.
+Routine review normally uses one independent subagent or Antigravity CLI and is exempt from the multi-agent parallel threshold; trivial, low-risk local edits may be excepted proportionally. Broad surveys and exploration may use multiple agents; avoid shared writes.
 
 ---
 
@@ -61,7 +61,7 @@ Operational manuals for calling external systems or tools.
 Complete workflows for specific tasks.
 
 - [Astra Coordinator / PI Workflow](./workflow_astra_coordinator.md) — Activates only when the actual primary model is GPT-6 Astra and the user explicitly requests coordinator or PI; delegates to competent executors at the lowest total cost while retaining main-thread final acceptance. Triggers: "astra coordinator", "coordinator", "PI"
-- [Parallel Subagent Workflow](./workflow_parallel_subagents.md) ✅ — Dispatch multiple `functions.task` subagents in parallel; must-read before first use, tasks must be bundled in a single message
+- [Parallel Subagent Workflow](./workflow_parallel_subagents.md) ✅ — Independent review, parallel research/exploration, and implementation delegation boundaries; launch co-ready tasks in one message and default to `background: true` when supported
 - [Deep Research Workflow](./workflow_deep_research_survey.md) ✅ — Multi-agent parallel information gathering and cross-validation across Phase 1-3
 - [External Writing Workflow](./workflow_external_writing.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/workflow_external_writing.md) — operational spine for external-facing analysis; double-generate single-review, separated cold reads, terminal machine-blocked verdict
 - [External Prose Lint CLI](./external_prose_lint.md) → migrated to [grapeot/writing-skill](https://github.com/grapeot/writing-skill/blob/master/skills_en/external_prose_lint.md) — deterministic Chinese prose scan; `python -m writing_skill.external_prose_lint_cli <md>`
@@ -74,7 +74,7 @@ Complete workflows for specific tasks.
 - [Delayed Execution Skill](./delayed_execution.md) ⚙️ — Low-risk `sleep + nohup` fallback; for durable or AI-driven delayed tasks, use Process Launcher + OpenCode Skill from the ecosystem
 - [Project Scaffold](./project_scaffold.md) ✅ — Restructure an ad-hoc directory into a standard project hierarchy: `docs/`, `src/`, `scripts/`, `tests/`, `AGENTS.md`, and an independent git repo
 - [AI Session Search & Archive](./ai_session_search_archive.md) — Search unified Markdown archives of AI sessions from OpenCode, Claude Code, Codex, Antigravity, and Second Mind, routed by source
-- [Workflow Watchdog](./workflow_watchdog.md) — After dispatching a workflow / background agent, set a ~30-minute inspection to distinguish normal execution from a stuck loop. Trigger words: "watchdog", "workflow stuck", "background task inspection"
+- [Workflow Watchdog](./workflow_watchdog.md) — Stage budgets, timeout evidence, and bounded recovery; honor native background completion and the no-poll contract without periodic inspection as a workaround. Trigger words: "watchdog", "workflow stuck", "wait budget"
 - [Public Consensus Net Income Audit Workflow](./workflow_public_consensus_net_income_audit.md) — Audit FY / CY consensus net income across a basket of tickers using public financial portals (MarketScreener, Yahoo Finance, MarketWatch). Trigger words: "consensus net income", "MarketScreener audit", "FY2026E net income consensus"
 - [Research Paper Survey and Writing Workflow](./workflow_research_paper_survey_writing.md) — Turn research papers into in-depth analysis articles aimed at technical practitioners. Trigger words: "analyze this paper", "write paper analysis", "paper analysis"
 

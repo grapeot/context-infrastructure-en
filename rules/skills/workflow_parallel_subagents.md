@@ -3,9 +3,9 @@
 ## Metadata
 
 - **Type**: Workflow
-- **Applicable Scenarios**: Using `multi_tool_use.parallel` to execute multiple `functions.task` subagents in parallel
+- **Applicable Scenarios**: Independent review, parallel research/exploration, and explicitly user-requested implementation delegation
 - **Created**: 2026-02-20
-- **Last Updated**: 2026-10-08
+- **Last Updated**: 2026-10-18
 
 ---
 
@@ -21,9 +21,13 @@ External experience points to the same conclusion: multi-agent is more viable fo
 
 Research basis: Anthropic Engineering "How we built our multi-agent research system" (https://www.anthropic.com/engineering/multi-agent-research-system), LangChain "How and when to build multi-agent systems" (https://www.langchain.com/blog/how-and-when-to-build-multi-agent-systems), Cemri et al. "Why Do Multi-Agent LLM Systems Fail?" (https://arxiv.org/abs/2503.13657).
 
-## When to Use Parallel Mode
+## Delegation Boundaries and When to Use Parallel Mode
 
-When at least 2 of the following conditions are met, and none of the anti-patterns below are triggered, prefer subagents:
+Decide whether to delegate before deciding whether to parallelize. The main thread implements by default; delegate implementation only when the user explicitly requests it. Multi-file scope, clean module boundaries, context savings, and cheaper models do not authorize delegation. A selected writing workflow may designate a writer; prose drafting is not code implementation.
+
+Code / privacy / design review normally uses an independent subagent or Antigravity CLI for a fresh context, with main-thread final acceptance. Trivial, low-risk local edits may be self-checked proportionally. A single review is exempt from the parallel threshold below. Broad surveys and exploration may use multiple subagents across independent dimensions.
+
+When launching multiple subagents in parallel, meet at least 2 of the following conditions without triggering the anti-patterns below:
 
 1. **Broad information surface**: Need to check multiple files, multiple web pages, multiple data sources, multiple time periods; reading them all in the main thread would pollute context.
 2. **Splittable into independent read tasks**: Can be divided into at least 2 relatively independent exploration directions, each expected to need ≥5 tool calls.
@@ -31,13 +35,13 @@ When at least 2 of the following conditions are met, and none of the anti-patter
 4. **High-value uncertainty exists**: Task results will affect subsequent decisions, public output, code changes, or high-cost actions; spending extra tokens is worthwhile.
 5. **Main thread needs to preserve design/integration capability**: The main agent should use its attention for problem decomposition, standard setting, evidence integration, and final judgment, not buried in low-level search or repeated reading.
 
-When not met, execute serially directly; don't parallelize for parallelism's sake.
+When the multi-agent parallel threshold is not met, work directly or launch a single independent review as needed; do not split artificially.
 
 ## Anti-Patterns
 
-In the following cases, default to not using subagents unless the user explicitly requests or the task value justifies the extra cost:
+Default to not splitting into multiple subagents in the following cases; task value does not replace the explicit user request required for implementation delegation:
 
-1. **Single-point small task**: Only need to read 1-2 files, run one command, fix one local bug.
+1. **Single-point small task**: Reading 1-2 files or making a minor local edit does not need mechanical splitting. Judge a single independent review by risk; file count alone must not skip privacy or key design review.
 2. **Strong sequential dependency**: The next step must depend on the previous step's output; splitting only creates waiting and handoff costs.
 3. **Shared state writes**: Multiple agents simultaneously modifying the same set of files, the same table, the same copy; conflicts and implicit decisions are hard to merge.
 4. **Context must be fully shared**: Every agent must know the full background to do it right; splitting only loses conditions.
@@ -49,11 +53,11 @@ In the following cases, default to not using subagents unless the user explicitl
 |-----------|-------------|---------------------|
 | External research, paper/product/market survey | High | 3-5 agents, split by evidence function, 30-50% overlap |
 | Large codebase understanding, file location, architecture mapping | High | `explore` parallel split by module or problem; main thread integrates |
-| Code review, solution review, fact-checking | High | 2-3 agents independent review; retain overlap on the same critical area |
+| Code / privacy / design review, solution review, fact-checking | High | Normally 1 independent reviewer; complex high-risk changes may use multiple perspectives, with main-thread acceptance |
 | Brainstorm, opposing viewpoints, thesis stress testing | Medium-High | Different agents assigned different judgment perspectives; output must answer the same set of questions |
-| Multi-file implementation | Medium | Only parallel when module boundaries are clear; main thread retains final merge and testing responsibility |
+| Engineering and code implementation (including multi-file) | Default: do not delegate | Delegate only on explicit user request; main thread owns merge and test acceptance |
 | Single bug fix, local edit, format adjustment | Low | Main thread does directly |
-| Multiple agents simultaneously writing the same file or same state | Low | Avoid; change to parallel read/review first, then main thread or single agent writes |
+| Multiple agents simultaneously writing the same file or same state | Low | Avoid; read/review independently first, then the main thread, authorized implementer, or writing-workflow writer writes |
 
 ---
 
@@ -61,18 +65,22 @@ In the following cases, default to not using subagents unless the user explicitl
 
 ### 1. Assessment and Splitting
 
-After identifying 2-5 key dimensions, determine overlap based on task type:
+A single independent review needs no forced splitting. When parallel work is appropriate, identify 2-5 dimensions and set overlap by task type:
 
 | Task Type | Overlap Range | Reason |
 |-----------|---------------|--------|
-| Research/Creative tasks | 30% - 50% | Cross-validation, gap-filling |
-| Code/Execution tasks | 0% - 20% | Efficiency priority, reduce duplication |
+| Research / Multi-angle review / Creative tasks | 30% - 50% | Cross-validation, gap-filling |
+| Codebase exploration / User-requested delegated implementation | 0% - 20% | Reduce duplication, retaining interface-boundary overlap |
 
 Don't understand overlap as redundant work. Good overlap means adjacent agents jointly cover the boundary areas most prone to error, such as the intersection of official claims and independent evidence, module interfaces, data methodology, opposing opinions.
 
 ### 2. Parallel Launch
 
-The correct parallel method in the current OpenCode environment is: in the same assistant message, use `multi_tool_use.parallel` to wrap multiple `functions.task` calls. Invoking multiple `task` calls individually in sequence, even if described as "parallel" in text, is actually serial.
+**Follow the live runtime schema.** Check that `functions.task`, the target agent, and parameters are available. State missing capabilities honestly; do not fabricate calls or silently swap models. A single review needs one call; bundle co-ready tasks in one message with `multi_tool_use.parallel`.
+
+**Default to `background: true` when supported.** Wait for automatic completion without polling or sleeping to check progress. Continue independent work or end the turn while waiting. Use synchronous calls only when async is unsupported or the step must block on the result. Background tasks can remain concurrent across messages; co-ready tasks should still launch together.
+
+The example assumes the schema supports `background`; omit that field otherwise. A launch receipt is not completion. Do not pass empty `task_id` / `command` placeholders for new tasks; `task_id` is for continuing an existing task.
 
 ```json
 {
@@ -83,18 +91,16 @@ The correct parallel method in the current OpenCode environment is: in the same 
         "description": "Official narrative",
         "subagent_type": "general",
         "prompt": "Read/search official sources, extract claims, URLs, original excerpts, write to tmp/<session>/tier1_official.md",
-        "task_id": "",
-        "command": ""
+        "background": true
       }
     },
     {
       "recipient_name": "functions.task",
       "parameters": {
         "description": "Independent experience",
-        "subagent_type": "cheap_glm",
+        "subagent_type": "general",
         "prompt": "Search independent user experiences, community discussions, GitHub issues, write to tmp/<session>/tier3_independent.md",
-        "task_id": "",
-        "command": ""
+        "background": true
       }
     }
   ]
@@ -107,21 +113,20 @@ Source of built-in and custom agents:
 
 - `general` / `explore` are built-in agents in the OpenCode source.
 - Other named agents come from `~/.config/opencode/opencode.json`, the project `opencode.json`, or `.opencode/agent(s)/*.md`.
-- `provider/model` is only the underlying model entry. To be callable by `task`, it must be wrapped as an agent, e.g., `writer_deepseek -> deepseek/deepseek-v4-pro`.
+- `provider/model` is only the underlying model entry, not a substitute for a registered agent name.
 
-Common `subagent_type`:
+Capability routing applies only after deciding to delegate; it does not authorize implementation delegation. The user's current explicit choice of model, agent, or CLI takes precedence over default capability routing, subject to runtime capabilities and data boundaries. If the specified runner is unavailable, report the blocker rather than substituting it. Names come from the active runtime configuration:
 
 | subagent_type | Applicable Scenarios |
 |---|---|
 | `general` | General tasks; inherits main session model when no model configured. Suitable for ordinary parallel execution, but don't assume it's a cheap model |
 | `explore` | Fast codebase internal search, file location, architecture understanding |
-| `reasoning_gpt` | High-reliability reasoning, engineering judgment, solution design, complex code review |
-| `writer_deepseek` | Chinese writing, editing, style polishing, final prose polishing; avoid high-privacy materials |
-| `cheap_glm` | Low-cost initial screening, classification, outlining, lightweight research and non-critical summaries |
-| `private_ds4` | Local DS4 route; suitable for privacy-sensitive, local-execution-priority, low-cost drafts |
-| `ollama_kimi` | Ollama Cloud Kimi K2.6, zero-data-retention, relatively cheap; suitable for tasks requiring high privacy posture but not the strongest model |
-| `ollama_deepseek_pro` | Ollama Cloud DeepSeek V4 Pro, zero-data-retention, relatively expensive; suitable for tasks requiring high privacy posture and stronger DeepSeek Pro |
-| `ds4` | Old alias; prefer `private_ds4` for new tasks |
+| Registered specialist agents | Match review, reasoning, coding, screening, or data-boundary needs; do not hardcode model mappings here |
+| Antigravity CLI (not `functions.task`) | Independent review or a selected writing workflow; read the installed `ai-agent-cli` root skill and Antigravity focused skill, then use currently available models. Do not conflate it with a Gemini subagent |
+
+Each task prompt should specify scope, output artifact, acceptance criteria, total deadline, logs, stop conditions, and exclusive write scope. Independent reviewers should normally write only their review artifacts; the main thread or authorized implementer makes fixes.
+
+Independent review uses a new agent/task context or new CLI conversation that did not participate in implementing or drafting the artifact. Do not resume the original author's task/conversation as an independent reviewer. Author self-checks may remain, but do not count as independent review; a different model or vendor is not required.
 
 ### File-First Agent Handoff
 
@@ -135,7 +140,7 @@ Five principles:
 4. **Parent merges from artifacts.** The main agent reads child artifacts, verifies evidence, and writes back to the canonical output. Information transfer between agents is anchored on inspectable files; a previous agent's natural-language summary is not treated directly as source of truth.
 5. **Preserve boundaries for failure recovery.** Long tasks update scratchpads, checkpoints, or partial outputs by stage. If a subagent is interrupted, a later agent should be able to continue from the file rather than only re-running the whole conversation.
 
-File-first handoff has three purposes: reduce prompt preprocessing and context copying; let agents read and write repeatedly on existing material; and leave auditable recovery points for interruption, model swap, or parent takeover. Only when the result is very short, there is no workspace, or it is a pure one-shot judgment, may the full deliverable be returned directly in the message.
+File-first handoff has three purposes: reduce prompt preprocessing and context copying; let agents read and write repeatedly on existing material; and leave auditable recovery points for interruption, model swap, or parent takeover. Results may be returned directly when very short, without a workspace, for one-shot judgments, or when the agent/runtime has no write permission. Read-only exploration without write access should return verifiable file paths, line numbers, evidence, and conclusions; the parent verifies and saves the necessary results. Do not elevate permissions or bypass read-only limits to satisfy file-first handoff.
 
 Main thread responsibilities:
 
@@ -146,11 +151,11 @@ Main thread responsibilities:
 
 ### 3. Waiting and Integration
 
-`multi_tool_use.parallel` returns all subtask results in the same round of tool response; there is no need and no way to call `background_output`. The `task_id` returned by each `functions.task` is only used when needing to resume the same subagent session later; it is not a parallel wait handle.
+With `background: true`, the wrapper returns launch receipts only. Wait for automatic completion before reading results and artifacts; do not poll, call non-existent `background_output`, or use scheduled inspection as a workaround. Only a synchronous wrapper returns completed results directly. `task_id` is for continuation, not a wait handle. Set stage budgets, a total deadline, logs, and failure stop conditions before dispatch; preserve partial artifacts for recovery.
 
 Integration steps:
 
-1. Read the artifact files written by each subagent.
+1. Read artifact files when available; for children without write access, accept evidence and content under the read-only handoff exception above, then verify and save it in the parent.
 2. Cross-validate overlapping areas: discovered by multiple agents → high credibility; single source → annotate pending verification; contradictory information → annotate and analyze reasons.
 3. Write integration results to the session directory, e.g., `phase3_synthesis.md`, `fact_check.md`, `brainstorm_synthesis.md`.
 
@@ -160,18 +165,15 @@ When appending a prompt with the same `task_id` to an already-running `functions
 
 ## Routing Decisions
 
-First split by data sensitivity, then by task capability:
+Route only after deciding to delegate, matching data boundaries and registered capabilities. The user's current explicit choice of model, agent, or CLI takes precedence over default routing, subject to runtime capabilities and privacy constraints; report an unavailable specified runner rather than substituting it. Routing must not force the main thread to outsource coding:
 
-1. High privacy, cannot leave the local machine: prioritize `private_ds4`. If the task exceeds local Flash capability, pause and let the user decide whether to use the Ollama Cloud zero-data-retention route.
-2. Need zero-data-retention but can go to cloud: lightweight tasks use `ollama_kimi`; high-quality reasoning or writing use `ollama_deepseek_pro`.
-3. Chinese writing quality priority and content not sensitive: use `writer_deepseek`.
-4. Complex engineering judgment, planning, architecture, code review: use `reasoning_gpt`.
-5. Cheap, rough, re-runnable initial screening tasks: use `cheap_glm`.
-6. Codebase exploration, file location, answering internal structure questions: use `explore`.
+1. Use `explore` for exploration and `general` for general research. Match specialized review, reasoning, screening, and explicitly user-requested delegated implementation to currently registered capabilities.
+2. Honor local/cloud boundaries for private data; insufficient capability does not authorize external disclosure. A selected writing workflow determines its writer.
+3. Antigravity CLI can provide a fresh independent context for code / privacy / design review and is not a Gemini subagent. Read the installed `ai-agent-cli` root skill and Antigravity focused skill; use the current model list rather than fixed names.
 
-Do not use old routing names like `category="deep"`, `category="writing"`, `librarian`, `ultrabrain`, `glm51` in prompts. Unless they are already registered as same-name agents in the current `opencode.json`, the `task` tool cannot invoke them.
+Do not reuse legacy `category` parameters or historical agent aliases; invoke only agents registered in the active runtime.
 
-Do not default to setting `temperature: 0` for agents "for stability." Many providers/models have their own sampling strategies; DS4 also does deterministic handling for protocol structures, but forcing determinism on long text payloads may cause repetition. Default to not setting temperature; let the provider/server use their own defaults. Only configure when you explicitly know a specific model needs fixed sampling.
+Do not default to `temperature: 0` "for stability." Use provider/server sampling defaults unless the target model explicitly requires fixed sampling.
 
 ---
 
@@ -182,28 +184,30 @@ Do not default to setting `temperature: 0` for agents "for stability." Many prov
 ```
 Research "adoption of a certain technical framework"
 ├─ Agent 1 (general): Official narrative + product definition
-├─ Agent 2 (cheap_glm): Independent experience + community feedback
-├─ Agent 3 (reasoning_gpt): Failure boundaries + competitor comparison
+├─ Agent 2 (general): Independent experience + community feedback
+├─ Agent 3 (general): Failure boundaries + competitor comparison
 └─ Overlap: Community and enterprise cases both covered, cross-verifiable
 ```
 
-### Code Task (0-20% overlap)
+### User-Requested Delegated Code Task (0-20% overlap)
 
 ```
-Implement "user authentication system"
+Prerequisite: The user explicitly requested delegated implementation of "user authentication system"; otherwise the main thread implements directly
 ├─ Task 1: Auth core logic + Token management
 ├─ Task 2: Database models + migration scripts
 ├─ Task 3: API endpoints + test cases
 └─ Overlap: Slight overlap at interface definitions to ensure correct integration
 ```
 
-### Review Task (30% overlap)
+### Review Task (Single reviewer or multi-angle overlap)
+
+Normally use one independent reviewer or Antigravity CLI, with main-thread acceptance; the multi-agent parallel threshold does not apply. Complex high-risk PRs may be split as follows:
 
 ```
 Review "whether a PR is reliable"
-├─ Agent 1 (explore/reasoning_gpt): Code behavior and boundary conditions
+├─ Agent 1 (explore / review agent): Code behavior and boundary conditions
 ├─ Agent 2 (explore): Test coverage, missing fixtures, regression risk
-├─ Agent 3 (reasoning_gpt): Architectural consistency and implicit dependencies
+├─ Agent 3 (review agent): Architectural consistency and implicit dependencies
 └─ Overlap: All agents look at the core diff, but peripheral files split by responsibility
 ```
 
@@ -222,4 +226,13 @@ Fix "an off-by-one in a function"
 - **Prompt quality**: Subagent prompts must be sufficiently specific, otherwise results will be shallow
 - **Cost awareness**: Parallelism consumes more tokens; evaluate whether it's worth it
 - **Intermediate results**: By default, don't need to persist every subagent's raw output; but research / writing workflows should organize key intermediate artifacts into `tmp/<session_slug>/`
-- **Old syntax prohibited**: Do not use `mcp_task(run_in_background=True)`, `background_output`, `category`, or `load_skills`; the current tool schema only accepts `description`, `prompt`, `subagent_type`, `task_id`, `command`
+- **Runtime syntax**: Use the live schema; default to `background: true` when supported. Do not use legacy `mcp_task(run_in_background=True)`, `category`, or `load_skills`, or invent a `background_output` tool.
+
+## Common Mistakes
+
+| Mistake | Correct Approach |
+|---|---|
+| Treating a background wrapper receipt as completion, or polling for progress | Wait for automatic completion, then read artifacts; only synchronous calls return completed results directly |
+| Rejecting a single review because fewer than 2 parallel conditions are met | Normally use one independent reviewer; trivial, low-risk local edits may be excepted proportionally |
+| Delegating implementation for cheaper models or context savings | Delegate implementation only when explicitly requested by the user |
+| Calling cross-message background work necessarily serial | Background tasks may remain concurrent; launch co-ready tasks together |
