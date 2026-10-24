@@ -51,7 +51,6 @@ Operational manuals for calling external systems or tools.
 - [Growth Analytics](./growth_analytics.md) ⚙️ — Three CLIs to query website traffic (GA4), email subscriptions (Kit), and Twitter engagement (Typefully)
 - [Typefully Metrics CLI](./typefully_metrics.md) ⚙️ — Query X account and tweet performance metrics (impressions, engagement, follower counts)
 - [Typefully Post CLI](./typefully_post.md) ⚙️ — Create drafts, schedule, and directly publish tweets/threads via the Typefully v2 API
-- [Apple Compressor Skill](./compressor.md) ⚙️ — Local Apple Compressor CLI transcoding; custom preset paths, source file write-completion detection, batch submission and monitoring
 - [OpenReview API](./openreview.md) ✅ — CLI tool (`python tools/openreview_cli.py`) to query AI conference paper metadata and author profiles (institution history, position, tilde ID). Trigger words: "OpenReview", "author profile", "ICLR papers", "NeurIPS papers", "tilde ID"
 - [Reddit Content Reader](./reddit_reader.md) ✅ — Read Reddit posts and comments as research evidence; PullPush archive API is the primary channel (submission/comment/subreddit search, live-verified), with a scraper compatibility matrix since Firecrawl rejects reddit.com and Tavily extract returns empty. Trigger words: "reddit", "read a post", "Reddit comments", "pullpush"
 - [Download and Convert Academic Papers](./skill_download_paper.md) ✅ — Download arXiv papers and convert them to Markdown (HTML preferred, PDF fallback); includes index building, arXiv ID discovery, and duplicate/wrong-paper checks
