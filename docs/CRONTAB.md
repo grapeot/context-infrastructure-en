@@ -44,9 +44,9 @@ Scans workspace file changes and extracts valuable observations into `contexts/m
 
 ### AI Heartbeat Reflector (weekly)
 
-Merges, promotes, and cleans up observations accumulated in OBSERVATIONS.md, distilling them into higher-level insights.
+Distils rule candidates from the observations accumulated in OBSERVATIONS.md and writes them to `contexts/memory/RULE_CANDIDATES.md` for human review; the cron job runs only this propose stage and never changes `rules/`. After a human ticks `- [x] Approve` on the candidates they accept, run `reflector.py --apply` by hand to merge them and clean up OBSERVATIONS.md.
 
-- **Script**: `periodic_jobs/ai_heartbeat/src/v0/reflector.py`
+- **Script**: `periodic_jobs/ai_heartbeat/src/v0/reflector.py` (propose); `reflector.py --apply` (merge after review)
 - **Dependency**: OpenCode Server API (`OPENCODE_API_URL`)
 - **Recommended time**: Every Sunday 9:00 AM
 

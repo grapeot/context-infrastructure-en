@@ -57,10 +57,10 @@ Observation records and memory files must strictly follow this tagging logic:
 
 ### 4.2 Reflection and Promotion (L2 Reflector)
 - **Core goal**: Achieve evolution from "short-term observation" to "long-term rule."
-- **Files operated on**:
-  1. **Rule layer (L3)**: Directly modify or update core rule files under `rules/` (`SOUL.md`, `USER.md`, `COMMUNICATION.md`, `WORKSPACE.md`) based on the latest observed effective patterns, language style changes, and long-term constraints.
-  2. **Memory layer (L1/L2)**: Rewrite `contexts/memory/OBSERVATIONS.md`. Perform garbage collection — delete content already solidified into rules and expired 🟢 records.
-- **Responsibility**: Ensure `rules/` always represents the system's latest "evolutionary state."
+- **Two stages; a rule changes only after a human approves it**:
+  1. **Propose (default, safe to run from cron at night)**: From the latest observed effective patterns, language style changes, long-term constraints, and rules under `rules/` that contradict each other, write rule candidates and append them to the "Pending review" section of `contexts/memory/RULE_CANDIDATES.md`. Each candidate names its target file, the exact text of the change, the reason (including where it does and does not apply) and its sources (observation entry dates or original conversation file paths). This stage **does not modify `rules/` or `OBSERVATIONS.md`**; the script compares `rules/` before and after the run and exits with an error if anything changed.
+  2. **Apply (run `reflector.py --apply` by hand after review)**: The human ticks `- [x] Approve` on the candidates they accept. The apply stage writes only the ticked candidates into the corresponding files under `rules/` (`SOUL.md`, `USER.md`, `COMMUNICATION.md`, `WORKSPACE.md`, `skills/`), moves them to the "Done" section, then rewrites `contexts/memory/OBSERVATIONS.md`, deleting content that has been merged into rules and expired 🟢 records.
+- **Responsibility**: Every change to `rules/` has a source and a human approval, so a rule that turns out wrong can be traced back to the original records and undone.
 
 ## 5. Execution Role Isolation
 - **Observer (L1)** and **Reflector (L2)** are independent task phases.
@@ -70,4 +70,4 @@ Observation records and memory files must strictly follow this tagging logic:
 ## 6. Reporting
 - After completing file writes, provide only a brief summary (walkthrough) in chat.
 - **Observer report points**: Which projects were processed, how much noise was filtered out based on metadata.
-- **Reflector report points**: Which observations became formal rules.
+- **Reflector report points**: In the propose stage, how many candidates were added and their target files; in the apply stage, which candidates were merged and which files changed.
