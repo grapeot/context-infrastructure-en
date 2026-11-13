@@ -60,7 +60,7 @@ context-infrastructure-en/
 │       │   └── KNOWLEDGE_BASE.md # Observation and reflection SOP
 │       └── src/v0/
 │           ├── observer.py      # Daily observation script (requires cron setup)
-│           └── reflector.py     # Weekly reflection script (requires cron setup)
+│           └── reflector.py     # Weekly reflection: cron only proposes rule candidates; --apply merges them after human approval
 │
 ├── tools/
 │   └── share_report/            # Report publishing (Tier 2)
