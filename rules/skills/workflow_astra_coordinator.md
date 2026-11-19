@@ -24,7 +24,7 @@ Apply these priorities in order:
 Model routes are task-routing preferences, not guarantees of availability or identical cost relationships across platforms. Invocation names and capabilities come from the current runtime:
 - **DeepSeek**: Simple, bounded execution.
 - **Grok**: Medium difficulty, longer execution chains, and local engineering judgment.
-- **GPT-6.1 SOL**: Complex reasoning, harder planning, and important independent review.
+- **GPT-6.2 SOL**: Complex reasoning, harder planning, and important independent review.
 - **GPT-6 Astra**: Keep the hardest, direction-setting problems in the main thread; delegate to Astra when independent solving or context isolation adds value.
 
 Account for main-thread attention, critical-path time, and the total marginal cost of startup, context handoff, waiting, verification, and expected rework. Prefer delegating low-value long execution with clear rules and independent acceptance criteria; existing context in the main thread alone does not justify taking it on. Short tool operations and spot checks may be done directly when their total cost is lower.
